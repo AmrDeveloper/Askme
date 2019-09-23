@@ -4,7 +4,8 @@
   "description": "Server side for Askme Android Application",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "nodemon server.js"
   },
   "keywords": [
     "node",
@@ -14,6 +15,10 @@
   "author": "AmrDeveloper",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql": "github:mysqljs/mysql"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
   }
 }
