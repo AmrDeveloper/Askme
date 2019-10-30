@@ -12,4 +12,10 @@ router.delete('/', controller.deleteAllUsers);
 
 router.delete('/:id', controller.deleteOneUser);
 
+router.put('/name', controller.updateUsername);
+
+router.put('/email', controller.updateUserEmail);
+
+router.put('/password', controller.updateUserPassword);
+
 module.exports = router;
