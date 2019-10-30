@@ -1,4 +1,4 @@
-//const databse = require('../../database/config')
+const databse = require('../../database/config')
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
