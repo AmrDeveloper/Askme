@@ -1,11 +1,15 @@
 const express = require('express');
-const databse = require('../../database/config')
+const controller = require('../controllers/user');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.status(200).json({
-        message: "GET request on api/users"
-    })
-});
+router.get('/', controller.getAllUsers);
+
+router.get('/:id', controller.getOneUser);
+
+router.post('/', controller.registerNewUser);
+
+router.delete('/', controller.deleteAllUsers);
+
+router.delete('/:id', controller.deleteOneUser);
 
 module.exports = router;
