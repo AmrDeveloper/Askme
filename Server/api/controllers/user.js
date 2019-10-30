@@ -34,20 +34,44 @@ exports.deleteOneUser = (req, res) => {
     })
 };
 
+exports.updateName = (req,res) => {
+    res.status(200).json({
+        message: "Update name"
+    })
+};
+
 exports.updateUsername = (req, res) => {
     res.status(200).json({
         message: "Update username"
     })
 };
 
-exports.updateUserEmail = (req, res) => {
+exports.updateEmail = (req, res) => {
     res.status(200).json({
         message: "Update user email"
     })
 };
 
-exports.updateUserPassword = (req, res) => {
+exports.updatePassword = (req, res) => {
     res.status(200).json({
         message: "Update user password"
+    })
+};
+
+exports.updateAddress = (req, res) => {
+    res.status(200).json({
+        message: "Update user Address"
+    })
+}
+
+exports.updateStatus = (req,res) => {
+    res.status(200).json({
+        message: "Update user status"
+    })
+};
+
+exports.updateActive = (req,res) => {
+    res.status(200).json({
+        message: "Update user Active"
     })
 };
