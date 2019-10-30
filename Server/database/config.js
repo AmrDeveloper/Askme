@@ -27,10 +27,16 @@ connection.connect(error => {
         console.log("Questions Table Done");
     });
 
+    //Create answerd table
+    connection.query(schema.MYSQL_ANSWERD_TABLE, (err, res) =>{
+        if (err) throw err;
+        console.log("Answerd Table Done");
+    });
+
     //Create follows table
     connection.query(schema.MYSQL_FOLLOWS_TABLE, (err, res) =>{
         if (err) throw err;
-        console.log("Questions Follows Done");
+        console.log("Follows Table Done");
     });
 });
 
