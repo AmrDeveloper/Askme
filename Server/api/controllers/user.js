@@ -5,9 +5,20 @@ const QUERY_DEFAULT_COUNT = 25;
 const QUERY_MAX_COUNT = 50;
 
 exports.getAllUsers = (req, res) => {
+    var offset = req.query.offset;
+    var count = req.query.count;
+
+    if (offset == null) {
+        offset = QUERY_DEFAULT_OFFSET;
+    }
+
+    if (count == null || count > QUERY_MAX_COUNT) {
+        count = QUERY_DEFAULT_COUNT;
+    }
+
     res.status(200).json({
-        message: "GET All users"
-    })
+        message: "Get All users"
+    });
 };
 
 exports.getOneUser = (req, res) => {
@@ -34,7 +45,7 @@ exports.deleteOneUser = (req, res) => {
     })
 };
 
-exports.updateName = (req,res) => {
+exports.updateName = (req, res) => {
     res.status(200).json({
         message: "Update name"
     })
@@ -64,13 +75,13 @@ exports.updateAddress = (req, res) => {
     })
 }
 
-exports.updateStatus = (req,res) => {
+exports.updateStatus = (req, res) => {
     res.status(200).json({
         message: "Update user status"
     })
 };
 
-exports.updateActive = (req,res) => {
+exports.updateActive = (req, res) => {
     res.status(200).json({
         message: "Update user Active"
     })
