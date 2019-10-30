@@ -26,6 +26,12 @@ connection.connect(error => {
         if (err) throw err;
         console.log("Questions Table Done");
     });
+
+    //Create follows table
+    connection.query(schema.MYSQL_FOLLOWS_TABLE, (err, res) =>{
+        if (err) throw err;
+        console.log("Questions Follows Done");
+    });
 });
 
 module.exports = connection;
