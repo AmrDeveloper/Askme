@@ -17,7 +17,7 @@ exports.getUserQuestions = (req, res) => {
     }
 
     res.status(200).json({
-        message: "GET One user by id"
+        message: "Get all questions come to user"
     })
 };
 
@@ -34,24 +34,24 @@ exports.getAskedQuestions = (req, res) => {
     }
 
     res.status(200).json({
-        message: "GET One user by id"
-    })
+        message: "Get all question sended by user"
+    });
 };
 
 exports.getQuestionByID = (req, res) => {
     res.status(200).json({
-        message: "GET One user by id"
-    })
+        message: "Get Question by ID"
+    });
 };
 
 exports.createNewQuestion = (req, res) => {
     res.status(200).json({
-        message: "GET One user by id"
-    })
+        message: "Create new Question"
+    });
 };
 
 exports.deleteQuestion = (req, res) => {
     res.status(200).json({
-        message: "GET One user by id"
-    })
+        message: "Delete Question by ID"
+    });
 };
