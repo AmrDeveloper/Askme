@@ -38,6 +38,12 @@ connection.connect(error => {
         if (err) throw err;
         console.log("Follows Table Done");
     });
+
+    //Create notifications table
+    connection.query(schema.MYSQL_NOTIFICATIONS_TABLE, (err, res) =>{
+        if (err) throw err;
+        console.log("Notifications Table Done");
+    });
 });
 
 module.exports = connection;
