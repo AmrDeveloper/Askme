@@ -52,6 +52,18 @@ exports.deleteOneUser = (req, res) => {
     });
 };
 
+exports.deleteUserAvatar = (req, res) => {
+    res.status(200).json({
+        message: "Delete User Avatar"
+    });
+};
+
+exports.deleteUserStatus = (req, res) => {
+    res.status(200).json({
+        message: "Delete User Status"
+    });
+};
+
 exports.updateName = (req, res) => {
     res.status(200).json({
         message: "Update name"
@@ -93,3 +105,9 @@ exports.updateActive = (req, res) => {
         message: "Update user Active"
     });
 };
+
+exports.updateUserAvatar = (req,res) => {
+    res.status(200).json({
+        message: "Update user Avatar"
+    });
+}

@@ -14,6 +14,10 @@ router.delete('/', controller.deleteAllUsers);
 
 router.delete('/:id', controller.deleteOneUser);
 
+router.delete('/avatar', controller.deleteUserAvatar);
+
+router.delete('/status', controller.deleteUserStatus);
+
 router.put('/name', controller.updateName);
 
 router.put('/username', controller.updateUsername);
@@ -27,5 +31,7 @@ router.put('/address', controller.updateAddress);
 router.put('/status', controller.updateStatus)
 
 router.put('/active', controller.updateActive)
+
+router.put('/avatar', controller.updateUserAvatar);
 
 module.exports = router;
