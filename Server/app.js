@@ -1,5 +1,9 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 const API_VERSION = "/v1/";
 const userRoutes = require('./api/routes/user');
