@@ -36,8 +36,8 @@ exports.userLogin = (req, res) => {
 };
 
 exports.registerNewUser = (req, res) => {
-    const email = req.query.email;
-    const password = req.query.password;
+    const email = req.body.email;
+    const password = req.body.password;
     bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
             return res.status(500).json({
@@ -45,7 +45,6 @@ exports.registerNewUser = (req, res) => {
             })
         } else {
             //Register User
-            console.log(hash);
             res.status(200).json({
                 message: "POST one user to database"
             });
