@@ -15,6 +15,7 @@
   "author": "AmrDeveloper",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "express": "^4.17.1",
     "mysql": "github:mysqljs/mysql"
   },
