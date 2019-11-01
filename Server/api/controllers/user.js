@@ -1,5 +1,6 @@
 const databse = require('../../database/config');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -32,9 +33,24 @@ exports.getOneUser = (req, res) => {
 exports.userLogin = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    res.status(200).json({
-        message: "User Login"
+    /*
+    bcrypt.compare("12345678", password, (err, result) => {
+        if (err) throw err;
+        if (result) {
+            jwt.sign(email, process.env.JWT_KEY, (err, token) => {
+                if(err) throw err;
+                res.status(200).json({
+                    message: "User Login",
+                    token : token
+                });
+            });
+        }else{
+            res.status(401).json({
+                message: "Invalid Login",
+            });
+        }
     });
+    */
 };
 
 exports.registerNewUser = (req, res) => {
