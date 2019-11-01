@@ -1,4 +1,5 @@
 const databse = require('../../database/config');
+const bcrypt = require('bcrypt');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -35,8 +36,20 @@ exports.userLogin = (req, res) => {
 };
 
 exports.registerNewUser = (req, res) => {
-    res.status(200).json({
-        message: "POST one user to database"
+    const email = req.query.email;
+    const password = req.query.password;
+    bcrypt.hash(password, 10, (err, hash) => {
+        if (err) {
+            return res.status(500).json({
+                error: err
+            })
+        } else {
+            //Register User
+            console.log(hash);
+            res.status(200).json({
+                message: "POST one user to database"
+            });
+        }
     });
 };
 
@@ -106,7 +119,7 @@ exports.updateActive = (req, res) => {
     });
 };
 
-exports.updateUserAvatar = (req,res) => {
+exports.updateUserAvatar = (req, res) => {
     res.status(200).json({
         message: "Update user Avatar"
     });
