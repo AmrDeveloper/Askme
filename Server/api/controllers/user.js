@@ -6,7 +6,6 @@ const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
 const QUERY_MAX_COUNT = 50;
 
-
 exports.getAllUsers = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
@@ -33,24 +32,33 @@ exports.getOneUser = (req, res) => {
 exports.userLogin = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    /*
-    bcrypt.compare("12345678", password, (err, result) => {
+    const sqlQuery = `SELECT password FROM users WHERE email = ?`;
+    databse.query(sqlQuery, email, ((err, result, rows) => {
         if (err) throw err;
-        if (result) {
-            jwt.sign(email, process.env.JWT_KEY, (err, token) => {
-                if(err) throw err;
-                res.status(200).json({
-                    message: "User Login",
-                    token : token
-                });
+        if (result.length == 1) {
+            const hashedPassword = result[0]['password'];
+            bcrypt.compare(password, hashedPassword, (err, result) => {
+                if (err) throw err;
+                if (result) {
+                    jwt.sign(email, process.env.JWT_KEY, (err, token) => {
+                        if (err) throw err;
+                        res.status(200).json({
+                            message: "Valid Login",
+                            token: token
+                        });
+                    });
+                } else {
+                    res.status(401).json({
+                        message: "Invalid Login",
+                    });
+                }
             });
-        }else{
+        } else {
             res.status(401).json({
                 message: "Invalid Login",
             });
         }
-    });
-    */
+    }));
 };
 
 exports.registerNewUser = (req, res) => {
