@@ -4,6 +4,7 @@ const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
 const QUERY_MAX_COUNT = 50;
 
+
 exports.getAllUsers = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
@@ -24,6 +25,12 @@ exports.getAllUsers = (req, res) => {
 exports.getOneUser = (req, res) => {
     res.status(200).json({
         message: "GET One user by id"
+    });
+};
+
+exports.userLogin = (req, res) => {
+    res.status(200).json({
+        message: "User Login"
     });
 };
 

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "nodemon server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [
     "node",
@@ -19,6 +19,6 @@
     "mysql": "github:mysqljs/mysql"
   },
   "devDependencies": {
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.4"
   }
 }
