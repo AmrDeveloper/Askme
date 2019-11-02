@@ -138,8 +138,19 @@ exports.deleteUserAvatar = (req, res) => {
 };
 
 exports.deleteUserStatus = (req, res) => {
-    res.status(200).json({
-        message: "Delete User Status"
+    const email = req.body.email;
+    const deleteQuery = 'UPDATE users SET status = "" WHERE email = ?';
+    database.query(deleteQuery, email, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Status changed",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't Delete Status"
+            });
+        }
     });
 };
 
@@ -217,12 +228,12 @@ exports.updateStatus = (req, res) => {
         email
     ];
     database.query(updateQuery, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Status updated",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't update status"
             });
