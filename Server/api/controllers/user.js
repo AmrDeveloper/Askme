@@ -132,8 +132,19 @@ exports.deleteOneUser = (req, res) => {
 };
 
 exports.deleteUserAvatar = (req, res) => {
-    res.status(200).json({
-        message: "Delete User Avatar"
+    const email = req.body.email;
+    const deleteQuery = 'UPDATE users SET avatar = "" WHERE email = ?';
+    database.query(deleteQuery, email, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Avatar Deleted",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't Delete Avatar"
+            });
+        }
     });
 };
 
@@ -144,7 +155,7 @@ exports.deleteUserStatus = (req, res) => {
         if(err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
-                message: "Status changed",
+                message: "Status Deleted",
             });
         }else{
             res.status(status.BAD_REQUEST).json({
