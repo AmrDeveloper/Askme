@@ -1,6 +1,7 @@
 const database = require('../../database/config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const status = require('../../utilities/server_status');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -171,21 +172,21 @@ exports.updatePassword = (req, res) => {
             bcrypt.compare(password, oldPassword, (err, isSame) => {
                 if (err) throw err;
                 if (isSame) {
-                    res.status(401).json({
+                    res.status(status.BAD_REQUEST).json({
                         message: "New password is equal old one"
                     });
                 } else {
                     bcrypt.hash(password, 10, (err, hash) => {
                         if (err) throw err;
                         const updateQuery = 'UPDATE users SET password = ? WHERE email = ?'
-                        const info = [
+                        const args = [
                             hash,
                             email
                         ];
-                        database.query(updateQuery, info, (err, result) => {
+                        database.query(updateQuery, args, (err, result) => {
                             if (err) throw err;
                             if (result['affectedRows'] == 1) {
-                                res.status(200).json({
+                                res.status(status.OK).json({
                                     message: "Password changed",
                                 });
                             }
@@ -194,13 +195,10 @@ exports.updatePassword = (req, res) => {
                 }
             });
         } else {
-            res.status(401).json({
+            res.status(status.BAD_REQUEST).json({
                 message: "Invalid Information"
             });
         }
-    });
-    res.status(200).json({
-        message: "Update user password"
     });
 };
 
