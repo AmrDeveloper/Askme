@@ -37,10 +37,9 @@ exports.userLogin = (req, res) => {
         if (err) throw err;
         if (result.length == 1) {
             const encryptedPass = result[0]['password'];
-            bcrypt.compare(password, encryptedPass,(err, result) => {
-                console.log(result)
+            bcrypt.compare(password, encryptedPass, (err, isSame) => {
                 if (err) throw err;
-                if (result) {
+                if (isSame) {
                     jwt.sign(email, process.env.JWT_KEY, (err, token) => {
                         if (err) throw err;
                         res.status(200).json({
@@ -162,6 +161,44 @@ exports.updateEmail = (req, res) => {
 };
 
 exports.updatePassword = (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const sqlQuery = 'SELECT password FROM users WHERE email = ?'
+    database.query(sqlQuery, email, (err, result) => {
+        if (err) throw err;
+        if (result.length == 1) {
+            const oldPassword = result[0]['password'];
+            bcrypt.compare(password, oldPassword, (err, isSame) => {
+                if (err) throw err;
+                if (isSame) {
+                    res.status(401).json({
+                        message: "New password is equal old one"
+                    });
+                } else {
+                    bcrypt.hash(password, 10, (err, hash) => {
+                        if (err) throw err;
+                        const updateQuery = 'UPDATE users SET password = ? WHERE email = ?'
+                        const info = [
+                            hash,
+                            email
+                        ];
+                        database.query(updateQuery, info, (err, result) => {
+                            if (err) throw err;
+                            if (result['affectedRows'] == 1) {
+                                res.status(200).json({
+                                    message: "Password changed",
+                                });
+                            }
+                        })
+                    });
+                }
+            });
+        } else {
+            res.status(401).json({
+                message: "Invalid Information"
+            });
+        }
+    });
     res.status(200).json({
         message: "Update user password"
     });
