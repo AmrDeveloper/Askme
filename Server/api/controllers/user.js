@@ -164,7 +164,7 @@ exports.updateEmail = (req, res) => {
 exports.updatePassword = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    const sqlQuery = 'SELECT password FROM users WHERE email = ?'
+    const sqlQuery = 'SELECT password FROM users WHERE email = ?';
     database.query(sqlQuery, email, (err, result) => {
         if (err) throw err;
         if (result.length == 1) {
@@ -178,7 +178,7 @@ exports.updatePassword = (req, res) => {
                 } else {
                     bcrypt.hash(password, 10, (err, hash) => {
                         if (err) throw err;
-                        const updateQuery = 'UPDATE users SET password = ? WHERE email = ?'
+                        const updateQuery = 'UPDATE users SET password = ? WHERE email = ?';
                         const args = [
                             hash,
                             email
@@ -209,8 +209,24 @@ exports.updateAddress = (req, res) => {
 }
 
 exports.updateStatus = (req, res) => {
-    res.status(200).json({
-        message: "Update user status"
+    const email = req.body.email;
+    const status = req.body.status;
+    const updateQuery = 'UPDATE status FROM users SET status = ? WHERE email = ?';
+    const args = [
+        status,
+        email
+    ];
+    database.query(updateQuery, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Status updated",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update status"
+            });
+        }
     });
 };
 
