@@ -3,7 +3,7 @@ const MYSQL_USERS_TABLE = `CREATE TABLE IF NOT EXISTS users(
     name TEXT NOT NULL,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(60) NOT NULL,
     avatar TEXT ,
     address VARCHAR(50),
     status VARCHAR(50),

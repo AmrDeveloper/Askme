@@ -1,4 +1,4 @@
-const databse = require('../../database/config');
+const database = require('../../database/config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -32,12 +32,13 @@ exports.getOneUser = (req, res) => {
 exports.userLogin = (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    const sqlQuery = `SELECT password FROM users WHERE email = ?`;
-    databse.query(sqlQuery, email, ((err, result, rows) => {
+    const sqlQuery = `SELECT password FROM users WHERE email = ? LIMIT 1`;
+    database.query(sqlQuery, email, ((err, result) => {
         if (err) throw err;
         if (result.length == 1) {
-            const hashedPassword = result[0]['password'];
-            bcrypt.compare(password, hashedPassword, (err, result) => {
+            const encryptedPass = result[0]['password'];
+            bcrypt.compare(password, encryptedPass,(err, result) => {
+                console.log(result)
                 if (err) throw err;
                 if (result) {
                     jwt.sign(email, process.env.JWT_KEY, (err, token) => {
@@ -62,18 +63,58 @@ exports.userLogin = (req, res) => {
 };
 
 exports.registerNewUser = (req, res) => {
+    const name = req.body.name;
     const email = req.body.email;
+    const username = req.body.username;
     const password = req.body.password;
-    bcrypt.hash(password, 10, (err, hash) => {
-        if (err) {
-            return res.status(500).json({
-                error: err
-            })
-        } else {
-            //Register User
-            res.status(200).json({
-                message: "POST one user to database"
+    const sqlQuery = `SELECT * FROM users WHERE email = ? or username = ? LIMIT 1`;
+    const info = [
+        email,
+        username
+    ];
+    database.query(sqlQuery, info, (err, result) => {
+        if (err) throw err;
+        const isValidMail = result.length == 0;
+        if (isValidMail) {
+            bcrypt.hash(password, 10, (error, hashedPassword) => {
+                if (error) {
+                    return res.status(500).json({
+                        error: error
+                    })
+                } else {
+
+                    const query = "INSERT INTO users(name, email, username , password) VALUES (?, ? , ? , ?)";
+                    const queryInfo = [
+                        name,
+                        email,
+                        username,
+                        hashedPassword
+                    ];
+                    database.query(query, queryInfo, (err, result) => {
+                        if (err) throw err;
+                        if (result['affectedRows'] == 1) {
+                            res.status(200).json({
+                                message: "Valid Register",
+                            });
+                        }
+                        else {
+                            res.status(401).json({
+                                message: "Invalid Register",
+                            });
+                        }
+                    });
+                }
             });
+        } else {
+            if (result[0]['email'] == email) {
+                return res.status(401).json({
+                    message: "Invalid Email"
+                })
+            } else {
+                return res.status(401).json({
+                    message: "Invalid username"
+                })
+            }
         }
     });
 };
