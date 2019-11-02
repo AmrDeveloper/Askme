@@ -120,14 +120,35 @@ exports.registerNewUser = (req, res) => {
 };
 
 exports.deleteAllUsers = (req, res) => {
-    res.status(200).json({
-        message: "Delete All users"
+    const query = "DELETE * FROM users";
+    database.query(query, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] > 0) {
+            res.status(status.OK).json({
+                message: "All is deleted",
+            });
+        } else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't Delete All"
+            });
+        }
     });
 };
 
 exports.deleteOneUser = (req, res) => {
-    res.status(200).json({
-        message: "Delete One user by id"
+    const email = req.body.email;
+    const query = "DELETE * FROM users WHERE email = ?";
+    database.query(query, email, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] > 0) {
+            res.status(status.OK).json({
+                message: "User is deleted",
+            });
+        } else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't Delete User"
+            });
+        }
     });
 };
 
@@ -174,12 +195,12 @@ exports.updateName = (req, res) => {
         email
     ];
     database.query(updateQuery, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Name changed",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't update Name"
             });
@@ -196,12 +217,12 @@ exports.updateUsername = (req, res) => {
         email
     ];
     database.query(updateQuery, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Username changed",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't update Username"
             });
@@ -218,12 +239,12 @@ exports.updateEmail = (req, res) => {
         email
     ];
     database.query(updateQuery, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Email changed",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't update Email"
             });
@@ -281,12 +302,12 @@ exports.updateAddress = (req, res) => {
         email
     ];
     database.query(updateQuery, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Address changed",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't update Address"
             });
@@ -325,12 +346,12 @@ exports.updateActive = (req, res) => {
         email
     ];
     database.query(updateQuery, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Active changed",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't update Active"
             });
