@@ -135,12 +135,12 @@ exports.deleteUserAvatar = (req, res) => {
     const email = req.body.email;
     const deleteQuery = 'UPDATE users SET avatar = "" WHERE email = ?';
     database.query(deleteQuery, email, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Avatar Deleted",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't Delete Avatar"
             });
@@ -152,12 +152,12 @@ exports.deleteUserStatus = (req, res) => {
     const email = req.body.email;
     const deleteQuery = 'UPDATE users SET status = "" WHERE email = ?';
     database.query(deleteQuery, email, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         if (result['affectedRows'] == 1) {
             res.status(status.OK).json({
                 message: "Status Deleted",
             });
-        }else{
+        } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Can't Delete Status"
             });
@@ -225,8 +225,24 @@ exports.updatePassword = (req, res) => {
 };
 
 exports.updateAddress = (req, res) => {
-    res.status(200).json({
-        message: "Update user Address"
+    const email = req.body.email;
+    const address = req.body.address;
+    const updateQuery = 'UPDATE users SET address = ? WHERE email = ?';
+    const args = [
+        address,
+        email
+    ];
+    database.query(updateQuery, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Address changed",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update Address"
+            });
+        }
     });
 }
 
