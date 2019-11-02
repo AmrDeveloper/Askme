@@ -166,20 +166,68 @@ exports.deleteUserStatus = (req, res) => {
 };
 
 exports.updateName = (req, res) => {
-    res.status(200).json({
-        message: "Update name"
+    const email = req.body.email;
+    const name = req.body.name;
+    const updateQuery = 'UPDATE users SET name = ? WHERE email = ?';
+    const args = [
+        name,
+        email
+    ];
+    database.query(updateQuery, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Name changed",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update Name"
+            });
+        }
     });
 };
 
 exports.updateUsername = (req, res) => {
-    res.status(200).json({
-        message: "Update username"
+    const email = req.body.email;
+    const username = req.body.username;
+    const updateQuery = 'UPDATE users SET username = ? WHERE email = ?';
+    const args = [
+        username,
+        email
+    ];
+    database.query(updateQuery, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Username changed",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update Username"
+            });
+        }
     });
 };
 
 exports.updateEmail = (req, res) => {
-    res.status(200).json({
-        message: "Update user email"
+    const email = req.body.email;
+    const newMail = req.body.newMail;
+    const updateQuery = 'UPDATE users SET email = ? WHERE email = ?';
+    const args = [
+        newMail,
+        email
+    ];
+    database.query(updateQuery, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Email changed",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update Email"
+            });
+        }
     });
 };
 
@@ -269,8 +317,24 @@ exports.updateStatus = (req, res) => {
 };
 
 exports.updateActive = (req, res) => {
-    res.status(200).json({
-        message: "Update user Active"
+    const email = req.body.email;
+    const active = req.body.active;
+    const updateQuery = 'UPDATE users SET active = ? WHERE email = ?';
+    const args = [
+        active,
+        email
+    ];
+    database.query(updateQuery, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Active changed",
+            });
+        }else{
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update Active"
+            });
+        }
     });
 };
 
