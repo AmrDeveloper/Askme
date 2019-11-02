@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require("body-parser");
+const morgan = require("morgan");
 const app = express();
+
+//Logging
+app.use(morgan("askme"));
 
 //Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
