@@ -20,14 +20,62 @@ exports.getAllUsers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    res.status(200).json({
-        message: "Get All users"
+    const query = `SELECT DISTINCT users.name, 
+                                   users.email,
+                                   users.username,
+                                   users.email,
+                                   users.avatar,
+                                   users.address,
+                                   users.status,
+                                   users.active,
+                                   (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
+                                   (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
+                                   (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
+                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers
+                  FROM users LIMIT ? OFFSET ?`;
+    const args = [
+        count,
+        offset,
+    ];
+    database.query(query, args, (err, result) => {
+        if (err) throw err;
+        res.status(200).json(result);
     });
 };
 
 exports.getOneUser = (req, res) => {
-    res.status(200).json({
-        message: "GET One user by id"
+    var offset = req.query.offset;
+    var count = req.query.count;
+    const email = req.params.id;
+    if (offset == null) {
+        offset = QUERY_DEFAULT_OFFSET;
+    }
+
+    if (count == null || count > QUERY_MAX_COUNT) {
+        count = QUERY_DEFAULT_COUNT;
+    }
+
+    const query = `SELECT DISTINCT users.name, 
+                                   users.email,
+                                   users.username,
+                                   users.email,
+                                   users.avatar,
+                                   users.address,
+                                   users.status,
+                                   users.active,
+                                   (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
+                                   (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
+                                   (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
+                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers
+                  FROM users WHERE email = ? LIMIT ? OFFSET ?`;
+    const args = [
+        email,
+        count,
+        offset
+    ];
+    database.query(query, args, (err, result) => {
+        if (err) throw err;
+        res.status(200).json(result);
     });
 };
 
