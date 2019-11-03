@@ -21,8 +21,8 @@ exports.getAllUsers = (req, res) => {
     }
 
     const query = `SELECT DISTINCT users.name, 
-                                   users.email,
                                    users.username,
+                                   users.email,
                                    users.email,
                                    users.avatar,
                                    users.address,
@@ -58,8 +58,8 @@ exports.getOneUser = (req, res) => {
     }
 
     const query = `SELECT DISTINCT users.name, 
-                                   users.email,
                                    users.username,
+                                   users.email,
                                    users.email,
                                    users.avatar,
                                    users.address,
