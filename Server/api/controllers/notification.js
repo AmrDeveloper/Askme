@@ -84,14 +84,14 @@ exports.getUnReadedNotification = (req, res) => {
 };
 
 exports.createNewNotification = (req, rse) => {
-    const userId = req.body.userId;
+    const id = req.body.id;
     const body = req.body.body;
     const action = req.body.action;
 
     const query = 'INSERT INTO notifications(toUser, body, action, opened) VALUES(?, ?, ?, ?)';
 
     const args = [
-        userId,
+        id,
         body,
         action,
         0
