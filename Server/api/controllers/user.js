@@ -2,6 +2,7 @@ const database = require('../../database/config');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const status = require('../../utilities/server_status');
+const fileSystem = require('fs');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -368,22 +369,34 @@ exports.updateUserAvatar = (req, res) => {
     } else {
         const avatarPath = file.path;
         const email = req.body.email;
-        const updateQuery = "UPDATE users SET avatar = ? WHERE email = ?";
-        const args = [
-            avatarPath,
-            email
-        ];
-        database.query(updateQuery, args, (err, result) => {
-            if(err) throw err;
-            if (result['affectedRows'] == 1) {
-                res.status(status.OK).json({
-                    message: "Avatar Updated",
-                });
-            } else {
-                res.status(status.BAD_REQUEST).json({
-                    message: "Can't update Avatar"
-                });
+        const updateQuery = "SELECT avatar FROM users WHERE email = ?";
+        database.query(updateQuery, email, (err, result) => {
+            if (err) throw err;
+            const oldAvatar = result[0]['avatar'];
+            if (oldAvatar != undefined || oldAvatar !== "null") {
+                try {
+                    fileSystem.unlinkSync(oldAvatar);
+                } catch (err) {
+                    console.error("Can't find file in storage/pictures Path");
+                }
             }
+            const updateQuery = "UPDATE users SET avatar = ? WHERE email = ?";
+            const args = [
+                avatarPath,
+                email
+            ];
+            database.query(updateQuery, args, (err, result) => {
+                if (err) throw err;
+                if (result['affectedRows'] == 1) {
+                    res.status(status.OK).json({
+                        message: "Avatar Updated",
+                    });
+                } else {
+                    res.status(status.BAD_REQUEST).json({
+                        message: "Can't update Avatar"
+                    });
+                }
+            });
         });
     }
 }
