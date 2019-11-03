@@ -44,6 +44,12 @@ connection.connect(error => {
         if (err) throw err;
         console.log("Notifications Table Done");
     });
+
+    //Create reactions table
+    connection.query(schema.MYSQL_REACTIONS_TABLE, (err, res) =>{
+        if (err) throw err;
+        console.log("Reactions Table Done");
+    });
 });
 
 module.exports = connection;
