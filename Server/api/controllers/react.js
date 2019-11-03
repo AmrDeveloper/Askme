@@ -20,7 +20,7 @@ exports.getPostReactions = (req, res) => {
     const sqlQuery = 'SELECT * FROM reactions WHEN questionId = ? LIMIT ? OFFSET ?';
     const args = [
         questionID,
-        coumt,
+        count,
         offset
     ];
     database.query(sqlQuery, args, (err, result) => {
