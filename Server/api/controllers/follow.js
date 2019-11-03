@@ -68,7 +68,7 @@ exports.unFollowUser = (req, res) => {
     const fromUser = req.body.fromUser;
     const toUser = req.body.toUser;
 
-    const query = 'DELETE * FROM follows WHERE fromUser = ? AND toUser = ?';
+    const query = 'DELETE FROM follows WHERE fromUser = ? AND toUser = ?';
 
     const args = [
         fromUser,

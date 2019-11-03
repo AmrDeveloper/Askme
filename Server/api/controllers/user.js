@@ -190,7 +190,7 @@ exports.deleteAllUsers = (req, res) => {
 
 exports.deleteOneUser = (req, res) => {
     const email = req.body.email;
-    const query = "DELETE * FROM users WHERE email = ?";
+    const query = "DELETE FROM users WHERE email = ?";
     database.query(query, email, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] > 0) {

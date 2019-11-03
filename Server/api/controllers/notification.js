@@ -112,7 +112,7 @@ exports.createNewNotification = (req, rse) => {
 };
 
 exports.deleteAllNotifications = (req, res) => {
-    const query = 'DELETE * FROM notifications';
+    const query = 'DELETE FROM notifications';
     database.query(query, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
@@ -129,7 +129,7 @@ exports.deleteAllNotifications = (req, res) => {
 
 exports.deleteNotificationByID = (req, res) => {
     const notificationID = req.body.id;
-    const query = 'DELETE * FROM notifications WHERE id = ?';
+    const query = 'DELETE FROM notifications WHERE id = ?';
     database.query(query, notificationID, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
