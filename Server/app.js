@@ -34,7 +34,7 @@ app.use(API_VERSION + 'users', userRoutes);
 app.use(API_VERSION + 'questions', questionRoutes);
 app.use(API_VERSION + 'answers', answerRoutes);
 app.use(API_VERSION + 'follows', followRoutes);
-app.use(API_VERSION + 'react', reactRoutes);
+app.use(API_VERSION + 'reacts', reactRoutes);
 app.use(API_VERSION + 'notifications', notificationRoutes);
 
 //Errors handle
