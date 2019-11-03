@@ -6,6 +6,8 @@ router.get('/', controller.getAllNotifications);
 
 router.get('/:id', controller.getNotificationByID);
 
+router.get('/new', controller.getUnReadedNotification);
+
 router.post('/', controller.createNewNotification);
 
 router.delete('/', controller.deleteAllNotifications);

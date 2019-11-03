@@ -12,11 +12,15 @@ exports.getNotificationByID = (req, res) => {
 
 };
 
+exports.getUnReadedNotification = (req, res) => {
+
+};
+
 exports.createNewNotification = (res, rse) => {
 
 };
 
-exports.deleteAllNotifications = (req,res) => {
+exports.deleteAllNotifications = (req, res) => {
 
 };
 
