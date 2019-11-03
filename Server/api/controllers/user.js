@@ -360,7 +360,30 @@ exports.updateActive = (req, res) => {
 };
 
 exports.updateUserAvatar = (req, res) => {
-    res.status(200).json({
-        message: "Update user Avatar"
-    });
+    const file = req.file;
+    if (file == undefined) {
+        res.status(status.BAD_REQUEST).json({
+            message: "Can't upload iamge"
+        });
+    } else {
+        const avatarPath = file.path;
+        const email = req.body.email;
+        const updateQuery = "UPDATE users SET avatar = ? WHERE email = ?";
+        const args = [
+            avatarPath,
+            email
+        ];
+        database.query(updateQuery, args, (err, result) => {
+            if(err) throw err;
+            if (result['affectedRows'] == 1) {
+                res.status(status.OK).json({
+                    message: "Avatar Updated",
+                });
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't update Avatar"
+                });
+            }
+        });
+    }
 }
