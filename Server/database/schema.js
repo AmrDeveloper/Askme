@@ -7,6 +7,7 @@ const MYSQL_USERS_TABLE = `CREATE TABLE IF NOT EXISTS users(
     avatar TEXT ,
     address VARCHAR(50),
     status VARCHAR(50),
+    joinDate VARCHAR(15),
     active CHAR(1),
     PRIMARY KEY(id),
     UNIQUE(email, username))`;
