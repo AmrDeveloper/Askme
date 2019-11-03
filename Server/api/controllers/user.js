@@ -155,12 +155,30 @@ exports.deleteOneUser = (req, res) => {
 
 exports.deleteUserAvatar = (req, res) => {
     const email = req.body.email;
-    const deleteQuery = 'UPDATE users SET avatar = "" WHERE email = ?';
-    database.query(deleteQuery, email, (err, result) => {
+    const updateQuery = "SELECT avatar FROM users WHERE email = ?";
+    database.query(updateQuery, email, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
-            res.status(status.OK).json({
-                message: "Avatar Deleted",
+            const oldAvatar = result[0]['avatar'];
+            if (oldAvatar != undefined || oldAvatar !== "null") {
+                try {
+                    fileSystem.unlinkSync(oldAvatar);
+                } catch (err) {
+                    console.error("Can't find file in storage/pictures Path");
+                }
+            }
+            const deleteQuery = 'UPDATE users SET avatar = "" WHERE email = ?';
+            database.query(deleteQuery, email, (err, result) => {
+                if (err) throw err;
+                if (result['affectedRows'] == 1) {
+                    res.status(status.OK).json({
+                        message: "Avatar Deleted",
+                    });
+                } else {
+                    res.status(status.BAD_REQUEST).json({
+                        message: "Can't Delete Avatar"
+                    });
+                }
             });
         } else {
             res.status(status.BAD_REQUEST).json({
