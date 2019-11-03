@@ -31,7 +31,8 @@ exports.getAllUsers = (req, res) => {
                                    (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
-                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers
+                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
+                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
                   FROM users LIMIT ? OFFSET ?`;
     const args = [
         count,
@@ -66,7 +67,8 @@ exports.getOneUser = (req, res) => {
                                    (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
-                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers
+                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
+                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
                   FROM users WHERE email = ? LIMIT ? OFFSET ?`;
     const args = [
         email,
