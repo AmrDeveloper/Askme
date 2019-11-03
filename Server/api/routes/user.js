@@ -1,5 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/user');
+const checkAuth = require('../../middleware/check_auth');
 const router = express.Router();
 const multer = require('multer');
 
@@ -24,7 +25,7 @@ const fileFilter = (req, file, callback) => {
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
-    limits: {fileSize: 1024 * 1024 * 5  }
+    limits: { fileSize: 1024 * 1024 * 5 }
 });
 
 router.get('/', controller.getAllUsers);
@@ -37,26 +38,26 @@ router.post('/register', controller.registerNewUser);
 
 router.delete('/', controller.deleteAllUsers);
 
-router.delete('/:id', controller.deleteOneUser);
+router.delete('/:id', checkAuth, controller.deleteOneUser);
 
-router.delete('/avatar', controller.deleteUserAvatar);
+router.delete('/avatar', checkAuth, controller.deleteUserAvatar);
 
-router.delete('/status', controller.deleteUserStatus);
+router.delete('/status', checkAuth, controller.deleteUserStatus);
 
-router.put('/name', controller.updateName);
+router.put('/name', checkAuth, controller.updateName);
 
-router.put('/username', controller.updateUsername);
+router.put('/username', checkAuth, controller.updateUsername);
 
-router.put('/email', controller.updateEmail);
+router.put('/email', checkAuth, controller.updateEmail);
 
-router.put('/password', controller.updatePassword);
+router.put('/password', checkAuth, controller.updatePassword);
 
-router.put('/address', controller.updateAddress);
+router.put('/address', checkAuth, controller.updateAddress);
 
-router.put('/status', controller.updateStatus)
+router.put('/status', checkAuth, controller.updateStatus)
 
-router.put('/active', controller.updateActive)
+router.put('/active', checkAuth, controller.updateActive)
 
-router.put('/avatar', upload.single('avatar'), controller.updateUserAvatar);
+router.put('/avatar', upload.single('avatar'), checkAuth, controller.updateUserAvatar);
 
 module.exports = router;
