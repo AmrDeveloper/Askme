@@ -1,13 +1,14 @@
 const express = require('express');
 const controller = require('../controllers/follow');
+const checkAuth = require('../../middleware/check_auth');
 const router = express.Router();
 
-router.get('/:id/following', controller.getUserFollowing);
+router.get('/following', controller.getUserFollowing);
 
-router.get('/:id/followers', controller.getUserFollowers);
+router.get('/followers', controller.getUserFollowers);
 
-router.post('/:id/follow', controller.followUser);
+router.post('/follow', controller.followUser);
 
-router.post('/:id/unfollow', controller.unFollowUser);
+router.post('/unfollow', controller.unFollowUser);
 
 module.exports = router;

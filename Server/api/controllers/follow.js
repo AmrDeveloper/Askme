@@ -1,4 +1,5 @@
 const database = require('../../database/config');
+const status = require('../../utilities/server_status');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -39,13 +40,52 @@ exports.getUserFollowers = (req, res) => {
 };
 
 exports.followUser = (req, res) => {
-    res.status(200).json({
-        message: "follow user"
-    })
+    const fromUser = req.body.fromUser;
+    const toUser = req.body.toUser;
+
+    const query = 'INSERT INTO follows(fromUser, toUser) VALUES(?, ?)';
+    const args = [
+        fromUser,
+        toUser
+    ];
+
+    database.query(query, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Follow is done",
+            });
+        }
+        else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Invalid Follow",
+            });
+        }
+    });
 };
 
 exports.unFollowUser = (req, res) => {
-    res.status(200).json({
-        message: "un follow user"
-    })
+    const fromUser = req.body.fromUser;
+    const toUser = req.body.toUser;
+
+    const query = 'DELETE * FROM follows WHERE fromUser = ? AND toUser = ?';
+
+    const args = [
+        fromUser,
+        toUser
+    ];
+
+    database.query(query, args, (err, result) => {
+        if(err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Un Follow is done",
+            });
+        }
+        else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Invalid un Follow",
+            });
+        }
+    });
 };
