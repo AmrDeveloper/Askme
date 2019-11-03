@@ -8,7 +8,7 @@ const QUERY_MAX_COUNT = 50;
 exports.getAllNotifications = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const id = req.params.id;
+    const id = req.body.id;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -17,13 +17,14 @@ exports.getAllNotifications = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
+    console.log(id)
     const query = `SELECT DISTINCT 
-                        n.id,
-                        n.body,
-                        n.createdDate
-                        n.action,
-                        n.opened
-                        FROM notifications n WHEN toUser = ? LIMIT ? OFFSET ?`;
+                        notifications.id,
+                        notifications.body,
+                        notifications.createdDate,
+                        notifications.action,
+                        notifications.opened
+                        FROM notifications WHERE toUser = ? LIMIT ? OFFSET ?`;
     const args = [
         id,
         count,
@@ -54,7 +55,7 @@ exports.getNotificationByID = (req, res) => {
 exports.getUnReadedNotification = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const id = req.params.id;
+    const id = req.body.id;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -64,12 +65,12 @@ exports.getUnReadedNotification = (req, res) => {
     }
 
     const query = `SELECT DISTINCT 
-                        n.id,
-                        n.body,
-                        n.createdDate
-                        n.action,
-                        n.opened
-                        FROM notifications n WHEN toUser = ? AND opened = 0 LIMIT ? OFFSET ?`;
+                        notifications.id,
+                        notifications.body,
+                        notifications.createdDate,
+                        notifications.action,
+                        notifications.opened
+                        FROM notifications WHERE toUser = ? AND opened = 0 LIMIT ? OFFSET ?`;
     const args = [
         id,
         count,

@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.get('/', controller.getAllNotifications);
 
-router.get('/:id', controller.getNotificationByID);
+router.get('/news', controller.getUnReadedNotification);
 
-router.get('/new', controller.getUnReadedNotification);
+router.get('/:id', controller.getNotificationByID);
 
 router.post('/', controller.createNewNotification);
 
