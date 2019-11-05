@@ -7,8 +7,8 @@ router.get('/following', controller.getUserFollowing);
 
 router.get('/followers', controller.getUserFollowers);
 
-router.post('/follow', controller.followUser);
+router.post('/follow', checkAuth, controller.followUser);
 
-router.post('/unfollow', controller.unFollowUser);
+router.post('/unfollow', checkAuth, controller.unFollowUser);
 
 module.exports = router;
