@@ -3,10 +3,10 @@ const controller = require('../controllers/react');
 const checkAuth = require('../../middleware/check_auth');
 const router = express.Router();
 
-router.get('/', checkAuth, controller.getPostReactions)
+router.get('/', controller.getPostReactions)
 
-router.post('/', checkAuth, controller.createNewReaction);
+router.post('/', controller.createNewReaction);
 
-router.delete('/', checkAuth, controller.deleteReaction);
+router.delete('/', controller.deleteReaction);
 
 module.exports = router;

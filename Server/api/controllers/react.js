@@ -17,12 +17,17 @@ exports.getPostReactions = (req, res) => {
     }
 
     const questionID = req.body.questionId;
-    const sqlQuery = 'SELECT * FROM reactions WHEN questionId = ? LIMIT ? OFFSET ?';
+    const sqlQuery = `SELECT DISTINCT 
+                     reactions.react
+                     (SELECT username, avatar FROM users WHERE users.id = fromUser),
+                     FROM reactions WHERE questionId = ? LIMIT ? OFFSET ?`;
+
     const args = [
         questionID,
         count,
         offset
     ];
+
     database.query(sqlQuery, args, (err, result) => {
         if (err) throw err;
         res.status(status.OK).json(result);
