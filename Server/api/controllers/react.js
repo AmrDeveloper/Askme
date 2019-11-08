@@ -16,14 +16,14 @@ exports.getPostReactions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const questionID = req.body.questionId;
+    const answerId = req.body.answerId;
     const sqlQuery = `SELECT DISTINCT 
                      reactions.react
                      (SELECT username, avatar FROM users WHERE users.id = fromUser),
-                     FROM reactions WHERE questionId = ? LIMIT ? OFFSET ?`;
+                     FROM reactions WHERE answerId = ? LIMIT ? OFFSET ?`;
 
     const args = [
-        questionID,
+        answerId,
         count,
         offset
     ];
@@ -36,14 +36,14 @@ exports.getPostReactions = (req, res) => {
 
 exports.createNewReaction = (req, res) => {
     const userId = req.body.userId;
-    const questionId = req.body.questionId;
+    const answerId = req.body.answerId;
     const reactionsType = req.body.reactionsType;
 
-    const sqlQuery = 'INSERT INTO reactions (fromUser, questionId, react) VALUES (?, ?, ?)';
+    const sqlQuery = 'INSERT INTO reactions (fromUser, answerId, react) VALUES (?, ?, ?)';
 
     const args = [
         userId,
-        questionId,
+        answerId,
         reactionsType
     ];
 
@@ -64,13 +64,13 @@ exports.createNewReaction = (req, res) => {
 
 exports.deleteReaction = (req, res) => {
     const userId = req.body.userId;
-    const questionId = req.body.questionId;
+    const answerId = req.body.answerId;
 
-    const sqlQuery = 'DELETE FROM reactions WHERE fromUser = ? AND questionId = ?';
+    const sqlQuery = 'DELETE FROM reactions WHERE fromUser = ? AND answerId = ?';
 
     const args = [
         userId,
-        questionId
+        answerId
     ];
 
     database.query(sqlQuery, args, (err, result) => {

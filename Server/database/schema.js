@@ -59,11 +59,11 @@ const MYSQL_REACTIONS_TABLE = `CREATE TABLE IF NOT EXISTS reactions(
     react CHAR(1),
     fromUser INTEGER,
     toUser INTEGER,
-    questionId INTEGER,
+    answerId INTEGER,
     PRIMARY KEY(id),
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(fromUser) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY(questionId) REFERENCES questions(id) ON DELETE CASCADE)`;
+    FOREIGN KEY(answerId) REFERENCES answers(id) ON DELETE CASCADE)`;
    
 exports.MYSQL_USERS_TABLE = MYSQL_USERS_TABLE;
 
