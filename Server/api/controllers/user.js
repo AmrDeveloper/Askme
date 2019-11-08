@@ -48,7 +48,7 @@ exports.getAllUsers = (req, res) => {
 exports.getOneUser = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const email = req.params.id;
+    const username = req.params.username;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -71,9 +71,9 @@ exports.getOneUser = (req, res) => {
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
                                    (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
-                  FROM users WHERE email = ? LIMIT ? OFFSET ?`;
+                  FROM users WHERE username = ? LIMIT ? OFFSET ?`;
     const args = [
-        email,
+        username,
         count,
         offset
     ];

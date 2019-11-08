@@ -30,7 +30,7 @@ const upload = multer({
 
 router.get('/', controller.getAllUsers);
 
-router.get('/:email', controller.getOneUser);
+router.get('/:username', controller.getOneUser);
 
 router.post('/login', controller.userLogin);
 
