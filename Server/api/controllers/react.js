@@ -29,10 +29,56 @@ exports.getPostReactions = (req, res) => {
     });
 };
 
-exports.createNewReact = (req, res) => {
-     
+exports.createNewReaction = (req, res) => {
+    const userId = req.body.userId;
+    const questionId = req.body.questionId;
+    const reactionsType = req.body.reactionsType;
+
+    const sqlQuery = 'INSERT INTO reactions (fromUser, questionId, react) VALUES (?, ?, ?)';
+
+    const args = [
+        userId,
+        questionId,
+        reactionsType
+    ];
+
+    database.query(sqlQuery, args, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Reaction is Created",
+            });
+        }
+        else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Reaction not Created",
+            });
+        }
+    });
 };
 
-exports.deleteReact = (req, res) => {
+exports.deleteReaction = (req, res) => {
+    const userId = req.body.userId;
+    const questionId = req.body.questionId;
 
+    const sqlQuery = 'DELETE FROM reactions WHERE fromUser = ? AND questionId = ?';
+
+    const args = [
+        userId,
+        questionId
+    ];
+
+    database.query(sqlQuery, args, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Reaction is deleted",
+            });
+        }
+        else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Reaction not deleted",
+            });
+        }
+    });
 };
