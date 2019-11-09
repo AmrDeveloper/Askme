@@ -72,8 +72,24 @@ exports.getAskedQuestions = (req, res) => {
 };
 
 exports.getQuestionByID = (req, res) => {
-    res.status(200).json({
-        message: "Get Question by ID"
+    const id = req.params.id;
+
+    const query = `SELECT DISTINCT title,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
+                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
+                                   anonymous,
+                                   askedDate
+                                   FROM questions WHERE id = ? LIMIT 1`;
+
+    database.query(query, id, (err, result) => {
+        if (err) throw err;
+        if (result.length == 1) {
+            res.status(status.OK).json(result[0]);
+        } else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Invalid ID"
+            });
+        }
     });
 };
 
@@ -107,7 +123,21 @@ exports.createNewQuestion = (req, res) => {
 };
 
 exports.deleteQuestion = (req, res) => {
-    res.status(200).json({
-        message: "Delete Question by ID"
+    const id = req.params.id;
+
+    const query = `DELETE FROM questions WHERE id = ?`;
+
+    database.query(query, id, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] == 1) {
+            res.status(status.OK).json({
+                message: "Question deleted",
+            });
+        }
+        else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Question not deleted",
+            });
+        }
     });
 };
