@@ -1,5 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/question');
+const checkAuth = require('../../middleware/check_auth');
 const router = express.Router();
 
 router.get('/:id/questions', controller.getUserQuestions);

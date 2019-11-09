@@ -18,6 +18,7 @@ const MYSQL_QUESTIONS_TABLE = `CREATE TABLE IF NOT EXISTS questions(
     toUser INTEGER,
     fromUser INTEGER,
     askedDate VARCHAR(50),
+    anonymous CHAR(1),
     PRIMARY KEY(id),
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(fromUser) REFERENCES users(id) ON DELETE CASCADE)`;
