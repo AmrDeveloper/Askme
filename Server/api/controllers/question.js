@@ -41,6 +41,7 @@ exports.getUserQuestions = (req, res) => {
 exports.getAskedQuestions = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
+    const userId = req.params.id;
 
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
@@ -50,8 +51,23 @@ exports.getAskedQuestions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    res.status(200).json({
-        message: "Get all question sended by user"
+    const query = `SELECT DISTINCT id,
+                                   title,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS fromUser,
+                                   (SELECT avatar FROM users WHERE toUser = users.id) AS avatar,
+                                   askedDate,
+                                   anonymous
+                                   FROM questions WHERE fromUser = ? LIMIT ? OFFSET ?`;
+
+    const args = [
+        userId,
+        count,
+        offset
+    ];
+
+    database.query(query, args, (err, result) => {
+        if (err) throw err;
+        res.status(status.OK).json(result);
     });
 };
 
