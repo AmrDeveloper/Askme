@@ -53,7 +53,7 @@ exports.getAskedQuestions = (req, res) => {
 
     const query = `SELECT DISTINCT id,
                                    title,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS fromUser,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS avatar,
                                    askedDate,
                                    anonymous
