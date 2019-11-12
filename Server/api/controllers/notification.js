@@ -1,5 +1,5 @@
-const database = require('../../database/config');
 const status = require('../../utilities/server_status');
+const notificationModel = require('../models/notification');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -17,39 +17,28 @@ exports.getAllNotifications = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    console.log(id)
-    const query = `SELECT DISTINCT 
-                        notifications.id,
-                        notifications.body,
-                        notifications.createdDate,
-                        notifications.action,
-                        notifications.opened
-                        FROM notifications WHERE toUser = ? LIMIT ? OFFSET ?`;
-    const args = [
-        id,
-        count,
-        offset
-    ];
 
-    database.query(query, args, (err, result) => {
-        if (err) throw err;
-        res.status(status.OK).json(result);
-    })
+    const args = [id, count, offset];
+
+    notificationModel.getUserNotifications(args)
+        .then(result => {
+            res.status(status.OK).json(result);
+        })
 };
 
 exports.getNotificationByID = (req, res) => {
     const notificationID = req.body.id;
-    const query = 'SELECT * FROM notifications WHERE id = ? LIMIT 1';
-    database.query(query, notificationID, (err, result) => {
-        if (err) throw err;
-        if (result.length == 1) {
-            res.status(status.OK).json(result[0]);
-        } else {
-            res.status(status.BAD_REQUEST).json({
-                message: "Can't find notification with this id"
-            });
-        }
-    });
+
+    notificationModel.getNotificationByID(notificationID)
+        .then(result => {
+            if (result[0]) {
+                res.status(status.OK).json(result[1][0]);
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't find notification with this id"
+                });
+            }
+        })
 };
 
 exports.getUnReadedNotification = (req, res) => {
@@ -64,23 +53,11 @@ exports.getUnReadedNotification = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const query = `SELECT DISTINCT 
-                        notifications.id,
-                        notifications.body,
-                        notifications.createdDate,
-                        notifications.action,
-                        notifications.opened
-                        FROM notifications WHERE toUser = ? AND opened = 0 LIMIT ? OFFSET ?`;
-    const args = [
-        id,
-        count,
-        offset
-    ];
+    const args = [id, count, offset];
 
-    database.query(query, args, (err, result) => {
-        if (err) throw err;
+    notificationModel.getNewNotifications(args).then(result => {
         res.status(status.OK).json(result);
-    });
+    })
 };
 
 exports.createNewNotification = (req, rse) => {
@@ -88,75 +65,67 @@ exports.createNewNotification = (req, rse) => {
     const body = req.body.body;
     const action = req.body.action;
 
-    const query = 'INSERT INTO notifications(toUser, body, action, opened) VALUES(?, ?, ?, ?)';
+    const args = [id, body, action, 0];
 
-    const args = [
-        id,
-        body,
-        action,
-        0
-    ];
-
-    database.query(query, args, (err, result) => {
-        if(err) throw err;
-        if (result['affectedRows'] == 1) {
-            rse.status(status.OK).json({
-                message: "Notification Created"
-            })
-        } else {
-            res.status(status.BAD_REQUEST).json({
-                message: "Can't Created notification"
-            })
-        }
-    });
+    notificationModel.createNewNotification(args)
+        .then(state => {
+            if (state) {
+                rse.status(status.OK).json({
+                    message: "Notification Created"
+                });
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't Created notification"
+                });
+            }
+        });
 };
 
 exports.deleteAllNotifications = (req, res) => {
-    const query = 'DELETE FROM notifications';
-    database.query(query, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
-            res.status(status.OK).json({
-                message: "Notifications Deleted"
-            })
-        } else {
-            res.status(status.BAD_REQUEST).json({
-                message: "Can't Deleted notifications"
-            })
-        }
-    });
+    notificationModel.deleteAllNotifications()
+        .then(state => {
+            if (state1) {
+                res.status(status.OK).json({
+                    message: "Notifications Deleted"
+                });
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't Deleted notifications"
+                });
+            }
+        });
 };
 
 exports.deleteNotificationByID = (req, res) => {
     const notificationID = req.body.id;
-    const query = 'DELETE FROM notifications WHERE id = ?';
-    database.query(query, notificationID, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
-            res.status(status.OK).json({
-                message: "Notification Deleted"
-            })
-        } else {
-            res.status(status.BAD_REQUEST).json({
-                message: "Can't Deleted notification with this id"
-            })
-        }
-    });
+
+    notificationModel.deleteNotificationByID(notificationID)
+        .then(state => {
+            if (state) {
+                res.status(status.OK).json({
+                    message: "Notification Deleted"
+                });
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't Deleted notification with this id"
+                });
+            }
+        });
 };
 
 exports.makeNotificationReaded = (req, res) => {
     const notificationID = req.body.id;
-    const query = 'UPDATE notifications SET opened = 1 WHERE id = ?';
-    database.query(query, notificationID, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
-            res.status(status.OK).json({
-                message: "Notification Readed"
-            })
-        } else {
-            res.status(status.BAD_REQUEST).json({
-                message: "Can't update notification with this id"
-            })
-        }
-    });
+
+    notificationModel.makeNotificationReaded(notificationID)
+        .then(state => {
+            if (state) {
+                res.status(status.OK).json({
+                    message: "Notification Readed"
+                });
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't update notification with this id"
+                });
+            }
+        });
 };
