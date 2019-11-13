@@ -1,5 +1,5 @@
-const database = require('../../database/config');
 const status = require('../../utilities/server_status');
+const reactModel = require('../models/react');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -17,19 +17,10 @@ exports.getPostReactions = (req, res) => {
     }
 
     const answerId = req.body.answerId;
-    const sqlQuery = `SELECT DISTINCT 
-                     reactions.react
-                     (SELECT username, avatar FROM users WHERE users.id = fromUser),
-                     FROM reactions WHERE answerId = ? LIMIT ? OFFSET ?`;
 
-    const args = [
-        answerId,
-        count,
-        offset
-    ];
+    const args = [answerId, count, offset];
 
-    database.query(sqlQuery, args, (err, result) => {
-        if (err) throw err;
+    reactModel.getPostReactions(args).then(result => {
         res.status(status.OK).json(result);
     });
 };
@@ -39,17 +30,10 @@ exports.createNewReaction = (req, res) => {
     const answerId = req.body.answerId;
     const reactionsType = req.body.reactionsType;
 
-    const sqlQuery = 'INSERT INTO reactions (fromUser, answerId, react) VALUES (?, ?, ?)';
+    const args = [userId, answerId, reactionsType];
 
-    const args = [
-        userId,
-        answerId,
-        reactionsType
-    ];
-
-    database.query(sqlQuery, args, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
+    reactModel.createNewReaction(args).then(state => {
+        if (state) {
             res.status(status.OK).json({
                 message: "Reaction is Created",
             });
@@ -66,16 +50,10 @@ exports.deleteReaction = (req, res) => {
     const userId = req.body.userId;
     const answerId = req.body.answerId;
 
-    const sqlQuery = 'DELETE FROM reactions WHERE fromUser = ? AND answerId = ?';
+    const args = [userId, answerId];
 
-    const args = [
-        userId,
-        answerId
-    ];
-
-    database.query(sqlQuery, args, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
+    reactModel.deleteReaction(args).then(state => {
+        if (state) {
             res.status(status.OK).json({
                 message: "Reaction is deleted",
             });
