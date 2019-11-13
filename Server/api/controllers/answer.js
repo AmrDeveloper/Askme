@@ -28,7 +28,7 @@ exports.createNewAnswer = (req, res) => {
     const fromUser = req.body.fromUser;
     const currentDate = new Date().toISOString();
 
-    const query = 'INSERT INTO answers(body, questionId, toUser, fromUser, answerdDate) VALUES (?, ?, ?, ?)';
+    const query = 'INSERT INTO answers(body, questionId, toUser, fromUser, answerdDate) VALUES (?, ?, ?, ?, ?)';
 
     const args = [
         body,

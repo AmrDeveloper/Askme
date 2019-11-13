@@ -100,7 +100,7 @@ exports.createNewQuestion = (req, res) => {
     const anonymous = req.body.anonymous;
     const currentDate = new Date().toISOString();
 
-    const query = `INSERT INTO questions (title, toUser, fromUser, anonymous, askedDate) VALUES (?, ?, ?, ?)`;
+    const query = `INSERT INTO questions (title, toUser, fromUser, anonymous, askedDate) VALUES (?, ?, ?, ?, ?)`;
 
     const args = [
         title,

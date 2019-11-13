@@ -43,7 +43,7 @@ exports.getNewNotifications = args => new Promise((resolve, reject) => {
 });
 
 exports.createNewNotification = args => new Promise((resolve, reject) => {
-    const query = 'INSERT INTO notifications(toUser, body, action, opened) VALUES(?, ?, ?, ?)';
+    const query = 'INSERT INTO notifications(toUser, body, action, opened, createdDate) VALUES(?, ?, ?, ?, ?)';
 
     database.query(query, args, (err, result) => {
         if (err) throw err;

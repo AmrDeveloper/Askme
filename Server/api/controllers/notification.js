@@ -23,7 +23,7 @@ exports.getAllNotifications = (req, res) => {
     notificationModel.getUserNotifications(args)
         .then(result => {
             res.status(status.OK).json(result);
-        })
+        });
 };
 
 exports.getNotificationByID = (req, res) => {
@@ -38,7 +38,7 @@ exports.getNotificationByID = (req, res) => {
                     message: "Can't find notification with this id"
                 });
             }
-        })
+        });
 };
 
 exports.getUnReadedNotification = (req, res) => {
@@ -64,8 +64,9 @@ exports.createNewNotification = (req, rse) => {
     const id = req.body.id;
     const body = req.body.body;
     const action = req.body.action;
+    const currentDate = new Date().toISOString();
 
-    const args = [id, body, action, 0];
+    const args = [id, body, action, 0, currentDate];
 
     notificationModel.createNewNotification(args)
         .then(state => {
