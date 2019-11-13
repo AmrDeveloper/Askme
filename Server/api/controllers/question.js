@@ -98,14 +98,16 @@ exports.createNewQuestion = (req, res) => {
     const toUser = req.body.toUser;
     const fromUser = req.body.fromUser;
     const anonymous = req.body.anonymous;
+    const currentDate = new Date().toISOString();
 
-    const query = `INSERT INTO questions (title, toUser, fromUser, anonymous) VALUES (?, ?, ?, ?)`;
+    const query = `INSERT INTO questions (title, toUser, fromUser, anonymous, askedDate) VALUES (?, ?, ?, ?)`;
 
     const args = [
         title,
         toUser,
         fromUser,
-        anonymous
+        anonymous,
+        currentDate
     ];
 
     database.query(query, args, (err, result) => {
