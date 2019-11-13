@@ -26,14 +26,16 @@ exports.createNewAnswer = (req, res) => {
     const questionId = req.body.questionId;
     const toUser = req.body.toUser;
     const fromUser = req.body.fromUser;
+    const currentDate = new Date().toISOString();
 
-    const query = 'INSERT INTO answers(body, questionId, toUser, fromUser) VALUES (?, ?, ?, ?)';
+    const query = 'INSERT INTO answers(body, questionId, toUser, fromUser, answerdDate) VALUES (?, ?, ?, ?)';
 
     const args = [
         body,
         questionId,
         toUser,
-        fromUser
+        fromUser,
+        currentDate
     ];
 
     database.query(query, args, (err, result) => {
