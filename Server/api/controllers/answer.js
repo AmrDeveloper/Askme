@@ -1,5 +1,5 @@
-const database = require('../../database/config');
 const status = require('../../utilities/server_status');
+const answerModel = require('../models/answer');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -7,16 +7,7 @@ const QUERY_MAX_COUNT = 50;
 
 exports.getAnswerByID = (req, res) => {
     const id = req.params.id;
-
-    const query = `SELECT DISTINCT id,
-                                   body,
-                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
-                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS avatar,
-                                   answerdDate
-                                   FROM answers WHERE questionId = ?`;
-
-    database.query(query, id, (err, result) => {
-        if (err) throw err;
+    answerModel.getAnswerByID(id).then(result => {
         res.status(status.OK).json(result);
     });
 };
@@ -28,8 +19,6 @@ exports.createNewAnswer = (req, res) => {
     const fromUser = req.body.fromUser;
     const currentDate = new Date().toISOString();
 
-    const query = 'INSERT INTO answers(body, questionId, toUser, fromUser, answerdDate) VALUES (?, ?, ?, ?, ?)';
-
     const args = [
         body,
         questionId,
@@ -38,28 +27,24 @@ exports.createNewAnswer = (req, res) => {
         currentDate
     ];
 
-    database.query(query, args, (err, result) => {
-       if(err) throw err;
-       if (result['affectedRows'] > 0) {
-        res.status(status.OK).json({
-            message: "answer is created",
-        });
-    } else {
-        res.status(status.BAD_REQUEST).json({
-            message: "Can't create answer"
-        });
-    }
+    answerModel.createNewAnswer(args).then(state => {
+        if (state) {
+            res.status(status.OK).json({
+                message: "answer is created",
+            });
+        } else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't create answer"
+            });
+        }
     });
 };
 
 exports.deleteAnswer = (req, res) => {
     const id = req.params.id;
 
-    const query = 'DELETE FROM answers WHERE id = ?';
-
-    database.query(query, id, (err, result => {
-        if (err) throw err;
-        if (result['affectedRows'] > 0) {
+    answerModel.deleteAnswer(id).then(state => {
+        if (state0) {
             res.status(status.OK).json({
                 message: "answer is deleted",
             });
@@ -68,5 +53,5 @@ exports.deleteAnswer = (req, res) => {
                 message: "Can't Delete answer"
             });
         }
-    }));
+    });
 };
