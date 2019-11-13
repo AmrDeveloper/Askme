@@ -6,6 +6,7 @@ const MYSQL_USERS_TABLE = `CREATE TABLE IF NOT EXISTS users(
     password VARCHAR(60) NOT NULL,
     avatar TEXT,
     wallpaper TEXT,
+    color TEXT,
     address VARCHAR(50),
     status VARCHAR(50),
     joinDate VARCHAR(15),
