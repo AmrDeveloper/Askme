@@ -3,18 +3,18 @@ const controller = require('../controllers/notification');
 const checkAuth = require('../../middleware/check_auth');
 const router = express.Router();
 
-router.get('/', controller.getAllNotifications);
+router.get('/', checkAuth, controller.getAllNotifications);
 
-router.get('/news', controller.getUnReadedNotification);
+router.get('/news', checkAuth, controller.getUnReadedNotification);
 
-router.get('/:id', controller.getNotificationByID);
+router.get('/:id', checkAuth, controller.getNotificationByID);
 
-router.post('/', controller.createNewNotification);
+router.post('/', checkAuth, controller.createNewNotification);
 
-router.delete('/', controller.deleteAllNotifications);
+router.delete('/', checkAuth, controller.deleteAllNotifications);
 
-router.delete('/:id', controller.deleteNotificationByID);
+router.delete('/:id', checkAuth, controller.deleteNotificationByID);
 
-router.put('/readed', controller.makeNotificationReaded);
+router.put('/readed', checkAuth, controller.makeNotificationReaded);
 
 module.exports = router;
