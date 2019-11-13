@@ -29,10 +29,12 @@ exports.registerNewUser = (req, res) => {
     const email = req.body.email;
     const username = req.body.username;
     const password = req.body.password;
+    const currentDate = new Date().toISOString();
 
     const info = [
         email,
-        username
+        username,
+        currentDate
     ];
 
     userModel.isAvailableInfo(info).then(result => {

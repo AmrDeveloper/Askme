@@ -28,7 +28,7 @@ exports.login = (email, password) => new Promise((resolve, reject) => {
 });
 
 exports.register = user => new Promise((resolve, reject) => {
-    const query = "INSERT INTO users(name, email, username , password) VALUES (?, ? , ? , ?)";
+    const query = "INSERT INTO users(name, email, username , password, joinDate) VALUES (?, ? , ? , ?)";
     database.query(query, user, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
