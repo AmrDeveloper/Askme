@@ -1,48 +1,8 @@
 const express = require('express');
 const controller = require('../controllers/user');
 const checkAuth = require('../../middleware/check_auth');
+const multerController = require('../../utilities/multer_setup');
 const router = express.Router();
-const multer = require('multer');
-
-const avatarStorage = multer.diskStorage({
-    destination: (request, file, callback) => {
-        callback(null, 'storage/avatar/');
-    },
-    filename: (request, file, callback) => {
-        const avatarName = Date.now() + file.originalname;
-        callback(null, avatarName);
-    }
-});
-
-const wallpaperStorage = multer.diskStorage({
-    destination: (request, file, callback) => {
-        callback(null, 'storage/wallpaper/');
-    },
-    filename: (request, file, callback) => {
-        const avatarName = Date.now() + file.originalname;
-        callback(null, avatarName);
-    }
-});
-
-const fileFilter = (req, file, callback) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        callback(null, true);
-    } else {
-        callback(null, false);
-    }
-};
-
-const uploadAvatar = multer({
-    storage: avatarStorage,
-    fileFilter: fileFilter,
-    limits: { fileSize: 1024 * 1024 * 5 }
-});
-
-const uploadWallpaper = multer({
-    storage: wallpaperStorage,
-    fileFilter: fileFilter,
-    limits: { fileSize: 1024 * 1024 * 5 }
-});
 
 router.get('/', controller.getAllUsers);
 
@@ -76,8 +36,8 @@ router.put('/status', checkAuth, controller.updateStatus);
 
 router.put('/active', checkAuth, controller.updateActive);
 
-router.put('/avatar', uploadAvatar.single('avatar'), checkAuth, controller.updateUserAvatar);
+router.put('/avatar', multerController.single('avatar'), checkAuth, controller.updateUserAvatar);
 
-router.put('/wallpaper', uploadWallpaper.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
+router.put('/wallpaper', multerController.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
 
 module.exports = router;
