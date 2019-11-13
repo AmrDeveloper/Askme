@@ -5,7 +5,8 @@ const app = express();
 
 //Middleware
 app.use(morgan("logging"));
-app.use('/storage/pictures', express.static('storage/pictures'));
+app.use('/storage/avatar', express.static('storage/avatar'));
+app.use('/storage/wallpaper', express.static('storage/wallpaper'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use((req, res, next) => {

@@ -352,6 +352,7 @@ exports.updateUserAvatar = (req, res) => {
     } else {
         const avatarPath = file.path;
         const email = req.body.email;
+        console.log("Email : " + email);
 
         userModel.getUserAvatar(email).then(oldAvatar => {
             if (oldAvatar != undefined || oldAvatar !== "null") {
@@ -364,7 +365,7 @@ exports.updateUserAvatar = (req, res) => {
 
             const args = [avatarPath, email];
 
-            userModel.deleteUserAvatar(args).then(state => {
+            userModel.updateUserAvatar(args).then(state => {
                 if (state) {
                     res.status(status.OK).json({
                         message: "Avatar Updated",
