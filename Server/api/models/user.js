@@ -88,7 +88,7 @@ exports.getOneUser = args => new Promise((resolve, reject) => {
 
 exports.getUserPassword = args => new Promise((resolve, reject) => {
     const sqlQuery = 'SELECT password FROM users WHERE email = ?';
-    database.query(sqlQuery, email, (err, result) => {
+    database.query(sqlQuery, args, (err, result) => {
         if (err) throw err;
         if (result.length == 1) {
             const oldPassword = result[0]['password'];
@@ -284,6 +284,18 @@ exports.updateUserAvatar =  args => new Promise((resolve, reject) => {
 exports.updateUserWallpaper = args => new Promise((resolve, reject) => {
     const updateQuery = "UPDATE users SET wallpaper = ? WHERE email = ?";
 
+    database.query(updateQuery, args, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] == 1) {
+            resolve(true);
+        } else {
+            resolve(false);
+        }
+    });
+});
+
+exports.updateUserColor = args => new Promise((resolve, reject) => {
+    const updateQuery = "UPDATE users SET color = ? WHERE email = ?";
     database.query(updateQuery, args, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {

@@ -40,4 +40,6 @@ router.put('/avatar', multerController.single('avatar'), checkAuth, controller.u
 
 router.put('/wallpaper', multerController.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
 
+router.put('/color', checkAuth, controller.updateUserColor);
+
 module.exports = router;

@@ -437,3 +437,18 @@ exports.updateUserWallpaper = (req, res) => {
         });
     }
 };
+
+exports.updateUserColor= (req, res) => {
+    const email = req.body.email;
+    userModel.updateUserColor(email).then(state => {
+        if (state) {
+            res.status(status.OK).json({
+                message: "Color changed",
+            });
+        } else {
+            res.status(status.BAD_REQUEST).json({
+                message: "Can't update Color"
+            });
+        }
+    });
+};
