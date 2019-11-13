@@ -108,6 +108,15 @@ exports.getUserAvatar = args => new Promise((resolve, reject) => {
     });
 });
 
+exports.getUserWallpaper = args => new Promise((resolve, reject) => {
+    const updateQuery = "SELECT wallpaper FROM users WHERE email = ?";
+    database.query(updateQuery, args, (err, result) => {
+        if (err) throw err;
+        const oldAvatar = result[0]['wallpaper'];
+        resolve(oldAvatar);
+    });
+});
+
 exports.deleteUsers = () => new Promise((resolve, reject) => {
     const query = "DELETE * FROM users";
     database.query(query, (err, result) => {
@@ -146,6 +155,18 @@ exports.deleteUserStatus = args => new Promise((resolve, reject) => {
 
 exports.deleteUserAvatar =  args => new Promise((resolve, reject) => {
     const deleteQuery = 'UPDATE users SET avatar = "" WHERE email = ?';
+    database.query(deleteQuery, args, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] == 1) {
+            resolve(true);
+        } else {
+            resolve(false);
+        }
+    });
+});
+
+exports.deleteUserWallpaper = args => new Promise((resolve, reject) => {
+    const deleteQuery = 'UPDATE users SET wallpaper = "" WHERE email = ?';
     database.query(deleteQuery, args, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
@@ -249,6 +270,19 @@ exports.updateActive = args => new Promise((resolve, reject) => {
 
 exports.updateUserAvatar =  args => new Promise((resolve, reject) => {
     const updateQuery = "UPDATE users SET avatar = ? WHERE email = ?";
+
+    database.query(updateQuery, args, (err, result) => {
+        if (err) throw err;
+        if (result['affectedRows'] == 1) {
+            resolve(true);
+        } else {
+            resolve(false);
+        }
+    });
+});
+
+exports.updateUserWallpaper = args => new Promise((resolve, reject) => {
+    const updateQuery = "UPDATE users SET wallpaper = ? WHERE email = ?";
 
     database.query(updateQuery, args, (err, result) => {
         if (err) throw err;

@@ -4,9 +4,19 @@ const checkAuth = require('../../middleware/check_auth');
 const router = express.Router();
 const multer = require('multer');
 
-const storage = multer.diskStorage({
+const avatarStorage = multer.diskStorage({
     destination: (request, file, callback) => {
         callback(null, 'storage/avatar/');
+    },
+    filename: (request, file, callback) => {
+        const avatarName = Date.now() + file.originalname;
+        callback(null, avatarName);
+    }
+});
+
+const wallpaperStorage = multer.diskStorage({
+    destination: (request, file, callback) => {
+        callback(null, 'storage/wallpaper/');
     },
     filename: (request, file, callback) => {
         const avatarName = Date.now() + file.originalname;
@@ -22,8 +32,14 @@ const fileFilter = (req, file, callback) => {
     }
 };
 
-const upload = multer({
-    storage: storage,
+const uploadAvatar = multer({
+    storage: avatarStorage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 1024 * 1024 * 5 }
+});
+
+const uploadWallpaper = multer({
+    storage: wallpaperStorage,
     fileFilter: fileFilter,
     limits: { fileSize: 1024 * 1024 * 5 }
 });
@@ -40,6 +56,8 @@ router.delete('/', controller.deleteAllUsers);
 
 router.delete('/avatar', controller.deleteUserAvatar);
 
+router.delete('/wallpaper', controller.deleteUserWallpaper);
+
 router.delete('/status', checkAuth, controller.deleteUserStatus);
 
 router.delete('/:id', checkAuth, controller.deleteOneUser);
@@ -54,10 +72,12 @@ router.put('/password', checkAuth, controller.updatePassword);
 
 router.put('/address', checkAuth, controller.updateAddress);
 
-router.put('/status', checkAuth, controller.updateStatus)
+router.put('/status', checkAuth, controller.updateStatus);
 
-router.put('/active', checkAuth, controller.updateActive)
+router.put('/active', checkAuth, controller.updateActive);
 
-router.put('/avatar', upload.single('avatar'), checkAuth, controller.updateUserAvatar);
+router.put('/avatar', uploadAvatar.single('avatar'), checkAuth, controller.updateUserAvatar);
+
+router.put('/wallpaper', uploadWallpaper.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
 
 module.exports = router;

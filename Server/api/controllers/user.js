@@ -156,11 +156,34 @@ exports.deleteUserAvatar = (req, res) => {
                 });
             } else {
                 res.status(status.BAD_REQUEST).json({
-                    message: "Can't Delete Avatar 1"
+                    message: "Can't Delete Avatar"
                 });
             }
         })
+    });
+};
 
+exports.deleteUserWallpaper = (req, res) => {
+    const email = req.body.email;
+    userModel.getUserWallpaper(email).then(oldWallpaper => {
+        if (oldWallpaper != undefined || oldWallpaper !== "null") {
+            try {
+                fileSystem.unlinkSync(oldWallpaper);
+            } catch (err) {
+                console.error("Can't find file in storage/pictures Path");
+            }
+        }
+        userModel.deleteUserWallpaper(email).then(state => {
+            if (state) {
+                res.status(status.OK).json({
+                    message: "Wallpaper Deleted",
+                });
+            } else {
+                res.status(status.BAD_REQUEST).json({
+                    message: "Can't Delete Wallpaper"
+                });
+            }
+        });
     });
 };
 
@@ -352,7 +375,6 @@ exports.updateUserAvatar = (req, res) => {
     } else {
         const avatarPath = file.path;
         const email = req.body.email;
-        console.log("Email : " + email);
 
         userModel.getUserAvatar(email).then(oldAvatar => {
             if (oldAvatar != undefined || oldAvatar !== "null") {
@@ -378,4 +400,40 @@ exports.updateUserAvatar = (req, res) => {
             })
         });
     }
-}
+};
+
+exports.updateUserWallpaper = (req, res) => {
+    const file = req.file;
+    if (file == undefined) {
+        res.status(status.BAD_REQUEST).json({
+            message: "Can't upload iamge"
+        });
+    } else {
+        const wallpaperPath = file.path;
+        const email = req.body.email;
+
+        userModel.getUserWallpaper(email).then(oldWallpaper => {
+            if (oldWallpaper != undefined || oldWallpaper !== "null") {
+                try {
+                    fileSystem.unlinkSync(oldWallpaper);
+                } catch (err) {
+                    console.error("Can't find file in storage/pictures Path");
+                }
+            }
+
+            const args = [wallpaperPath, email];
+
+            userModel.updateUserWallpaper(args).then(state => {
+                if (state) {
+                    res.status(status.OK).json({
+                        message: "Wallpaper Updated",
+                    });
+                } else {
+                    res.status(status.BAD_REQUEST).json({
+                        message: "Can't update Wallpaper"
+                    });
+                }
+            })
+        });
+    }
+};
