@@ -1,5 +1,5 @@
-const database = require('../../database/config');
 const status = require('../../utilities/server_status');
+const questionModel = require('../models/question');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -18,22 +18,9 @@ exports.getUserQuestions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const query = `SELECT DISTINCT id,
-                                   title,
-                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
-                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS avatar,
-                                   askedDate,
-                                   anonymous
-                                   FROM questions WHERE toUser = ? LIMIT ? OFFSET ?`;
+    const args = [userId, count, offset];
 
-    const args = [
-        userId,
-        count,
-        offset
-    ];
-
-    database.query(query, args, (err, result) => {
-        if (err) throw err;
+    questionModel.getUserQuestions(args).then(result => {
         res.status(status.OK).json(result);
     });
 };
@@ -51,22 +38,9 @@ exports.getAskedQuestions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const query = `SELECT DISTINCT id,
-                                   title,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
-                                   (SELECT avatar FROM users WHERE toUser = users.id) AS avatar,
-                                   askedDate,
-                                   anonymous
-                                   FROM questions WHERE fromUser = ? LIMIT ? OFFSET ?`;
+    const args = [userId, count, offset];
 
-    const args = [
-        userId,
-        count,
-        offset
-    ];
-
-    database.query(query, args, (err, result) => {
-        if (err) throw err;
+    questionModel.getAskedQuestions(args).then(result => {
         res.status(status.OK).json(result);
     });
 };
@@ -74,16 +48,8 @@ exports.getAskedQuestions = (req, res) => {
 exports.getQuestionByID = (req, res) => {
     const id = req.params.id;
 
-    const query = `SELECT DISTINCT title,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
-                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
-                                   anonymous,
-                                   askedDate
-                                   FROM questions WHERE id = ? LIMIT 1`;
-
-    database.query(query, id, (err, result) => {
-        if (err) throw err;
-        if (result.length == 1) {
+    questionModel.getQuestionByID(id).then(state => {
+        if (state) {
             res.status(status.OK).json(result[0]);
         } else {
             res.status(status.BAD_REQUEST).json({
@@ -100,8 +66,6 @@ exports.createNewQuestion = (req, res) => {
     const anonymous = req.body.anonymous;
     const currentDate = new Date().toISOString();
 
-    const query = `INSERT INTO questions (title, toUser, fromUser, anonymous, askedDate) VALUES (?, ?, ?, ?, ?)`;
-
     const args = [
         title,
         toUser,
@@ -110,9 +74,9 @@ exports.createNewQuestion = (req, res) => {
         currentDate
     ];
 
-    database.query(query, args, (err, result) => {
-        if (result['affectedRows'] == 1) {
-            const questionId = result.insertId;
+    questionModel.createNewQuestion(args).then(result => {
+        if (result[0]) {
+            const questionId = result[];
             
             res.status(status.OK).json({
                 message: "Question created",
@@ -129,11 +93,8 @@ exports.createNewQuestion = (req, res) => {
 exports.deleteQuestion = (req, res) => {
     const id = req.params.id;
 
-    const query = `DELETE FROM questions WHERE id = ?`;
-
-    database.query(query, id, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
+    questionModel.deleteQuestion(id).then(state => {
+        if (state) {
             res.status(status.OK).json({
                 message: "Question deleted",
             });

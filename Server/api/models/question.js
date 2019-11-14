@@ -54,7 +54,7 @@ exports.createNewQuestion = args => new Promise((resolve, reject) => {
     database.query(query, args, (err, result) => {
         if(err) throw err;
         const isValidRequest = result['affectedRows'] == 1;
-        resolve(isValidRequest);
+        resolve([isValidRequest, result.insertId]);
     });
 });
 
