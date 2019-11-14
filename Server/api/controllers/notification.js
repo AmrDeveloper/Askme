@@ -85,7 +85,7 @@ exports.createNewNotification = (req, rse) => {
 exports.deleteAllNotifications = (req, res) => {
     notificationModel.deleteAllNotifications()
         .then(state => {
-            if (state1) {
+            if (state) {
                 res.status(status.OK).json({
                     message: "Notifications Deleted"
                 });

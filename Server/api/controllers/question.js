@@ -1,5 +1,6 @@
 const status = require('../../utilities/server_status');
 const questionModel = require('../models/question');
+const notificationModel = require('../models/notification');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -77,7 +78,7 @@ exports.createNewQuestion = (req, res) => {
     questionModel.createNewQuestion(args).then(result => {
         if (result[0]) {
             const questionId = result[1];
-            
+            notificationModel.createQuestionNotification(toUser, questionId);
             res.status(status.OK).json({
                 message: "Question created",
             });
