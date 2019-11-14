@@ -2,12 +2,13 @@ const database = require('../../database/config');
 
 exports.getUserNotifications = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT 
-    notifications.id,
-    notifications.body,
-    notifications.createdDate,
-    notifications.action,
-    notifications.opened
-    FROM notifications WHERE toUser = ? LIMIT ? OFFSET ?`;
+                            notifications.id,
+                            notifications.body,
+                            notifications.createdDate,
+                            notifications.action,
+                            notifications.data,
+                            notifications.opened
+                            FROM notifications WHERE toUser = ? LIMIT ? OFFSET ?`;
 
     database.query(query, args, (err, result) => {
         if (err) throw err;
@@ -33,6 +34,7 @@ exports.getNewNotifications = args => new Promise((resolve, reject) => {
                         notifications.body,
                         notifications.createdDate,
                         notifications.action,
+                        notifications.data,
                         notifications.opened
                         FROM notifications WHERE toUser = ? AND opened = 0 LIMIT ? OFFSET ?`;
 
@@ -50,6 +52,28 @@ exports.createNewNotification = args => new Promise((resolve, reject) => {
         const isValidCreation = (result['affectedRows'] == 1);
         resolve(isValidCreation);
     });
+});
+
+exports.createFollowNotification = toUser => new Promise((resolve, reject) => {
+    const args = [
+        toUser,
+        "One user start following you",
+        "follow",
+        0,
+        new Date().toISOString()
+    ];
+    this.createNewNotification(args).then(state => resolve(state));
+});
+
+exports.createQuestionNotification = (toUser, questionId) => new Promise((resolve, reject) => {
+    const args = [
+        toUser,
+        "You have new Question check it now",
+        "question",
+        0,
+        new Date().toISOString()
+    ];
+    this.createNewNotification(args).then(state => resolve(state));
 });
 
 exports.deleteAllNotifications = () => new Promise((resolve, reject) => {

@@ -54,6 +54,7 @@ const MYSQL_NOTIFICATIONS_TABLE = `CREATE TABLE IF NOT EXISTS notifications(
     createdDate VARCHAR(50),
     action VARCHAR(50),
     opened CHAR(1),
+    data TEXT,
     PRIMARY KEY(id),
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE)`;
 

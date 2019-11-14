@@ -112,6 +112,8 @@ exports.createNewQuestion = (req, res) => {
 
     database.query(query, args, (err, result) => {
         if (result['affectedRows'] == 1) {
+            const questionId = result.insertId;
+            
             res.status(status.OK).json({
                 message: "Question created",
             });
