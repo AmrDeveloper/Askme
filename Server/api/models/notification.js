@@ -45,7 +45,7 @@ exports.getNewNotifications = args => new Promise((resolve, reject) => {
 });
 
 exports.createNewNotification = args => new Promise((resolve, reject) => {
-    const query = 'INSERT INTO notifications(toUser, body, action, opened, createdDate) VALUES(?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO notifications(toUser, body, action, opened, createdDate, data) VALUES(?, ?, ?, ?, ?, ?)';
 
     database.query(query, args, (err, result) => {
         if (err) throw err;
@@ -60,6 +60,7 @@ exports.createFollowNotification = toUser => new Promise((resolve, reject) => {
         "One user start following you",
         "follow",
         0,
+        "",
         new Date().toISOString()
     ];
     this.createNewNotification(args).then(state => resolve(state));
@@ -71,6 +72,7 @@ exports.createQuestionNotification = (toUser, questionId) => new Promise((resolv
         "You have new Question check it now",
         "question",
         0,
+        questionId.toString(),
         new Date().toISOString()
     ];
     this.createNewNotification(args).then(state => resolve(state));

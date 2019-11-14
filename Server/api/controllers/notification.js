@@ -66,7 +66,7 @@ exports.createNewNotification = (req, rse) => {
     const action = req.body.action;
     const currentDate = new Date().toISOString();
 
-    const args = [toUser, body, action, 0, currentDate];
+    const args = [toUser, body, action, 0, currentDate, ""];
 
     notificationModel.createNewNotification(args)
         .then(state => {
