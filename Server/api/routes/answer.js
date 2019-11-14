@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/:id', controller.getAnswerByID);
 
-router.post('/', controller.createNewAnswer);
+router.post('/', checkAuth, controller.createNewAnswer);
 
-router.delete('/:id', controller.deleteAnswer);
+router.delete('/:id', checkAuth, controller.deleteAnswer);
 
 module.exports = router;
