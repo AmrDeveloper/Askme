@@ -52,6 +52,18 @@ exports.createNewNotification = args => new Promise((resolve, reject) => {
     });
 });
 
+exports.createFollowNotification = (toUser, fromUser) => new Promise((resolve, reject) => {
+    const args = [
+       toUser,
+       fromUser + " start follow you",
+       "follow",
+       0,
+       new Date().toISOString()
+    ];
+
+    this.createNewNotification(args).then(state => resolve(state));
+});
+
 exports.deleteAllNotifications = () => new Promise((resolve, reject) => {
     const query = 'DELETE FROM notifications';
     database.query(query, (err, result) => {

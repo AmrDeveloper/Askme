@@ -61,19 +61,19 @@ exports.getUnReadedNotification = (req, res) => {
 };
 
 exports.createNewNotification = (req, rse) => {
-    const id = req.body.id;
+    const toUser = req.body.toUser;
     const body = req.body.body;
     const action = req.body.action;
     const currentDate = new Date().toISOString();
 
-    const args = [id, body, action, 0, currentDate];
+    const args = [toUser, body, action, 0, currentDate];
 
     notificationModel.createNewNotification(args)
         .then(state => {
             if (state) {
                 rse.status(status.OK).json({
                     message: "Notification Created"
-                });
+                }); 
             } else {
                 res.status(status.BAD_REQUEST).json({
                     message: "Can't Created notification"

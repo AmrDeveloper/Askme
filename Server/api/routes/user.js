@@ -36,9 +36,9 @@ router.put('/status', checkAuth, controller.updateStatus);
 
 router.put('/active', checkAuth, controller.updateActive);
 
-router.put('/avatar', multerController.single('avatar'), checkAuth, controller.updateUserAvatar);
+router.put('/avatar', multerController.uploadAvatar.single('avatar'), checkAuth, controller.updateUserAvatar);
 
-router.put('/wallpaper', multerController.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
+router.put('/wallpaper', multerController.uploadWallpaper.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
 
 router.put('/color', checkAuth, controller.updateUserColor);
 

@@ -1,5 +1,6 @@
 const status = require('../../utilities/server_status');
 const followModel = require('../models/follow');
+const notificationModel = require('../models/notification');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -21,7 +22,7 @@ exports.getUserFollowing = (req, res) => {
     const args = [id, count, offset];
 
     followModel.getUserFollowing(args).then(result => {
-        res.status(status.OK).json(result); 
+        res.status(status.OK).json(result);
     });
 };
 
@@ -51,11 +52,14 @@ exports.followUser = (req, res) => {
 
     const args = [fromUser, toUser];
 
+    console.log(args)
+
     followModel.followUser(args).then(state => {
         if (state) {
+            notificationModel.createFollowNotification(toUser, fromUser);
             res.status(status.OK).json({
                 message: "Follow is done",
-            });
+            }); 
         }
         else {
             res.status(status.BAD_REQUEST).json({
@@ -70,7 +74,7 @@ exports.unFollowUser = (req, res) => {
     const toUser = req.body.toUser;
 
     const args = [fromUser, toUser];
-        
+
     followModel.unfollowUser(args).then(state => {
         if (state) {
             res.status(status.OK).json({
