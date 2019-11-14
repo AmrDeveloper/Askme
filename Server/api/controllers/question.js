@@ -76,7 +76,7 @@ exports.createNewQuestion = (req, res) => {
 
     questionModel.createNewQuestion(args).then(result => {
         if (result[0]) {
-            const questionId = result[];
+            const questionId = result[1];
             
             res.status(status.OK).json({
                 message: "Question created",
