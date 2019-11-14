@@ -54,13 +54,13 @@ exports.createNewNotification = args => new Promise((resolve, reject) => {
     });
 });
 
-exports.createFollowNotification = toUser => new Promise((resolve, reject) => {
+exports.createFollowNotification = (toUser, fromUser) => new Promise((resolve, reject) => {
     const args = [
         toUser,
         "One user start following you",
         "follow",
         0,
-        "",
+        fromUser.toString(),
         new Date().toISOString()
     ];
     this.createNewNotification(args).then(state => resolve(state));
