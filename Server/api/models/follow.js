@@ -20,7 +20,7 @@ exports.getUserFollowing = args => new Promise((resolve, reject) => {
                     WHERE follows.fromUser = ? LIMIT ? OFFSET ?`;
 
     database.query(query, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         resolve(result);
     });
 });
@@ -45,7 +45,7 @@ exports.getUserFollowers = args => new Promise((resolve, reject) => {
                     WHERE follows.toUser = ? LIMIT ? OFFSET ?`;
 
     database.query(query, args, (err, result) => {
-        if(err) throw err;
+        if (err) throw err;
         resolve(result);
     });
 });
@@ -54,7 +54,13 @@ exports.followUser = args => new Promise((resolve, reject) => {
     const query = 'INSERT INTO follows(fromUser, toUser) VALUES(?, ?)';
 
     database.query(query, args, (err, result) => {
-        if (err) throw err;
+        if (err) {
+            if (err.code == 'ER_DUP_ENTRY' || err.errno == 1062) {
+                resolve(false);
+                return;
+            }
+            throw err;
+        }
         const isValidRequest = result['affectedRows'] == 1;
         resolve(isValidRequest);
     });
