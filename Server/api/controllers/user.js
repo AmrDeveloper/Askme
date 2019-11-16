@@ -7,7 +7,7 @@ const QUERY_DEFAULT_COUNT = 25;
 const QUERY_MAX_COUNT = 50;
 
 exports.userLogin = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const password = req.body.password;
 
     userModel.login(email, password).then((result) => {
@@ -32,8 +32,8 @@ exports.registerNewUser = (req, res) => {
     const currentDate = new Date().toISOString();
 
     const info = [
-        email,
-        username,
+        email.toLowerCase(),
+        username.toLowerCase(),
         currentDate
     ];
 
@@ -95,7 +95,7 @@ exports.getAllUsers = (req, res) => {
 exports.getOneUser = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const username = req.params.username;
+    const username = req.params.username.toLowerCase();
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -124,7 +124,7 @@ exports.deleteAllUsers = (req, res) => {
 };
 
 exports.deleteOneUser = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     userModel.deleteOneUser(email).then(state => {
         if (state) {
             res.status(status.OK).json({
@@ -139,7 +139,7 @@ exports.deleteOneUser = (req, res) => {
 };
 
 exports.deleteUserAvatar = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
 
     userModel.getUserAvatar(email).then(oldAvatar => {
         if (oldAvatar != undefined || oldAvatar !== "null") {
@@ -164,7 +164,7 @@ exports.deleteUserAvatar = (req, res) => {
 };
 
 exports.deleteUserWallpaper = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     userModel.getUserWallpaper(email).then(oldWallpaper => {
         if (oldWallpaper != undefined || oldWallpaper !== "null") {
             try {
@@ -188,7 +188,7 @@ exports.deleteUserWallpaper = (req, res) => {
 };
 
 exports.deleteUserStatus = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
 
     userModel.deleteUserStatus(email).then(state => {
         if (state) {
@@ -204,8 +204,8 @@ exports.deleteUserStatus = (req, res) => {
 };
 
 exports.updateName = (req, res) => {
-    const email = req.body.email;
-    const name = req.body.name;
+    const email = req.body.email.toLowerCase();
+    const name = req.body.name.toLowerCase();
     const args = [
         name,
         email
@@ -225,8 +225,8 @@ exports.updateName = (req, res) => {
 };
 
 exports.updateUsername = (req, res) => {
-    const email = req.body.email;
-    const username = req.body.username;
+    const email = req.body.email.toLowerCase();
+    const username = req.body.username.toLowerCase();
     const args = [
         username,
         email
@@ -246,8 +246,8 @@ exports.updateUsername = (req, res) => {
 };
 
 exports.updateEmail = (req, res) => {
-    const email = req.body.email;
-    const newMail = req.body.newMail;
+    const email = req.body.email.toLowerCase();
+    const newMail = req.body.newMail.toLowerCase();
     const args = [
         newMail,
         email
@@ -267,7 +267,7 @@ exports.updateEmail = (req, res) => {
 };
 
 exports.updatePassword = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const password = req.body.password;
 
     userModel.getUserPassword(email).then(result => {
@@ -304,7 +304,7 @@ exports.updatePassword = (req, res) => {
 };
 
 exports.updateAddress = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const address = req.body.address;
     const args = [
         address,
@@ -325,7 +325,7 @@ exports.updateAddress = (req, res) => {
 }
 
 exports.updateStatus = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const status = req.body.status;
     const args = [
         status,
@@ -346,7 +346,7 @@ exports.updateStatus = (req, res) => {
 };
 
 exports.updateActive = (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const active = req.body.active;
     const args = [
         active,
