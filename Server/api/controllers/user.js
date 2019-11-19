@@ -374,7 +374,7 @@ exports.updateUserAvatar = (req, res) => {
         });
     } else {
         const avatarPath = file.path;
-        const email = req.body.email;
+        const email = req.body.email.toLowerCase();
 
         userModel.getUserAvatar(email).then(oldAvatar => {
             if (oldAvatar != undefined || oldAvatar !== "null") {
@@ -410,7 +410,7 @@ exports.updateUserWallpaper = (req, res) => {
         });
     } else {
         const wallpaperPath = file.path;
-        const email = req.body.email;
+        const email = req.body.email.toLowerCase();
 
         userModel.getUserWallpaper(email).then(oldWallpaper => {
             if (oldWallpaper != undefined || oldWallpaper !== "null") {
@@ -439,7 +439,7 @@ exports.updateUserWallpaper = (req, res) => {
 };
 
 exports.updateUserColor= (req, res) => {
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     userModel.updateUserColor(email).then(state => {
         if (state) {
             res.status(status.OK).json({
