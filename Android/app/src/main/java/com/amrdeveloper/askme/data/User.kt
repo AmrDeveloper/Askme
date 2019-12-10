@@ -5,44 +5,44 @@ import com.google.gson.annotations.SerializedName
 data class User(
 
     @SerializedName("name")
-    private val name: String,
+    val name: String,
 
     @SerializedName("username")
-    private val username: String,
+    val username: String,
 
     @SerializedName("email")
-    private val email: String,
+    val email: String,
 
     @SerializedName("avatar")
-    private val avatarUrl: String,
+    val avatarUrl: String,
 
     @SerializedName("wallpaper")
-    private val wallpaperUrl: String,
+    val wallpaperUrl: String,
 
     @SerializedName("address")
-    private val address: String,
+    val address: String,
 
     @SerializedName("status")
-    private val status: String,
+    val status: String,
 
     @SerializedName("active")
-    private val active: String,
+    val active: String,
 
     @SerializedName("joinDate")
-    private val joinDate: String,
+    val joinDate: String,
 
     @SerializedName("following")
-    private val followingNum: Int,
+    val followingNum: Int,
 
     @SerializedName("followers")
-    private val followersNum: Int,
+    val followersNum: Int,
 
     @SerializedName("questions")
-    private val questionsNum: Int,
+    val questionsNum: Int,
 
     @SerializedName("answers")
-    private val answersNum: Int,
+    val answersNum: Int,
 
     @SerializedName("likes")
-    private val reactionsNum: Int
+    val reactionsNum: Int
 )
