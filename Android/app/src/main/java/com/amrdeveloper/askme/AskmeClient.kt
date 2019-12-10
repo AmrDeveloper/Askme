@@ -7,8 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object AskmeClient {
 
     private val retrofit: Retrofit
-    private lateinit var askmeClient: AskmeClient
-    private val ASKME_BASE_URL = "http://localhost:3000/v1/"
+    private const val ASKME_BASE_URL = "http://192.168.1.2:3000/v1/"
 
     init {
         retrofit = Retrofit.Builder()

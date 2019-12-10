@@ -6,11 +6,8 @@ import retrofit2.http.POST
 
 interface AskmeService {
 
-    @POST("/login")
+    @POST("users/login")
     fun login(
-        @Body email: String,
-        @Body password: String
+        @Body userInfo: String
     ): Call<String>
-
-    
 }

@@ -1,7 +1,8 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.amrdeveloper.askme.R
 
 class MainActivity : AppCompatActivity() {
 

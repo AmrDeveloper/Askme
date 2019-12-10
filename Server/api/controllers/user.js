@@ -12,12 +12,9 @@ exports.userLogin = (req, res) => {
 
     userModel.login(email, password).then((result) => {
         if (result[0]) {
-            res.status(status.OK).json({
-                message: "Valid Login",
-                token: result[1]
-            });
+            res.status(status.OK).send(result[1])
         } else {
-            res.status(statis.BAD_REQUEST).json({
+            res.status(status.BAD_REQUEST).json({
                 message: "Invalid Login",
             });
         }
