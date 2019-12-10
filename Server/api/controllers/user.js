@@ -93,8 +93,6 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getOneUser = (req, res) => {
-    var offset = req.query.offset;
-    var count = req.query.count;
     const username = req.params.username.toLowerCase();
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
@@ -104,8 +102,8 @@ exports.getOneUser = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [username, count, offset];
-    console.log("username")
+    const args = [username];
+    
     userModel.getOneUser(args).then(result => { res.status(status.OK).json(result); })
 };
 
