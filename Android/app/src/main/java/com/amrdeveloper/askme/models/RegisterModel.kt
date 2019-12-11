@@ -17,7 +17,7 @@ class RegisterModel : RegisterContract.Model {
     }
 
     override fun makeRegisterRequest(registerData: RegisterData) {
-        AskmeClient.getAskmeService().register(registerData).enqueue(object :
+        AskmeClient.getUserService().register(registerData).enqueue(object :
             retrofit2.Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 EventBus.getDefault().post(RegisterFailureEvent("Invalid Request"))

@@ -8,4 +8,8 @@
     <string name="password">Password</string>
     <string name="login_message">You have account? Login</string>
     <string name="register_message">No account yet? Create one</string>
+    <string name="home">Home</string>
+    <string name="notifications">Notifications</string>
+    <string name="people">People</string>
+    <string name="profile">Profile</string>
 </resources>

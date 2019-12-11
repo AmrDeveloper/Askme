@@ -7,13 +7,13 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface AskmeService {
+interface UserService {
 
-    @POST("v1/users/login")
+    @POST("users/login")
     @Headers("content-type: application/json")
     fun login(@Body body: LoginData): Call<String>
 
-    @POST("v1/users/register")
+    @POST("users/register")
     @Headers("content-type: application/json")
     fun register(@Body body: RegisterData) : Call<String>
 }

@@ -21,7 +21,7 @@ class LoginModel : LoginContract.Model {
     }
 
     override fun makeLoginRequest(loginData: LoginData) {
-        AskmeClient.getAskmeService().login(loginData)
+        AskmeClient.getUserService().login(loginData)
             .enqueue(object : Callback<String> {
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     EventBus.getDefault().post(LoginFailureEvent())
