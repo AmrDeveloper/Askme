@@ -16,11 +16,11 @@ class LoginPresenter(
         model = LoginModel()
     }
 
-    override fun makeLoginRequest(email: String, pass: String) {
-        val isValidInfo : Boolean = model.isValidInformation(email, pass)
+    override fun makeLoginRequest(loginData: LoginData) {
+        val isValidInfo : Boolean = model.isValidInformation(loginData)
         if(isValidInfo){
             view.showProgressBar()
-            model.makeLoginRequest(LoginData(email, pass))
+            model.makeLoginRequest(loginData)
         }else{
             view.hideProgressBar()
             EventBus.getDefault().post(LoginFailureEvent())

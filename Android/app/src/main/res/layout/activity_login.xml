@@ -55,5 +55,11 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/register_message" />
+
+        <ProgressBar
+            android:id="@+id/loadingBar"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </layout>

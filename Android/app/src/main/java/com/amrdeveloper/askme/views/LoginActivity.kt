@@ -9,10 +9,13 @@ import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.contracts.LoginContract
 import com.amrdeveloper.askme.presenters.LoginPresenter
 import com.amrdeveloper.askme.R
+import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.databinding.ActivityLoginBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent
+import com.amrdeveloper.extensions.extensions.gone
+import com.amrdeveloper.extensions.extensions.show
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.greenrobot.eventbus.EventBus
@@ -27,13 +30,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         mLoginActivity = DataBindingUtil.setContentView(this, R.layout.activity_login)
         mLoginPresenter = LoginPresenter(this)
 
-        /*
-        loginButton.setOnClickListener { view ->
-            val email: String = emailEditText.text.toString()
-            val password: String = passwordEdit.text.toString()
-            mLoginPresenter.makeLoginRequest(email, password)
+        mLoginActivity.loginButton.setOnClickListener {
+            val email: String = mLoginActivity.emailInputEdit.text.toString()
+            val password: String = mLoginActivity.passInputEdit.text.toString()
+            val loginData = LoginData(email, password)
+            mLoginPresenter.makeLoginRequest(loginData)
         }
-         */
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -51,11 +53,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun showProgressBar() {
-
+        mLoginActivity.loadingBar.show()
     }
 
     override fun hideProgressBar() {
-
+        mLoginActivity.loadingBar.gone()
     }
 
     override fun onStart() {

@@ -5,7 +5,7 @@ import com.amrdeveloper.askme.data.LoginData
 interface LoginContract {
 
     interface Model{
-        fun isValidInformation(email : String, pass : String) : Boolean
+        fun isValidInformation(loginData: LoginData) : Boolean
         fun makeLoginRequest(loginData: LoginData)
     }
 
@@ -15,6 +15,6 @@ interface LoginContract {
     }
 
     interface Presenter{
-        fun makeLoginRequest(email : String, pass : String)
+        fun makeLoginRequest(loginData: LoginData)
     }
 }
