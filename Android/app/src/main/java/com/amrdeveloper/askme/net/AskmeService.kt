@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.net
 
+import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.data.LoginData
 import retrofit2.Call
 import retrofit2.http.Body
@@ -11,4 +12,8 @@ interface AskmeService {
     @POST("v1/users/login")
     @Headers("content-type: application/json")
     fun login(@Body body: LoginData): Call<String>
+
+    @POST("v1/users/register")
+    @Headers("content-type: application/json")
+    fun register(@Body body: RegisterData) : Call<String>
 }

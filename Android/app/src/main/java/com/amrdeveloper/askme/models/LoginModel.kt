@@ -32,7 +32,5 @@ class LoginModel : LoginContract.Model {
                     }
                 }
             })
-
-
     }
 }

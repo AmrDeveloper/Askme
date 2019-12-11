@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.widget.Toast
@@ -14,13 +13,13 @@ import com.amrdeveloper.askme.databinding.ActivityLoginBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent
+import com.amrdeveloper.askme.utils.AskmeActivity
 import com.amrdeveloper.extensions.extensions.gone
 import com.amrdeveloper.extensions.extensions.show
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import org.greenrobot.eventbus.EventBus
 
-class LoginActivity : AppCompatActivity(), LoginContract.View {
+class LoginActivity : AskmeActivity(), LoginContract.View {
 
     private lateinit var mLoginActivity: ActivityLoginBinding
     private lateinit var mLoginPresenter: LoginPresenter
@@ -65,19 +64,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         mLoginActivity.loadingBar.gone()
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
+    override fun onNetworkOn() {
+
     }
 
-    override fun onPause() {
-        super.onPause()
-        EventBus.getDefault().unregister(this)
-    }
+    override fun onNetworkOff() {
 
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 }
 

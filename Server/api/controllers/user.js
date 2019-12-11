@@ -23,7 +23,7 @@ exports.userLogin = (req, res) => {
 
 exports.registerNewUser = (req, res) => {
     const name = req.body.name;
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase();
     const username = req.body.username;
     const password = req.body.password;
     const currentDate = new Date().toISOString();
@@ -47,26 +47,18 @@ exports.registerNewUser = (req, res) => {
 
                 userModel.register(user).then(state => {
                     if (state) {
-                        res.status(status.OK).json({
-                            message: "Valid Register",
-                        });
+                        res.status(status.OK).send("Valid Register");      
                     } else {
-                        res.status(status.BAD_REQUEST).json({
-                            message: "Invalid Register",
-                        });
+                        res.status(status.BAD_REQUEST).send("Invalid Register");
                     }
                 });
             });
         } else {
             const current = result[1][0]['email'];
             if (current == email) {
-                return res.status(status.BAD_REQUEST).json({
-                    message: "Invalid Email"
-                })
+                return res.status(status.BAD_REQUEST).send("Invalid Email");
             } else {
-                return res.status(status.BAD_REQUEST).json({
-                    message: "Invalid username"
-                })
+                return res.status(status.BAD_REQUEST).send("Invalid username")
             }
         }
     });
