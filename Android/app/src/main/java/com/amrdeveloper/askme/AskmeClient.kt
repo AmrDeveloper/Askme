@@ -8,7 +8,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 object AskmeClient {
 
     private val retrofit: Retrofit
-    private const val ASKME_BASE_URL = "http://192.168.1.2:3000/"
+    private const val ASKME_BASE_URL = "http://192.168.1.2:3000/v1/"
 
     init {
         retrofit = Retrofit.Builder()
