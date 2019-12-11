@@ -36,10 +36,17 @@ ext.picassoVersion = '2.71828'
 ext.retrofitVersion = '2.5.0'
 ext.eventBusVersion = '3.1.1'
 
+ext.cardVersion = '1.0.0'
+ext.recyclerVersion = '1.1.0'
+ext.materialVersion = '1.2.0-alpha02'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation "androidx.recyclerview:recyclerview:$recyclerVersion"
+    implementation "androidx.cardview:cardview:$cardVersion"
+    implementation "com.google.android.material:material:$materialVersion"
     implementation 'androidx.core:core-ktx:1.1.0'
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

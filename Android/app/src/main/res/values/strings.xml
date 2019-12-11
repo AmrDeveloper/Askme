@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Askme</string>
+    <string name="login">Login</string>
+    <string name="e_email">E-email</string>
+    <string name="password">Password</string>
+    <string name="register_message">No account yet? Create one</string>
 </resources>
