@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.presenters
 
-import com.amrdeveloper.askme.LoginData
+import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.contracts.LoginContract
 import com.amrdeveloper.askme.models.LoginModel
 import com.amrdeveloper.askme.events.LoginFailureEvent

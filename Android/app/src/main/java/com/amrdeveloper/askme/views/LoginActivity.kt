@@ -10,7 +10,7 @@ import android.widget.Toast
 import com.amrdeveloper.askme.contracts.LoginContract
 import com.amrdeveloper.askme.presenters.LoginPresenter
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.Session
+import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent
 import org.greenrobot.eventbus.Subscribe

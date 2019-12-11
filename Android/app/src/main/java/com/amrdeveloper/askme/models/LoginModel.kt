@@ -1,7 +1,7 @@
 package com.amrdeveloper.askme.models
 
-import com.amrdeveloper.askme.AskmeClient
-import com.amrdeveloper.askme.LoginData
+import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.contracts.LoginContract
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent

@@ -1,6 +1,7 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.utils
 
 import android.content.Context
+import com.amrdeveloper.askme.data.Constants
 
 class Session {
 

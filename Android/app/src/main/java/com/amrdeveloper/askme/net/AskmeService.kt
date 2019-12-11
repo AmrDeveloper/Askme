@@ -1,5 +1,6 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.net
 
+import com.amrdeveloper.askme.data.LoginData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers

@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.contracts
 
-import com.amrdeveloper.askme.LoginData
+import com.amrdeveloper.askme.data.LoginData
 
 interface LoginContract {
 

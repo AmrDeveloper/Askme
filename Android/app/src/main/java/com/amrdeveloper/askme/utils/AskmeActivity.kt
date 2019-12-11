@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.utils
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager
