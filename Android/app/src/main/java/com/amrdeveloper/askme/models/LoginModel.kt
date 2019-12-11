@@ -12,8 +12,12 @@ import retrofit2.Response
 
 class LoginModel : LoginContract.Model {
 
-    override fun isValidInformation(loginData: LoginData): Boolean {
-        return loginData.email.isNotEmpty() && loginData.password.isNotEmpty()
+    override fun isValidEmail(email: String): Boolean {
+        return email.isNotEmpty()
+    }
+
+    override fun isValidPassword(password: String): Boolean {
+        return password.isNotEmpty() && password.length >= 8
     }
 
     override fun makeLoginRequest(loginData: LoginData) {

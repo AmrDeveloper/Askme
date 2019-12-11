@@ -56,6 +56,14 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
         Toast.makeText(applicationContext, "Invalid Login", Toast.LENGTH_SHORT).show()
     }
 
+    override fun showEmailErrorMessage() {
+        mLoginActivity.emailInputLayout.error = "Invalid Email"
+    }
+
+    override fun showPasswordErrorMessage() {
+        mLoginActivity.passInputLayout.error = "Invalid Password"
+    }
+
     override fun showProgressBar() {
         mLoginActivity.loadingBar.show()
     }

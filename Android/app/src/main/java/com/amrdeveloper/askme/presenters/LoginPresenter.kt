@@ -5,6 +5,7 @@ import com.amrdeveloper.askme.contracts.LoginContract
 import com.amrdeveloper.askme.models.LoginModel
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import org.greenrobot.eventbus.EventBus
+import kotlin.math.log
 
 class LoginPresenter(
     private val view : LoginContract.View
@@ -17,13 +18,15 @@ class LoginPresenter(
     }
 
     override fun makeLoginRequest(loginData: LoginData) {
-        val isValidInfo : Boolean = model.isValidInformation(loginData)
+        val isValidEmail = model.isValidEmail(loginData.email)
+        val isValidPassword = model.isValidPassword(loginData.password)
+        val isValidInfo : Boolean = isValidEmail and isValidPassword
         if(isValidInfo){
             view.showProgressBar()
             model.makeLoginRequest(loginData)
         }else{
-            view.hideProgressBar()
-            EventBus.getDefault().post(LoginFailureEvent())
+            if(isValidEmail.not())view.showEmailErrorMessage()
+            if(isValidPassword.not()) view.showPasswordErrorMessage()
         }
     }
 
