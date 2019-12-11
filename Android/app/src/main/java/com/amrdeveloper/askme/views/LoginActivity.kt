@@ -65,11 +65,11 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
     }
 
     override fun onNetworkOn() {
-
+        mLoginActivity.loginButton.isClickable = true
     }
 
     override fun onNetworkOff() {
-
+        mLoginActivity.loginButton.isClickable = false
     }
 }
 

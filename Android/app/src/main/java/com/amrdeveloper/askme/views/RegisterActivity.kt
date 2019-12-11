@@ -31,7 +31,7 @@ class RegisterActivity : AskmeActivity(), RegisterContract.View {
             finish()
         }
 
-        mRegisterActivity.loginButton.setOnClickListener {
+        mRegisterActivity.registerButton.setOnClickListener {
 
         }
     }
@@ -55,10 +55,10 @@ class RegisterActivity : AskmeActivity(), RegisterContract.View {
     }
 
     override fun onNetworkOn() {
-
+        mRegisterActivity.registerButton.isClickable = true
     }
 
     override fun onNetworkOff() {
-
+        mRegisterActivity.registerButton.isClickable = false
     }
 }

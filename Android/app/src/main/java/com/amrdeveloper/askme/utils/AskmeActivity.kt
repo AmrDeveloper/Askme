@@ -2,8 +2,6 @@ package com.amrdeveloper.askme.utils
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import org.greenrobot.eventbus.EventBus
 
@@ -12,12 +10,21 @@ abstract class AskmeActivity : AppCompatActivity() {
     abstract fun onNetworkOn()
     abstract fun onNetworkOff()
 
-    private var isNetworkConnected : Boolean = false;
-    private lateinit var mNetworkReceiver : NetworkReceiver
+    private var isNetworkConnected : Boolean = false
+    private val mNetworkReceiver : NetworkReceiver
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        mNetworkReceiver = NetworkReceiver(mNetworkChangeListener)
+    init {
+        mNetworkReceiver = NetworkReceiver( object : NetworkStateListener{
+            override fun onNetworkConnected() {
+                onNetworkOn()
+                isNetworkConnected = true
+            }
+
+            override fun onNetworkDisconnected() {
+                onNetworkOff()
+                isNetworkConnected = false
+            }
+        })
     }
 
     override fun onStart() {
@@ -38,16 +45,4 @@ abstract class AskmeActivity : AppCompatActivity() {
     }
 
     fun isNetworkConnected() : Boolean = isNetworkConnected
-
-    private val mNetworkChangeListener : NetworkStateListener = object : NetworkStateListener{
-        override fun onNetworkConnected() {
-            onNetworkOn()
-            isNetworkConnected = true
-        }
-
-        override fun onNetworkDisconnected() {
-            onNetworkOff()
-            isNetworkConnected = false;
-        }
-    }
 }

@@ -21,7 +21,7 @@ class RegisterPresenter(private val view : RegisterContract.View) : RegisterCont
             model.makeRegisterRequest(registerData)
         }else{
             view.hideProgressBar()
-            EventBus.getDefault().post(RegisterFailureEvent())
+            EventBus.getDefault().post(RegisterFailureEvent("Invalid Register"))
         }
     }
 
