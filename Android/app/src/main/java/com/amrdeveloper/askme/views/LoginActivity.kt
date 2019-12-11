@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         loginButton.setOnClickListener { view ->
             val email: String = emailEditText.text.toString()
             val password: String = passwordEdit.text.toString()
-            mLoginPresenter.onStartLogin(email, password)
+            mLoginPresenter.makeLoginRequest(email, password)
         }
     }
 
@@ -48,7 +48,6 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccessEvent(event: LoginSuccessEvent) {
-        Toast.makeText(applicationContext, "Valid Login", Toast.LENGTH_SHORT).show()
         val session = Session()
         session.login(applicationContext, event.email, event.password, event.token)
 

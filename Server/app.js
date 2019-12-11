@@ -7,8 +7,8 @@ const app = express();
 app.use(morgan("logging"));
 app.use('/storage/avatar', express.static('storage/avatar'));
 app.use('/storage/wallpaper', express.static('storage/wallpaper'));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(

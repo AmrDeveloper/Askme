@@ -7,7 +7,7 @@ const QUERY_DEFAULT_COUNT = 25;
 const QUERY_MAX_COUNT = 50;
 
 exports.userLogin = (req, res) => {
-    const email = req.body.email.toLowerCase();
+    const email = req.body.email;
     const password = req.body.password;
 
     userModel.login(email, password).then((result) => {

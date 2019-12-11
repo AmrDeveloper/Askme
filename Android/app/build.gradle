@@ -44,6 +44,7 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
     implementation "com.squareup.picasso:picasso:$picassoVersion"
 
     implementation "org.greenrobot:eventbus:$eventBusVersion"

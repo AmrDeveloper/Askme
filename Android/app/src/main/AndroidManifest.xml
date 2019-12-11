@@ -16,6 +16,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".views.MainActivity" />
         <activity android:name=".views.LoginActivity">

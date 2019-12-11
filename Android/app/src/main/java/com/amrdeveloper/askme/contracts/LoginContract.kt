@@ -1,10 +1,12 @@
 package com.amrdeveloper.askme.contracts
 
+import com.amrdeveloper.askme.LoginData
+
 interface LoginContract {
 
     interface Model{
         fun isValidInformation(email : String, pass : String) : Boolean
-        fun makeLoginRequest(email : String, pass : String)
+        fun makeLoginRequest(loginData: LoginData)
     }
 
     interface View{
@@ -13,6 +15,6 @@ interface LoginContract {
     }
 
     interface Presenter{
-        fun onStartLogin(email : String, pass : String)
+        fun makeLoginRequest(email : String, pass : String)
     }
 }
