@@ -30,6 +30,11 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         mLoginActivity = DataBindingUtil.setContentView(this, R.layout.activity_login)
         mLoginPresenter = LoginPresenter(this)
 
+        mLoginActivity.registerTxt.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
+        }
+
         mLoginActivity.loginButton.setOnClickListener {
             val email: String = mLoginActivity.emailInputEdit.text.toString()
             val password: String = mLoginActivity.passInputEdit.text.toString()
