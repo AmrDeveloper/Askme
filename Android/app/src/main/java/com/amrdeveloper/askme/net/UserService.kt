@@ -2,6 +2,7 @@ package com.amrdeveloper.askme.net
 
 import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.data.LoginData
+import com.amrdeveloper.askme.data.User
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -16,5 +17,5 @@ interface UserService {
     fun register(@Body body: RegisterData) : Call<String>
 
     @GET("users/{email}")
-    fun getUserByEmail(@Path("email") email : String) : Call<String>
+    fun getUserByEmail(@Path("email") email : String) : Call<User>
 }

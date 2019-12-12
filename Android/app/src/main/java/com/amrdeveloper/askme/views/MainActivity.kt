@@ -5,10 +5,12 @@ import android.view.Menu
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.amrdeveloper.askme.ProfileFragment
 import com.amrdeveloper.askme.utils.MenuManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +50,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_profile -> {
                     mActionBar.notNull { it.title = "Profile" }
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.viewContainers, ProfileFragment())
+                        .addToBackStack(null)
+                        .commit()
                     return@OnNavigationItemSelectedListener true
                 }
             }

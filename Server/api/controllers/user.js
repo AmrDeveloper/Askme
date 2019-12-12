@@ -83,17 +83,8 @@ exports.getAllUsers = (req, res) => {
 
 exports.getOneUser = (req, res) => {
     const email = req.params.email.toLowerCase();
-    if (offset == null) {
-        offset = QUERY_DEFAULT_OFFSET;
-    }
 
-    if (count == null || count > QUERY_MAX_COUNT) {
-        count = QUERY_DEFAULT_COUNT;
-    }
-
-    const args = [email];
-    
-    userModel.getOneUser(args).then(result => { res.status(status.OK).json(result); })
+    userModel.getOneUser(email).then(result => { res.status(status.OK).json(result[0]); })
 };
 
 exports.deleteAllUsers = (req, res) => {

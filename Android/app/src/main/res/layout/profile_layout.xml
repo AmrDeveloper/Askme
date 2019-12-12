@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:contentDescription="User Wallpaper"
+            android:id="@+id/userWallpaper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:contentDescription="User Avatar"
+            android:id="@+id/userAvatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@color/colorPrimary"
+            app:civ_border_color="@color/colorPrimary"
+            app:civ_border_width="2dp" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_alignParentBottom="true"
+            tools:text="Amr Developer"
+            android:gravity="center"
+            android:lines="1"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="5dp"
+            tools:text="Following : 0"
+            android:id="@+id/userFollowing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:padding="5dp"
+            tools:text="Followers : 0"
+            android:id="@+id/userFollowers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/userLikes"
+            tools:text="Likes : 0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:padding="5dp"
+            tools:text="Questions : 0"
+            android:id="@+id/userQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/userAnswers"
+            android:padding="5dp"
+            tools:text="Answers : 0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="#eeeeee"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/userStatus"
+            android:gravity="center"
+            tools:text="Time is limited don't waste it"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/userAddress"
+            tools:text="Alexandria, Egypt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:padding="5dp"
+            android:id="@+id/userJoinDate"
+            tools:text="2 years ago"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <include layout="@layout/list_layout"/>
+</LinearLayout>

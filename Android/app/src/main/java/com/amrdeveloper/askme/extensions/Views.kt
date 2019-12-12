@@ -1,6 +1,8 @@
 package com.amrdeveloper.askme.extensions
 
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 
 fun View.show(){
     this.visibility = View.VISIBLE
@@ -19,5 +21,17 @@ fun View.clickable(){
 }
 
 fun View.unClickable(){
-    this.isClickable = false;
+    this.isClickable = false
+}
+
+fun TextView.setTextOrGone(text : String?){
+    if(text.isNullOrEmpty()){
+        this.gone()
+    }else{
+        this.text = text
+    }
+}
+
+fun ImageView.loadImage(imageUrl : String){
+
 }

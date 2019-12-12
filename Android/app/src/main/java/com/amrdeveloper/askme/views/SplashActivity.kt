@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.amrdeveloper.askme.R
+
 import com.amrdeveloper.askme.utils.Session
 
 class SplashActivity : AppCompatActivity() {
