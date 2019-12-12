@@ -8,7 +8,7 @@ const QUERY_MAX_COUNT = 50;
 exports.getAllNotifications = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const id = req.body.id;
+    const id = req.param.id;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -16,7 +16,6 @@ exports.getAllNotifications = (req, res) => {
     if (count == null || count > QUERY_MAX_COUNT) {
         count = QUERY_DEFAULT_COUNT;
     }
-
 
     const args = [id, count, offset];
 
@@ -27,7 +26,7 @@ exports.getAllNotifications = (req, res) => {
 };
 
 exports.getNotificationByID = (req, res) => {
-    const notificationID = req.body.id;
+    const notificationID = req.param.id;
 
     notificationModel.getNotificationByID(notificationID)
         .then(result => {
@@ -44,7 +43,7 @@ exports.getNotificationByID = (req, res) => {
 exports.getUnReadedNotification = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const id = req.body.id;
+    const id = req.param.id;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -98,7 +97,7 @@ exports.deleteAllNotifications = (req, res) => {
 };
 
 exports.deleteNotificationByID = (req, res) => {
-    const notificationID = req.body.id;
+    const notificationID = req.param.id;
 
     notificationModel.deleteNotificationByID(notificationID)
         .then(state => {
@@ -115,7 +114,7 @@ exports.deleteNotificationByID = (req, res) => {
 };
 
 exports.makeNotificationReaded = (req, res) => {
-    const notificationID = req.body.id;
+    const notificationID = req.param.id;
 
     notificationModel.makeNotificationReaded(notificationID)
         .then(state => {

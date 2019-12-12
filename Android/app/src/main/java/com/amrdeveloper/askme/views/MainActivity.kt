@@ -1,9 +1,11 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.amrdeveloper.askme.utils.MenuManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
@@ -12,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private var mActionBar: ActionBar? = null
+    private lateinit var mMenuManager: MenuManager
     private lateinit var mMainActivity: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         mActionBar = supportActionBar
         mMainActivity.mainNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelection)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        mMenuManager = MenuManager(menu, this)
+        mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
+        return super.onCreateOptionsMenu(menu)
     }
 
     private val onNavigationItemSelection =
@@ -42,6 +51,6 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
             }
-            false
+            return@OnNavigationItemSelectedListener false
         }
 }
