@@ -1,4 +1,4 @@
-package com.amrdeveloper.extensions.extensions
+package com.amrdeveloper.askme.extensions
 
 import android.view.View
 
@@ -12,4 +12,12 @@ fun View.hide(){
 
 fun View.gone(){
     this.visibility = View.GONE
+}
+
+fun View.clickable(){
+    this.isClickable = true
+}
+
+fun View.unClickable(){
+    this.isClickable = false;
 }

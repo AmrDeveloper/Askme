@@ -10,9 +10,11 @@ import com.amrdeveloper.askme.presenters.RegisterPresenter
 import com.amrdeveloper.askme.databinding.ActivityRegisterBinding
 import com.amrdeveloper.askme.events.RegisterFailureEvent
 import com.amrdeveloper.askme.events.RegisterSuccessEvent
+import com.amrdeveloper.askme.extensions.clickable
 import com.amrdeveloper.askme.utils.AskmeActivity
-import com.amrdeveloper.extensions.extensions.gone
-import com.amrdeveloper.extensions.extensions.show
+import com.amrdeveloper.askme.extensions.gone
+import com.amrdeveloper.askme.extensions.show
+import com.amrdeveloper.askme.extensions.unClickable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -38,7 +40,9 @@ class RegisterActivity : AskmeActivity(), RegisterContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRegisterSuccessEvent(event: RegisterSuccessEvent) {
-
+        Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -55,10 +59,10 @@ class RegisterActivity : AskmeActivity(), RegisterContract.View {
     }
 
     override fun onNetworkOn() {
-        mRegisterActivity.registerButton.isClickable = true
+        mRegisterActivity.registerButton.clickable()
     }
 
     override fun onNetworkOff() {
-        mRegisterActivity.registerButton.isClickable = false
+        mRegisterActivity.registerButton.unClickable()
     }
 }

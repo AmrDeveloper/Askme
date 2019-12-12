@@ -58,4 +58,10 @@ class Session {
         preferencesEditor.putString(Constants.PASSWORD, password)
         return preferencesEditor.commit()
     }
+
+    fun isUserLogined(context: Context) : Boolean{
+        val preferences =
+            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+        return preferences.getString(Constants.LOGIN_TOKEN,"").isNullOrBlank().not()
+    }
 }

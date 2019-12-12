@@ -82,7 +82,7 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getOneUser = (req, res) => {
-    const username = req.params.username.toLowerCase();
+    const email = req.params.email.toLowerCase();
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -91,7 +91,7 @@ exports.getOneUser = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [username];
+    const args = [email];
     
     userModel.getOneUser(args).then(result => { res.status(status.OK).json(result); })
 };

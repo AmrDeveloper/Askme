@@ -13,9 +13,11 @@ import com.amrdeveloper.askme.databinding.ActivityLoginBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent
+import com.amrdeveloper.askme.extensions.clickable
 import com.amrdeveloper.askme.utils.AskmeActivity
-import com.amrdeveloper.extensions.extensions.gone
-import com.amrdeveloper.extensions.extensions.show
+import com.amrdeveloper.askme.extensions.gone
+import com.amrdeveloper.askme.extensions.show
+import com.amrdeveloper.askme.extensions.unClickable
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -49,6 +51,7 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -73,11 +76,11 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
     }
 
     override fun onNetworkOn() {
-        mLoginActivity.loginButton.isClickable = true
+        mLoginActivity.loginButton.clickable()
     }
 
     override fun onNetworkOff() {
-        mLoginActivity.loginButton.isClickable = false
+        mLoginActivity.loginButton.unClickable()
     }
 }
 

@@ -80,7 +80,7 @@ exports.getOneUser = args => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
                                    (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
-                  FROM users WHERE username = ? LIMIT 1`;
+                  FROM users WHERE email = ? LIMIT 1`;
 
     database.query(query, args, (err, result) => {
         if (err) throw err;

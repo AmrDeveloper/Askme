@@ -13,7 +13,7 @@ exports.getUserNotifications = args => new Promise((resolve, reject) => {
     database.query(query, args, (err, result) => {
         if (err) throw err;
         resolve(result);
-    })
+    });
 });
 
 exports.getNotificationByID = args => new Promise((resolve, reject) => {
