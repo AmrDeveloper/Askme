@@ -136,9 +136,9 @@ exports.searchUsers = (args) => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
                                    (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
                   FROM users WHERE
-                                users.name LIKE CONCAT('%', ? ,'%') OR
-                                users.username LIKE CONCAT('%', ? ,'%') OR
-                                users.email LIKE CONCAT('%', ? ,'%')
+                                name LIKE ? OR
+                                username ? OR
+                                email LIKE ? 
                                 LIMIT ? OFFSET ?`;
     database.query(query, args, (err, result) =>{
         if(err) throw err;
