@@ -361,7 +361,7 @@ exports.updateUserAvatar = (req, res) => {
                 try {
                     fileSystem.unlinkSync(oldAvatar);
                 } catch (err) {
-                    console.error("Can't find file in storage/pictures Path");
+                    console.error("Can't find file in storage/avatar Path");
                 }
             }
 
