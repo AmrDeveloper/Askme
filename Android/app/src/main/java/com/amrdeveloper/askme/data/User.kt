@@ -44,8 +44,5 @@ data class User(
     val answersNum: Int,
 
     @SerializedName("likes")
-    val reactionsNum: Int,
-
-    @SerializedName("color")
-    val userColor : Theme
+    val reactionsNum: Int
 )

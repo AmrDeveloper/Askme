@@ -13,9 +13,10 @@
         <ImageView
             android:contentDescription="User Wallpaper"
             android:id="@+id/userWallpaper"
+            android:scaleType="fitXY"
+            android:alpha=".6"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/gray" />
+            android:layout_height="match_parent" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:contentDescription="User Avatar"
@@ -24,9 +25,8 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="@color/colorPrimary"
-            app:civ_border_color="@color/colorPrimary"
-            app:civ_border_width="2dp" />
+            app:civ_border_color="@color/orange"
+            app:civ_border_width="5dp" />
 
         <TextView
             android:id="@+id/userName"
@@ -35,7 +35,10 @@
             android:gravity="center"
             android:lines="1"
             android:textSize="20sp"
-            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold|italic"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 
@@ -96,12 +99,14 @@
 
         <TextView
             android:padding="5dp"
+            android:drawableStart="@drawable/ic_location"
             android:id="@+id/userAddress"
             tools:text="Alexandria, Egypt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <TextView
+            android:drawableStart="@drawable/ic_time"
             android:padding="5dp"
             android:id="@+id/userJoinDate"
             tools:text="2 years ago"

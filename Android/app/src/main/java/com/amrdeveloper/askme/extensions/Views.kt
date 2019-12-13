@@ -3,6 +3,7 @@ package com.amrdeveloper.askme.extensions
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.amrdeveloper.askme.net.API_SERVER_URL
 import com.squareup.picasso.Picasso
 
 fun View.show() {
@@ -34,7 +35,7 @@ fun TextView.setTextOrGone(text: String?) {
 }
 
 fun TextView.setPluralsText(id : Int, value : Int) {
-    this.resources.getQuantityString(id, value,value)
+    this.text = this.resources.getQuantityString(id, value,value)
 }
 
 
@@ -42,6 +43,6 @@ fun ImageView.loadImage(imageUrl: String) {
     if(imageUrl.isNullOrEmpty()){
         return
     }
-    val imagePath = imageUrl.replace("\\", "/")
-    Picasso.get().load(imagePath).centerCrop().into(this)
+    val imagePath = API_SERVER_URL + imageUrl.replace("\\", "/")
+    Picasso.get().load(imagePath).into(this)
 }
