@@ -28,7 +28,7 @@ exports.login = (email, password) => new Promise((resolve, reject) => {
 });
 
 exports.register = user => new Promise((resolve, reject) => {
-    const query = "INSERT INTO users(name, email, username , password, joinDate) VALUES (?, ? , ? , ?, ?)";
+    const query = "INSERT INTO users(name, email, username , password, joinDate, color) VALUES (?, ? , ? , ?, ?, ?)";
     database.query(query, user, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
@@ -51,6 +51,7 @@ exports.queryUsers = args => new Promise((resolve, reject) => {
                                    users.status,
                                    users.active,
                                    users.joinDate,
+                                   users.color,
                                    (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,

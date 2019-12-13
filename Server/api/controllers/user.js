@@ -27,11 +27,11 @@ exports.registerNewUser = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     const currentDate = new Date().toISOString();
+    const color = "ORANGE";
 
     const info = [
         email.toLowerCase(),
         username.toLowerCase(),
-        currentDate
     ];
 
     userModel.isAvailableInfo(info).then(result => {
@@ -42,7 +42,9 @@ exports.registerNewUser = (req, res) => {
                     name,
                     email,
                     username,
-                    hashedPassword
+                    hashedPassword,
+                    currentDate,
+                    color
                 ];
 
                 userModel.register(user).then(state => {
