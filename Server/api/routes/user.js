@@ -12,6 +12,8 @@ router.post('/login', controller.userLogin);
 
 router.post('/register', controller.registerNewUser);
 
+router.post('/search', controller.searchUsers);
+
 router.delete('/', controller.deleteAllUsers);
 
 router.delete('/avatar', controller.deleteUserAvatar);

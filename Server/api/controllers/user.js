@@ -49,7 +49,7 @@ exports.registerNewUser = (req, res) => {
 
                 userModel.register(user).then(state => {
                     if (state) {
-                        res.status(status.OK).send("Valid Register");      
+                        res.status(status.OK).send("Valid Register");
                     } else {
                         res.status(status.BAD_REQUEST).send("Invalid Register");
                     }
@@ -80,13 +80,35 @@ exports.getAllUsers = (req, res) => {
 
     const args = [count, offset];
 
-    userModel.queryUsers(args).then(result => { res.status(status.OK).json(result) });
+    userModel.queryUsers(args).then(result => {
+        res.status(status.OK).json(result)
+    });
 };
 
 exports.getOneUser = (req, res) => {
     const email = req.params.email.toLowerCase();
 
     userModel.getOneUser(email).then(result => { res.status(status.OK).json(result[0]); })
+};
+
+exports.searchUsers = (req, res) => {
+    const keyword = req.query.q.toLowerCase();
+    var offset = req.query.offset;
+    var count = req.query.count;
+
+    if (offset == null) {
+        offset = QUERY_DEFAULT_OFFSET;
+    }
+
+    if (count == null || count > QUERY_MAX_COUNT) {
+        count = QUERY_DEFAULT_COUNT;
+    }
+
+    const args = [keyword, keyword, keyword, offset, count];
+
+    userModel.searchUsers(args).then(result => {
+        res.status(status.OK).json(result)
+    });
 };
 
 exports.deleteAllUsers = (req, res) => {
@@ -418,7 +440,7 @@ exports.updateUserWallpaper = (req, res) => {
     }
 };
 
-exports.updateUserColor= (req, res) => {
+exports.updateUserColor = (req, res) => {
     const email = req.body.email.toLowerCase();
     userModel.updateUserColor(email).then(state => {
         if (state) {

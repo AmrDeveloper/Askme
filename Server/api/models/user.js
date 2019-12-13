@@ -44,7 +44,6 @@ exports.queryUsers = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT users.name, 
                                    users.username,
                                    users.email,
-                                   users.email,
                                    users.avatar,
                                    users.wallpaper,
                                    users.address,
@@ -117,6 +116,33 @@ exports.getUserWallpaper = args => new Promise((resolve, reject) => {
         if (err) throw err;
         const oldAvatar = result[0]['wallpaper'];
         resolve(oldAvatar);
+    });
+});
+
+exports.searchUsers = (args) => new Promise((resolve, reject) => {
+    const query = `SELECT DISTINCT users.name, 
+                                   users.username,
+                                   users.email,
+                                   users.avatar,
+                                   users.wallpaper,
+                                   users.address,
+                                   users.status,
+                                   users.active,
+                                   users.joinDate,
+                                   users.color,
+                                   (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
+                                   (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
+                                   (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
+                                   (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
+                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
+                  FROM users WHERE
+                                users.name LIKE CONCAT('%', ? ,'%') OR
+                                users.username LIKE CONCAT('%', ? ,'%') OR
+                                users.email LIKE CONCAT('%', ? ,'%')
+                                LIMIT ? OFFSET ?`;
+    database.query(query, args, (err, result) =>{
+        if(err) throw err;
+        resolve(result);
     });
 });
 
