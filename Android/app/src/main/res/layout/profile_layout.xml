@@ -25,7 +25,7 @@
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            app:civ_border_color="@color/orange"
+            app:civ_border_color="@color/darkBlue"
             app:civ_border_width="5dp" />
 
         <TextView
