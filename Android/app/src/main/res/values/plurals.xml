@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="followers">
+        <item quantity="one">Follower : %d</item>
+        <item quantity="other">Followers : %d</item>
+    </plurals>
+
+    <plurals name="following">
+        <item quantity="one">Following : %d</item>
+        <item quantity="other">Following : %d</item>
+    </plurals>
+
+    <plurals name="questions">
+        <item quantity="one">Question : %d</item>
+        <item quantity="other">Questions : %d</item>
+    </plurals>
+
+    <plurals name="answers">
+        <item quantity="one">Answer : %d</item>
+        <item quantity="other">Answers : %d</item>
+    </plurals>
+
+    <plurals name="reactions">
+        <item quantity="one">Like : %d</item>
+        <item quantity="other">Likes : %d</item>
+    </plurals>
+</resources>

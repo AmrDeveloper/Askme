@@ -74,6 +74,7 @@ exports.getOneUser = args => new Promise((resolve, reject) => {
                                    users.status,
                                    users.active,
                                    users.joinDate,
+                                   users.color,
                                    (SELECT COUNT(*) FROM follows WHERE fromUser = users.id) AS following,
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
