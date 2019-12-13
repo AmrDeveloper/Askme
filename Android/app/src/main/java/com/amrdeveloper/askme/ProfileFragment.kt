@@ -11,6 +11,7 @@ import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.profile_layout.*
+import kotlinx.android.synthetic.main.user_grid_analysis.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,11 +49,11 @@ class ProfileFragment : Fragment() {
         userStatus.setTextOrGone(user.status)
         userJoinDate.setTextOrGone(user.joinDate)
 
-        userFollowing.setPluralsText(R.plurals.following, user.followingNum)
-        userFollowers.setPluralsText(R.plurals.followers, user.followersNum)
-        userLikes.setPluralsText(R.plurals.reactions, user.reactionsNum)
-        userQuestions.setPluralsText(R.plurals.questions, user.questionsNum)
-        userAnswers.setPluralsText(R.plurals.answers, user.answersNum)
+        userFollowing.text = user.followingNum.toString()
+        userFollowers.text = user.followersNum.toString()
+        userLikes.text = user.reactionsNum.toString()
+        userQuestions.text = user.questionsNum.toString()
+        userAnswers.text = user.answersNum.toString()
 
         userAvatar.loadImage(user.avatarUrl)
         userWallpaper.loadImage(user.wallpaperUrl)

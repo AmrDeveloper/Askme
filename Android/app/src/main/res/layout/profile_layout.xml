@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -11,108 +11,84 @@
         android:layout_height="200dp">
 
         <ImageView
-            android:contentDescription="User Wallpaper"
             android:id="@+id/userWallpaper"
-            android:scaleType="fitXY"
-            android:alpha=".6"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:alpha=".6"
+            android:contentDescription="User Wallpaper"
+            android:scaleType="fitXY" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:contentDescription="User Avatar"
             android:id="@+id/userAvatar"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:contentDescription="User Avatar"
             app:civ_border_color="@color/darkBlue"
             app:civ_border_width="5dp" />
 
         <TextView
             android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            tools:text="Amr Developer"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:lines="1"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold|italic"
             android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            tools:text="Amr Developer" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true">
 
-        <TextView
-            android:padding="5dp"
-            tools:text="Following : 0"
-            android:id="@+id/userFollowing"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <include layout="@layout/user_grid_analysis" />
+    </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:padding="5dp"
-            tools:text="Followers : 0"
-            android:id="@+id/userFollowers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:padding="5dp"
-            android:id="@+id/userLikes"
-            tools:text="Likes : 0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:padding="5dp"
-            tools:text="Questions : 0"
-            android:id="@+id/userQuestions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/userAnswers"
-            android:padding="5dp"
-            tools:text="Answers : 0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:background="#eeeeee"
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:padding="5dp"
             android:id="@+id/userStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            tools:text="Time is limited don't waste it"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
             android:padding="5dp"
-            android:drawableStart="@drawable/ic_location"
-            android:id="@+id/userAddress"
-            tools:text="Alexandria, Egypt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            tools:text="Time is limited don't waste it" />
 
         <TextView
+            android:id="@+id/userAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_location"
+            android:padding="5dp"
+            tools:text="Alexandria, Egypt" />
+
+        <TextView
+            android:id="@+id/userJoinDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_time"
             android:padding="5dp"
-            android:id="@+id/userJoinDate"
-            tools:text="2 years ago"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            tools:text="2 years ago" />
     </LinearLayout>
 
-    <include layout="@layout/list_layout"/>
+    </androidx.cardview.widget.CardView>
+
+    <include layout="@layout/list_layout" />
 </LinearLayout>
