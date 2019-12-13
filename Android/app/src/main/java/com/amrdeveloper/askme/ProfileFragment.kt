@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.extensions.notNull
-import com.amrdeveloper.askme.extensions.plurals
-import com.amrdeveloper.askme.extensions.setTextOrGone
+import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.profile_layout.*
@@ -50,10 +48,13 @@ class ProfileFragment : Fragment() {
         userStatus.setTextOrGone(user.status)
         userJoinDate.setTextOrGone(user.joinDate)
 
-        userFollowing.text = resources.plurals(R.plurals.following, user.followingNum)
-        userFollowers.text = resources.plurals(R.plurals.followers, user.followersNum)
-        userLikes.text = resources.plurals(R.plurals.reactions, user.reactionsNum)
-        userQuestions.text = resources.plurals(R.plurals.questions, user.questionsNum)
-        userAnswers.text = resources.plurals(R.plurals.answers, user.answersNum)
+        userFollowing.setPluralsText(R.plurals.following, user.followingNum)
+        userFollowers.setPluralsText(R.plurals.followers, user.followersNum)
+        userLikes.setPluralsText(R.plurals.reactions, user.reactionsNum)
+        userQuestions.setPluralsText(R.plurals.questions, user.questionsNum)
+        userAnswers.setPluralsText(R.plurals.answers, user.answersNum)
+
+        userAvatar.loadImage(user.avatarUrl)
+        userWallpaper.loadImage(user.wallpaperUrl)
     }
 }
