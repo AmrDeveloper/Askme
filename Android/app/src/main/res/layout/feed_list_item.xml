@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/questionUserAvatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:id="@+id/questionTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/questionUserAvatar"
+            android:lines="2"
+            android:padding="2dp"
+            tools:text="Hello how are you bro?" />
+
+        <TextView
+            android:id="@+id/answerDateTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/questionTxt"
+            android:padding="5dp"
+            tools:text="9 h ago" />
+
+        <TextView
+            android:id="@+id/answerTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/answerDateTxt"
+            android:lines="2"
+            android:padding="2dp"
+            tools:text="I am find thanks for question byo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/answerTxt"
+            android:drawableStart="@drawable/ic_react"
+            android:gravity="center"
+            tools:text="10" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
