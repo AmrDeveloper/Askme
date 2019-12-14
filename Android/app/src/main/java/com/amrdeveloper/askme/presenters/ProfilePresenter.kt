@@ -1,13 +1,14 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.presenters
 
 import androidx.lifecycle.LifecycleOwner
 import com.amrdeveloper.askme.contracts.ProfileContract
 import com.amrdeveloper.askme.models.FeedViewModel
+import com.amrdeveloper.askme.models.ProfileModel
 
 class ProfilePresenter(
-    val view: ProfileContract.View,
-    val feedViewModel: FeedViewModel,
-    val owner: LifecycleOwner
+    private val view: ProfileContract.View,
+    private val feedViewModel: FeedViewModel,
+    private val owner: LifecycleOwner
 ) : ProfileContract.Presenter {
 
     private val model : ProfileContract.Model
@@ -16,7 +17,7 @@ class ProfilePresenter(
         model = ProfileModel()
     }
 
-    override fun startLoadingFeed(userId: String) {
+    override fun startLoadingFeed() {
         view.showProgressBar()
         model.loadFeedFromServer(feedViewModel, owner)
     }

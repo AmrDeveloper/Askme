@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.notNull
+import com.amrdeveloper.askme.extensions.setTextOrHide
 import kotlinx.android.synthetic.main.feed_list_item.view.*
 
 class FeedPagedAdapter : PagedListAdapter<Feed, FeedPagedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
@@ -31,7 +33,11 @@ class FeedPagedAdapter : PagedListAdapter<Feed, FeedPagedAdapter.FeedViewHolder>
         fun bingFeed(feed : Feed){
             itemView.questionTxt.text = feed.questionBody
             itemView.answerTxt.text = feed.answerBody
-            itemView.reactionsTxt.text = feed.reactionsNum.toString()
+            itemView.questionFrom.text = feed.toUserName
+            itemView.answerDateTxt.setTextOrHide(feed.answerDate)
+            itemView.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
+
+            itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
         }
     }
 }
@@ -42,6 +48,6 @@ private val DIFF_CALL_BACK : DiffUtil.ItemCallback<Feed> = object : DiffUtil.Ite
     }
 
     override fun areContentsTheSame(oldItem: Feed, newItem: Feed): Boolean {
-        return oldItem == newItem
+        return oldItem.answerBody == newItem.answerBody
     }
 }

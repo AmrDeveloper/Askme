@@ -22,10 +22,10 @@ class FeedDataSource(var userId: String) : PageKeyedDataSource<Int, Feed>() {
                     val feedList = response.body()
                     feedList.notNull {
                         val size = feedList?.size
-                        if(size == DEFAULT_QUERY_COUNT){
-                            callback.onResult(feedList,null,1)
-                        }else{
-                            callback.onResult(feedList!!,null,0)
+                        if (size == DEFAULT_QUERY_COUNT) {
+                            callback.onResult(feedList, null, 1)
+                        } else {
+                            callback.onResult(feedList!!, null, 0)
                         }
                     }
                 }
@@ -37,14 +37,14 @@ class FeedDataSource(var userId: String) : PageKeyedDataSource<Int, Feed>() {
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
-        AskmeClient.getFeedService().getUserFeed(userId = userId)
+        AskmeClient.getFeedService().getUserFeed(userId = userId, offset = params.key)
             .enqueue(object : Callback<List<Feed>> {
                 override fun onResponse(call: Call<List<Feed>>, response: Response<List<Feed>>) {
                     val feedList = response.body()
                     feedList.notNull {
-                        if(params.key > 1){
+                        if (params.key > 1) {
                             callback.onResult(feedList!!, params.key - 1)
-                        }else{
+                        } else {
                             callback.onResult(feedList!!, null)
                         }
                     }
@@ -57,16 +57,16 @@ class FeedDataSource(var userId: String) : PageKeyedDataSource<Int, Feed>() {
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
-        AskmeClient.getFeedService().getUserFeed(userId = userId)
+        AskmeClient.getFeedService().getUserFeed(userId = userId, offset = params.key)
             .enqueue(object : Callback<List<Feed>> {
                 override fun onResponse(call: Call<List<Feed>>, response: Response<List<Feed>>) {
                     val feedList = response.body()
                     feedList.notNull {
                         val size = feedList?.size
-                        if(size == DEFAULT_QUERY_COUNT){
-                            callback.onResult(feedList,params.key + 1)
-                        }else{
-                            callback.onResult(feedList!!,null)
+                        if (size == DEFAULT_QUERY_COUNT) {
+                            callback.onResult(feedList, params.key + 1)
+                        } else {
+                            callback.onResult(feedList!!, null)
                         }
                     }
                 }

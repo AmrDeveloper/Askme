@@ -14,7 +14,7 @@ exports.getUserFeed = (args) => new Promise((resolve, reject) => {
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS toUserAvatar,
                                    (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions,
                                    answers.answerdDate AS answerDate
-                    FROM answers WHERE fromUser = ? LIMIT ? OFFSET ?`;
+                    FROM answers WHERE fromUser = ?`;
     database.query(query, args, (err, result) => {
        if(err) throw err;
        resolve(result)

@@ -29,7 +29,6 @@ class FeedViewModel : ViewModel() {
         val config: PagedList.Config =
             PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
-                .setPageSize(DEFAULT_QUERY_COUNT)
                 .build()
 
         feedPagedList = LivePagedListBuilder(feedDataSourceFactory, config).build()

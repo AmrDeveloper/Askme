@@ -7,7 +7,7 @@ const QUERY_MAX_COUNT = 50;
 
 
 exports.getUserFeed = (req, res) => {
-    const email = req.query.id;
+    const id = req.query.id;
     var offset = req.query.offset;
     var count = req.query.count;
 
@@ -19,7 +19,7 @@ exports.getUserFeed = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [email,count, offset]
+    const args = [id,count, offset]
     feedModel.getUserFeed(args).then(result => {
         res.status(status.OK).json(result);
     })

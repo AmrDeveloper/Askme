@@ -10,7 +10,9 @@ class FeedDataSourceFactory(var userId : String) : DataSource.Factory<Int,Feed>(
     private val feedLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
 
     override fun create(): DataSource<Int, Feed> {
-        return FeedDataSource(userId)
+        val feedDataSource = FeedDataSource(userId)
+        feedLiveDataSource.postValue(feedDataSource)
+        return feedDataSource
     }
 
     fun getFeedLiveDataSource() = feedLiveDataSource

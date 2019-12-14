@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.adapter.FeedPagedAdapter
 import com.amrdeveloper.askme.contracts.ProfileContract
 import com.amrdeveloper.askme.data.Feed
@@ -17,10 +18,12 @@ import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.models.FeedViewModel
 import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.presenters.ProfilePresenter
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.list_layout.*
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
@@ -38,13 +41,14 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.profile_layout, container, false)
-        feedListSetup()
+        feedListSetup(view)
         getUserInformation()
         return view
     }
 
-    private fun feedListSetup(){
+    private fun feedListSetup(view : View){
         mFeedAdapter = FeedPagedAdapter()
+        val listItems = view.findViewById<RecyclerView>(R.id.listItems)
         listItems.setHasFixedSize(true)
         listItems.layoutManager = LinearLayoutManager(context)
         listItems.adapter = mFeedAdapter
@@ -56,6 +60,7 @@ class ProfileFragment : Fragment(), ProfileContract.View{
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 response.body().notNull {
                     bindUserProfile(it)
+                    loadUserFeed(it.id)
                 }
             }
 
@@ -79,20 +84,19 @@ class ProfileFragment : Fragment(), ProfileContract.View{
 
         userAvatar.loadImage(user.avatarUrl)
         userWallpaper.loadImage(user.wallpaperUrl)
+    }
 
-        FeedViewModel.setUserId("")
+    private fun loadUserFeed(userId : String){
+        FeedViewModel.setUserId(userId)
         val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
         mProfilePresenter = ProfilePresenter(this,feedViewModel,this)
-    }
-
-    override fun onLoadFinish(feedList: PagedList<Feed>) {
-        mFeedAdapter.submitList(feedList)
+        mProfilePresenter.startLoadingFeed()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<Feed>>){
-        onLoadFinish(event.data)
+        mFeedAdapter.submitList(event.data)
         hideProgressBar()
     }
 
@@ -102,5 +106,20 @@ class ProfileFragment : Fragment(), ProfileContract.View{
 
     override fun hideProgressBar() {
         loadingBar.gone()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 }

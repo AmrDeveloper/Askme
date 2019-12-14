@@ -3,6 +3,7 @@ package com.amrdeveloper.askme.extensions
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.net.API_SERVER_URL
 import com.squareup.picasso.Picasso
 
@@ -34,15 +35,23 @@ fun TextView.setTextOrGone(text: String?) {
     }
 }
 
+fun TextView.setTextOrHide(text: String?) {
+    if (text.isNullOrEmpty()) {
+        this.hide()
+    } else {
+        this.text = text
+    }
+}
+
 fun TextView.setPluralsText(id : Int, value : Int) {
     this.text = this.resources.getQuantityString(id, value,value)
 }
 
 
-fun ImageView.loadImage(imageUrl: String) {
+fun ImageView.loadImage(imageUrl: String?) {
     if(imageUrl.isNullOrEmpty()){
         return
     }
     val imagePath = API_SERVER_URL + imageUrl.replace("\\", "/")
-    Picasso.get().load(imagePath).into(this)
+    Picasso.get().load(imagePath).error(R.drawable.ic_profile).into(this)
 }

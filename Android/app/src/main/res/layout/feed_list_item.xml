@@ -15,6 +15,9 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            app:civ_border_color="@color/darkBlue"
+            app:civ_border_width="1dp"
+            android:src="@drawable/ic_profile"
             android:id="@+id/questionUserAvatar"
             android:layout_width="35dp"
             android:layout_height="35dp" />
@@ -26,14 +29,29 @@
             android:layout_toEndOf="@id/questionUserAvatar"
             android:lines="2"
             android:padding="2dp"
+            android:textColor="@color/darkBlue"
+            android:layout_marginStart="1dp"
             tools:text="Hello how are you bro?" />
 
         <TextView
-            android:id="@+id/answerDateTxt"
+            android:id="@+id/questionFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/questionTxt"
-            android:padding="5dp"
+            android:textColor="@color/darkBlue"
+            android:textStyle="bold"
+            android:padding="3dp"
+            android:gravity="center"
+            tools:text="Asked By" />
+
+        <TextView
+            android:id="@+id/answerDateTxt"
+            android:layout_toEndOf="@id/questionFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/questionTxt"
+            android:gravity="center"
+            android:padding="3dp"
             tools:text="9 h ago" />
 
         <TextView
@@ -41,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/answerDateTxt"
+            android:textColor="@color/darkBlue"
             android:lines="2"
             android:padding="2dp"
             tools:text="I am find thanks for question byo" />
@@ -49,6 +68,8 @@
             android:id="@+id/reactionsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="2dp"
+            android:textColor="@color/darkBlue"
             android:layout_below="@id/answerTxt"
             android:drawableStart="@drawable/ic_react"
             android:gravity="center"
