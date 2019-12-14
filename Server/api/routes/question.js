@@ -9,8 +9,8 @@ router.get('/:id/asked', controller.getAskedQuestions);
 
 router.get('/:id', controller.getQuestionByID);
 
-router.post('/', controller.createNewQuestion);
+router.post('/', checkAuth, controller.createNewQuestion);
 
-router.delete('/:id', controller.deleteQuestion);
+router.delete('/:id', checkAuth, controller.deleteQuestion);
 
 module.exports = router;
