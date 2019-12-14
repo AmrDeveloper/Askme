@@ -46,6 +46,7 @@
             tools:text="I am find thanks for question byo" />
 
         <TextView
+            android:id="@+id/reactionsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/answerTxt"
