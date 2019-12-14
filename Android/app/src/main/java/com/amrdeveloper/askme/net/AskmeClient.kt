@@ -21,6 +21,26 @@ object AskmeClient {
         return retrofit.create(UserService::class.java)
     }
 
+    fun getFeedService() : FeedService{
+        return retrofit.create(FeedService::class.java)
+    }
+
+    fun getQuestionService() : QuestionService{
+        return retrofit.create(QuestionService::class.java)
+    }
+
+    fun getAnswerService() : AnswerService{
+        return retrofit.create(AnswerService::class.java)
+    }
+
+    fun getFollowService() : FollowService{
+        return retrofit.create(FollowService::class.java)
+    }
+
+    fun getReactionService() : ReactionService{
+        return retrofit.create(ReactionService::class.java)
+    }
+
     fun getNotificationService(): NotificationService {
         return retrofit.create(NotificationService::class.java)
     }
