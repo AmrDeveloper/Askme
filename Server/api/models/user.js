@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.login = (email, password) => new Promise((resolve, reject) => {
-    const sqlQuery = `SELECT password FROM users WHERE email = ? LIMIT 1`;
+    const sqlQuery = `SELECT id, password FROM users WHERE email = ? LIMIT 1`;
 
     database.query(sqlQuery, email, ((err, result) => {
         if (err) throw err;
@@ -15,7 +15,10 @@ exports.login = (email, password) => new Promise((resolve, reject) => {
                 if (isSame) {
                     jwt.sign(email, process.env.JWT_KEY, (err, token) => {
                         if (err) throw err;
-                        resolve([true, token]);
+                        resolve([true, {
+                            "id" : result[0]['id'],
+                            "token" : token
+                        }]);
                     });
                 } else {
                     resolve([false]);
