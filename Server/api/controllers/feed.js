@@ -19,7 +19,7 @@ exports.getUserFeed = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [id,count, offset]
+    const args = [id, parseInt(count), parseInt(offset)]
     feedModel.getUserFeed(args).then(result => {
         res.status(status.OK).json(result);
     })
