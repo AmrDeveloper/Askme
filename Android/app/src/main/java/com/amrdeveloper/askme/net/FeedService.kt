@@ -10,7 +10,7 @@ interface FeedService {
     @GET("feeds/")
     fun getUserFeed(
         @Query("id") userId: String,
-        @Query("offset") offset: Int = 0,
-        @Query("count") count: Int = 25
-    ): Call<Feed>
+        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
+        @Query("count") count: Int = DEFAULT_QUERY_COUNT
+    ): Call<List<Feed>>
 }

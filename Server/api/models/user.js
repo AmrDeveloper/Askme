@@ -41,7 +41,8 @@ exports.register = user => new Promise((resolve, reject) => {
 });
 
 exports.queryUsers = args => new Promise((resolve, reject) => {
-    const query = `SELECT DISTINCT users.name, 
+    const query = `SELECT DISTINCT users.id,
+                                   users.name, 
                                    users.username,
                                    users.email,
                                    users.avatar,
@@ -65,7 +66,8 @@ exports.queryUsers = args => new Promise((resolve, reject) => {
 });
 
 exports.getOneUser = args => new Promise((resolve, reject) => {
-    const query = `SELECT DISTINCT users.name, 
+    const query = `SELECT DISTINCT users.id,
+                                   users.name, 
                                    users.username,
                                    users.email,
                                    users.avatar,
