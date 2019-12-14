@@ -24,6 +24,7 @@ app.use((req, res, next) => {
 
 //Routers
 const API_VERSION = "/v1/";
+const feedRoutes = require('./api/routes/feed');
 const userRoutes = require('./api/routes/user');
 const questionRoutes = require('./api/routes/question');
 const answerRoutes = require('./api/routes/answer');
@@ -31,7 +32,9 @@ const followRoutes = require('./api/routes/follow');
 const reactRoutes = require('./api/routes/react');
 const notificationRoutes = require('./api/routes/notification');
 
+//Bind routers
 app.use(API_VERSION + 'users', userRoutes);
+app.use(API_VERSION + 'feeds', feedRoutes);
 app.use(API_VERSION + 'questions', questionRoutes);
 app.use(API_VERSION + 'answers', answerRoutes);
 app.use(API_VERSION + 'follows', followRoutes);
