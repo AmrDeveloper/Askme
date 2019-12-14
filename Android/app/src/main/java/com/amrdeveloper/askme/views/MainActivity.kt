@@ -38,22 +38,30 @@ class MainActivity : AppCompatActivity() {
             when (menu.itemId) {
                 R.id.navigation_home -> {
                     mActionBar.notNull { it.title = "Home" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
+                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
+                        HomeFragment()
+                    )
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_notifications -> {
                     mActionBar.notNull { it.title = "Notifications" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers, NotificationFragment())
+                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
+                        NotificationFragment()
+                    )
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_people -> {
                     mActionBar.notNull { it.title = "People" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers, PeopleFragment())
+                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
+                        PeopleFragment()
+                    )
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
                     mActionBar.notNull { it.title = "Profile" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers, ProfileFragment())
+                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
+                        ProfileFragment()
+                    )
                     return@OnNavigationItemSelectedListener true
                 }
             }

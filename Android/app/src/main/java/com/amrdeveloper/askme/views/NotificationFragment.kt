@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.views
 
 import androidx.fragment.app.Fragment
 
