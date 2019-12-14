@@ -6,7 +6,6 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.data.Feed
-import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
 
 class FeedViewModel : ViewModel() {
 

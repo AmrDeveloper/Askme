@@ -8,7 +8,7 @@ const QUERY_MAX_COUNT = 50;
 exports.getAllNotifications = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const id = req.param.id;
+    const id = req.query.id;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }

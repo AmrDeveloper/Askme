@@ -48,6 +48,6 @@ private val DIFF_CALL_BACK : DiffUtil.ItemCallback<Feed> = object : DiffUtil.Ite
     }
 
     override fun areContentsTheSame(oldItem: Feed, newItem: Feed): Boolean {
-        return oldItem.answerBody == newItem.answerBody
+        return oldItem == newItem
     }
 }
