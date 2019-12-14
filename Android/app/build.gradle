@@ -36,9 +36,13 @@ ext.picassoVersion = '2.71828'
 ext.retrofitVersion = '2.5.0'
 ext.eventBusVersion = '3.1.1'
 
+ext.pagingVersion = "2.1.0"
+ext.lifecycleVersion = "2.1.0"
+
 ext.cardVersion = '1.0.0'
 ext.recyclerVersion = '1.1.0'
 ext.materialVersion = '1.2.0-alpha02'
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -54,6 +58,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
     implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
 
     implementation "org.greenrobot:eventbus:$eventBusVersion"
 
