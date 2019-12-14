@@ -18,7 +18,7 @@ exports.getPostReactions = (req, res) => {
 
     const answerId = req.body.answerId;
 
-    const args = [answerId, count, offset];
+    const args = [answerId, parseInt(count), parseInt(offset)];
 
     reactModel.getPostReactions(args).then(result => {
         res.status(status.OK).json(result);

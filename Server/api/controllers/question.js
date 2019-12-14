@@ -19,7 +19,7 @@ exports.getUserQuestions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [userId, count, offset];
+    const args = [userId, parseInt(count), parseInt(offset)];
 
     questionModel.getUserQuestions(args).then(result => {
         res.status(status.OK).json(result);
@@ -39,7 +39,7 @@ exports.getAskedQuestions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [userId, count, offset];
+    const args = [userId, parseInt(count), parseInt(offset)];
 
     questionModel.getAskedQuestions(args).then(result => {
         res.status(status.OK).json(result);

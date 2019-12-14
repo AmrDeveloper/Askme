@@ -19,7 +19,7 @@ exports.getUserFollowing = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [id, count, offset];
+    const args = [id, parseInt(count), parseInt(offset)];
 
     followModel.getUserFollowing(args).then(result => {
         res.status(status.OK).json(result);
@@ -39,7 +39,7 @@ exports.getUserFollowers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [id, count, offset];
+    const args = [id, parseInt(count), parseInt(offset)];
 
     followModel.getUserFollowers(args).then(result => {
         res.status(status.OK).json(result);

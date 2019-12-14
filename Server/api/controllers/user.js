@@ -78,7 +78,7 @@ exports.getAllUsers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [count, offset];
+    const args = [parseInt(count), parseInt(offset)];
 
     userModel.queryUsers(args).then(result => {
         res.status(status.OK).json(result)
@@ -104,7 +104,7 @@ exports.searchUsers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [keyword, keyword, keyword, offset, count];
+    const args = [keyword, keyword, keyword, parseInt(count), parseInt(offset)];
 
     userModel.searchUsers(args).then(result => {
         res.status(status.OK).json(result)
