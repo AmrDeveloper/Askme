@@ -47,7 +47,7 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccessEvent(event: LoginSuccessEvent) {
         val session = Session()
-        session.login(applicationContext, event.email, event.password, event.token)
+        session.login(applicationContext, event.id, event.email, event.password, event.token)
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

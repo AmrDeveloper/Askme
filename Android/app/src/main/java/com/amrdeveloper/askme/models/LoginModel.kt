@@ -3,6 +3,7 @@ package com.amrdeveloper.askme.models
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.contracts.LoginContract
+import com.amrdeveloper.askme.data.SessionData
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent
 import org.greenrobot.eventbus.EventBus
@@ -22,18 +23,25 @@ class LoginModel : LoginContract.Model {
 
     override fun makeLoginRequest(loginData: LoginData) {
         AskmeClient.getUserService().login(loginData)
-            .enqueue(object : Callback<String> {
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    EventBus.getDefault().post(LoginFailureEvent())
-                }
-
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+            .enqueue(object : Callback<SessionData> {
+                override fun onResponse(call: Call<SessionData>, response: Response<SessionData>) {
                     if (response.code() == 200) {
-                        val token = response.body().toString()
-                        EventBus.getDefault().post(LoginSuccessEvent(loginData.email, loginData.password, token))
+                        val sessionData = response.body()
+                        EventBus.getDefault().post(
+                            LoginSuccessEvent(
+                                sessionData!!.userId,
+                                loginData.email,
+                                loginData.password,
+                                sessionData.authToken
+                            )
+                        )
                     } else {
                         EventBus.getDefault().post(LoginFailureEvent())
                     }
+                }
+
+                override fun onFailure(call: Call<SessionData>, t: Throwable) {
+                    EventBus.getDefault().post(LoginFailureEvent())
                 }
             })
     }

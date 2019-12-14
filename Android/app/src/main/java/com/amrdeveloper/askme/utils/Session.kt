@@ -5,7 +5,7 @@ import com.amrdeveloper.askme.data.Constants
 
 class Session {
 
-    fun login(context: Context, email: String, password: String, token: String): Boolean {
+    fun login(context: Context, id : String, email: String, password: String, token: String): Boolean {
         val preferencesEditor =
             context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
         preferencesEditor.putString(Constants.EMAIL, email)
@@ -18,6 +18,12 @@ class Session {
         val preferencesEditor =
             context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
         return preferencesEditor.clear().commit()
+    }
+
+    fun getUserId(context: Context): String? {
+        val preferences =
+            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+        return preferences.getString(Constants.USER_ID, "")
     }
 
     fun getUserToken(context: Context): String? {
@@ -36,6 +42,13 @@ class Session {
         val preferences =
             context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
         return preferences.getString(Constants.PASSWORD, "")
+    }
+
+    fun updateUserId(context: Context, id: String): Boolean {
+        val preferencesEditor =
+            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+        preferencesEditor.putString(Constants.USER_ID, id)
+        return preferencesEditor.commit()
     }
 
     fun updateToken(context: Context, token: String): Boolean {
