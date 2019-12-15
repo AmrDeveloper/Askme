@@ -43,6 +43,7 @@ class ProfileFragment : AskmeFragment(), ProfileContract.View{
         val view = inflater.inflate(R.layout.profile_layout, container, false)
         feedListSetup(view)
         getUserInformation()
+        loadUserFeed()
         return view
     }
 
@@ -60,7 +61,6 @@ class ProfileFragment : AskmeFragment(), ProfileContract.View{
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 response.body().notNull {
                     bindUserProfile(it)
-                    loadUserFeed(it.id)
                 }
             }
 
@@ -86,7 +86,8 @@ class ProfileFragment : AskmeFragment(), ProfileContract.View{
         userWallpaper.loadImage(user.wallpaperUrl)
     }
 
-    private fun loadUserFeed(userId : String){
+    private fun loadUserFeed(){
+        val userId  = Session().getUserId(context!!).toString()
         FeedViewModel.setUserId(userId)
         val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
