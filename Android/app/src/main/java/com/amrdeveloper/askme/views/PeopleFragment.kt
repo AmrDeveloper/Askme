@@ -61,11 +61,11 @@ class PeopleFragment : Fragment(), PeopleContract.View{
     }
 
     override fun showProgressBar() {
-        mLoadingBar.gone()
+        mLoadingBar.show()
     }
 
     override fun hideProgressBar() {
-        mLoadingBar.show()
+        mLoadingBar.gone()
     }
 
     override fun onStart() {
