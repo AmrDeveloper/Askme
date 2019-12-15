@@ -12,7 +12,7 @@ import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.adapter.FeedPagedAdapter
+import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.ProfileContract
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.User
@@ -35,7 +35,7 @@ class ProfileFragment : Fragment(), ProfileContract.View{
 
     private lateinit var mLoadingBar : ProgressBar
     private lateinit var mProfilePresenter: ProfilePresenter
-    private lateinit var mFeedAdapter: FeedPagedAdapter
+    private lateinit var mFeedAdapter: FeedAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +51,7 @@ class ProfileFragment : Fragment(), ProfileContract.View{
     }
 
     private fun feedListSetup(view : View){
-        mFeedAdapter = FeedPagedAdapter()
+        mFeedAdapter = FeedAdapter()
         val listItems = view.findViewById<RecyclerView>(R.id.listItems)
         listItems.setHasFixedSize(true)
         listItems.layoutManager = LinearLayoutManager(context)

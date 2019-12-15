@@ -13,7 +13,7 @@ import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.setTextOrHide
 import kotlinx.android.synthetic.main.feed_list_item.view.*
 
-class FeedPagedAdapter : PagedListAdapter<Feed, FeedPagedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
+class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)

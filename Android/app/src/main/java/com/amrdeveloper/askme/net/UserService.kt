@@ -15,8 +15,14 @@ interface UserService {
 
     @POST("users/register")
     @Headers("content-type: application/json")
-    fun register(@Body body: RegisterData) : Call<String>
+    fun register(@Body body: RegisterData): Call<String>
 
     @GET("users/{email}")
-    fun getUserByEmail(@Path("email") email : String) : Call<User>
+    fun getUserByEmail(@Path("email") email: String): Call<User>
+
+    @GET("users/")
+    fun getUsersQuery(
+        @Query("count") count: Int = DEFAULT_QUERY_COUNT,
+        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
+    ): Call<List<User>>
 }
