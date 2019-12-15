@@ -1,6 +1,7 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.contracts
 
 import androidx.lifecycle.LifecycleOwner
+import com.amrdeveloper.askme.models.UserViewModel
 
 interface PeopleContract {
 

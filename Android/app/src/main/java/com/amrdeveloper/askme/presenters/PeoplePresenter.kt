@@ -1,6 +1,9 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.presenters
 
 import androidx.lifecycle.LifecycleOwner
+import com.amrdeveloper.askme.models.PeopleModel
+import com.amrdeveloper.askme.models.UserViewModel
+import com.amrdeveloper.askme.contracts.PeopleContract
 
 class PeoplePresenter(
     private val view : PeopleContract.View,

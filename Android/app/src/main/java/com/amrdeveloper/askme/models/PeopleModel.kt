@@ -1,7 +1,8 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.models
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.amrdeveloper.askme.contracts.PeopleContract
 import com.amrdeveloper.askme.events.LoadFinishEvent
 import org.greenrobot.eventbus.EventBus
 

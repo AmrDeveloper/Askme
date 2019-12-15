@@ -7,14 +7,14 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_whatshot"
-        android:title="@string/notifications" />
-
-    <item
         android:id="@+id/navigation_people"
         android:icon="@drawable/ic_people"
         android:title="@string/people" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_whatshot"
+        android:title="@string/notifications" />
 
     <item
         android:id="@+id/navigation_profile"

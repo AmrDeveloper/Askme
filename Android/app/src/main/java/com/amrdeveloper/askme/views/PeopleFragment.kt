@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amrdeveloper.askme.PeopleContract
-import com.amrdeveloper.askme.PeoplePresenter
+import com.amrdeveloper.askme.contracts.PeopleContract
+import com.amrdeveloper.askme.presenters.PeoplePresenter
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.UserViewModel
+import com.amrdeveloper.askme.models.UserViewModel
 import com.amrdeveloper.askme.adapter.PeopleAdapter
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.events.LoadFinishEvent
@@ -39,7 +39,11 @@ class PeopleFragment : Fragment(), PeopleContract.View{
         setupUserList(view)
 
         val userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        mPeoplePresenter = PeoplePresenter(this, userViewModel, this)
+        mPeoplePresenter = PeoplePresenter(
+            this,
+            userViewModel,
+            this
+        )
         mPeoplePresenter.startLoadingPeople()
 
         return view
