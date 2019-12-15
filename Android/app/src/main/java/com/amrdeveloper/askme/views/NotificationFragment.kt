@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,8 +40,9 @@ class NotificationFragment: AskmeFragment() , NotificationContract.View{
         notiListSetup(view)
         loadingBar = view.findViewById(R.id.loadingBar)
 
-        NotificationViewModel.setUserId(Session().getUserId(context!!).toString())
-        NotificationViewModel.setToken(Session().getUserToken(context!!).toString())
+        val session = Session()
+        NotificationViewModel.setUserId(session.getUserId(context!!).toString())
+        NotificationViewModel.setToken(session.getUserToken(context!!).toString())
         val notificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
 
         mNotiPresenter = NotificationPresenter(this, notificationViewModel ,this )

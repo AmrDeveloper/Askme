@@ -8,6 +8,7 @@ class Session {
     fun login(context: Context, id : String, email: String, password: String, token: String): Boolean {
         val preferencesEditor =
             context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+        preferencesEditor.putString(Constants.USER_ID, id)
         preferencesEditor.putString(Constants.EMAIL, email)
         preferencesEditor.putString(Constants.PASSWORD, password)
         preferencesEditor.putString(Constants.LOGIN_TOKEN, token)
