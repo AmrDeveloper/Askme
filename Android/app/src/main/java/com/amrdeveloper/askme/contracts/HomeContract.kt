@@ -1,7 +1,7 @@
 package com.amrdeveloper.askme.contracts
 
 import androidx.lifecycle.LifecycleOwner
-import com.amrdeveloper.askme.HomeViewModel
+import com.amrdeveloper.askme.models.HomeViewModel
 
 interface HomeContract {
 

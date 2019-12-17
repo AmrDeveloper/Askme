@@ -15,22 +15,22 @@
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            app:civ_border_color="@color/darkBlue"
-            app:civ_border_width="1dp"
-            android:src="@drawable/ic_profile"
             android:id="@+id/questionUserAvatar"
             android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_height="35dp"
+            android:src="@drawable/ic_profile"
+            app:civ_border_color="@color/darkBlue"
+            app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/questionTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
             android:layout_toEndOf="@id/questionUserAvatar"
             android:lines="2"
             android:padding="2dp"
             android:textColor="@color/darkBlue"
-            android:layout_marginStart="1dp"
             tools:text="Hello how are you bro?" />
 
         <TextView
@@ -38,18 +38,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/questionTxt"
+            android:gravity="center"
+            android:padding="3dp"
             android:textColor="@color/darkBlue"
             android:textStyle="bold"
-            android:padding="3dp"
-            android:gravity="center"
             tools:text="Asked By" />
 
         <TextView
             android:id="@+id/answerDateTxt"
-            android:layout_toEndOf="@id/questionFrom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/questionTxt"
+            android:layout_toEndOf="@id/questionFrom"
             android:gravity="center"
             android:padding="3dp"
             tools:text="9 h ago" />
@@ -59,20 +59,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/answerDateTxt"
-            android:textColor="@color/darkBlue"
             android:lines="2"
             android:padding="2dp"
+            android:textColor="@color/darkBlue"
             tools:text="I am find thanks for question byo" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/answerUserAvatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_below="@+id/answerTxt"
+            android:src="@drawable/ic_profile"
+            app:civ_border_color="@color/darkBlue"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/answerFrom"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@id/answerTxt"
+            android:layout_toEndOf="@id/answerUserAvatar"
+            android:gravity="center"
+            android:padding="2dp"
+            android:textStyle="bold"
+            android:textColor="@color/darkBlue"
+            tools:text="amrdeveloper" />
 
         <TextView
             android:id="@+id/reactionsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawablePadding="2dp"
-            android:textColor="@color/darkBlue"
             android:layout_below="@id/answerTxt"
+            android:layout_alignParentEnd="true"
             android:drawableStart="@drawable/ic_react"
+            android:drawablePadding="2dp"
             android:gravity="center"
+            android:textColor="@color/darkBlue"
             tools:text="10" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

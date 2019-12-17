@@ -34,10 +34,12 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
             itemView.questionTxt.text = feed.questionBody
             itemView.answerTxt.text = feed.answerBody
             itemView.questionFrom.text = feed.toUserName
+            itemView.answerFrom.text = feed.fromUserName
             itemView.answerDateTxt.setTextOrHide(feed.answerDate)
             itemView.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
 
             itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
+            itemView.answerUserAvatar.loadImage(feed.fromUserAvatar)
         }
     }
 }

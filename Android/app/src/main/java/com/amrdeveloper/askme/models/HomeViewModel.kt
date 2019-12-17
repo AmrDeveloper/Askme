@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.models
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,7 @@ class HomeViewModel : ViewModel(){
         private lateinit var userId: String
 
         fun setUserId(id: String) {
-            this.userId = id
+            userId = id
         }
     }
 
@@ -22,7 +22,8 @@ class HomeViewModel : ViewModel(){
     private var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
 
     init {
-        val homeDataSourceFactory = HomeDataSourceFactory(HomeViewModel.userId)
+        val homeDataSourceFactory =
+            HomeDataSourceFactory(userId)
         liveDataSource = homeDataSourceFactory.getHomeLiveDataSource()
 
         val config: PagedList.Config =

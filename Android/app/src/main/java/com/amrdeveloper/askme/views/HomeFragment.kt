@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.amrdeveloper.askme.HomePresenter
-import com.amrdeveloper.askme.HomeViewModel
+import com.amrdeveloper.askme.presenters.HomePresenter
+import com.amrdeveloper.askme.models.HomeViewModel
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.HomeContract
@@ -45,7 +45,11 @@ class HomeFragment : Fragment(), HomeContract.View {
         //HomeViewModel.setUserId(session.getUserId(context!!).toString())
         val homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        mHomePresenter = HomePresenter(this, homeViewModel , this)
+        mHomePresenter = HomePresenter(
+            this,
+            homeViewModel,
+            this
+        )
         mHomePresenter.startLoadingHomeFeed()
 
         return view

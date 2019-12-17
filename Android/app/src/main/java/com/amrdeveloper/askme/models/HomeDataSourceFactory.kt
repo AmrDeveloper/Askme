@@ -1,9 +1,10 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.models
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.models.HomeDataSource
 
 class HomeDataSourceFactory(var userId : String) : DataSource.Factory<Int, Feed>() {
 

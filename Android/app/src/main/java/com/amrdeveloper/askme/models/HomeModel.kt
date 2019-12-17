@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme
+package com.amrdeveloper.askme.models
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
