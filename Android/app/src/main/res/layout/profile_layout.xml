@@ -45,8 +45,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="2dp"
         app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
 
         <include layout="@layout/user_grid_analysis" />
@@ -55,40 +55,43 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="2dp"
         app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/userStatus"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            tools:text="Time is limited don't waste it" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/userAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_location"
-            android:padding="5dp"
-            tools:text="Alexandria, Egypt" />
+            <TextView
+                android:id="@+id/userStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="5dp"
+                tools:text="Time is limited don't waste it" />
 
-        <TextView
-            android:id="@+id/userJoinDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_time"
-            android:padding="5dp"
-            tools:text="2 years ago" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/userAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_location"
+                android:padding="5dp"
+                tools:text="Alexandria, Egypt" />
+
+            <TextView
+                android:id="@+id/userJoinDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_time"
+                android:padding="5dp"
+                tools:text="2 years ago" />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <include layout="@layout/ask_question_layout"/>
 
     <include layout="@layout/list_layout" />
 </LinearLayout>

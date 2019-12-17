@@ -12,4 +12,7 @@
     <string name="notifications">Notifications</string>
     <string name="people">People</string>
     <string name="profile">Profile</string>
+    <string name="question_message" translatable="false">What, when, why... ask</string>
+    <string name="ask">Ask</string>
+    <string name="ask_anonymously">Anonymously</string>
 </resources>
