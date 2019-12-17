@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.get('/', controller.getUserFeed);
 
+router.get('/home', controller.getHomeFeed);
+
 module.exports = router;

@@ -24,3 +24,22 @@ exports.getUserFeed = (req, res) => {
         res.status(status.OK).json(result);
     })
 };
+
+exports.getHomeFeed = (req, res) => {
+    const id = req.query.id;
+    var offset = req.query.offset;
+    var count = req.query.count;
+
+    if (offset == null) {
+        offset = QUERY_DEFAULT_OFFSET;
+    }
+
+    if (count == null || count > QUERY_MAX_COUNT) {
+        count = QUERY_DEFAULT_COUNT;
+    }
+
+    const args = [id, parseInt(count), parseInt(offset)]
+    feedModel.getHomeFeed(args).then(result => {
+        res.status(status.OK).json(result);
+    })
+};
