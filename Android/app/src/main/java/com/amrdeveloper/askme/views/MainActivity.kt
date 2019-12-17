@@ -35,6 +35,11 @@ class MainActivity : AppCompatActivity() {
 
     private val onNavigationItemSelection =
         BottomNavigationView.OnNavigationItemSelectedListener { menu ->
+            val selectedId = mMainActivity.mainNavigation.selectedItemId
+            if(selectedId == menu.itemId){
+                return@OnNavigationItemSelectedListener false
+            }
+
             when (menu.itemId) {
                 R.id.navigation_home -> {
                     mActionBar.notNull { it.title = "Home" }
