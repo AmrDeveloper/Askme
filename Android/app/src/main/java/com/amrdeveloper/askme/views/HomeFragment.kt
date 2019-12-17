@@ -6,13 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.amrdeveloper.askme.HomePresenter
+import com.amrdeveloper.askme.HomeViewModel
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
+import com.amrdeveloper.askme.contracts.HomeContract
+import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.events.LoadFinishEvent
+import com.amrdeveloper.askme.extensions.gone
+import com.amrdeveloper.askme.extensions.show
+import com.amrdeveloper.askme.utils.Session
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), HomeContract.View {
 
     private lateinit var mLoadingBar: ProgressBar
     private lateinit var mFeedAdapter : FeedAdapter
+    private lateinit var mHomePresenter: HomePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +37,54 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.list_layout, container, false)
         mLoadingBar = view.findViewById(R.id.loadingBar)
+        setupUserList(view)
+
+        val session = Session()
+        //15 for testing
+        HomeViewModel.setUserId("15")
+        //HomeViewModel.setUserId(session.getUserId(context!!).toString())
+        val homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
+        mHomePresenter = HomePresenter(this, homeViewModel , this)
+        mHomePresenter.startLoadingHomeFeed()
 
         return view
+    }
+
+    private fun setupUserList(view : View){
+        mFeedAdapter = FeedAdapter()
+        val listItems  = view.findViewById<RecyclerView>(R.id.listItems)
+        listItems.setHasFixedSize(true)
+        listItems.layoutManager = LinearLayoutManager(context)
+        listItems.adapter = mFeedAdapter
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<Feed>>){
+        mFeedAdapter.submitList(event.data)
+        hideProgressBar()
+    }
+
+    override fun showProgressBar() {
+        mLoadingBar.show()
+    }
+
+    override fun hideProgressBar() {
+        mLoadingBar.gone()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
     }
 }

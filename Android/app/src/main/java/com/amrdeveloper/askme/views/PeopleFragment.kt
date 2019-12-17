@@ -39,11 +39,8 @@ class PeopleFragment : Fragment(), PeopleContract.View{
         setupUserList(view)
 
         val userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
-        mPeoplePresenter = PeoplePresenter(
-            this,
-            userViewModel,
-            this
-        )
+        mPeoplePresenter = PeoplePresenter(this,  userViewModel,this)
+
         mPeoplePresenter.startLoadingPeople()
 
         return view
@@ -56,7 +53,6 @@ class PeopleFragment : Fragment(), PeopleContract.View{
         listItems.layoutManager = LinearLayoutManager(context)
         listItems.adapter = mUserAdapter
     }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<User>>){
