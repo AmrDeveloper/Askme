@@ -13,4 +13,11 @@ interface FeedService {
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
         @Query("count") count: Int = DEFAULT_QUERY_COUNT
     ): Call<List<Feed>>
+
+    @GET("feeds/home")
+    fun getHomeFeed(
+        @Query("id") userId: String,
+        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
+        @Query("count") count: Int = DEFAULT_QUERY_COUNT
+    ): Call<List<Feed>>
 }
