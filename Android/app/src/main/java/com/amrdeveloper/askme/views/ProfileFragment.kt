@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.ProfileContract
+import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
@@ -36,6 +37,7 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment(), ProfileContract.View{
 
+    private lateinit var mUserEmail : String
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding : ProfileLayoutBinding
@@ -46,6 +48,8 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         savedInstanceState: Bundle?
     ): View? {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container,false)
+
+        mUserEmail = savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).toString()
 
         feedListSetup()
         getUserInformation()
@@ -74,8 +78,7 @@ class ProfileFragment : Fragment(), ProfileContract.View{
     }
 
     private fun getUserInformation(){
-        val userEmail = Session().getUserEmail(context!!)
-        AskmeClient.getUserService().getUserByEmail(userEmail.toString()).enqueue(object : Callback<User>{
+        AskmeClient.getUserService().getUserByEmail(mUserEmail).enqueue(object : Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 response.body().notNull {
                     bindUserProfile(it)
@@ -93,8 +96,10 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         val localId = Session().getUserId(context!!)
         if(localId == user.id){
             askText.text = getString(R.string.ask_yourself)
+            askText.setTag(0,user.id)
         }else{
             askText.text = "Ask ${user.username}"
+            askText.setTag(0,user.id)
         }
     }
 
