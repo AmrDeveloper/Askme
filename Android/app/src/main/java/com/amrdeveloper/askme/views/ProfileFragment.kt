@@ -15,6 +15,7 @@ import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.ProfileContract
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.data.QuestionData
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.events.LoadFinishEvent
@@ -49,7 +50,7 @@ class ProfileFragment : Fragment(), ProfileContract.View{
     ): View? {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container,false)
 
-        mUserEmail = savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).toString()
+        mUserEmail = savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).str()
 
         feedListSetup()
         getUserInformation()
@@ -68,12 +69,36 @@ class ProfileFragment : Fragment(), ProfileContract.View{
 
     private fun setupAskNewQuestion(){
         mProfileBinding.questionLayout.askButton.setOnClickListener {
-            val fromUserId = Session().getUserId(context!!).toString()
-            val isAnonymously = mProfileBinding.questionLayout.anonymouslySwitch.isChecked
-            val questionBody = mProfileBinding.questionLayout.questionText.text?.trim()
-            val toUserId = askText.getTag(0)
-            //TODO : validate information
-            //TODO : Make new question request
+            val fromUserId = Session().getUserId(context!!).str()
+            val isAnonymously = mProfileBinding.questionLayout.anonymouslySwitch.isChecked.str()
+            val questionBody = mProfileBinding.questionLayout.questionText.text?.trim().str()
+            val toUserId = askText.getTag(0).str()
+
+            if(questionBody.isNullOrEmpty() || questionBody.length > 300){
+                Toast.makeText(context, "Invalid Question", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val questionData = QuestionData(questionBody,toUserId, fromUserId, isAnonymously)
+
+            AskmeClient.getQuestionService()
+                .createNewQueestion(
+                    token = "auth ${Session().getUserToken(context!!).str()}",
+                    question = questionData
+                )
+                .enqueue(object : Callback<String>{
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                         if(response.code() == 200){
+                             Toast.makeText(context, "Send is Done", Toast.LENGTH_SHORT).show()
+                         }else{
+                             Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
+                         }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                         Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
+                    }
+                })
         }
     }
 
@@ -109,11 +134,11 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         userStatus.setTextOrGone(user.status)
         userJoinDate.setTextOrGone(user.joinDate)
 
-        userFollowing.text = user.followingNum.toString()
-        userFollowers.text = user.followersNum.toString()
-        userLikes.text = user.reactionsNum.toString()
-        userQuestions.text = user.questionsNum.toString()
-        userAnswers.text = user.answersNum.toString()
+        userFollowing.text = user.followingNum.str()
+        userFollowers.text = user.followersNum.str()
+        userLikes.text = user.reactionsNum.str()
+        userQuestions.text = user.questionsNum.str()
+        userAnswers.text = user.answersNum.str()
 
         userAvatar.loadImage(user.avatarUrl)
         userWallpaper.loadImage(user.wallpaperUrl)
