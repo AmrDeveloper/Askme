@@ -30,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         mMenuManager = MenuManager(menu, this)
         mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
+        supportFragmentManager.openFragmentInto(R.id.viewContainers,
+            HomeFragment()
+        )
         return super.onCreateOptionsMenu(menu)
     }
 

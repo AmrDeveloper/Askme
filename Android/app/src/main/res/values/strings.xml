@@ -15,4 +15,5 @@
     <string name="question_message" translatable="false">What, when, why... ask</string>
     <string name="ask">Ask</string>
     <string name="ask_anonymously">Anonymously</string>
+    <string name="ask_yourself">Ask Yourself</string>
 </resources>

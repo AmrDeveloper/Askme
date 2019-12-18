@@ -56,6 +56,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:id="@+id/textLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/questionInputLayout"
+            android:layout_toStartOf="@id/askButton"
+            android:textColor="@color/white"
+            tools:text="300" />
+
         <Button
             android:id="@+id/askButton"
             android:layout_width="wrap_content"

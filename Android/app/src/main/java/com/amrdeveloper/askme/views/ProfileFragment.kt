@@ -1,19 +1,15 @@
 package com.amrdeveloper.askme.views
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.ProfileContract
@@ -27,6 +23,8 @@ import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.presenters.ProfilePresenter
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.ask_question_layout.*
+import kotlinx.android.synthetic.main.ask_question_layout.view.*
+import kotlinx.android.synthetic.main.list_layout.view.*
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
 import org.greenrobot.eventbus.EventBus
@@ -38,7 +36,6 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment(), ProfileContract.View{
 
-    private lateinit var mLoadingBar : ProgressBar
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding : ProfileLayoutBinding
@@ -49,28 +46,30 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         savedInstanceState: Bundle?
     ): View? {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container,false)
-        val view = mProfileBinding.root
-        mLoadingBar = view.findViewById(R.id.loadingBar)
 
-        feedListSetup(view)
+        feedListSetup()
         getUserInformation()
         loadUserFeed()
-        setupAskNewQuestion(view)
-        return view
+        setupAskNewQuestion()
+        return  mProfileBinding.root
     }
 
-    private fun feedListSetup(view : View){
+    private fun feedListSetup(){
         mFeedAdapter = FeedAdapter()
-        val listItems = view.findViewById<RecyclerView>(R.id.listItems)
-        listItems.setHasFixedSize(true)
-        listItems.layoutManager = LinearLayoutManager(context)
-        listItems.adapter = mFeedAdapter
+        mProfileBinding.listLayout.listItems.setHasFixedSize(true)
+        mProfileBinding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
+        mProfileBinding.listLayout.listItems.isNestedScrollingEnabled = false
+        mProfileBinding.listLayout.listItems.adapter = mFeedAdapter
     }
 
-    private fun setupAskNewQuestion(view : View){
-        val askButton : Button = view.findViewById(R.id.askButton)
-        askButton.setOnClickListener {
-
+    private fun setupAskNewQuestion(){
+        mProfileBinding.questionLayout.askButton.setOnClickListener {
+            val fromUserId = Session().getUserId(context!!).toString()
+            val isAnonymously = mProfileBinding.questionLayout.anonymouslySwitch.isChecked
+            val questionBody = mProfileBinding.questionLayout.questionText.text?.trim()
+            val toUserId = askText.getTag(0)
+            //TODO : validate information
+            //TODO : Make new question request
         }
     }
 
@@ -90,11 +89,10 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         })
     }
 
-    @SuppressLint("SetTextI18n")
     private fun setupAskBordTitle(user : User){
         val localId = Session().getUserId(context!!)
         if(localId == user.id){
-            askText.text = "Ask Yourself"
+            askText.text = getString(R.string.ask_yourself)
         }else{
             askText.text = "Ask ${user.username}"
         }
@@ -132,11 +130,11 @@ class ProfileFragment : Fragment(), ProfileContract.View{
     }
 
     override fun showProgressBar() {
-        mLoadingBar.show()
+        mProfileBinding.listLayout.loadingBar.show()
     }
 
     override fun hideProgressBar() {
-        mLoadingBar.gone()
+        mProfileBinding.listLayout.loadingBar.gone()
     }
 
     override fun onStart() {
