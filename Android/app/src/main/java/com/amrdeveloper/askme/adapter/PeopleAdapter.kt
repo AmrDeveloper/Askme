@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,12 @@ import kotlinx.android.synthetic.main.user_list_item.view.*
 
 class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_CALL_BACK){
 
+    interface OnUserClickListener{
+        fun onClick(user : User)
+    }
+
+    private lateinit var mOnclickListener : OnUserClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.user_list_item, parent, false)
@@ -24,7 +31,16 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
         val user = getItem(position)
         user.notNull {
             holder.bingUser(user!!)
+            holder.itemView.setOnClickListener {
+                if(::mOnclickListener.isInitialized){
+                    mOnclickListener.onClick(user)
+                }
+            }
         }
+    }
+
+    fun setOnUserClickListener(listener: OnUserClickListener){
+        mOnclickListener = listener
     }
 
     class UserViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
