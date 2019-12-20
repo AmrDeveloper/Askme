@@ -54,7 +54,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
         mUserEmail =
             savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).str()
-        if (mUserEmail == "null") {
+        if (mUserEmail.isNullString()) {
             mUserEmail = Session().getUserEmail(context!!).str()
         }
 
