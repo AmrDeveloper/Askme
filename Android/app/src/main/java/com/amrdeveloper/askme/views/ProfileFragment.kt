@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,15 +51,13 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         mProfileBinding =
             DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
 
-        mUserEmail =
-            savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).str()
+        mUserEmail = arguments?.getString(Constants.EMAIL).str()
         if (mUserEmail.isNullString()) {
             mUserEmail = Session().getUserEmail(context!!).str()
         }
 
         feedListSetup()
         getUserInformation()
-        loadUserFeed()
         setupAskNewQuestion()
         return mProfileBinding.root
     }
@@ -114,6 +111,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 response.body().notNull {
                     bindUserProfile(it)
+                    loadUserFeed(it.id)
                     setupAskBordTitle(it)
                 }
             }
@@ -151,8 +149,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         userWallpaper.loadImage(user.wallpaperUrl)
     }
 
-    private fun loadUserFeed() {
-        val userId = Session().getUserId(context!!).toString()
+    private fun loadUserFeed(userId : String) {
         FeedViewModel.setUserId(userId)
         val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
