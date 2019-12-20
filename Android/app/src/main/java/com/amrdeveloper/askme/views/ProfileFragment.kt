@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,30 +37,35 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileFragment : Fragment(), ProfileContract.View{
+class ProfileFragment : Fragment(), ProfileContract.View {
 
-    private lateinit var mUserEmail : String
+    private lateinit var mUserEmail: String
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
-    private lateinit var mProfileBinding : ProfileLayoutBinding
+    private lateinit var mProfileBinding: ProfileLayoutBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container,false)
+        mProfileBinding =
+            DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
 
-        mUserEmail = savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).str()
+        mUserEmail =
+            savedInstanceState?.getString(Constants.EMAIL, Session().getUserEmail(context!!)).str()
+        if (mUserEmail == "null") {
+            mUserEmail = Session().getUserEmail(context!!).str()
+        }
 
         feedListSetup()
         getUserInformation()
         loadUserFeed()
         setupAskNewQuestion()
-        return  mProfileBinding.root
+        return mProfileBinding.root
     }
 
-    private fun feedListSetup(){
+    private fun feedListSetup() {
         mFeedAdapter = FeedAdapter()
         mProfileBinding.listLayout.listItems.setHasFixedSize(true)
         mProfileBinding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
@@ -67,43 +73,44 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         mProfileBinding.listLayout.listItems.adapter = mFeedAdapter
     }
 
-    private fun setupAskNewQuestion(){
+    private fun setupAskNewQuestion() {
         mProfileBinding.questionLayout.askButton.setOnClickListener {
             val fromUserId = Session().getUserId(context!!).str()
             val isAnonymously = mProfileBinding.questionLayout.anonymouslySwitch.isChecked.str()
             val questionBody = mProfileBinding.questionLayout.questionText.text?.trim().str()
-            val toUserId = askText.getTag(0).str()
+            val toUserId = askText.tag.str()
 
-            if(questionBody.isNullOrEmpty() || questionBody.length > 300){
+            if (questionBody.isNullOrEmpty() || questionBody.length > 300) {
                 Toast.makeText(context, "Invalid Question", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val questionData = QuestionData(questionBody,toUserId, fromUserId, isAnonymously)
+            val questionData = QuestionData(questionBody, toUserId, fromUserId, isAnonymously)
 
             AskmeClient.getQuestionService()
                 .createNewQueestion(
                     token = "auth ${Session().getUserToken(context!!).str()}",
                     question = questionData
                 )
-                .enqueue(object : Callback<String>{
+                .enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
-                         if(response.code() == 200){
-                             Toast.makeText(context, "Send is Done", Toast.LENGTH_SHORT).show()
-                         }else{
-                             Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
-                         }
+                        if (response.code() == 200) {
+                            Toast.makeText(context, "Send is Done", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
 
                     override fun onFailure(call: Call<String>, t: Throwable) {
-                         Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
                     }
                 })
         }
     }
 
-    private fun getUserInformation(){
-        AskmeClient.getUserService().getUserByEmail(mUserEmail).enqueue(object : Callback<User>{
+    private fun getUserInformation() {
+        AskmeClient.getUserService().getUserByEmail(mUserEmail).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 response.body().notNull {
                     bindUserProfile(it)
@@ -117,18 +124,18 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         })
     }
 
-    private fun setupAskBordTitle(user : User){
+    private fun setupAskBordTitle(user: User) {
         val localId = Session().getUserId(context!!)
-        if(localId == user.id){
+        if (localId == user.id) {
             askText.text = getString(R.string.ask_yourself)
-            askText.setTag(0,user.id)
-        }else{
+            askText.tag = user.id
+        } else {
             askText.text = "Ask ${user.username}"
-            askText.setTag(0,user.id)
+            askText.tag = user.id
         }
     }
 
-    private fun bindUserProfile(user : User){
+    private fun bindUserProfile(user: User) {
         userName.setTextOrGone(user.username)
         userAddress.setTextOrGone(user.address)
         userStatus.setTextOrGone(user.status)
@@ -144,17 +151,17 @@ class ProfileFragment : Fragment(), ProfileContract.View{
         userWallpaper.loadImage(user.wallpaperUrl)
     }
 
-    private fun loadUserFeed(){
-        val userId  = Session().getUserId(context!!).toString()
+    private fun loadUserFeed() {
+        val userId = Session().getUserId(context!!).toString()
         FeedViewModel.setUserId(userId)
         val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
-        mProfilePresenter = ProfilePresenter(this,feedViewModel,this)
+        mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
         mProfilePresenter.startLoadingFeed()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<Feed>>){
+    fun onLoadFinishEvent(event: LoadFinishEvent<PagedList<Feed>>) {
         mFeedAdapter.submitList(event.data)
         hideProgressBar()
     }
