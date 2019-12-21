@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.contracts.PeopleContract
@@ -17,13 +17,9 @@ import com.amrdeveloper.askme.models.UserViewModel
 import com.amrdeveloper.askme.adapter.PeopleAdapter
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class PeopleFragment : Fragment(), PeopleContract.View {
 
@@ -41,6 +37,11 @@ class PeopleFragment : Fragment(), PeopleContract.View {
         setupUserList(view)
 
         val userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        userViewModel.getUserPagedList().observe(this, Observer{
+            mUserAdapter.submitList(it)
+            hideProgressBar()
+        })
+
         mPeoplePresenter = PeoplePresenter(this, userViewModel, this)
 
         mPeoplePresenter.startLoadingPeople()
@@ -60,6 +61,7 @@ class PeopleFragment : Fragment(), PeopleContract.View {
                 val profileFragment = ProfileFragment()
 
                 val args = Bundle()
+                args.putString(Constants.USER_ID, user.id)
                 args.putString(Constants.EMAIL, user.email)
                 profileFragment.arguments = args
 
@@ -68,11 +70,6 @@ class PeopleFragment : Fragment(), PeopleContract.View {
         })
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoadFinishEvent(event: LoadFinishEvent<PagedList<User>>) {
-        mUserAdapter.submitList(event.data)
-        hideProgressBar()
-    }
 
     override fun showProgressBar() {
         mLoadingBar.show()
@@ -80,20 +77,5 @@ class PeopleFragment : Fragment(), PeopleContract.View {
 
     override fun hideProgressBar() {
         mLoadingBar.gone()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        EventBus.getDefault().unregister(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 }

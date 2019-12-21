@@ -12,8 +12,8 @@ class PeopleModel : PeopleContract.Model{
         userViewModel: UserViewModel,
         lifecycleOwner: LifecycleOwner
     ) {
-        userViewModel.getUserPagedList().observe(lifecycleOwner, Observer {
-            EventBus.getDefault().post(LoadFinishEvent(it))
-        })
+        //userViewModel.getUserPagedList().observe(lifecycleOwner, Observer {
+        //    EventBus.getDefault().post(LoadFinishEvent(it))
+        //})
     }
 }

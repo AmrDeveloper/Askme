@@ -38,6 +38,7 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment(), ProfileContract.View {
 
+    private lateinit var mUserId : String
     private lateinit var mUserEmail: String
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
@@ -50,6 +51,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     ): View? {
         mProfileBinding =
             DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
+
+        mUserId = arguments?.getString(Constants.USER_ID).str()
+        if (mUserId.isNullString()) {
+            mUserId = Session().getUserId(context!!).str()
+        }
 
         mUserEmail = arguments?.getString(Constants.EMAIL).str()
         if (mUserEmail.isNullString()) {
@@ -107,7 +113,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     private fun getUserInformation() {
-        AskmeClient.getUserService().getUserByEmail(mUserEmail).enqueue(object : Callback<User> {
+        AskmeClient.getUserService().getUserByEmail(mUserId).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 response.body().notNull {
                     bindUserProfile(it)

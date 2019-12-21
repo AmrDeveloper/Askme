@@ -86,9 +86,9 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.getOneUser = (req, res) => {
-    const email = req.params.email.toLowerCase();
+    const id = req.params.id;
 
-    userModel.getOneUser(email).then(result => { res.status(status.OK).json(result[0]); })
+    userModel.getOneUser(id).then(result => { res.status(status.OK).json(result[0]); })
 };
 
 exports.searchUsers = (req, res) => {

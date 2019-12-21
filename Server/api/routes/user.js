@@ -8,7 +8,7 @@ router.get('/', controller.getAllUsers);
 
 router.get('/search', controller.searchUsers);
 
-router.get('/:email', controller.getOneUser);
+router.get('/:id', controller.getOneUser);
 
 router.post('/login', controller.userLogin);
 

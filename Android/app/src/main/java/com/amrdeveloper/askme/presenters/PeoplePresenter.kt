@@ -21,5 +21,4 @@ class PeoplePresenter(
         view.showProgressBar()
         model.loadPeopleFromServer(userViewModel, owner)
     }
-
 }
