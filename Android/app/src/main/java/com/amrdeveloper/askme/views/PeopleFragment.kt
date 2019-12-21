@@ -62,7 +62,6 @@ class PeopleFragment : Fragment(), PeopleContract.View {
 
                 val args = Bundle()
                 args.putString(Constants.USER_ID, user.id)
-                args.putString(Constants.EMAIL, user.email)
                 profileFragment.arguments = args
 
                 fragmentManager?.openFragmentInto(R.id.viewContainers, profileFragment)

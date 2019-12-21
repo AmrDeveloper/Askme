@@ -39,7 +39,6 @@ import retrofit2.Response
 class ProfileFragment : Fragment(), ProfileContract.View {
 
     private lateinit var mUserId : String
-    private lateinit var mUserEmail: String
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
@@ -55,11 +54,6 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         mUserId = arguments?.getString(Constants.USER_ID).str()
         if (mUserId.isNullString()) {
             mUserId = Session().getUserId(context!!).str()
-        }
-
-        mUserEmail = arguments?.getString(Constants.EMAIL).str()
-        if (mUserEmail.isNullString()) {
-            mUserEmail = Session().getUserEmail(context!!).str()
         }
 
         feedListSetup()
