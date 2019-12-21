@@ -16,8 +16,8 @@ exports.login = (email, password) => new Promise((resolve, reject) => {
                     jwt.sign(email, process.env.JWT_KEY, (err, token) => {
                         if (err) throw err;
                         resolve([true, {
-                            "id" : result[0]['id'],
-                            "token" : token
+                            "id": result[0]['id'],
+                            "token": token
                         }]);
                     });
                 } else {
@@ -59,7 +59,8 @@ exports.queryUsers = args => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
-                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
+                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes,
+                                   (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM follows WHERE fromUser = ? and toUser = users.id) AS isFollow
                   FROM users LIMIT ? OFFSET ?`;
 
     database.query(query, args, (err, result) => {
@@ -84,7 +85,8 @@ exports.getOneUser = args => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
-                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
+                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes,
+                                   (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM follows WHERE fromUser = ? and toUser = users.id) AS isFollow
                   FROM users WHERE id = ? LIMIT 1`;
 
     database.query(query, args, (err, result) => {
@@ -145,8 +147,8 @@ exports.searchUsers = (args) => new Promise((resolve, reject) => {
                                 username ? OR
                                 email LIKE ? 
                                 LIMIT ? OFFSET ?`;
-    database.query(query, args, (err, result) =>{
-        if(err) throw err;
+    database.query(query, args, (err, result) => {
+        if (err) throw err;
         resolve(result);
     });
 });
@@ -187,7 +189,7 @@ exports.deleteUserStatus = args => new Promise((resolve, reject) => {
     });
 });
 
-exports.deleteUserAvatar =  args => new Promise((resolve, reject) => {
+exports.deleteUserAvatar = args => new Promise((resolve, reject) => {
     const deleteQuery = 'UPDATE users SET avatar = "" WHERE email = ?';
     database.query(deleteQuery, args, (err, result) => {
         if (err) throw err;
@@ -257,7 +259,7 @@ exports.updatePassword = args => new Promise((resolve, reject) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {
             resolve(true);
-        }else{
+        } else {
             resolve(false);
         }
     })
@@ -302,7 +304,7 @@ exports.updateActive = args => new Promise((resolve, reject) => {
     });
 });
 
-exports.updateUserAvatar =  args => new Promise((resolve, reject) => {
+exports.updateUserAvatar = args => new Promise((resolve, reject) => {
     const updateQuery = "UPDATE users SET avatar = ? WHERE email = ?";
 
     database.query(updateQuery, args, (err, result) => {

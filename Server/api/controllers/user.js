@@ -67,8 +67,13 @@ exports.registerNewUser = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => {
+    var userId = req.query.userId;
     var offset = req.query.offset;
     var count = req.query.count;
+
+    if(userId == null){
+        userId = 0;
+    }
 
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
@@ -78,7 +83,7 @@ exports.getAllUsers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [parseInt(count), parseInt(offset)];
+    const args = [userId, parseInt(count), parseInt(offset)];
 
     userModel.queryUsers(args).then(result => {
         res.status(status.OK).json(result)
@@ -87,8 +92,15 @@ exports.getAllUsers = (req, res) => {
 
 exports.getOneUser = (req, res) => {
     const id = req.params.id;
+    var userId = req.query.userId;
 
-    userModel.getOneUser(id).then(result => { res.status(status.OK).json(result[0]); })
+    if(userId == null){
+        userId = 0;
+    }
+
+    const args = [userId, id]
+
+    userModel.getOneUser(args).then(result => { res.status(status.OK).json(result[0]); })
 };
 
 exports.searchUsers = (req, res) => {
