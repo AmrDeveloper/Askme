@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.ProfileContract
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Feed
-import com.amrdeveloper.askme.data.QuestionData
-import com.amrdeveloper.askme.data.User
+import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.*
@@ -147,6 +144,21 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
         userAvatar.loadImage(user.avatarUrl)
         userWallpaper.loadImage(user.wallpaperUrl)
+
+        if (user.id != Session().getUserId(context!!)) {
+            when (user.isUserFollow) {
+                Follow.FOLLOW -> {
+                    mProfileBinding.followingTxt.text = getString(R.string.following)
+                    mProfileBinding.followIcon.setImageResource(R.drawable.ic_done_all)
+                }
+                Follow.UNFOLLOW -> {
+                    mProfileBinding.followingTxt.text = getString(R.string.follow)
+                    mProfileBinding.followIcon.setImageResource(R.drawable.ic_feed)
+                }
+            }
+        }else{
+            mProfileBinding.followCardView.gone()
+        }
     }
 
     private fun loadUserFeed(userId : String) {
