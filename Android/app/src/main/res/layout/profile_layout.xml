@@ -1,124 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:fillViewport="true"
-        android:layout_height="wrap_content">
-
-    <RelativeLayout
-        android:descendantFocusability="blocksDescendants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
         <RelativeLayout
-            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
 
-            <ImageView
-                android:id="@+id/userWallpaper"
+            <RelativeLayout
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ImageView
+                    android:id="@+id/userWallpaper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha=".6"
+                    android:background="@color/darkBlue"
+                    android:contentDescription="@string/user_wallpaper"
+                    android:scaleType="fitXY" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userAvatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:contentDescription="@string/user_avatar"
+                    android:src="@drawable/ic_profile"
+                    app:civ_border_color="@color/darkBlue"
+                    app:civ_border_width="5dp" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/userAvatar"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold|italic"
+                    tools:text="Amr Developer" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/followCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/userName"
+                    android:layout_centerHorizontal="true"
+                    app:cardBackgroundColor="@color/darkBlue"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="2dp"
+                    app:cardUseCompatPadding="true">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/followIcon"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/follow"
+                            android:src="@drawable/ic_feed"
+                            app:civ_border_color="@color/orange"
+                            app:civ_border_width="1dp"
+                            app:civ_circle_background_color="@color/white" />
+
+                        <TextView
+                            android:id="@+id/followingTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@id/followIcon"
+                            android:gravity="center"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:text="@string/following"
+                            android:textColor="@color/orange"
+                            android:textSize="16sp"
+                            android:textStyle="italic" />
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/analysisCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mainLayout"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <include layout="@layout/user_grid_analysis" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/infoCardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/analysisCardView"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/userStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        tools:text="Time is limited don't waste it" />
+
+                    <TextView
+                        android:id="@+id/userAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_location"
+                        android:padding="5dp"
+                        tools:text="Alexandria, Egypt" />
+
+                    <TextView
+                        android:id="@+id/userJoinDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_time"
+                        android:padding="5dp"
+                        tools:text="2 years ago" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <include
+                android:id="@+id/questionLayout"
+                layout="@layout/ask_question_layout"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/infoCardView" />
+
+            <include
+                android:id="@+id/listLayout"
+                layout="@layout/list_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha=".6"
-                android:background="@color/darkBlue"
-                android:contentDescription="User Wallpaper"
-                android:scaleType="fitXY" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/userAvatar"
-                android:layout_width="150dp"
-                android:src="@drawable/ic_profile"
-                android:layout_height="150dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="User Avatar"
-                app:civ_border_color="@color/darkBlue"
-                app:civ_border_width="5dp" />
-
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/userAvatar"
-                android:gravity="center"
-                android:lines="1"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
-                tools:text="Amr Developer" />
+                android:layout_below="@+id/questionLayout"
+                android:layout_alignParentBottom="true" />
         </RelativeLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_below="@id/mainLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="2dp"
-            android:id="@+id/analysisCardView"
-            app:cardUseCompatPadding="true">
-
-            <include layout="@layout/user_grid_analysis" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/infoCardView"
-            android:layout_below="@id/analysisCardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/userStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    tools:text="Time is limited don't waste it" />
-
-                <TextView
-                    android:id="@+id/userAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_location"
-                    android:padding="5dp"
-                    tools:text="Alexandria, Egypt" />
-
-                <TextView
-                    android:id="@+id/userJoinDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_time"
-                    android:padding="5dp"
-                    tools:text="2 years ago" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/infoCardView"
-            android:id="@+id/questionLayout"
-            layout="@layout/ask_question_layout" />
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/questionLayout"
-            android:id="@+id/listLayout"
-            layout="@layout/list_layout" />
-    </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

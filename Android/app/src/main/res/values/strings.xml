@@ -16,4 +16,8 @@
     <string name="ask">Ask</string>
     <string name="ask_anonymously">Anonymously</string>
     <string name="ask_yourself">Ask Yourself</string>
+    <string name="user_wallpaper">User Wallpaper</string>
+    <string name="user_avatar">User Avatar</string>
+    <string name="follow">Follow</string>
+    <string name="following">Following</string>
 </resources>
