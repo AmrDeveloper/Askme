@@ -3,11 +3,13 @@ package com.amrdeveloper.askme.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.setTextOrHide
@@ -75,6 +77,17 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
             itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
             itemView.answerUserAvatar.loadImage(feed.fromUserAvatar)
+
+            when(feed.isReacted){
+                Reaction.REACATED -> {
+                    itemView.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
+                    itemView.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
+                }
+                Reaction.UN_REACATED -> {
+                    itemView.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context ,R.color.black))
+                    itemView.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_react,0,0,0)
+                }
+            }
         }
     }
 }

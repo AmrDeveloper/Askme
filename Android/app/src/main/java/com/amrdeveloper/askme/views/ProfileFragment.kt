@@ -69,7 +69,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                     ).enqueue(object : Callback<String> {
                         override fun onResponse(call: Call<String>, response: Response<String>) {
                             if (response.code() == 200) {
-                                updateFollowCardView(Follow.UNFOLLOW)
+                                updateFollowCardView(Follow.UN_FOLLOW)
                             }
                         }
 
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                         }
                     })
                 }
-                Follow.UNFOLLOW -> {
+                Follow.UN_FOLLOW -> {
                     AskmeClient.getFollowService().followUser(
                         token = "auth ${Session().getUserToken(context!!).str()}",
                         followData = followData
@@ -203,10 +203,10 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 mProfileBinding.followIcon.setImageResource(R.drawable.ic_done_all)
                 mProfileBinding.followCardView.tag = Follow.FOLLOW
             }
-            Follow.UNFOLLOW -> {
+            Follow.UN_FOLLOW -> {
                 mProfileBinding.followingTxt.text = getString(R.string.follow)
                 mProfileBinding.followIcon.setImageResource(R.drawable.ic_feed)
-                mProfileBinding.followCardView.tag = Follow.UNFOLLOW
+                mProfileBinding.followCardView.tag = Follow.UN_FOLLOW
             }
         }
     }

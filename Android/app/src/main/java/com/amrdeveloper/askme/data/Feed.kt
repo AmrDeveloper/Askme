@@ -39,6 +39,9 @@ data class Feed(
     @SerializedName("reactions")
     var reactionsNum : Int,
 
+    @SerializedName("isReacted")
+    var isReacted : Reaction,
+
     @SerializedName("answerDate")
     var answerDate : String
 )
