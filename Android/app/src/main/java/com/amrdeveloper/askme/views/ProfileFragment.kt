@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.amrdeveloper.askme.presenters.ProfilePresenter
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.ask_question_layout.*
 import kotlinx.android.synthetic.main.ask_question_layout.view.*
-import kotlinx.android.synthetic.main.list_layout.view.*
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
 import org.greenrobot.eventbus.EventBus
@@ -40,6 +38,8 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
+
+    private val LOG_TAG = "ProfileFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,7 +80,6 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                     })
                 }
                 Follow.UNFOLLOW -> {
-                    Toast.makeText(context, "Follow ${mUserId}", Toast.LENGTH_SHORT).show()
                     AskmeClient.getFollowService().followUser(
                         token = "auth ${Session().getUserToken(context!!).str()}",
                         followData = followData
@@ -89,11 +88,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                             if (response.code() == 200) {
                                 updateFollowCardView(Follow.FOLLOW)
                             }
-                            Toast.makeText(context, "${response.message()}", Toast.LENGTH_SHORT).show()
                         }
 
                         override fun onFailure(call: Call<String>, t: Throwable) {
-                            Toast.makeText(context, "Can't Follow user", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Can't Follow user", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     })
                 }
@@ -219,7 +218,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
         mProfilePresenter.startLoadingFeed()
     }
-
+l
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadFinishEvent(event: LoadFinishEvent<PagedList<Feed>>) {
         mFeedAdapter.submitList(event.data)
