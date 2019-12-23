@@ -10,6 +10,7 @@ exports.getUserFeed = (req, res) => {
     const id = req.query.id;
     var offset = req.query.offset;
     var count = req.query.count;
+    var userId = req.query.userId;
 
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
@@ -19,7 +20,11 @@ exports.getUserFeed = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [id, parseInt(count), parseInt(offset)]
+    if (userId == null) {
+        userId = 0;
+    }
+
+    const args = [userId, id, parseInt(count), parseInt(offset)]
     feedModel.getUserFeed(args).then(result => {
         res.status(status.OK).json(result);
     })
@@ -38,7 +43,7 @@ exports.getHomeFeed = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const args = [id, parseInt(count), parseInt(offset)]
+    const args = [id, id, parseInt(count), parseInt(offset)]
     feedModel.getHomeFeed(args).then(result => {
         res.status(status.OK).json(result);
     })

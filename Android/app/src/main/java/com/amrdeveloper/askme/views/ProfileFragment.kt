@@ -218,7 +218,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
         mProfilePresenter.startLoadingFeed()
     }
-l
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadFinishEvent(event: LoadFinishEvent<PagedList<Feed>>) {
         mFeedAdapter.submitList(event.data)
