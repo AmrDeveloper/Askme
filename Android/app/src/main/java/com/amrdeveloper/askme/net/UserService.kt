@@ -18,7 +18,10 @@ interface UserService {
     fun register(@Body body: RegisterData): Call<String>
 
     @GET("users/{email}")
-    fun getUserByEmail(@Path("email") email: String): Call<User>
+    fun getUserByEmail(
+        @Path("email") email: String,
+        @Query("userId") userId : String
+    ): Call<User>
 
     @GET("users/")
     fun getUsersQuery(

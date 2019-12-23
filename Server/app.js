@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const app = express();
 
 //Middleware
-app.use(morgan(`Server Request`));
+app.use(morgan(`Server Logger`));
 app.use('/storage/avatar', express.static('storage/avatar'));
 app.use('/storage/wallpaper', express.static('storage/wallpaper'));
 app.use(bodyParser.json());

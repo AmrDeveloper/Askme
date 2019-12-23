@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ import retrofit2.Response
 
 class ProfileFragment : Fragment(), ProfileContract.View {
 
-    private lateinit var mUserId : String
+    private lateinit var mUserId: String
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
@@ -58,7 +59,45 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         setupAskNewQuestion()
 
         mProfileBinding.followCardView.setOnClickListener {
-            Toast.makeText(context, "Follow or un follow", Toast.LENGTH_SHORT).show()
+            val followData = FollowData(Session().getUserId(context!!).str(), mUserId)
+
+            when (Follow.valueOf(mProfileBinding.followCardView.tag.toString())) {
+                Follow.FOLLOW -> {
+                    AskmeClient.getFollowService().unFollowUser(
+                        token = "auth ${Session().getUserToken(context!!).str()}",
+                        followData = followData
+                    ).enqueue(object : Callback<String> {
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                            if (response.code() == 200) {
+                                updateFollowCardView(Follow.UNFOLLOW)
+                            }
+                        }
+
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                            Toast.makeText(context, "Can't unFollow user", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    })
+                }
+                Follow.UNFOLLOW -> {
+                    Toast.makeText(context, "Follow ${mUserId}", Toast.LENGTH_SHORT).show()
+                    AskmeClient.getFollowService().followUser(
+                        token = "auth ${Session().getUserToken(context!!).str()}",
+                        followData = followData
+                    ).enqueue(object : Callback<String> {
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                            if (response.code() == 200) {
+                                updateFollowCardView(Follow.FOLLOW)
+                            }
+                            Toast.makeText(context, "${response.message()}", Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                            Toast.makeText(context, "Can't Follow user", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
+            }
         }
 
         return mProfileBinding.root
@@ -109,19 +148,20 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     private fun getUserInformation() {
-        AskmeClient.getUserService().getUserByEmail(mUserId).enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                response.body().notNull {
-                    bindUserProfile(it)
-                    loadUserFeed(it.id)
-                    setupAskBordTitle(it)
+        AskmeClient.getUserService().getUserByEmail(mUserId, Session().getUserId(context!!).str())
+            .enqueue(object : Callback<User> {
+                override fun onResponse(call: Call<User>, response: Response<User>) {
+                    response.body().notNull {
+                        bindUserProfile(it)
+                        loadUserFeed(it.id)
+                        setupAskBordTitle(it)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Toast.makeText(context, "Can't Load Info", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<User>, t: Throwable) {
+                    Toast.makeText(context, "Can't Load Info", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun setupAskBordTitle(user: User) {
@@ -151,22 +191,28 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         userWallpaper.loadImage(user.wallpaperUrl)
 
         if (user.id != Session().getUserId(context!!)) {
-            when (user.isUserFollow) {
-                Follow.FOLLOW -> {
-                    mProfileBinding.followingTxt.text = getString(R.string.following)
-                    mProfileBinding.followIcon.setImageResource(R.drawable.ic_done_all)
-                }
-                Follow.UNFOLLOW -> {
-                    mProfileBinding.followingTxt.text = getString(R.string.follow)
-                    mProfileBinding.followIcon.setImageResource(R.drawable.ic_feed)
-                }
-            }
-        }else{
+            updateFollowCardView(user.isUserFollow)
+        } else {
             mProfileBinding.followCardView.gone()
         }
     }
 
-    private fun loadUserFeed(userId : String) {
+    private fun updateFollowCardView(follow: Follow) {
+        when (follow) {
+            Follow.FOLLOW -> {
+                mProfileBinding.followingTxt.text = getString(R.string.following)
+                mProfileBinding.followIcon.setImageResource(R.drawable.ic_done_all)
+                mProfileBinding.followCardView.tag = Follow.FOLLOW
+            }
+            Follow.UNFOLLOW -> {
+                mProfileBinding.followingTxt.text = getString(R.string.follow)
+                mProfileBinding.followIcon.setImageResource(R.drawable.ic_feed)
+                mProfileBinding.followCardView.tag = Follow.UNFOLLOW
+            }
+        }
+    }
+
+    private fun loadUserFeed(userId: String) {
         FeedViewModel.setUserId(userId)
         val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
 
