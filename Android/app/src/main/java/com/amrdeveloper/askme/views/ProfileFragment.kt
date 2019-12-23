@@ -56,6 +56,11 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         feedListSetup()
         getUserInformation()
         setupAskNewQuestion()
+
+        mProfileBinding.followCardView.setOnClickListener {
+            Toast.makeText(context, "Follow or un follow", Toast.LENGTH_SHORT).show()
+        }
+
         return mProfileBinding.root
     }
 

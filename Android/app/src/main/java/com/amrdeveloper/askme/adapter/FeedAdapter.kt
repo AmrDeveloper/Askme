@@ -15,6 +15,17 @@ import kotlinx.android.synthetic.main.feed_list_item.view.*
 
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
+    interface OnReactionClick{
+        fun onReactClick(answerId : Int)
+    }
+
+    interface OnUsernameClick{
+        fun onUserClick(userId : String)
+    }
+
+    private lateinit var onReactionClick : OnReactionClick
+    private lateinit var onUsernameClick: OnUsernameClick
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.feed_list_item, parent, false)
@@ -25,7 +36,31 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         val currentFeed : Feed? = getItem(position)
         currentFeed.notNull {
             holder.bingFeed(currentFeed!!)
+
+            if(::onUsernameClick.isInitialized){
+                holder.itemView.questionFrom.setOnClickListener {
+                    onUsernameClick.onUserClick(currentFeed.toUserName)
+                }
+
+                holder.itemView.answerFrom.setOnClickListener {
+                    onUsernameClick.onUserClick(currentFeed.fromUserName)
+                }
+            }
+
+            if(::onReactionClick.isInitialized){
+                holder.itemView.reactionsTxt.setOnClickListener {
+                    onReactionClick.onReactClick(currentFeed.answerId)
+                }
+            }
         }
+    }
+
+    fun setOnReactionListener(listener : OnReactionClick){
+        onReactionClick = listener
+    }
+
+    fun setOnUsernameListener(listener : OnUsernameClick){
+        onUsernameClick = listener
     }
 
     class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {

@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,8 @@ class HomeFragment : Fragment(), HomeContract.View {
     private lateinit var mFeedAdapter : FeedAdapter
     private lateinit var mHomePresenter: HomePresenter
 
+    private val LOG_TAG = "HomeFragment"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,16 +43,12 @@ class HomeFragment : Fragment(), HomeContract.View {
         setupUserList(view)
 
         val session = Session()
-        //15 for testing
         HomeViewModel.setUserId("15")
         //HomeViewModel.setUserId(session.getUserId(context!!).toString())
         val homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        mHomePresenter = HomePresenter(
-            this,
-            homeViewModel,
-            this
-        )
+        mHomePresenter = HomePresenter(this,  homeViewModel,this )
+
         mHomePresenter.startLoadingHomeFeed()
 
         return view
@@ -61,6 +60,18 @@ class HomeFragment : Fragment(), HomeContract.View {
         listItems.setHasFixedSize(true)
         listItems.layoutManager = LinearLayoutManager(context)
         listItems.adapter = mFeedAdapter
+
+        mFeedAdapter.setOnUsernameListener(object : FeedAdapter.OnUsernameClick {
+            override fun onUserClick(userId: String) {
+                Log.d(LOG_TAG, "Username Click")
+            }
+        })
+
+        mFeedAdapter.setOnReactionListener(object : FeedAdapter.OnReactionClick {
+            override fun onReactClick(answerId: Int) {
+                Log.d(LOG_TAG, "Reaction Click")
+            }
+        })
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
