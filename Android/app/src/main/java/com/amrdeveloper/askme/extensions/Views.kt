@@ -47,7 +47,6 @@ fun TextView.setPluralsText(id : Int, value : Int) {
     this.text = this.resources.getQuantityString(id, value,value)
 }
 
-
 fun ImageView.loadImage(imageUrl: String?) {
     if(imageUrl.isNullOrEmpty()){
         return

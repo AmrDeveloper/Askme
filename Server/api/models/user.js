@@ -144,7 +144,7 @@ exports.searchUsers = (args) => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
                   FROM users WHERE
                                 name LIKE ? OR
-                                username ? OR
+                                username LIKE ? OR
                                 email LIKE ? 
                                 LIMIT ? OFFSET ?`;
     database.query(query, args, (err, result) => {

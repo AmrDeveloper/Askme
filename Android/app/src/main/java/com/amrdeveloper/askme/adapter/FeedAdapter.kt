@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.Reaction
-import com.amrdeveloper.askme.extensions.loadImage
-import com.amrdeveloper.askme.extensions.notNull
-import com.amrdeveloper.askme.extensions.setTextOrHide
+import com.amrdeveloper.askme.extensions.*
 import kotlinx.android.synthetic.main.feed_list_item.view.*
 
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
