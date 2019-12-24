@@ -39,11 +39,11 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
             if(::onUsernameClick.isInitialized){
                 holder.itemView.questionFrom.setOnClickListener {
-                    onUsernameClick.onUserClick(currentFeed.toUserName)
+                    onUsernameClick.onUserClick(currentFeed.toUserId.str())
                 }
 
                 holder.itemView.answerFrom.setOnClickListener {
-                    onUsernameClick.onUserClick(currentFeed.fromUserName)
+                    onUsernameClick.onUserClick(currentFeed.fromUserId.str())
                 }
             }
 
