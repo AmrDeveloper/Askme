@@ -28,4 +28,11 @@ interface UserService {
         @Query("count") count: Int = DEFAULT_QUERY_COUNT,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
     ): Call<List<User>>
+
+    @GET("users/search")
+    fun getUsersSearch(
+        @Query("q") query : String,
+        @Query("count") count: Int = DEFAULT_QUERY_COUNT,
+        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
+    ): Call<List<User>>
 }
