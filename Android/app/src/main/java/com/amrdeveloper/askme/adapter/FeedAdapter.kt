@@ -16,11 +16,15 @@ import kotlinx.android.synthetic.main.feed_list_item.view.*
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
     interface OnReactionClick{
-        fun onReactClick(answerId : Int)
+        fun onReactClick(answerId : Int, reaction : Reaction, callback : Callback)
     }
 
     interface OnUsernameClick{
         fun onUserClick(userId : String)
+    }
+
+    interface Callback{
+        fun onCallback(state : Boolean)
     }
 
     private lateinit var onReactionClick : OnReactionClick
@@ -49,7 +53,28 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
             if(::onReactionClick.isInitialized){
                 holder.itemView.reactionsTxt.setOnClickListener {
-                    onReactionClick.onReactClick(currentFeed.answerId)
+                    onReactionClick.onReactClick(currentFeed.answerId, currentFeed.isReacted,
+                        object : Callback {
+                            override fun onCallback(state: Boolean) {
+                                if (state) {
+                                    when (currentFeed.isReacted) {
+                                        Reaction.REACATED -> {
+                                            currentList?.get(position)?.reactionsNum =
+                                                currentList?.get(position)?.reactionsNum?.plus(1)!!
+                                            currentList?.get(position)?.isReacted =
+                                                Reaction.UN_REACATED
+                                        }
+                                        Reaction.UN_REACATED -> {
+                                            currentList?.get(position)?.reactionsNum =
+                                                currentList?.get(position)?.reactionsNum?.minus(1)!!
+                                            currentList?.get(position)?.isReacted =
+                                                Reaction.REACATED
+                                        }
+                                    }
+                                    notifyDataSetChanged()
+                                }
+                            }
+                        })
                 }
             }
         }
@@ -65,7 +90,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
     class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bingFeed(feed : Feed){
+        fun bingFeed(feed: Feed) {
             itemView.questionTxt.text = feed.questionBody
             itemView.answerTxt.text = feed.answerBody
             itemView.questionFrom.text = feed.toUserName
@@ -76,7 +101,11 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
             itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
             itemView.answerUserAvatar.loadImage(feed.fromUserAvatar)
 
-            when(feed.isReacted){
+            updateReactedIcon(feed.isReacted)
+        }
+
+        fun updateReactedIcon(reaction: Reaction){
+            when(reaction){
                 Reaction.REACATED -> {
                     itemView.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
                     itemView.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)

@@ -33,6 +33,10 @@ class Session {
         return preferences.getString(Constants.LOGIN_TOKEN, "")
     }
 
+    fun getHeaderToken(context: Context) : String?{
+        return "auth ${getUserToken(context)}"
+    }
+
     fun getUserEmail(context: Context): String? {
         val preferences =
             context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)

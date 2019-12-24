@@ -18,14 +18,21 @@ import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.contracts.HomeContract
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.data.Reaction
+import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
+import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment(), HomeContract.View {
 
@@ -76,8 +83,57 @@ class HomeFragment : Fragment(), HomeContract.View {
         })
 
         mFeedAdapter.setOnReactionListener(object : FeedAdapter.OnReactionClick {
-            override fun onReactClick(answerId: Int) {
-                Log.d(LOG_TAG, "Reaction Click")
+            override fun onReactClick(answerId: Int, reaction: Reaction, callback: FeedAdapter.Callback){
+                when(reaction){
+                    Reaction.REACATED -> {
+                        val body = ReactionData(Session().getUserId(context!!).str(), answerId.str())
+                        AskmeClient.getReactionService()
+                            .deleteAnswerReaction(
+                                token = Session().getHeaderToken(context!!).str(),
+                                reactionData = body
+                            ).enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>
+                                ) {
+                                    if(response.code() == 200){
+                                        callback.onCallback(true)
+                                    }else{
+                                        callback.onCallback(false)
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Log.d(LOG_TAG, "Can't react this post")
+                                    callback.onCallback(false)
+                                }
+                            })
+                    }
+                    Reaction.UN_REACATED -> {
+                        val body = ReactionData(Session().getUserId(context!!).str(), answerId.str())
+                        AskmeClient.getReactionService()
+                            .createAnswerReaction(
+                                token = Session().getHeaderToken(context!!).str(),
+                                reactionData = body
+                            ).enqueue(object : Callback<String> {
+                                override fun onResponse(
+                                    call: Call<String>,
+                                    response: Response<String>
+                                ) {
+                                    if(response.code() == 200){
+                                        callback.onCallback(true)
+                                    }else{
+                                        callback.onCallback(false)
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<String>, t: Throwable) {
+                                    Log.d(LOG_TAG, "Can't react this post")
+                                    callback.onCallback(false)
+                                }
+                            })
+                    }
+                }
             }
         })
     }
