@@ -71,7 +71,7 @@ exports.getAllUsers = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
 
-    if(userId == null){
+    if (userId == null) {
         userId = 0;
     }
 
@@ -94,7 +94,7 @@ exports.getOneUser = (req, res) => {
     const id = req.params.id;
     var userId = req.query.userId;
 
-    if(userId == null){
+    if (userId == null) {
         userId = 0;
     }
 
@@ -108,6 +108,10 @@ exports.searchUsers = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
 
+    if(keyword == null || keyword.length < 3){
+        res.status(status.BAD_REQUEST).send("Query must be more than 3 chars")
+    }
+
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -116,7 +120,7 @@ exports.searchUsers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
-    const searchQuery = '%' + keyword + '%'
+    const searchQuery = '%' + keyword + '%';
 
     const args = [searchQuery, searchQuery, searchQuery, parseInt(count), parseInt(offset)];
 
