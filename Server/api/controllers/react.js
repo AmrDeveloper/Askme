@@ -28,7 +28,11 @@ exports.getPostReactions = (req, res) => {
 exports.createNewReaction = (req, res) => {
     const userId = req.body.userId;
     const answerId = req.body.answerId;
-    const reactionsType = req.body.reactionsType;
+    var reactionsType = req.body.reactionsType;
+
+    if(reactionsType == null){
+        reactionsType = 0;
+    }
 
     const args = [userId, answerId, reactionsType];
 
