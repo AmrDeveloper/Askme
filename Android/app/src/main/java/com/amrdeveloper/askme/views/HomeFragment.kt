@@ -83,10 +83,14 @@ class HomeFragment : Fragment(), HomeContract.View {
         })
 
         mFeedAdapter.setOnReactionListener(object : FeedAdapter.OnReactionClick {
-            override fun onReactClick(answerId: Int, reaction: Reaction, callback: FeedAdapter.Callback){
+            override fun onReactClick(answerId: Int, toUser : String,reaction: Reaction, callback: FeedAdapter.Callback){
                 when(reaction){
                     Reaction.REACATED -> {
-                        val body = ReactionData(Session().getUserId(context!!).str(), answerId.str())
+                        val body = ReactionData(
+                            Session().getUserId(context!!).str(),
+                            toUser,
+                            answerId.str()
+                        )
                         AskmeClient.getReactionService()
                             .deleteAnswerReaction(
                                 token = Session().getHeaderToken(context!!).str(),
@@ -110,7 +114,7 @@ class HomeFragment : Fragment(), HomeContract.View {
                             })
                     }
                     Reaction.UN_REACATED -> {
-                        val body = ReactionData(Session().getUserId(context!!).str(), answerId.str())
+                        val body = ReactionData(Session().getUserId(context!!).str(), answerId.str(), "")
                         AskmeClient.getReactionService()
                             .createAnswerReaction(
                                 token = Session().getHeaderToken(context!!).str(),

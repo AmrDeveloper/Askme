@@ -26,7 +26,8 @@ exports.getPostReactions = (req, res) => {
 };
 
 exports.createNewReaction = (req, res) => {
-    const userId = req.body.userId;
+    const fromUser = req.body.fromUser;
+    var toUser = req.body.toUser;
     const answerId = req.body.answerId;
     var reactionsType = req.body.reactionsType;
 
@@ -34,7 +35,11 @@ exports.createNewReaction = (req, res) => {
         reactionsType = 0;
     }
 
-    const args = [userId, answerId, reactionsType];
+    if(toUser == null){
+        toUser = "";
+    }
+
+    const args = [fromUser, toUser, answerId, reactionsType];
 
     reactModel.createNewReaction(args).then(state => {
         if (state) {
@@ -51,10 +56,10 @@ exports.createNewReaction = (req, res) => {
 };
 
 exports.deleteReaction = (req, res) => {
-    const userId = req.body.userId;
+    const fromUser = req.body.fromUser;
     const answerId = req.body.answerId;
 
-    const args = [userId, answerId];
+    const args = [fromUser, answerId];
 
     reactModel.deleteReaction(args).then(state => {
         if (state) {

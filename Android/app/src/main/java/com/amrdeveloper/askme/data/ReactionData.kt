@@ -3,9 +3,15 @@ package com.amrdeveloper.askme.data
 import com.google.gson.annotations.SerializedName
 
 data class ReactionData(
-    @SerializedName("userId")
-    val userId : String,
+    @SerializedName("fromUser")
+    val fromUser : String,
+
+    @SerializedName("toUser")
+    val toUser : String,
 
     @SerializedName("answerId")
-    val answerId : String
+    val answerId : String,
+
+    @SerializedName("answerId")
+    val reactionType : Int = 0
 )

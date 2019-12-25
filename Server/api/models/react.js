@@ -14,7 +14,7 @@ exports.getPostReactions = args => new Promise((resolve, reject) => {
 });
 
 exports.createNewReaction = args => new Promise((resolve, reject) => {
-    const sqlQuery = 'INSERT INTO reactions (fromUser, answerId, react) VALUES (?, ?, ?)';
+    const sqlQuery = 'INSERT INTO reactions (fromUser,toUser, answerId, react) VALUES (?, ?, ?, ?)';
 
     database.query(sqlQuery, args, (err, result) => {
         if (err) throw err;

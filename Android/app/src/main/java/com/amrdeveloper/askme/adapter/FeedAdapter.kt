@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.feed_list_item.view.*
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
     interface OnReactionClick{
-        fun onReactClick(answerId : Int, reaction : Reaction, callback : Callback)
+        fun onReactClick(answerId : Int,toUser : String, reaction : Reaction, callback : Callback)
     }
 
     interface OnUsernameClick{
@@ -53,7 +53,8 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
             if(::onReactionClick.isInitialized){
                 holder.itemView.reactionsTxt.setOnClickListener {
-                    onReactionClick.onReactClick(currentFeed.answerId, currentFeed.isReacted,
+                    onReactionClick.onReactClick(
+                        currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted,
                         object : Callback {
                             override fun onCallback(state: Boolean) {
                                 if (state) {
