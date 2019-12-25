@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -112,6 +113,8 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
     private fun setupAskNewQuestion() {
         mProfileBinding.questionLayout.askButton.setOnClickListener {
+            fragmentManager?.openFragmentInto(R.id.viewContainers, AskQuestionFragment())
+            /*
             val fromUserId = Session().getUserId(context!!).str()
             val isAnonymously = mProfileBinding.questionLayout.anonymouslySwitch.isChecked.str()
             val questionBody = mProfileBinding.questionLayout.questionText.text?.trim().str()
@@ -143,6 +146,8 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                         Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
                     }
                 })
+
+             */
         }
     }
 
@@ -214,6 +219,10 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     private fun loadUserFeed(userId: String) {
         FeedViewModel.setUserId(userId)
         val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
+        feedViewModel.getFeedPagedList().observe(this, Observer {
+            mFeedAdapter.submitList(it)
+            hideProgressBar()
+        })
 
         mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
         mProfilePresenter.startLoadingFeed()
@@ -221,8 +230,8 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadFinishEvent(event: LoadFinishEvent<PagedList<Feed>>) {
-        mFeedAdapter.submitList(event.data)
-        hideProgressBar()
+        //mFeedAdapter.submitList(event.data)
+        //hideProgressBar()
     }
 
     override fun showProgressBar() {

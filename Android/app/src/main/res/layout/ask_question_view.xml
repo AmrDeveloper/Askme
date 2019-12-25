@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_profile"
+            app:civ_border_color="@color/orange"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/userName"
+            tools:text="Amr Hesham"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/userAvatar" />
+
+        <TextView
+            tools:text="AmrDeveloper"
+            android:id="@+id/userUsername"
+            android:layout_below="@id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/userAvatar" />
+    </RelativeLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_weight="5"
+        android:layout_margin="5dp"
+        android:id="@+id/questionEditText"
+        android:layout_width="match_parent"
+        android:maxLength="300"
+        android:hint="@string/question_message"
+        android:textColor="@color/darkBlue"
+        android:gravity="start"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_margin="5dp"
+        android:layout_weight=".3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/orange"
+            android:id="@+id/questionLength"
+            android:text="@string/question_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/anonymouslySwitch"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:switchPadding="8dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:checked="true"
+            android:text="@string/ask_anonymously"
+            app:trackTint="@color/black"
+            app:thumbTint="@color/orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</LinearLayout>
+</layout>
