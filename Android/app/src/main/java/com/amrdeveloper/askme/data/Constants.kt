@@ -5,6 +5,9 @@ class Constants {
         //Session Constants
         const val SESSION_PREFERNSE = "session_pref"
         const val USER_ID = "id"
+        const val NAME = "name"
+        const val USERNAME = "username"
+        const val AVATAR_URL = "avatar_url"
         const val EMAIL = "email"
         const val PASSWORD = "password"
         const val LOGIN_TOKEN = "token"

@@ -36,6 +36,8 @@ import retrofit2.Response
 class ProfileFragment : Fragment(), ProfileContract.View {
 
     private lateinit var mUserId: String
+    private lateinit var mCurrentUser : User
+
     private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
@@ -57,7 +59,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
 
         feedListSetup()
         getUserInformation()
-        setupAskNewQuestion()
+        openAskQuestionFragment()
 
         mProfileBinding.followCardView.setOnClickListener {
             val followData = FollowData(Session().getUserId(context!!).str(), mUserId)
@@ -111,43 +113,18 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         mProfileBinding.listLayout.listItems.adapter = mFeedAdapter
     }
 
-    private fun setupAskNewQuestion() {
+    private fun openAskQuestionFragment() {
         mProfileBinding.questionLayout.askButton.setOnClickListener {
-            fragmentManager?.openFragmentInto(R.id.viewContainers, AskQuestionFragment())
-            /*
-            val fromUserId = Session().getUserId(context!!).str()
-            val isAnonymously = mProfileBinding.questionLayout.anonymouslySwitch.isChecked.str()
-            val questionBody = mProfileBinding.questionLayout.questionText.text?.trim().str()
-            val toUserId = askText.tag.str()
+            val askQuestionFragment = AskQuestionFragment()
 
-            if (questionBody.isNullOrEmpty() || questionBody.length > 300) {
-                Toast.makeText(context, "Invalid Question", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            val args = Bundle()
+            args.putString(Constants.USER_ID, mCurrentUser.id)
+            args.putString(Constants.NAME, mCurrentUser.name)
+            args.putString(Constants.USERNAME, mCurrentUser.username)
+            args.putString(Constants.AVATAR_URL, mCurrentUser.avatarUrl)
+            askQuestionFragment.arguments = args
 
-            val questionData = QuestionData(questionBody, toUserId, fromUserId, isAnonymously)
-
-            AskmeClient.getQuestionService()
-                .createNewQueestion(
-                    token = "auth ${Session().getUserToken(context!!).str()}",
-                    question = questionData
-                )
-                .enqueue(object : Callback<String> {
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                        if (response.code() == 200) {
-                            Toast.makeText(context, "Send is Done", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                        Toast.makeText(context, "Can't Send Question", Toast.LENGTH_SHORT).show()
-                    }
-                })
-
-             */
+            fragmentManager?.openFragmentInto(R.id.viewContainers,askQuestionFragment)
         }
     }
 
@@ -156,6 +133,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
             .enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     response.body().notNull {
+                        mCurrentUser = it
                         bindUserProfile(it)
                         loadUserFeed(it.id)
                         setupAskBordTitle(it)
@@ -224,8 +202,9 @@ class ProfileFragment : Fragment(), ProfileContract.View {
             hideProgressBar()
         })
 
-        mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
-        mProfilePresenter.startLoadingFeed()
+        //TODO : Move to MVVM
+        //mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
+        //mProfilePresenter.startLoadingFeed()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
