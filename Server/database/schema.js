@@ -42,7 +42,7 @@ const MYSQL_FOLLOWS_TABLE = `CREATE TABLE IF NOT EXISTS follows(
     fromUser INTEGER,
     toUser INTEGER,
     PRIMARY KEY(id),
-    UNIQUE(fromUser,toUser),
+    UNIQUE(fromUser, toUser),
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(fromUser) REFERENCES users(id) ON DELETE CASCADE)`;
     
@@ -65,6 +65,7 @@ const MYSQL_REACTIONS_TABLE = `CREATE TABLE IF NOT EXISTS reactions(
     toUser INTEGER,
     answerId INTEGER,
     PRIMARY KEY(id),
+    UNIQUE(fromUser, answerId),
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(fromUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(answerId) REFERENCES answers(id) ON DELETE CASCADE)`;
