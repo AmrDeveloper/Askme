@@ -23,7 +23,6 @@ import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.presenters.ProfilePresenter
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.ask_question_layout.*
-import kotlinx.android.synthetic.main.ask_question_layout.view.*
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
 import org.greenrobot.eventbus.EventBus
@@ -114,7 +113,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     }
 
     private fun openAskQuestionFragment() {
-        mProfileBinding.questionLayout.askButton.setOnClickListener {
+        mProfileBinding.askmeButton.setOnClickListener {
             val askQuestionFragment = AskQuestionFragment()
 
             val args = Bundle()
@@ -136,7 +135,6 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                         mCurrentUser = it
                         bindUserProfile(it)
                         loadUserFeed(it.id)
-                        setupAskBordTitle(it)
                     }
                 }
 
@@ -144,17 +142,6 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                     Toast.makeText(context, "Can't Load Info", Toast.LENGTH_SHORT).show()
                 }
             })
-    }
-
-    private fun setupAskBordTitle(user: User) {
-        val localId = Session().getUserId(context!!)
-        if (localId == user.id) {
-            askText.text = getString(R.string.ask_yourself)
-            askText.tag = user.id
-        } else {
-            askText.text = "Ask ${user.username}"
-            askText.tag = user.id
-        }
     }
 
     private fun bindUserProfile(user: User) {
