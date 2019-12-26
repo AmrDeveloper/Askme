@@ -46,13 +46,12 @@ const MYSQL_FOLLOWS_TABLE = `CREATE TABLE IF NOT EXISTS follows(
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(fromUser) REFERENCES users(id) ON DELETE CASCADE)`;
     
-
 const MYSQL_NOTIFICATIONS_TABLE = `CREATE TABLE IF NOT EXISTS notifications(
     id INTEGER NOT NULL AUTO_INCREMENT,
     body VARCHAR(50),
     toUser INTEGER,
     createdDate VARCHAR(50),
-    action VARCHAR(50),
+    action VARCHAR(15),
     opened CHAR(1),
     data TEXT,
     PRIMARY KEY(id),

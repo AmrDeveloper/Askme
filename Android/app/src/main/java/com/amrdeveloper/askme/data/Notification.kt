@@ -13,7 +13,7 @@ data class Notification(
     val createdDate: String,
 
     @SerializedName("action")
-    val action: String,
+    val action: Action,
 
     @SerializedName("data")
     val data: String,
