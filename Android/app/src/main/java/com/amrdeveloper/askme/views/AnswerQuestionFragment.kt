@@ -23,6 +23,7 @@ import retrofit2.Response
 
 class AnswerQuestionFragment : Fragment() {
 
+    private lateinit var mQuestion: Question
     private lateinit var mAnswerQuestionLayoutBinding: AnswerQuestionLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class AnswerQuestionFragment : Fragment() {
             val questionID = arguments?.getString(Constants.QUESTION_ID).str()
             val answerBody = mAnswerQuestionLayoutBinding.answerEditText.text.str()
             val fromUserId = Session().getUserId(context!!).str()
-            val toUserId = arguments?.getString(Constants.TO_USER_ID).str()
+            val toUserId = mQuestion.fromUser
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
             answerOneQuestion(answerData)
         }
@@ -67,7 +68,10 @@ class AnswerQuestionFragment : Fragment() {
         ).enqueue(object : Callback<Question>{
             override fun onResponse(call: Call<Question>, response: Response<Question>) {
                 if(response.code() == 200){
-                    response.body().notNull {bindQuestionInformation(it)}
+                    response.body().notNull {
+                        bindQuestionInformation(it)
+                        mQuestion = it
+                    }
                 }else{
                     Log.d("Answer","Invalid Answer Request")
                 }
@@ -81,7 +85,7 @@ class AnswerQuestionFragment : Fragment() {
 
     private fun bindQuestionInformation(question : Question){
         mAnswerQuestionLayoutBinding.questionText.text = question.title
-        mAnswerQuestionLayoutBinding.userUsername.text = question.toUser
+        mAnswerQuestionLayoutBinding.userUsername.text = question.fromUser
         mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar)
     }
 

@@ -15,9 +15,12 @@ import com.amrdeveloper.askme.presenters.NotificationPresenter
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.NotificationAdapter
 import com.amrdeveloper.askme.contracts.NotificationContract
+import com.amrdeveloper.askme.data.Action
+import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.gone
+import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.utils.AskmeFragment
 import com.amrdeveloper.askme.utils.Session
@@ -61,7 +64,17 @@ class NotificationFragment: AskmeFragment() , NotificationContract.View{
 
         mNotiAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
             override fun onItemClick(notification: Notification) {
-                Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
+                when(notification.action){
+                    Action.QUESTION -> {
+                        val answerQuestionFragment = AnswerQuestionFragment()
+
+                        val args = Bundle()
+                        args.putString(Constants.QUESTION_ID, notification.data)
+                        answerQuestionFragment.arguments = args
+
+                        fragmentManager?.openFragmentInto(R.id.viewContainers, answerQuestionFragment)
+                    }
+                }
             }
         })
     }
