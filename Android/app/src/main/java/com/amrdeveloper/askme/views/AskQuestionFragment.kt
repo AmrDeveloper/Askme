@@ -5,13 +5,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.QuestionData
-import com.amrdeveloper.askme.databinding.AskQuestionViewBinding
+import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.net.AskmeClient
@@ -22,7 +21,7 @@ import retrofit2.Response
 
 class AskQuestionFragment : Fragment(){
 
-    private lateinit var mAskQuestionViewBinding: AskQuestionViewBinding
+    private lateinit var mAskQuestionLayoutBinding: AskQuestionLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +33,13 @@ class AskQuestionFragment : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mAskQuestionViewBinding =
-            DataBindingUtil.inflate(inflater, R.layout.ask_question_view, container, false)
+        mAskQuestionLayoutBinding =
+            DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
 
         bindUserInformation()
         updateQuestionLength()
 
-        return mAskQuestionViewBinding.root
+        return mAskQuestionLayoutBinding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -50,8 +49,8 @@ class AskQuestionFragment : Fragment(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
-            val question = mAskQuestionViewBinding.questionEditText.text.str()
-            val isAnonymously = mAskQuestionViewBinding.anonymouslySwitch.isChecked.str()
+            val question = mAskQuestionLayoutBinding.questionEditText.text.str()
+            val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked.str()
             val fromUser = Session().getUserId(context!!).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
             val questionData = QuestionData(question,fromUser, toUser, isAnonymously)
@@ -86,13 +85,13 @@ class AskQuestionFragment : Fragment(){
         val username = arguments?.getString(Constants.USERNAME)
         val avatarUrl = arguments?.getString(Constants.AVATAR_URL)
 
-        mAskQuestionViewBinding.userName.text = name
-        mAskQuestionViewBinding.userUsername.text = username
-        mAskQuestionViewBinding.userAvatar.loadImage(avatarUrl)
+        mAskQuestionLayoutBinding.userName.text = name
+        mAskQuestionLayoutBinding.userUsername.text = username
+        mAskQuestionLayoutBinding.userAvatar.loadImage(avatarUrl)
     }
 
     private fun updateQuestionLength(){
-        mAskQuestionViewBinding.questionEditText.addTextChangedListener(object : TextWatcher {
+        mAskQuestionLayoutBinding.questionEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -102,7 +101,7 @@ class AskQuestionFragment : Fragment(){
             }
 
             override fun afterTextChanged(editable : Editable?) {
-                mAskQuestionViewBinding.questionLength.text = (300 - editable!!.length).str()
+                mAskQuestionLayoutBinding.questionLength.text = (300 - editable!!.length).str()
             }
         })
     }
