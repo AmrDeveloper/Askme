@@ -63,7 +63,8 @@ exports.createNewNotification = (req, rse) => {
     const toUser = req.body.toUser;
     const body = req.body.body;
     const action = req.body.action;
-    const currentDate = new Date().toISOString();
+    //const currentDate = new Date().toISOString();
+    const currentDate = Date.now();
 
     if(action == null){
         action = "normal";

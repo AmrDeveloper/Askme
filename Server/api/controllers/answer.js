@@ -17,7 +17,7 @@ exports.createNewAnswer = (req, res) => {
     const questionId = req.body.questionId;
     const toUser = req.body.toUser;
     const fromUser = req.body.fromUser;
-    const currentDate = new Date().toISOString();
+    const currentDate = Date.now();
 
     const args = [
         body,

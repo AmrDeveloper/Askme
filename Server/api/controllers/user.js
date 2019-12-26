@@ -26,7 +26,7 @@ exports.registerNewUser = (req, res) => {
     const email = req.body.email.toLowerCase();
     const username = req.body.username;
     const password = req.body.password;
-    const currentDate = new Date().toISOString();
+    const currentDate = Date.now();
     const color = "ORANGE";
 
     const info = [

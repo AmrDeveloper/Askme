@@ -65,7 +65,7 @@ exports.createNewQuestion = (req, res) => {
     const toUser = req.body.toUser;
     const fromUser = req.body.fromUser;
     const anonymous = req.body.anonymous;
-    const currentDate = new Date().toISOString();
+    const currentDate = Date.now();
 
     const args = [
         title,
