@@ -49,9 +49,9 @@ exports.getAskedQuestions = (req, res) => {
 exports.getQuestionByID = (req, res) => {
     const id = req.params.id;
 
-    questionModel.getQuestionByID(id).then(state => {
-        if (state) {
-            res.status(status.OK).json(result[0]);
+    questionModel.getQuestionByID(id).then(result => {
+        if (result) {
+            res.status(status.OK).json(result[1]);
         } else {
             res.status(status.BAD_REQUEST).json({
                 message: "Invalid ID"
