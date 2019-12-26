@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,10 +48,13 @@ class NotificationFragment: AskmeFragment() , NotificationContract.View{
         NotificationViewModel.setUserId(session.getUserId(context!!).toString())
         NotificationViewModel.setToken(session.getUserToken(context!!).toString())
         val notificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
+        notificationViewModel.getNotiPagedList().observe(this, Observer {
+            mNotiAdapter.submitList(it)
+            hideProgressBar()
+        })
 
-        mNotiPresenter = NotificationPresenter(this, notificationViewModel ,this )
-
-        mNotiPresenter.startLoadingNotifications()
+        //mNotiPresenter = NotificationPresenter(this, notificationViewModel ,this )
+        //mNotiPresenter.startLoadingNotifications()
 
         return view
     }
@@ -81,8 +85,8 @@ class NotificationFragment: AskmeFragment() , NotificationContract.View{
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<Notification>>){
-        mNotiAdapter.submitList(event.data)
-        hideProgressBar()
+        //mNotiAdapter.submitList(event.data)
+        //hideProgressBar()
     }
 
     override fun showProgressBar() {
