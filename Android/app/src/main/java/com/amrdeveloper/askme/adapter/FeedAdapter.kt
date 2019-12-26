@@ -28,7 +28,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
     }
 
     private lateinit var onReactionClick : OnReactionClick
-    private lateinit var onUsernameClick: OnUsernameClick
+    private lateinit var onUsernameClick : OnUsernameClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -40,7 +40,6 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         val currentFeed : Feed? = getItem(position)
         currentFeed.notNull {
             holder.bingFeed(currentFeed!!)
-
             if(::onUsernameClick.isInitialized){
                 holder.itemView.questionFrom.setOnClickListener {
                     onUsernameClick.onUserClick(currentFeed.toUserId.str())

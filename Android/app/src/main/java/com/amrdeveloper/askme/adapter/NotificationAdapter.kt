@@ -14,6 +14,11 @@ import kotlinx.android.synthetic.main.notification_list_item.view.*
 class NotificationAdapter :
     PagedListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DIFF_CALL_BACK) {
 
+    interface OnItemClickListener{
+        fun onItemClick(notification: Notification)
+    }
+
+    private lateinit var mItemClickListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -25,7 +30,16 @@ class NotificationAdapter :
         val currentNotification = getItem(position)
         currentNotification.notNull {
             holder.bingNotification(it)
+            if(::mItemClickListener.isInitialized){
+                holder.itemView.setOnClickListener {
+                    mItemClickListener.onItemClick(currentNotification!!)
+                }
+            }
         }
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        mItemClickListener = listener
     }
 
     class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
