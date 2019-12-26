@@ -19,6 +19,8 @@
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/ic_profile"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="4dp"
                 app:civ_border_color="@color/orange"
                 app:civ_border_width="1dp" />
 
@@ -28,51 +30,70 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/userAvatar"
+                android:shadowColor="@color/darkBlue"
+                android:textColor="@color/darkBlue"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="AmrDeveloper" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/questionText"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight=".5"
-            android:gravity="start"
-            android:maxLength="300"
-            tools:text="How are you bro ?"
-            android:textColor="@color/darkBlue" />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/answerEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:gravity="start"
-            android:hint="@string/question_message"
-            android:maxLength="300"
-            android:textColor="@color/darkBlue" />
-
-        <RelativeLayout
-            android:layout_margin="5dp"
-            android:layout_weight=".1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
 
             <TextView
-                android:gravity="center"
+                android:id="@+id/questionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="start"
+                android:maxLength="300"
+                android:textColor="@color/darkBlue"
+                tools:text="How are you bro ?" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/answerEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="start"
+                android:hint="@string/answer_message"
+                android:maxLength="300"
+                android:textColor="@color/darkBlue" />
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight=".1">
+
+            <TextView
+                android:id="@+id/questionLength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:textColor="@color/orange"
-                android:id="@+id/questionLength"
+                android:gravity="center"
                 android:text="@string/question_length"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/orange"
+                android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
 </layout>
