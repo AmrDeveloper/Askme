@@ -55,7 +55,6 @@ class AnswerQuestionFragment : Fragment() {
             val fromUserId = Session().getUserId(context!!).str()
             val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
-            Log.d("Answer","id : ${questionID}\nbody : $answerBody\nfrom:$fromUserId\nto:$toUserId")
             answerOneQuestion(answerData)
         }
         return super.onOptionsItemSelected(item)
