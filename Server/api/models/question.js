@@ -3,8 +3,9 @@ const database = require('../../database/config');
 exports.getUserQuestions = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
                                    title,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
                                    (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
-                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS avatar,
+                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar,
                                    askedDate,
                                    anonymous
                                    FROM questions WHERE toUser = ? LIMIT ? OFFSET ?`;
@@ -19,7 +20,8 @@ exports.getAskedQuestions = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
                                    title,
                                    (SELECT username FROM users WHERE toUser = users.id) AS toUser,
-                                   (SELECT avatar FROM users WHERE toUser = users.id) AS avatar,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
+                                   (SELECT avatar FROM users WHERE toUser = users.id) AS fromUserAvatar,
                                    askedDate,
                                    anonymous
                                    FROM questions WHERE fromUser = ? LIMIT ? OFFSET ?`;
@@ -31,9 +33,11 @@ exports.getAskedQuestions = args => new Promise((resolve, reject) => {
 });
 
 exports.getQuestionByID = args => new Promise((resolve, reject) => {
-    const query = `SELECT DISTINCT title,
+    const query = `SELECT DISTINCT id,
+                                   title,
                                    (SELECT username FROM users WHERE toUser = users.id) AS toUser,
                                    (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
+                                   (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar,
                                    anonymous,
                                    askedDate
                                    FROM questions WHERE id = ? LIMIT 1`;
