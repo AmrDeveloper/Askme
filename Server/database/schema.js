@@ -33,6 +33,7 @@ const MYSQL_ANSWERD_TABLE = `CREATE TABLE IF NOT EXISTS answers(
     fromUser INTEGER,
     answerdDate VARCHAR(50),
     PRIMARY KEY(id),
+    UNIQUE(questionId, fromUser),
     FOREIGN KEY(toUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(fromUser) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(questionId) REFERENCES questions(id) ON DELETE CASCADE)`;

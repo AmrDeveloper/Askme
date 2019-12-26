@@ -9,11 +9,17 @@ data class Question(
     @SerializedName("title")
     val title : String,
 
-    @SerializedName("toUser")
-    val toUser : String,
+    @SerializedName("toUserId")
+    val toUserId : String,
 
-    @SerializedName("fromUser")
-    val fromUser : String,
+    @SerializedName("toUserName")
+    val toUserName : String,
+
+    @SerializedName("fromUserId")
+    val fromUserId : String,
+
+    @SerializedName("fromUserName")
+    val fromUserName : String,
 
     @SerializedName("fromUserAvatar")
     val fromUserAvatar : String,

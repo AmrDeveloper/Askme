@@ -53,8 +53,9 @@ class AnswerQuestionFragment : Fragment() {
             val questionID = arguments?.getString(Constants.QUESTION_ID).str()
             val answerBody = mAnswerQuestionLayoutBinding.answerEditText.text.str()
             val fromUserId = Session().getUserId(context!!).str()
-            val toUserId = mQuestion.fromUser
+            val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
+            Log.d("Answer","id : ${questionID}\nbody : $answerBody\nfrom:$fromUserId\nto:$toUserId")
             answerOneQuestion(answerData)
         }
         return super.onOptionsItemSelected(item)
@@ -73,7 +74,7 @@ class AnswerQuestionFragment : Fragment() {
                         mQuestion = it
                     }
                 }else{
-                    Log.d("Answer","Invalid Answer Request")
+                    Log.d("Answer","Invalid Answer Request ${response.code()}")
                 }
             }
 
@@ -85,7 +86,7 @@ class AnswerQuestionFragment : Fragment() {
 
     private fun bindQuestionInformation(question : Question){
         mAnswerQuestionLayoutBinding.questionText.text = question.title
-        mAnswerQuestionLayoutBinding.userUsername.text = question.fromUser
+        mAnswerQuestionLayoutBinding.userUsername.text = question.fromUserName
         mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar)
     }
 
@@ -98,12 +99,12 @@ class AnswerQuestionFragment : Fragment() {
                 if(response.code() == 200){
                     fragmentManager?.popBackStackImmediate()
                 }else{
-                    Log.d("Answer","Invalid Answer Request")
+                    Log.d("Answer","Invalid Answer Request ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("Answer","Invalid Answer Request")
+                Log.d("Answer","Invalid Answer Request ${t.message}")
             }
         })
     }

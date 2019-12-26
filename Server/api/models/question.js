@@ -3,8 +3,10 @@ const database = require('../../database/config');
 exports.getUserQuestions = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
                                    title,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
-                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
+                                   toUser AS toUserId,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUserName,
+                                   fromUser AS fromUserId,
+                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUserName,
                                    (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar,
                                    askedDate,
                                    anonymous
@@ -19,8 +21,10 @@ exports.getUserQuestions = args => new Promise((resolve, reject) => {
 exports.getAskedQuestions = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
                                    title,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
+                                   toUser AS toUserId,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUserName,
+                                   fromUser AS fromUserId,
+                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUserName,
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS fromUserAvatar,
                                    askedDate,
                                    anonymous
@@ -35,8 +39,10 @@ exports.getAskedQuestions = args => new Promise((resolve, reject) => {
 exports.getQuestionByID = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
                                    title,
-                                   (SELECT username FROM users WHERE toUser = users.id) AS toUser,
-                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUser,
+                                   toUser AS toUserId,
+                                   (SELECT username FROM users WHERE toUser = users.id) AS toUserName,
+                                   fromUser AS fromUserId,
+                                   (SELECT username FROM users WHERE fromUser = users.id) AS fromUserName,
                                    (SELECT avatar FROM users WHERE fromUser = users.id) AS fromUserAvatar,
                                    anonymous,
                                    askedDate
