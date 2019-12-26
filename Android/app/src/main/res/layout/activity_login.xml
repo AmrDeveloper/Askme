@@ -12,7 +12,7 @@
             android:id="@+id/emailInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="@dimen/dimen8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInputEdit"
@@ -28,7 +28,7 @@
             android:id="@+id/passInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_margin="@dimen/dimen8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passInputEdit"
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="15dp"
+            android:padding="@dimen/dimen15dp"
             android:text="@string/login"
             android:textAllCaps="false" />
 

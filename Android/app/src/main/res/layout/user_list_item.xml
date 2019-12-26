@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    android:layout_margin="@dimen/dimen5dp"
+    app:cardCornerRadius="@dimen/dimen5dp"
+    app:cardElevation="@dimen/dimen5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,20 +16,20 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userAvatar"
             android:src="@drawable/ic_profile"
-            app:civ_border_width="1dp"
-            android:layout_margin="3dp"
+            app:civ_border_width="@dimen/dimen1dp"
+            android:layout_margin="@dimen/dimen3dp"
             android:layout_centerVertical="true"
             app:civ_border_color="@color/orange"
-            android:layout_width="50dp"
-            android:layout_height="50dp"/>
+            android:layout_width="@dimen/dimen50dp"
+            android:layout_height="@dimen/dimen50dp"/>
 
         <TextView
             tools:text="AmrDeveloper"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="@dimen/dimen5dp"
             android:id="@+id/usernameTxt"
             android:textColor="@color/darkBlue"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="@dimen/dimen20sp"
             android:layout_toEndOf="@id/userAvatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -38,8 +38,8 @@
             tools:text ="20"
             android:id="@+id/reactionsTxt"
             android:gravity="center"
-            android:drawablePadding="5dp"
-            android:layout_marginBottom="5dp"
+            android:drawablePadding="@dimen/dimen5dp"
+            android:layout_marginBottom="@dimen/dimen5dp"
             android:drawableStart="@drawable/ic_react"
             android:layout_toEndOf="@id/userAvatar"
             android:layout_below="@id/usernameTxt"

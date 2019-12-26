@@ -12,7 +12,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
         android:gravity="center"
-        app:cardElevation="2dp"
+        app:cardElevation="@dimen/dimen2dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="1dp"
+                android:padding="@dimen/dimen1dp"
                 android:src="@drawable/ic_react" />
 
             <TextView
@@ -45,7 +45,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
         android:gravity="center"
-        app:cardElevation="2dp"
+        app:cardElevation="@dimen/dimen2dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="1dp"
+                android:padding="@dimen/dimen1dp"
                 android:src="@drawable/ic_question" />
 
             <TextView
@@ -78,7 +78,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
         android:gravity="center"
-        app:cardElevation="2dp"
+        app:cardElevation="@dimen/dimen2dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="1dp"
+                android:padding="@dimen/dimen1dp"
                 android:src="@drawable/ic_answer" />
 
             <TextView
@@ -111,7 +111,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
         android:gravity="center"
-        app:cardElevation="2dp"
+        app:cardElevation="@dimen/dimen2dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="1dp"
+                android:padding="@dimen/dimen1dp"
                 android:src="@drawable/ic_followers" />
 
             <TextView
@@ -144,7 +144,7 @@
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"
         android:gravity="center"
-        app:cardElevation="2dp"
+        app:cardElevation="@dimen/dimen2dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:padding="1dp"
+                android:padding="@dimen/dimen1dp"
                 android:src="@drawable/ic_followers" />
 
             <TextView

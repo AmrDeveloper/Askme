@@ -14,17 +14,17 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userAvatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_width="@dimen/dimen50dp"
+            android:layout_height="@dimen/dimen50dp"
+            android:layout_margin="@dimen/dimen5dp"
             android:src="@drawable/ic_profile"
             app:civ_border_color="@color/orange"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="@dimen/dimen1dp" />
 
         <TextView
             android:id="@+id/userName"
             tools:text="Amr Hesham"
-            android:textSize="20sp"
+            android:textSize="@dimen/dimen20sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:layout_weight="5"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/dimen5dp"
         android:id="@+id/questionEditText"
         android:layout_width="match_parent"
         android:maxLength="300"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"/>
 
     <RelativeLayout
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/dimen5dp"
         android:layout_weight=".3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -59,9 +59,9 @@
         <TextView
             android:gravity="center"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:textSize="18sp"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
+            android:textSize="@dimen/dimen18sp"
             android:layout_centerVertical="true"
             android:textColor="@color/orange"
             android:id="@+id/questionLength"
@@ -73,9 +73,9 @@
             android:id="@+id/anonymouslySwitch"
             android:textColor="@color/orange"
             android:textStyle="bold"
-            app:switchPadding="8dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            app:switchPadding="@dimen/dimen8dp"
+            android:layout_marginStart="@dimen/dimen5dp"
+            android:layout_marginEnd="@dimen/dimen5dp"
             android:gravity="center"
             android:layout_centerVertical="true"
             android:text="@string/ask_anonymously"

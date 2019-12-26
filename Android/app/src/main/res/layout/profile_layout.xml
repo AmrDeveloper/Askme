@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             <RelativeLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="@dimen/dimen250dp">
 
                 <ImageView
                     android:id="@+id/userWallpaper"
@@ -29,14 +29,14 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/userAvatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/dimen100dp"
+                    android:layout_height="@dimen/dimen100dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
                     android:contentDescription="@string/user_avatar"
                     android:src="@drawable/ic_profile"
                     app:civ_border_color="@color/darkBlue"
-                    app:civ_border_width="5dp" />
+                    app:civ_border_width="@dimen/dimen5dp" />
 
                 <TextView
                     android:id="@+id/userName"
@@ -47,7 +47,7 @@
                     android:gravity="center"
                     android:lines="1"
                     android:textColor="@color/white"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/dimen22sp"
                     android:textStyle="bold|italic"
                     tools:text="Amr Developer" />
 
@@ -58,22 +58,22 @@
                     android:layout_below="@id/userName"
                     android:layout_centerHorizontal="true"
                     app:cardBackgroundColor="@color/darkBlue"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="2dp"
+                    app:cardCornerRadius="@dimen/dimen5dp"
+                    app:cardElevation="@dimen/dimen2dp"
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="35dp">
+                        android:layout_height="@dimen/dimen35dp">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/followIcon"
-                            android:layout_width="30dp"
+                            android:layout_width="@dimen/dimen30dp"
                             android:layout_height="match_parent"
                             android:contentDescription="@string/follow"
                             android:src="@drawable/ic_feed"
                             app:civ_border_color="@color/orange"
-                            app:civ_border_width="1dp"
+                            app:civ_border_width="@dimen/dimen1dp"
                             app:civ_circle_background_color="@color/darkBlue" />
 
                         <TextView
@@ -82,11 +82,11 @@
                             android:layout_height="match_parent"
                             android:layout_toEndOf="@id/followIcon"
                             android:gravity="center"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="5dp"
+                            android:paddingStart="@dimen/dimen5dp"
+                            android:paddingEnd="@dimen/dimen5dp"
                             android:text="@string/follow"
                             android:textColor="@color/orange"
-                            android:textSize="16sp"
+                            android:textSize="@dimen/dimen16sp"
                             android:textStyle="italic" />
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -94,16 +94,16 @@
                 <Button
                     android:id="@+id/askmeButton"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/dimen40dp"
                     android:layout_below="@id/followCardView"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="@dimen/dimen10dp"
+                    android:layout_marginEnd="@dimen/dimen20dp"
                     android:background="@color/orange"
                     android:text="@string/ask_my_anything"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/dimen18sp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -112,8 +112,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mainLayout"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="@dimen/dimen5dp"
+                app:cardElevation="@dimen/dimen2dp"
                 app:cardUseCompatPadding="true">
 
                 <include layout="@layout/user_grid_analysis" />
@@ -124,8 +124,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/analysisCardView"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="2dp"
+                app:cardCornerRadius="@dimen/dimen5dp"
+                app:cardElevation="@dimen/dimen2dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -138,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="5dp"
+                        android:padding="@dimen/dimen5dp"
                         tools:text="Time is limited don't waste it" />
 
                     <TextView
@@ -146,7 +146,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_location"
-                        android:padding="5dp"
+                        android:padding="@dimen/dimen5dp"
                         tools:text="Alexandria, Egypt" />
 
                     <TextView
@@ -154,7 +154,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_time"
-                        android:padding="5dp"
+                        android:padding="@dimen/dimen5dp"
                         tools:text="2 years ago" />
                 </LinearLayout>
 

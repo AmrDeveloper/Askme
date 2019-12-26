@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +12,7 @@
         android:id="@+id/nameInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="@dimen/dimen5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nameInputEdit"
@@ -29,7 +28,7 @@
         android:id="@+id/usernameInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="@dimen/dimen5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameInputEdit"
@@ -45,7 +44,7 @@
         android:id="@+id/emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="@dimen/dimen5dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailInputEdit"
@@ -78,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="15dp"
+        android:padding="@dimen/dimen15dp"
         android:text="@string/register"
         android:textAllCaps="false" />
 

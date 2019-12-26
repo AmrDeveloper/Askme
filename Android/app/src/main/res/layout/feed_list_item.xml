@@ -4,32 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    android:layout_margin="@dimen/dimen5dp"
+    app:cardCornerRadius="@dimen/dimen4dp"
+    app:cardElevation="@dimen/dimen4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/dimen5dp"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/questionUserAvatar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/dimen35dp"
+            android:layout_height="@dimen/dimen35dp"
             android:src="@drawable/ic_profile"
             app:civ_border_color="@color/darkBlue"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="@dimen/dimen1dp" />
 
         <TextView
             android:id="@+id/questionTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
+            android:layout_marginStart="@dimen/dimen1dp"
             android:layout_toEndOf="@id/questionUserAvatar"
             android:lines="2"
-            android:padding="2dp"
+            android:padding="@dimen/dimen2dp"
             android:textColor="@color/darkBlue"
             tools:text="Hello how are you bro?" />
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/questionTxt"
             android:gravity="center"
-            android:padding="3dp"
+            android:padding="@dimen/dimen3dp"
             android:textColor="@color/darkBlue"
             android:textStyle="bold"
             tools:text="Asked By" />
@@ -51,7 +51,7 @@
             android:layout_below="@id/questionTxt"
             android:layout_toEndOf="@id/questionFrom"
             android:gravity="center"
-            android:padding="3dp"
+            android:padding="@dimen/dimen3dp"
             tools:text="9 h ago" />
 
         <TextView
@@ -60,27 +60,27 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/answerDateTxt"
             android:lines="2"
-            android:padding="2dp"
+            android:padding="@dimen/dimen2dp"
             android:textColor="@color/darkBlue"
             tools:text="I am find thanks for question byo" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/answerUserAvatar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/dimen35dp"
+            android:layout_height="@dimen/dimen35dp"
             android:layout_below="@+id/answerTxt"
             android:src="@drawable/ic_profile"
             app:civ_border_color="@color/darkBlue"
-            app:civ_border_width="1dp" />
+            app:civ_border_width="@dimen/dimen1dp" />
 
         <TextView
             android:id="@+id/answerFrom"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="@dimen/dimen35dp"
             android:layout_below="@id/answerTxt"
             android:layout_toEndOf="@id/answerUserAvatar"
             android:gravity="center"
-            android:padding="2dp"
+            android:padding="@dimen/dimen2dp"
             android:textStyle="bold"
             android:textColor="@color/darkBlue"
             tools:text="amrdeveloper" />
@@ -92,7 +92,7 @@
             android:layout_below="@id/answerTxt"
             android:layout_alignParentEnd="true"
             android:drawableStart="@drawable/ic_react"
-            android:drawablePadding="2dp"
+            android:drawablePadding="@dimen/dimen2dp"
             android:gravity="center"
             android:textColor="@color/darkBlue"
             tools:text="10" />
