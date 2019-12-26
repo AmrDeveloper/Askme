@@ -8,7 +8,10 @@ exports.getUserNotifications = args => new Promise((resolve, reject) => {
                             notifications.action,
                             notifications.data,
                             notifications.opened
-                            FROM notifications WHERE toUser = ? LIMIT ? OFFSET ?`;
+                            FROM notifications
+                            WHERE toUser = ? 
+                            ORDER BY createdDate DESC 
+                            LIMIT ? OFFSET ?`;
 
     database.query(query, args, (err, result) => {
         if (err) throw err;
@@ -36,7 +39,10 @@ exports.getNewNotifications = args => new Promise((resolve, reject) => {
                         notifications.action,
                         notifications.data,
                         notifications.opened
-                        FROM notifications WHERE toUser = ? AND opened = 0 LIMIT ? OFFSET ?`;
+                        FROM notifications 
+                        WHERE toUser = ? AND opened = 0 
+                        ORDER BY createdDate DESC 
+                        LIMIT ? OFFSET ?`;
 
     database.query(query, args, (err, result) => {
         if (err) throw err;
