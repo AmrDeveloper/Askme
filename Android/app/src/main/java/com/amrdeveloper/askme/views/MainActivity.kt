@@ -6,7 +6,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.*
-import com.amrdeveloper.askme.utils.MenuManager
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.openFragmentInto

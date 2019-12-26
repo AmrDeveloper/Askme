@@ -25,4 +25,5 @@
     <string name="search_hint">Search by mail, name</string>
     <string name="question_length">300</string>
     <string name="ask_my_anything">Ask my anything</string>
+    <string name="logout">logout</string>
 </resources>
