@@ -58,6 +58,12 @@ class NotificationFragment: AskmeFragment() , NotificationContract.View{
         listItems.setHasFixedSize(true)
         listItems.layoutManager = LinearLayoutManager(context)
         listItems.adapter = mNotiAdapter
+
+        mNotiAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
+            override fun onItemClick(notification: Notification) {
+                Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -16,7 +16,7 @@ const MYSQL_USERS_TABLE = `CREATE TABLE IF NOT EXISTS users(
 
 const MYSQL_QUESTIONS_TABLE = `CREATE TABLE IF NOT EXISTS questions(
     id INTEGER NOT NULL AUTO_INCREMENT,
-    title VARCHAR(50),
+    title VARCHAR(300),
     toUser INTEGER,
     fromUser INTEGER,
     askedDate VARCHAR(50),
@@ -27,7 +27,7 @@ const MYSQL_QUESTIONS_TABLE = `CREATE TABLE IF NOT EXISTS questions(
 
 const MYSQL_ANSWERD_TABLE = `CREATE TABLE IF NOT EXISTS answers(
     id INTEGER NOT NULL AUTO_INCREMENT,
-    body VARCHAR(255),
+    body VARCHAR(300),
     questionId INTEGER,
     toUser INTEGER,
     fromUser INTEGER,
