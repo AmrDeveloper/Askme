@@ -28,5 +28,5 @@ data class Question(
     val anonymously: Anonymously,
 
     @SerializedName("askedDate")
-    val askedDate : String
+    val askedDate : Long
 )

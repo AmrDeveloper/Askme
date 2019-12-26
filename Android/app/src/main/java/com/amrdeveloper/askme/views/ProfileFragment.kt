@@ -19,7 +19,6 @@ import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.models.FeedViewModel
 import com.amrdeveloper.askme.net.AskmeClient
-import com.amrdeveloper.askme.presenters.ProfilePresenter
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
@@ -160,7 +159,7 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         userName.setTextOrGone(user.username)
         userAddress.setTextOrGone(user.address)
         userStatus.setTextOrGone(user.status)
-        userJoinDate.setTextOrGone(user.joinDate)
+        userJoinDate.setFormattedJoinDate(user.joinDate)
 
         userFollowing.text = user.followingNum.str()
         userFollowers.text = user.followersNum.str()

@@ -95,7 +95,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
             itemView.answerTxt.text = feed.answerBody
             itemView.questionFrom.text = feed.toUserName
             itemView.answerFrom.text = feed.fromUserName
-            itemView.answerDateTxt.setTextOrHide(feed.answerDate)
+            itemView.answerDateTxt.setFormattedDateForPost(feed.answerDate)
             itemView.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
 
             itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
@@ -104,7 +104,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
             updateReactedIcon(feed.isReacted)
         }
 
-        fun updateReactedIcon(reaction: Reaction){
+        private fun updateReactedIcon(reaction: Reaction){
             when(reaction){
                 Reaction.REACATED -> {
                     itemView.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))

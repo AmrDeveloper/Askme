@@ -5,6 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.net.API_SERVER_URL
+import com.amrdeveloper.askme.utils.formatDateForJoin
+import com.amrdeveloper.askme.utils.formatDateForPost
 import com.squareup.picasso.Picasso
 
 fun View.show() {
@@ -41,6 +43,14 @@ fun TextView.setTextOrHide(text: String?) {
     } else {
         this.text = text
     }
+}
+
+fun TextView.setFormattedJoinDate(time : Long) {
+    this.text = formatDateForJoin(time).str()
+}
+
+fun TextView.setFormattedDateForPost(time : Long) {
+    this.text = formatDateForPost(time).str()
 }
 
 fun TextView.setPluralsText(id : Int, value : Int) {

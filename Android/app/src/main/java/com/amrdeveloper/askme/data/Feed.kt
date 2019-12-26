@@ -43,5 +43,5 @@ data class Feed(
     var isReacted : Reaction,
 
     @SerializedName("answerDate")
-    var answerDate : String
+    var answerDate : Long
 )

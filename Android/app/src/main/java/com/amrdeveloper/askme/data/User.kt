@@ -32,7 +32,7 @@ data class User(
     val active: String,
 
     @SerializedName("joinDate")
-    val joinDate: String,
+    val joinDate: Long,
 
     @SerializedName("following")
     val followingNum: Int,

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.extensions.notNull
+import com.amrdeveloper.askme.extensions.setFormattedDateForPost
 import kotlinx.android.synthetic.main.notification_list_item.view.*
 
 class NotificationAdapter :
@@ -46,7 +47,7 @@ class NotificationAdapter :
 
         fun bingNotification(notification: Notification) {
             itemView.notificationBody.text = notification.body
-            itemView.notificationDate.text = notification.createdDate
+            itemView.notificationDate.setFormattedDateForPost(notification.createdDate)
             //TODO : Load icon depend on action
         }
     }
