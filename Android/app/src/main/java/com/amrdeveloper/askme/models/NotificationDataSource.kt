@@ -24,6 +24,7 @@ class NotificationDataSource(private var userId: String, private val token: Stri
                     call: Call<List<Notification>>,
                     response: Response<List<Notification>>
                 ) {
+                    Log.d("QUESTION","NOTIFICATION : ${response.message()}" )
                     val notiList = response.body()
                     notiList.notNull {
                         val size = notiList?.size

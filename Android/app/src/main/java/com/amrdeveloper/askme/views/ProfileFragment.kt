@@ -22,7 +22,6 @@ import com.amrdeveloper.askme.models.FeedViewModel
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.presenters.ProfilePresenter
 import com.amrdeveloper.askme.utils.Session
-import kotlinx.android.synthetic.main.ask_question_layout.*
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
 import org.greenrobot.eventbus.EventBus
@@ -37,7 +36,6 @@ class ProfileFragment : Fragment(), ProfileContract.View {
     private lateinit var mUserId: String
     private lateinit var mCurrentUser : User
 
-    private lateinit var mProfilePresenter: ProfilePresenter
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
 

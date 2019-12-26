@@ -79,7 +79,6 @@
             android:layout_marginEnd="5dp"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:checked="true"
             android:text="@string/ask_anonymously"
             app:trackTint="@color/black"
             app:thumbTint="@color/orange"

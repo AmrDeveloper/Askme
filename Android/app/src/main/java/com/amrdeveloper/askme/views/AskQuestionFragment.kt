@@ -3,16 +3,22 @@ package com.amrdeveloper.askme.views
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
+import com.amrdeveloper.askme.data.QuestionData
 import com.amrdeveloper.askme.databinding.AskQuestionViewBinding
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AskQuestionFragment : Fragment(){
 
@@ -45,11 +51,34 @@ class AskQuestionFragment : Fragment(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
             val question = mAskQuestionViewBinding.questionEditText.text.str()
-            val isAnonymously = mAskQuestionViewBinding.anonymouslySwitch.isChecked
+            val isAnonymously = mAskQuestionViewBinding.anonymouslySwitch.isChecked.str()
             val fromUser = Session().getUserId(context!!).str()
-            val userId = arguments?.getString(Constants.USER_ID)
+            val toUser = arguments?.getString(Constants.USER_ID).str()
+            val questionData = QuestionData(question,fromUser, toUser, isAnonymously)
+            askNewQuestion(questionData)
+
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun askNewQuestion(questionData: QuestionData){
+        AskmeClient.getQuestionService().createNewQueestion(
+            token = Session().getUserToken(context!!).str(),
+            question = questionData
+        ).enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200) {
+                    fragmentManager?.popBackStackImmediate()
+                }else{
+                    Log.d("QUESTION","Invalid ${response.code()}")
+
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("QUESTION","Invalid")
+            }
+        })
     }
 
     private fun bindUserInformation(){
