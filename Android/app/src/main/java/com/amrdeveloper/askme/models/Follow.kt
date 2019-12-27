@@ -1,11 +1,11 @@
-package com.amrdeveloper.askme.data
+package com.amrdeveloper.askme.models
 
 import com.google.gson.annotations.SerializedName
 
-enum class Reaction {
+enum class Follow {
     @SerializedName("1")
-    REACATED,
+    FOLLOW,
 
     @SerializedName("0")
-    UN_REACATED
+    UN_FOLLOW
 }

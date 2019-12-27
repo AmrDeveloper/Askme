@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.models
+package com.amrdeveloper.askme.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,8 @@ import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
-import com.amrdeveloper.askme.data.Feed
-import com.amrdeveloper.askme.data.User
+import com.amrdeveloper.askme.models.Feed
+import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.AskmeClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

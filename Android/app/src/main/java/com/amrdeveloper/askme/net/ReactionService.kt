@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.net
 
-import com.amrdeveloper.askme.data.ReactionData
+import com.amrdeveloper.askme.models.ReactionData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE

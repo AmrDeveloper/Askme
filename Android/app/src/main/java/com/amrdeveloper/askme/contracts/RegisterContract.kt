@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.contracts
 
-import com.amrdeveloper.askme.data.RegisterData
+import com.amrdeveloper.askme.models.RegisterData
 
 interface RegisterContract {
 

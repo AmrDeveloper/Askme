@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.net
 
-import com.amrdeveloper.askme.data.AnswerData
+import com.amrdeveloper.askme.models.AnswerData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header

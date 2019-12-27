@@ -1,13 +1,14 @@
-package com.amrdeveloper.askme.models
+package com.amrdeveloper.askme.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
-import com.amrdeveloper.askme.data.Notification
+import com.amrdeveloper.askme.models.Notification
 
 class NotificationViewModel : ViewModel() {
 
@@ -35,10 +36,9 @@ class NotificationViewModel : ViewModel() {
             MutableLiveData()
 
         override fun create(): DataSource<Int, Notification> {
-            val notifcationDataSource =
-                NotificationDataSource(userId, token)
-            notificationLiveDataSource.postValue(notifcationDataSource)
-            return notifcationDataSource
+            val dataSource = NotificationDataSource(userId, token, viewModelScope)
+            notificationLiveDataSource.postValue(dataSource)
+            return dataSource
         }
 
         fun getNotificationLiveDataSource() = notificationLiveDataSource

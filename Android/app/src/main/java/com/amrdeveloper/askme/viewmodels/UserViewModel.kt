@@ -1,13 +1,14 @@
-package com.amrdeveloper.askme.models
+package com.amrdeveloper.askme.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
-import com.amrdeveloper.askme.data.User
+import com.amrdeveloper.askme.models.User
 
 class UserViewModel : ViewModel(){
 
@@ -33,7 +34,7 @@ class UserViewModel : ViewModel(){
         private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
 
         override fun create(): DataSource<Int, User> {
-            val userDataSource = UserDataSource()
+            val userDataSource = UserDataSource(viewModelScope)
             userLiveDataSource.postValue(userDataSource)
             return userDataSource
         }

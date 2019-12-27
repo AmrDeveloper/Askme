@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.contracts.RegisterContract
-import com.amrdeveloper.askme.data.RegisterData
+import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.presenters.RegisterPresenter
 import com.amrdeveloper.askme.databinding.ActivityRegisterBinding
 import com.amrdeveloper.askme.events.RegisterFailureEvent

@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amrdeveloper.askme.models.HomeViewModel
+import com.amrdeveloper.askme.viewmodels.HomeViewModel
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Reaction
-import com.amrdeveloper.askme.data.ReactionData
+import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.Reaction
+import com.amrdeveloper.askme.models.ReactionData
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto

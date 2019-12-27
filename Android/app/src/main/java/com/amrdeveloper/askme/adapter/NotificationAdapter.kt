@@ -7,7 +7,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Notification
+import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.setFormattedDateForPost
 import kotlinx.android.synthetic.main.notification_list_item.view.*

@@ -8,8 +8,8 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.QuestionData
+import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.QuestionData
 import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str

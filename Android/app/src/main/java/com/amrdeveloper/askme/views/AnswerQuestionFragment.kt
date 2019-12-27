@@ -9,9 +9,9 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.AnswerData
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Question
+import com.amrdeveloper.askme.models.AnswerData
+import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.Question
 import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.notNull

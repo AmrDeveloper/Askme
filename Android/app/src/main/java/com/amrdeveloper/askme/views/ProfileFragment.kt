@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
-import com.amrdeveloper.askme.data.*
+import com.amrdeveloper.askme.models.*
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.extensions.*
-import com.amrdeveloper.askme.models.ProfileViewModel
+import com.amrdeveloper.askme.viewmodels.ProfileViewModel
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.profile_layout.*

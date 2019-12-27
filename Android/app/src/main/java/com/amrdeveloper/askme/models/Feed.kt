@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.data
+package com.amrdeveloper.askme.models
 
 import com.google.gson.annotations.SerializedName
 

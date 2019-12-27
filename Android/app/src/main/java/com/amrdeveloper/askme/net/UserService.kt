@@ -1,9 +1,9 @@
 package com.amrdeveloper.askme.net
 
-import com.amrdeveloper.askme.data.RegisterData
-import com.amrdeveloper.askme.data.LoginData
-import com.amrdeveloper.askme.data.SessionData
-import com.amrdeveloper.askme.data.User
+import com.amrdeveloper.askme.models.RegisterData
+import com.amrdeveloper.askme.models.LoginData
+import com.amrdeveloper.askme.models.SessionData
+import com.amrdeveloper.askme.models.User
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -24,10 +24,10 @@ interface UserService {
     ): User
 
     @GET("users/")
-    fun getUsersQuery(
+    suspend fun getUsersQuery(
         @Query("count") count: Int = DEFAULT_QUERY_COUNT,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
-    ): Call<List<User>>
+    ): List<User>
 
     @GET("users/search")
     fun getUsersSearch(

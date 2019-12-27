@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amrdeveloper.askme.models.NotificationViewModel
+import com.amrdeveloper.askme.viewmodels.NotificationViewModel
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.NotificationAdapter
-import com.amrdeveloper.askme.data.Action
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Notification
+import com.amrdeveloper.askme.models.Action
+import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto

@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.net
 
-import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.models.Feed
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

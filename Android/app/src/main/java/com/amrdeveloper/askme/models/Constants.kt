@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.data
+package com.amrdeveloper.askme.models
 
 class Constants {
     companion object {

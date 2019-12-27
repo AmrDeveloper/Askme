@@ -1,11 +1,8 @@
 package com.amrdeveloper.askme.presenters
 
-import com.amrdeveloper.askme.data.LoginData
+import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.contracts.LoginContract
-import com.amrdeveloper.askme.models.LoginModel
-import com.amrdeveloper.askme.events.LoginFailureEvent
-import org.greenrobot.eventbus.EventBus
-import kotlin.math.log
+import com.amrdeveloper.askme.viewmodels.LoginModel
 
 class LoginPresenter(
     private val view : LoginContract.View

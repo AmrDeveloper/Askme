@@ -1,9 +1,9 @@
-package com.amrdeveloper.askme.models
+package com.amrdeveloper.askme.viewmodels
 
 import com.amrdeveloper.askme.net.AskmeClient
-import com.amrdeveloper.askme.data.LoginData
+import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.contracts.LoginContract
-import com.amrdeveloper.askme.data.SessionData
+import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.events.LoginFailureEvent
 import com.amrdeveloper.askme.events.LoginSuccessEvent
 import org.greenrobot.eventbus.EventBus

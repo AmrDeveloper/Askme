@@ -1,6 +1,5 @@
 package com.amrdeveloper.askme.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.User
+import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.notNull
 import kotlinx.android.synthetic.main.user_list_item.view.*

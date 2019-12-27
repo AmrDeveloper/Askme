@@ -1,7 +1,7 @@
 package com.amrdeveloper.askme.net
 
-import com.amrdeveloper.askme.data.Question
-import com.amrdeveloper.askme.data.QuestionData
+import com.amrdeveloper.askme.models.Question
+import com.amrdeveloper.askme.models.QuestionData
 import retrofit2.Call
 import retrofit2.http.*
 

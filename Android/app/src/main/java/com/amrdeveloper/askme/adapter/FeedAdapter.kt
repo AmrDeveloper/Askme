@@ -8,8 +8,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Feed
-import com.amrdeveloper.askme.data.Reaction
+import com.amrdeveloper.askme.models.Feed
+import com.amrdeveloper.askme.models.Reaction
 import com.amrdeveloper.askme.extensions.*
 import kotlinx.android.synthetic.main.feed_list_item.view.*
 

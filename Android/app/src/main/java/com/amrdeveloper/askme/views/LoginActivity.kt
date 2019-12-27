@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.contracts.LoginContract
 import com.amrdeveloper.askme.presenters.LoginPresenter
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.LoginData
+import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.databinding.ActivityLoginBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.events.LoginFailureEvent

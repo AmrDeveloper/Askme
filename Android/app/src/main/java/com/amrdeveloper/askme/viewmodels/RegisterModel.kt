@@ -1,7 +1,7 @@
-package com.amrdeveloper.askme.models
+package com.amrdeveloper.askme.viewmodels
 
 import com.amrdeveloper.askme.contracts.RegisterContract
-import com.amrdeveloper.askme.data.RegisterData
+import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.events.RegisterFailureEvent
 import com.amrdeveloper.askme.events.RegisterSuccessEvent
 import com.amrdeveloper.askme.net.AskmeClient

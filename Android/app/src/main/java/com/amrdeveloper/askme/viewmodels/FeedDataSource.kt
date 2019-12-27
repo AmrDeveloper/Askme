@@ -1,8 +1,8 @@
-package com.amrdeveloper.askme.models
+package com.amrdeveloper.askme.viewmodels
 
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
-import com.amrdeveloper.askme.data.Feed
+import com.amrdeveloper.askme.models.Feed
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
@@ -10,14 +10,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeDataSource(var userId : String) : PageKeyedDataSource<Int, Feed>(){
+class FeedDataSource(var userId: String) : PageKeyedDataSource<Int, Feed>() {
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Feed>
     ) {
-        AskmeClient.getFeedService()
-            .getHomeFeed(userId = userId)
+        AskmeClient.getFeedService().getUserFeed(userId = userId)
             .enqueue(object : Callback<List<Feed>> {
                 override fun onResponse(call: Call<List<Feed>>, response: Response<List<Feed>>) {
                     val feedList = response.body()
@@ -38,8 +37,7 @@ class HomeDataSource(var userId : String) : PageKeyedDataSource<Int, Feed>(){
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
-        AskmeClient.getFeedService()
-            .getHomeFeed(userId = userId)
+        AskmeClient.getFeedService().getUserFeed(userId = userId, offset = params.key)
             .enqueue(object : Callback<List<Feed>> {
                 override fun onResponse(call: Call<List<Feed>>, response: Response<List<Feed>>) {
                     val feedList = response.body()
@@ -59,8 +57,7 @@ class HomeDataSource(var userId : String) : PageKeyedDataSource<Int, Feed>(){
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
-        AskmeClient.getFeedService()
-            .getHomeFeed(userId = userId)
+        AskmeClient.getFeedService().getUserFeed(userId = userId, offset = params.key)
             .enqueue(object : Callback<List<Feed>> {
                 override fun onResponse(call: Call<List<Feed>>, response: Response<List<Feed>>) {
                     val feedList = response.body()
