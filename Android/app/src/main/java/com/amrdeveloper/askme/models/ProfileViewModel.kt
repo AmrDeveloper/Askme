@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
@@ -40,4 +41,17 @@ class ProfileViewModel : ViewModel() {
     fun getUserLiveData() = userLiveData
 
     fun getFeedPagedList() = feedPagedList
+
+    private inner class FeedDataSourceFactory(var userId : String) : DataSource.Factory<Int,Feed>() {
+
+        private val feedLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
+
+        override fun create(): DataSource<Int, Feed> {
+            val feedDataSource = FeedDataSource(userId)
+            feedLiveDataSource.postValue(feedDataSource)
+            return feedDataSource
+        }
+
+        fun getFeedLiveDataSource() = feedLiveDataSource
+    }
 }

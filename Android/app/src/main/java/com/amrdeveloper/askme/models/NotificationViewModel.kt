@@ -3,6 +3,7 @@ package com.amrdeveloper.askme.models
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
@@ -26,4 +27,21 @@ class NotificationViewModel : ViewModel() {
     }
 
     fun getNotificationList() = notificationPagedList
+
+    private inner class NotificationDataSourceFactory(var userId: String, val token: String) :
+        DataSource.Factory<Int, Notification>() {
+
+        private val notificationLiveDataSource: MutableLiveData<PageKeyedDataSource<Int, Notification>> =
+            MutableLiveData()
+
+        override fun create(): DataSource<Int, Notification> {
+            val notifcationDataSource =
+                NotificationDataSource(userId, token)
+            notificationLiveDataSource.postValue(notifcationDataSource)
+            return notifcationDataSource
+        }
+
+        fun getNotificationLiveDataSource() = notificationLiveDataSource
+    }
 }
+

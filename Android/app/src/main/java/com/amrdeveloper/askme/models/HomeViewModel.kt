@@ -3,6 +3,7 @@ package com.amrdeveloper.askme.models
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
@@ -26,4 +27,17 @@ class HomeViewModel : ViewModel(){
     }
 
     fun getFeedPagedList() = homePagedList
+
+    private inner class HomeDataSourceFactory(var userId : String) : DataSource.Factory<Int, Feed>() {
+
+        private val homeLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
+
+        override fun create(): DataSource<Int, Feed> {
+            val feedDataSource = HomeDataSource(userId)
+            homeLiveDataSource.postValue(feedDataSource)
+            return feedDataSource
+        }
+
+        fun getHomeLiveDataSource() = homeLiveDataSource
+    }
 }
