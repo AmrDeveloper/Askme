@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.models
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
@@ -9,21 +10,11 @@ import com.amrdeveloper.askme.data.Feed
 
 class HomeViewModel : ViewModel(){
 
-    companion object{
+    private var homePagedList: LiveData<PagedList<Feed>> = MutableLiveData()
+    private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
 
-        private lateinit var userId: String
-
-        fun setUserId(id: String) {
-            userId = id
-        }
-    }
-
-    private var homePagedList: LiveData<PagedList<Feed>>
-    private var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
-
-    init {
-        val homeDataSourceFactory =
-            HomeDataSourceFactory(userId)
+    fun loadUserHomeFeed(id : String){
+        val homeDataSourceFactory = HomeDataSourceFactory(id)
         liveDataSource = homeDataSourceFactory.getHomeLiveDataSource()
 
         val config: PagedList.Config =
@@ -35,5 +26,4 @@ class HomeViewModel : ViewModel(){
     }
 
     fun getFeedPagedList() = homePagedList
-    fun getLiveDataSource() = liveDataSource
 }

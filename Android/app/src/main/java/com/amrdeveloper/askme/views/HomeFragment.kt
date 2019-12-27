@@ -5,40 +5,33 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.amrdeveloper.askme.presenters.HomePresenter
 import com.amrdeveloper.askme.models.HomeViewModel
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
-import com.amrdeveloper.askme.contracts.HomeContract
 import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
-import com.amrdeveloper.askme.events.LoadFinishEvent
+import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment(), HomeContract.View {
+class HomeFragment : Fragment() {
 
-    private lateinit var mLoadingBar: ProgressBar
     private lateinit var mFeedAdapter : FeedAdapter
-    private lateinit var mHomePresenter: HomePresenter
+    private lateinit var mHomeViewModel : HomeViewModel
+    private lateinit var mListLayoutBinding: ListLayoutBinding
 
     private val LOG_TAG = "HomeFragment"
 
@@ -47,28 +40,30 @@ class HomeFragment : Fragment(), HomeContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.list_layout, container, false)
-        mLoadingBar = view.findViewById(R.id.loadingBar)
-        setupUserList(view)
+        mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
+        mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        val session = Session()
-        HomeViewModel.setUserId("15")
-        //HomeViewModel.setUserId(session.getUserId(context!!).toString())
-        val homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        setupUserList()
 
-        mHomePresenter = HomePresenter(this,  homeViewModel,this )
+        mHomeViewModel.loadUserHomeFeed("15")
+        //val session = Session()
+        //mHomeViewModel.loadUserHomeFeed(session.getUserId(context!!).str())
 
-        mHomePresenter.startLoadingHomeFeed()
+        mListLayoutBinding.loadingBar.show()
 
-        return view
+        mHomeViewModel.getFeedPagedList().observe(this, Observer {
+            mFeedAdapter.submitList(it)
+            mListLayoutBinding.loadingBar.gone()
+        })
+
+        return mListLayoutBinding.root
     }
 
-    private fun setupUserList(view : View){
+    private fun setupUserList(){
         mFeedAdapter = FeedAdapter()
-        val listItems  = view.findViewById<RecyclerView>(R.id.listItems)
-        listItems.setHasFixedSize(true)
-        listItems.layoutManager = LinearLayoutManager(context)
-        listItems.adapter = mFeedAdapter
+        mListLayoutBinding.listItems.setHasFixedSize(true)
+        mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
+        mListLayoutBinding.listItems.adapter = mFeedAdapter
 
         mFeedAdapter.setOnUsernameListener(object : FeedAdapter.OnUsernameClick {
             override fun onUserClick(userId: String) {
@@ -140,34 +135,5 @@ class HomeFragment : Fragment(), HomeContract.View {
                 }
             }
         })
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<Feed>>){
-        mFeedAdapter.submitList(event.data)
-        hideProgressBar()
-    }
-
-    override fun showProgressBar() {
-        mLoadingBar.show()
-    }
-
-    override fun hideProgressBar() {
-        mLoadingBar.gone()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        EventBus.getDefault().unregister(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 }

@@ -4,69 +4,62 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.models.NotificationViewModel
-import com.amrdeveloper.askme.presenters.NotificationPresenter
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.NotificationAdapter
-import com.amrdeveloper.askme.contracts.NotificationContract
 import com.amrdeveloper.askme.data.Action
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Notification
-import com.amrdeveloper.askme.events.LoadFinishEvent
+import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
-import com.amrdeveloper.askme.utils.AskmeFragment
 import com.amrdeveloper.askme.utils.Session
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
-class NotificationFragment: AskmeFragment() , NotificationContract.View{
+class NotificationFragment: Fragment(){
 
-    private lateinit var loadingBar : ProgressBar
-    private lateinit var mNotiPresenter: NotificationPresenter
-    private lateinit var mNotiAdapter: NotificationAdapter
+    private lateinit var mListLayoutBinding: ListLayoutBinding
+    private lateinit var mNotificationAdapter: NotificationAdapter
+    private lateinit var mNotificationViewModel: NotificationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.list_layout, container, false)
+        mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
+        mNotificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
 
-        notiListSetup(view)
-        loadingBar = view.findViewById(R.id.loadingBar)
+        notiListSetup()
 
         val session = Session()
-        NotificationViewModel.setUserId(session.getUserId(context!!).toString())
-        NotificationViewModel.setToken(session.getUserToken(context!!).toString())
-        val notificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
-        notificationViewModel.getNotiPagedList().observe(this, Observer {
-            mNotiAdapter.submitList(it)
-            hideProgressBar()
+        val id = session.getUserId(context!!).toString()
+        val token = session.getUserToken(context!!).toString()
+
+        mListLayoutBinding.loadingBar.show()
+
+        mNotificationViewModel.loadUserNotifications(id, token)
+
+        mNotificationViewModel.getNotificationList().observe(this, Observer {
+            mNotificationAdapter.submitList(it)
+            mListLayoutBinding.loadingBar.gone()
         })
 
-        //mNotiPresenter = NotificationPresenter(this, notificationViewModel ,this )
-        //mNotiPresenter.startLoadingNotifications()
-
-        return view
+        return mListLayoutBinding.root
     }
 
-    private fun notiListSetup(view : View){
-        mNotiAdapter = NotificationAdapter()
-        val listItems  = view.findViewById<RecyclerView>(R.id.listItems)
-        listItems.setHasFixedSize(true)
-        listItems.layoutManager = LinearLayoutManager(context)
-        listItems.adapter = mNotiAdapter
+    private fun notiListSetup(){
+        mNotificationAdapter = NotificationAdapter()
+        mListLayoutBinding.listItems.setHasFixedSize(true)
+        mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
+        mListLayoutBinding.listItems.adapter = mNotificationAdapter
 
-        mNotiAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
+        mNotificationAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
             override fun onItemClick(notification: Notification) {
                 when(notification.action){
                     Action.QUESTION -> {
@@ -81,19 +74,5 @@ class NotificationFragment: AskmeFragment() , NotificationContract.View{
                 }
             }
         })
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoadFinishEvent(event : LoadFinishEvent<PagedList<Notification>>){
-        //mNotiAdapter.submitList(event.data)
-        //hideProgressBar()
-    }
-
-    override fun showProgressBar() {
-        loadingBar.show()
-    }
-
-    override fun hideProgressBar() {
-        loadingBar.gone()
     }
 }

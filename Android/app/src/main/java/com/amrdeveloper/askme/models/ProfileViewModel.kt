@@ -15,9 +15,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val TAG = "ProfileViewModel"
 
 class ProfileViewModel : ViewModel() {
+
+    private val TAG = "ProfileViewModel"
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private var feedPagedList: LiveData<PagedList<Feed>> = MutableLiveData()
@@ -50,11 +51,7 @@ class ProfileViewModel : ViewModel() {
             })
     }
 
-    fun getUserLiveData() : LiveData<User>{
-        return userLiveData
-    }
+    fun getUserLiveData() = userLiveData
 
-    fun getFeedPagedList() : LiveData<PagedList<Feed>>{
-        return feedPagedList
-    }
+    fun getFeedPagedList() = feedPagedList
 }
