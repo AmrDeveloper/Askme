@@ -8,34 +8,29 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
-import com.amrdeveloper.askme.contracts.ProfileContract
 import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
-import com.amrdeveloper.askme.events.LoadFinishEvent
 import com.amrdeveloper.askme.extensions.*
-import com.amrdeveloper.askme.models.FeedViewModel
+import com.amrdeveloper.askme.models.ProfileViewModel
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProfileFragment : Fragment(), ProfileContract.View {
+class ProfileFragment : Fragment(){
 
     private lateinit var mUserId: String
     private lateinit var mCurrentUser : User
 
     private lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
+    private lateinit var mProfileViewModel : ProfileViewModel
 
     private val LOG_TAG = "ProfileFragment"
 
@@ -44,17 +39,39 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mProfileBinding =
-            DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
+        mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
+        mProfileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
-        mUserId = arguments?.getString(Constants.USER_ID).str()
-        if (mUserId.isNullString()) {
-            mUserId = Session().getUserId(context!!).str()
+        updateUserInfoFromArguments()
+        setupFeedRecyclerView()
+
+        mProfileBinding.listLayout.loadingBar.show()
+
+        mProfileViewModel.loadUserInformation(mUserId, Session().getUserId(context!!).str())
+        mProfileViewModel.loadUserFeed(mUserId)
+
+        mProfileViewModel.getUserLiveData().observe(this, Observer {
+            mCurrentUser = it
+            bindUserProfile(it)
+        })
+
+        mProfileViewModel.getFeedPagedList().observe(this, Observer {
+            mFeedAdapter.submitList(it)
+            mProfileBinding.listLayout.loadingBar.gone()
+        })
+
+        mProfileBinding.askmeButton.setOnClickListener {
+            val askQuestionFragment = AskQuestionFragment()
+
+            val args = Bundle()
+            args.putString(Constants.USER_ID, mCurrentUser.id)
+            args.putString(Constants.NAME, mCurrentUser.name)
+            args.putString(Constants.USERNAME, mCurrentUser.username)
+            args.putString(Constants.AVATAR_URL, mCurrentUser.avatarUrl)
+            askQuestionFragment.arguments = args
+
+            fragmentManager?.openFragmentInto(R.id.viewContainers,askQuestionFragment)
         }
-
-        feedListSetup()
-        getUserInformation()
-        openAskQuestionFragment()
 
         mProfileBinding.followCardView.setOnClickListener {
             val followData = FollowData(Session().getUserId(context!!).str(), mUserId)
@@ -115,44 +132,19 @@ class ProfileFragment : Fragment(), ProfileContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun feedListSetup() {
+    private fun updateUserInfoFromArguments(){
+        mUserId = arguments?.getString(Constants.USER_ID).str()
+        if (mUserId.isNullString()) {
+            mUserId = Session().getUserId(context!!).str()
+        }
+    }
+
+    private fun setupFeedRecyclerView() {
         mFeedAdapter = FeedAdapter()
         mProfileBinding.listLayout.listItems.setHasFixedSize(true)
         mProfileBinding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
         mProfileBinding.listLayout.listItems.isNestedScrollingEnabled = false
         mProfileBinding.listLayout.listItems.adapter = mFeedAdapter
-    }
-
-    private fun openAskQuestionFragment() {
-        mProfileBinding.askmeButton.setOnClickListener {
-            val askQuestionFragment = AskQuestionFragment()
-
-            val args = Bundle()
-            args.putString(Constants.USER_ID, mCurrentUser.id)
-            args.putString(Constants.NAME, mCurrentUser.name)
-            args.putString(Constants.USERNAME, mCurrentUser.username)
-            args.putString(Constants.AVATAR_URL, mCurrentUser.avatarUrl)
-            askQuestionFragment.arguments = args
-
-            fragmentManager?.openFragmentInto(R.id.viewContainers,askQuestionFragment)
-        }
-    }
-
-    private fun getUserInformation() {
-        AskmeClient.getUserService().getUserByEmail(mUserId, Session().getUserId(context!!).str())
-            .enqueue(object : Callback<User> {
-                override fun onResponse(call: Call<User>, response: Response<User>) {
-                    response.body().notNull {
-                        mCurrentUser = it
-                        bindUserProfile(it)
-                        loadUserFeed(it.id)
-                    }
-                }
-
-                override fun onFailure(call: Call<User>, t: Throwable) {
-                    Toast.makeText(context, "Can't Load Info", Toast.LENGTH_SHORT).show()
-                }
-            })
     }
 
     private fun bindUserProfile(user: User) {
@@ -190,47 +182,5 @@ class ProfileFragment : Fragment(), ProfileContract.View {
                 mProfileBinding.followCardView.tag = Follow.UN_FOLLOW
             }
         }
-    }
-
-    private fun loadUserFeed(userId: String) {
-        FeedViewModel.setUserId(userId)
-        val feedViewModel = ViewModelProviders.of(this).get(FeedViewModel::class.java)
-        feedViewModel.getFeedPagedList().observe(this, Observer {
-            mFeedAdapter.submitList(it)
-            hideProgressBar()
-        })
-
-        //TODO : Move to MVVM
-        //mProfilePresenter = ProfilePresenter(this, feedViewModel, this)
-        //mProfilePresenter.startLoadingFeed()
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onLoadFinishEvent(event: LoadFinishEvent<PagedList<Feed>>) {
-        //mFeedAdapter.submitList(event.data)
-        //hideProgressBar()
-    }
-
-    override fun showProgressBar() {
-        mProfileBinding.listLayout.loadingBar.show()
-    }
-
-    override fun hideProgressBar() {
-        mProfileBinding.listLayout.loadingBar.gone()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        EventBus.getDefault().unregister(this)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().unregister(this)
     }
 }
