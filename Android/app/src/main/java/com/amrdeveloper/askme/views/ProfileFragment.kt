@@ -34,6 +34,10 @@ class ProfileFragment : Fragment(){
 
     private val LOG_TAG = "ProfileFragment"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -114,6 +118,7 @@ class ProfileFragment : Fragment(){
             }
         }
 
+        setupFullScreenOption()
         return mProfileBinding.root
     }
 
@@ -166,6 +171,30 @@ class ProfileFragment : Fragment(){
             updateFollowCardView(user.isUserFollow)
         } else {
             mProfileBinding.followCardView.gone()
+        }
+    }
+
+    private fun setupFullScreenOption(){
+        mProfileBinding.userAvatar.setOnClickListener {
+            val fullscreenFragment = FullscreenFragment()
+
+            val avatarUrl = mCurrentUser.avatarUrl
+            val args = Bundle()
+            args.putString(Constants.AVATAR_URL, avatarUrl)
+            fullscreenFragment.arguments = args
+
+            fragmentManager?.openFragmentInto(R.id.viewContainers, fullscreenFragment)
+        }
+
+        mProfileBinding.userWallpaper.setOnClickListener {
+            val fullscreenFragment = FullscreenFragment()
+
+            val avatarUrl = mCurrentUser.wallpaperUrl
+            val args = Bundle()
+            args.putString(Constants.AVATAR_URL, avatarUrl)
+            fullscreenFragment.arguments = args
+
+            fragmentManager?.openFragmentInto(R.id.viewContainers, fullscreenFragment)
         }
     }
 
