@@ -4,12 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.models.UserDataSource
 
 class UserDataSourceFactory : DataSource.Factory<Int, User>(){
 
     private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
-
 
     override fun create(): DataSource<Int, User> {
         val userDataSource = UserDataSource()

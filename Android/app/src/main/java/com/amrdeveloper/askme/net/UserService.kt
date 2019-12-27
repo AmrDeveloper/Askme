@@ -17,11 +17,11 @@ interface UserService {
     @Headers("content-type: application/json")
     fun register(@Body body: RegisterData): Call<String>
 
-    @GET("users/{email}")
-    fun getUserByEmail(
-        @Path("email") email: String,
+    @GET("users/{id}")
+    suspend fun getUserById(
+        @Path("id") id: String,
         @Query("userId") userId : String
-    ): Call<User>
+    ): User
 
     @GET("users/")
     fun getUsersQuery(
