@@ -47,7 +47,7 @@ class ProfileViewModel : ViewModel() {
         private val feedLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
 
         override fun create(): DataSource<Int, Feed> {
-            val feedDataSource = FeedDataSource(userId)
+            val feedDataSource = FeedDataSource(userId, viewModelScope)
             feedLiveDataSource.postValue(feedDataSource)
             return feedDataSource
         }

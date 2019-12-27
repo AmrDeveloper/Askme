@@ -8,16 +8,16 @@ import retrofit2.http.Query
 interface FeedService {
 
     @GET("feeds/")
-    fun getUserFeed(
+    suspend fun getUserFeed(
         @Query("id") userId: String,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
         @Query("count") count: Int = DEFAULT_QUERY_COUNT
-    ): Call<List<Feed>>
+    ): List<Feed>
 
     @GET("feeds/home")
-    fun getHomeFeed(
+    suspend fun getHomeFeed(
         @Query("id") userId: String,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
         @Query("count") count: Int = DEFAULT_QUERY_COUNT
-    ): Call<List<Feed>>
+    ): List<Feed>
 }
