@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.models
 
+import com.amrdeveloper.askme.utils.Validation
 import com.google.gson.annotations.SerializedName
 
 data class LoginData(
@@ -8,12 +9,13 @@ data class LoginData(
 
     @SerializedName("password")
     val password: String
-){
+)
+{
     fun isValidEmail() : Boolean{
-        return true
+        return Validation.isValidEmail(email)
     }
 
     fun isValidPassword() : Boolean{
-        return true
+        return Validation.isValidPassword(password)
     }
 }
