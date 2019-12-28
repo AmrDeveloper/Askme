@@ -35,20 +35,17 @@ class LoginActivity : AppCompatActivity() {
             val password: String = mLoginActivity.passInputEdit.text.toString()
             val loginData = LoginData(email, password)
 
-            val isValidEmail = loginData.isValidEmail()
-            val isValidPassword = loginData.isValidPassword()
-
-            if(isValidEmail && isValidPassword){
+            if(loginData.isValidLoginInfo()){
                 mLoginViewModel.userLogin(loginData)
                 mLoginActivity.loadingBar.show()
                 return@setOnClickListener
             }
 
-            if(isValidEmail.not()){
+            if(loginData.isValidEmail().not()){
                 mLoginActivity.emailInputLayout.error = "Invalid Email"
             }
 
-            if(isValidPassword.not()){
+            if(loginData.isValidPassword().not()){
                 mLoginActivity.passInputLayout.error = "Invalid Password"
             }
         }

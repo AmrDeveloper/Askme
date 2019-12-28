@@ -16,7 +16,7 @@ interface UserService {
 
     @POST("users/register")
     @Headers("content-type: application/json")
-    fun register(@Body body: RegisterData): Call<String>
+    suspend fun register(@Body body: RegisterData): Response<String>
 
     @GET("users/{id}")
     suspend fun getUserById(

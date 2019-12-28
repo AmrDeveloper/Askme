@@ -11,6 +11,10 @@ data class LoginData(
     val password: String
 )
 {
+    fun isValidLoginInfo() : Boolean{
+        return isValidEmail() && isValidPassword()
+    }
+
     fun isValidEmail() : Boolean{
         return Validation.isValidEmail(email)
     }
