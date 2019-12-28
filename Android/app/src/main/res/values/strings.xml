@@ -26,4 +26,6 @@
     <string name="question_length">300</string>
     <string name="ask_my_anything">Ask my anything</string>
     <string name="logout">logout</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
 </resources>
