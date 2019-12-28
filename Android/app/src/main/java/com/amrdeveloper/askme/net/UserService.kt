@@ -5,13 +5,14 @@ import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.models.User
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.*
 
 interface UserService {
 
     @POST("users/login")
     @Headers("content-type: application/json")
-    fun login(@Body body: LoginData): Call<SessionData>
+    suspend fun login(@Body body: LoginData): Response<SessionData>
 
     @POST("users/register")
     @Headers("content-type: application/json")

@@ -8,4 +8,12 @@ data class LoginData(
 
     @SerializedName("password")
     val password: String
-)
+){
+    fun isValidEmail() : Boolean{
+        return true
+    }
+
+    fun isValidPassword() : Boolean{
+        return true
+    }
+}
