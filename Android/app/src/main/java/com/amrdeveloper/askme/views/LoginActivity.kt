@@ -46,6 +46,7 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginSuccessEvent(event: LoginSuccessEvent) {
+        mLoginActivity.loadingBar.gone()
         val session = Session()
         session.login(applicationContext, event.id, event.email, event.password, event.token)
 
@@ -56,6 +57,7 @@ class LoginActivity : AskmeActivity(), LoginContract.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onLoginFailureEvent(event: LoginFailureEvent) {
+        mLoginActivity.loadingBar.gone()
         Toast.makeText(applicationContext, "Invalid Login", Toast.LENGTH_SHORT).show()
     }
 
