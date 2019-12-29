@@ -8,7 +8,7 @@ apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.0"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.amrdeveloper.askme"
         minSdkVersion 19
@@ -43,8 +43,7 @@ ext.lifecycleVersion = "2.1.0"
 
 ext.cardVersion = '1.0.0'
 ext.recyclerVersion = '1.1.0'
-ext.materialVersion = '1.2.0-alpha02'
-
+ext.materialVersion = '1.2.0-alpha03'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -72,6 +71,6 @@ dependencies {
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }

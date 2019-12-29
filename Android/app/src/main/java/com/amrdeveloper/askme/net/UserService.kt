@@ -4,7 +4,6 @@ import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.models.User
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -21,7 +20,7 @@ interface UserService {
     @GET("users/{id}")
     suspend fun getUserById(
         @Path("id") id: String,
-        @Query("userId") userId : String
+        @Query("userId") userId: String
     ): User
 
     @GET("users/")
@@ -31,9 +30,9 @@ interface UserService {
     ): List<User>
 
     @GET("users/search")
-    fun getUsersSearch(
-        @Query("q") query : String,
+    suspend fun getUsersSearch(
+        @Query("q") query: String,
         @Query("count") count: Int = DEFAULT_QUERY_COUNT,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
-    ): Call<List<User>>
+    ): List<User>
 }

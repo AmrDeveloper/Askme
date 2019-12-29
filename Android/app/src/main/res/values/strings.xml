@@ -28,4 +28,5 @@
     <string name="logout">logout</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -57,6 +57,10 @@ class PeopleFragment : Fragment() {
         val searchView : SearchView = searchMenu.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(userSearchViewListener)
+        searchView.setOnCloseListener {
+            Toast.makeText(context, "Close", Toast.LENGTH_SHORT).show()
+            true
+        }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -88,29 +92,9 @@ class PeopleFragment : Fragment() {
                 Toast.makeText(context, "Invalid Query", Toast.LENGTH_SHORT).show()
                 return false
             }else{
-                /*
-                val keyword = query.trim()
-                AskmeClient.getUserService().getUsersSearch(keyword)
-                    .enqueue(object : Callback<List<User>>{
-                        override fun onResponse(
-                            call: Call<List<User>>,
-                            response: Response<List<User>>
-                        ) {
-                            if(response.code() == 200){
-                                val usersList = response.body()
-                                usersList.notNull {
-
-                                }
-                            }
-                        }
-
-                        override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                            Toast.makeText(context, "Invalid Search", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-                 */
+                //Search
+                return true
             }
-            return true
         }
     }
 }

@@ -1,10 +1,9 @@
 package com.amrdeveloper.askme.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -35,6 +34,11 @@ class HomeFragment : Fragment() {
 
     private val LOG_TAG = "HomeFragment"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,6 +61,18 @@ class HomeFragment : Fragment() {
         })
 
         return mListLayoutBinding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.settings_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.settingsMenu){
+            startActivity(Intent(context, SettingsActivity::class.java))
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupUserList(){

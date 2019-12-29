@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
                 android:id="@+id/emailInputEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="start"
                 android:hint="@string/e_email"
                 android:inputType="textEmailAddress" />
 
@@ -28,15 +29,18 @@
             android:id="@+id/passInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen8dp">
+            android:layout_margin="@dimen/dimen8dp"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passInputEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="start"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,6 +51,8 @@
             android:layout_gravity="center"
             android:padding="@dimen/dimen15dp"
             android:text="@string/login"
+            android:textColor="@color/orange"
+            android:background="@color/darkBlue"
             android:textAllCaps="false" />
 
         <TextView
@@ -58,8 +64,8 @@
 
         <ProgressBar
             android:id="@+id/loadingBar"
-            android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
     </LinearLayout>
 </layout>
