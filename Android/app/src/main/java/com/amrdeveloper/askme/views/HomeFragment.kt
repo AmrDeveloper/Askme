@@ -1,6 +1,5 @@
 package com.amrdeveloper.askme.views
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -70,7 +69,7 @@ class HomeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.settingsMenu){
-            startActivity(Intent(context, SettingsActivity::class.java))
+
         }
         return super.onOptionsItemSelected(item)
     }

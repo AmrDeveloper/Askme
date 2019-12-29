@@ -57,10 +57,6 @@ class PeopleFragment : Fragment() {
         val searchView : SearchView = searchMenu.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(userSearchViewListener)
-        searchView.setOnCloseListener {
-            Toast.makeText(context, "Close", Toast.LENGTH_SHORT).show()
-            true
-        }
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -85,14 +81,26 @@ class PeopleFragment : Fragment() {
     }
 
     private val userSearchViewListener = object : SearchView.OnQueryTextListener{
-        override fun onQueryTextChange(newText: String?): Boolean = true
+        override fun onQueryTextChange(newText: String?): Boolean{
+            if(newText!!.isEmpty()){
+                Toast.makeText(context, "Search Closed", Toast.LENGTH_SHORT).show()
+                mPeopleViewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
+                mUserAdapter.submitList(mPeopleViewModel.getUserPagedList().value)
+            }
+            return true
+        }
 
         override fun onQueryTextSubmit(query: String?): Boolean {
             if(query.isNullOrEmpty() || query.trim().length < 3){
                 Toast.makeText(context, "Invalid Query", Toast.LENGTH_SHORT).show()
                 return false
             }else{
-                //Search
+                if(mPeopleViewModel.getUsersSearchList().hasActiveObservers().not()){
+                    mPeopleViewModel.getUsersSearchList().observe(viewLifecycleOwner, Observer {
+                        mUserAdapter.submitList(it)
+                    })
+                }
+                mPeopleViewModel.searchPeopleList(query)
                 return true
             }
         }

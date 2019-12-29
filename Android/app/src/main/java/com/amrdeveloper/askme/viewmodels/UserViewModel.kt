@@ -12,8 +12,10 @@ import com.amrdeveloper.askme.models.User
 
 class UserViewModel : ViewModel(){
 
-    private var userPagedList : LiveData<PagedList<User>> = MutableLiveData()
+    private var usersLiveData : LiveData<PagedList<User>> = MutableLiveData()
+    private var usersSearchLiveData : LiveData<PagedList<User>> = MutableLiveData()
     private lateinit var liveDataSource : LiveData<PageKeyedDataSource<Int, User>>
+    private lateinit var searchLiveDataSource : LiveData<PageKeyedDataSource<Int, User>>
 
     fun loadPeopleList(){
         val userDataSourceFactory = UserDataSourceFactory()
@@ -24,10 +26,23 @@ class UserViewModel : ViewModel(){
                 .setEnablePlaceholders(false)
                 .build()
 
-        userPagedList = LivePagedListBuilder(userDataSourceFactory, config).build()
+        usersLiveData = LivePagedListBuilder(userDataSourceFactory, config).build()
     }
 
-    fun getUserPagedList() = userPagedList
+    fun searchPeopleList(query : String){
+        val userDataSourceFactory = UserSearchDataSourceFactory(query)
+        searchLiveDataSource = userDataSourceFactory.getUserSearchLiveDataSource()
+
+        val config: PagedList.Config =
+            PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .build()
+
+        usersSearchLiveData = LivePagedListBuilder(userDataSourceFactory, config).build()
+    }
+
+    fun getUserPagedList() = usersLiveData
+    fun getUsersSearchList() = usersSearchLiveData
 
     private inner class UserDataSourceFactory : DataSource.Factory<Int, User>(){
 
@@ -40,5 +55,18 @@ class UserViewModel : ViewModel(){
         }
 
         fun getUserLiveDataSource() = userLiveDataSource
+    }
+
+    private inner class UserSearchDataSourceFactory(val query : String) : DataSource.Factory<Int, User>() {
+
+        private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
+
+        override fun create(): DataSource<Int, User> {
+            val userDataSource = UserSearchDataSource(query, viewModelScope)
+            userLiveDataSource.postValue(userDataSource)
+            return userDataSource
+        }
+
+        fun getUserSearchLiveDataSource() = userLiveDataSource
     }
 }
