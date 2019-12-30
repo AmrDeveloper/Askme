@@ -1,9 +1,9 @@
 package com.amrdeveloper.askme.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -11,17 +11,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
-import com.amrdeveloper.askme.models.*
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.extensions.*
-import com.amrdeveloper.askme.viewmodels.ProfileViewModel
-import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.Follow
+import com.amrdeveloper.askme.models.FollowData
+import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileFragment : Fragment(){
 
@@ -33,6 +32,8 @@ class ProfileFragment : Fragment(){
     private lateinit var mProfileViewModel : ProfileViewModel
 
     private val LOG_TAG = "ProfileFragment"
+    private val REQUEST_AVATAR_ID = 1996
+    private val REQUEST_WALLPAPER_ID = 1997
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,8 @@ class ProfileFragment : Fragment(){
             mProfileBinding.listLayout.loadingBar.gone()
         })
 
+        mProfileViewModel.getFollowLiveData().observe(this, Observer {updateFollowCardView(it)})
+
         mProfileBinding.askmeButton.setOnClickListener {
             val askQuestionFragment = AskQuestionFragment()
 
@@ -79,42 +82,11 @@ class ProfileFragment : Fragment(){
 
         mProfileBinding.followCardView.setOnClickListener {
             val followData = FollowData(Session().getUserId(context!!).str(), mUserId)
+            val token = Session().getUserToken(context!!).str()
 
             when (Follow.valueOf(mProfileBinding.followCardView.tag.toString())) {
-                Follow.FOLLOW -> {
-                    AskmeClient.getFollowService().unFollowUser(
-                        token = "auth ${Session().getUserToken(context!!).str()}",
-                        followData = followData
-                    ).enqueue(object : Callback<String> {
-                        override fun onResponse(call: Call<String>, response: Response<String>) {
-                            if (response.code() == 200) {
-                                updateFollowCardView(Follow.UN_FOLLOW)
-                            }
-                        }
-
-                        override fun onFailure(call: Call<String>, t: Throwable) {
-                            Toast.makeText(context, "Can't unFollow user", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    })
-                }
-                Follow.UN_FOLLOW -> {
-                    AskmeClient.getFollowService().followUser(
-                        token = "auth ${Session().getUserToken(context!!).str()}",
-                        followData = followData
-                    ).enqueue(object : Callback<String> {
-                        override fun onResponse(call: Call<String>, response: Response<String>) {
-                            if (response.code() == 200) {
-                                updateFollowCardView(Follow.FOLLOW)
-                            }
-                        }
-
-                        override fun onFailure(call: Call<String>, t: Throwable) {
-                            Toast.makeText(context, "Can't Follow user", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    })
-                }
+                Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)
+                Follow.UN_FOLLOW -> mProfileViewModel.followUser(token ,followData)
             }
         }
 
@@ -141,6 +113,9 @@ class ProfileFragment : Fragment(){
         mUserId = arguments?.getString(Constants.USER_ID).str()
         if (mUserId.isNullString()) {
             mUserId = Session().getUserId(context!!).str()
+            setupEditMode()
+        }else{
+            hideEditMode()
         }
     }
 
@@ -210,6 +185,39 @@ class ProfileFragment : Fragment(){
                 mProfileBinding.followIcon.setImageResource(R.drawable.ic_feed)
                 mProfileBinding.followCardView.tag = Follow.UN_FOLLOW
             }
+        }
+    }
+
+    private fun setupEditMode(){
+        mProfileBinding.changeAvatarAction.setOnClickListener { changeAvatarImage() }
+        mProfileBinding.changeWallpaperAction.setOnClickListener { changeWallpaperImage() }
+    }
+
+    private fun hideEditMode(){
+        mProfileBinding.changeAvatarAction.gone()
+        mProfileBinding.changeWallpaperAction.gone()
+        mProfileViewModel.getFollowLiveData().removeObservers(viewLifecycleOwner)
+    }
+
+    private fun changeAvatarImage(){
+        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        photoPickerIntent.type = "image/*"
+        startActivityForResult(photoPickerIntent, REQUEST_AVATAR_ID)
+    }
+
+    private fun changeWallpaperImage(){
+        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        photoPickerIntent.type = "image/*"
+        startActivityForResult(photoPickerIntent, REQUEST_WALLPAPER_ID)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK){
+           when(requestCode){
+               REQUEST_AVATAR_ID -> {}
+               REQUEST_WALLPAPER_ID -> {}
+           }
         }
     }
 }

@@ -11,8 +11,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:descendantFocusability="blocksDescendants">
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/mainLayout"
@@ -28,22 +28,52 @@
                     android:contentDescription="@string/user_wallpaper"
                     android:scaleType="fitXY" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/userAvatar"
+                <RelativeLayout
+                    android:id="@+id/userAvatarLayout"
                     android:layout_width="@dimen/dimen100dp"
                     android:layout_height="@dimen/dimen100dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/dimen10dp"
-                    android:contentDescription="@string/user_avatar"
-                    android:src="@drawable/ic_profile"
+                    android:layout_marginTop="@dimen/dimen10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/userAvatar"
+                        android:layout_width="@dimen/dimen100dp"
+                        android:layout_height="@dimen/dimen100dp"
+                        android:layout_centerHorizontal="true"
+                        android:contentDescription="@string/user_avatar"
+                        android:src="@drawable/ic_profile"
+                        app:civ_border_color="@color/orange"
+                        app:civ_border_width="@dimen/dimen3dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/changeAvatarAction"
+                        android:layout_width="@dimen/dimen25dp"
+                        android:layout_height="@dimen/dimen25dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:baselineAlignBottom="true"
+                        android:src="@drawable/ic_camera"
+                        app:civ_border_color="@color/darkBlue"
+                        app:civ_border_width="@dimen/dimen1dp"
+                        app:civ_circle_background_color="@color/orange" />
+                </RelativeLayout>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/changeWallpaperAction"
+                    android:layout_width="@dimen/dimen25dp"
+                    android:layout_height="@dimen/dimen25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="@dimen/dimen5dp"
+                    android:src="@drawable/ic_mode_edit"
                     app:civ_border_color="@color/darkBlue"
-                    app:civ_border_width="@dimen/dimen5dp" />
+                    app:civ_border_width="@dimen/dimen1dp"
+                    app:civ_circle_background_color="@color/orange" />
 
                 <TextView
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userAvatar"
+                    android:layout_below="@id/userAvatarLayout"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:lines="1"
