@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.FullscreenLayoutBinding
 import com.amrdeveloper.askme.extensions.loadImage
+import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.extensions.toServerImageUrl
 import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.utils.Downloader
 
 class FullscreenFragment : Fragment(){
 
@@ -47,8 +49,8 @@ class FullscreenFragment : Fragment(){
     }
 
     private fun saveImageAction(){
-        //val imageUrl = arguments?.getString(Constants.AVATAR_URL)?.toServerImageUrl()
-        //TODO : Create Image Download in Storage Later after find the best way
+        val imageUrl = arguments?.getString(Constants.AVATAR_URL)?.toServerImageUrl().str()
+        Downloader.downloadImage(context!!, imageUrl)
     }
 
     private fun shareImageAction(){
