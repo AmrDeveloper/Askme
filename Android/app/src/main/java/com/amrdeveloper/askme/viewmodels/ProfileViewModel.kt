@@ -17,7 +17,7 @@ import com.amrdeveloper.askme.models.Follow
 import com.amrdeveloper.askme.models.FollowData
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.AskmeClient
-import com.amrdeveloper.askme.net.Response
+import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.coroutines.Dispatchers
@@ -34,8 +34,8 @@ class ProfileViewModel : ViewModel() {
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private val followLiveData : MutableLiveData<Follow> = MutableLiveData()
-    private val avatarLiveData : MutableLiveData<Response> = MutableLiveData()
-    private val wallpaperLiveData : MutableLiveData<Response> = MutableLiveData()
+    private val avatarLiveData : MutableLiveData<ResponseType> = MutableLiveData()
+    private val wallpaperLiveData : MutableLiveData<ResponseType> = MutableLiveData()
     private var feedPagedList: LiveData<PagedList<Feed>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
 
@@ -69,12 +69,12 @@ class ProfileViewModel : ViewModel() {
             try{
                 val response = AskmeClient.getUserService().updateUserAvatar(emailBody, avatarBody)
                 when(response.code()){
-                    200 -> avatarLiveData.postValue(Response.SUCCESS)
-                    401 -> avatarLiveData.postValue(Response.NO_AUTH)
-                    else -> avatarLiveData.postValue(Response.FAILURE)
+                    200 -> avatarLiveData.postValue(ResponseType.SUCCESS)
+                    401 -> avatarLiveData.postValue(ResponseType.NO_AUTH)
+                    else -> avatarLiveData.postValue(ResponseType.FAILURE)
                 }
             }catch(exception : Exception){
-                avatarLiveData.postValue(Response.FAILURE)
+                avatarLiveData.postValue(ResponseType.FAILURE)
                 Log.d(TAG, "Invalid Request")
             }
         }
@@ -92,12 +92,12 @@ class ProfileViewModel : ViewModel() {
             try{
                 val response = AskmeClient.getUserService().updateUserWallpaper(emailBody, wallpaperBody)
                 when(response.code()){
-                    200 -> wallpaperLiveData.postValue(Response.SUCCESS)
-                    401 -> wallpaperLiveData.postValue(Response.NO_AUTH)
-                    else -> wallpaperLiveData.postValue(Response.FAILURE)
+                    200 -> wallpaperLiveData.postValue(ResponseType.SUCCESS)
+                    401 -> wallpaperLiveData.postValue(ResponseType.NO_AUTH)
+                    else -> wallpaperLiveData.postValue(ResponseType.FAILURE)
                 }
             }catch(exception : Exception){
-                wallpaperLiveData.postValue(Response.FAILURE)
+                wallpaperLiveData.postValue(ResponseType.FAILURE)
                 Log.d(TAG, "Invalid Request")
             }
         }

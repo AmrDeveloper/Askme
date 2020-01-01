@@ -61,7 +61,7 @@ class AskQuestionFragment : Fragment(){
     }
 
     private fun askNewQuestion(questionData: QuestionData){
-        AskmeClient.getQuestionService().createNewQueestion(
+        AskmeClient.getQuestionService().createNewQuestion(
             token = Session.getUserToken(context!!).str(),
             question = questionData
         ).enqueue(object : Callback<String> {

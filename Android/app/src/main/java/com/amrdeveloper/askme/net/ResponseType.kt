@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.net
 
-enum class Response {
+enum class ResponseType {
     SUCCESS,
     FAILURE,
     NO_AUTH

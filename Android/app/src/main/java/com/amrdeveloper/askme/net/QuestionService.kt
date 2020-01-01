@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface QuestionService {
 
     @POST("questions/")
-    fun createNewQueestion(
+    fun createNewQuestion(
         @Header("authorization") token: String,
         @Body question: QuestionData
     ): Call<String>

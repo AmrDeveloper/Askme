@@ -21,7 +21,7 @@ import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Follow
 import com.amrdeveloper.askme.models.FollowData
 import com.amrdeveloper.askme.models.User
-import com.amrdeveloper.askme.net.Response
+import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.profile_layout.*
@@ -73,13 +73,13 @@ class ProfileFragment : Fragment(){
 
         mProfileViewModel.getAvatarLiveData().observe(this, Observer {
             when(it){
-                Response.SUCCESS -> {
+                ResponseType.SUCCESS -> {
                     Toast.makeText(context, "Update Avatar Success", Toast.LENGTH_SHORT).show()
                 }
-                Response.FAILURE -> {
+                ResponseType.FAILURE -> {
                     Toast.makeText(context, "Update Avatar Failure", Toast.LENGTH_SHORT).show()
                 }
-                Response.NO_AUTH -> {
+                ResponseType.NO_AUTH -> {
                     Toast.makeText(context, "Invalid Auth", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -87,13 +87,13 @@ class ProfileFragment : Fragment(){
 
         mProfileViewModel.getWallpaperLiveData().observe(this, Observer {
             when(it){
-                Response.SUCCESS -> {
+                ResponseType.SUCCESS -> {
                     Toast.makeText(context, "Update Wallpaper Success", Toast.LENGTH_SHORT).show()
                 }
-                Response.FAILURE -> {
+                ResponseType.FAILURE -> {
                     Toast.makeText(context, "Update Wallpaper Failure", Toast.LENGTH_SHORT).show()
                 }
-                Response.NO_AUTH -> {
+                ResponseType.NO_AUTH -> {
                     Toast.makeText(context, "Invalid Auth", Toast.LENGTH_SHORT).show()
                 }
             }
