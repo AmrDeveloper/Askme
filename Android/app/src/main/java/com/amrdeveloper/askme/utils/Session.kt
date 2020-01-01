@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.utils
 import android.content.Context
 import com.amrdeveloper.askme.models.Constants
 
-class Session {
+object Session {
 
     fun login(context: Context, id : String, email: String, password: String, token: String): Boolean {
         val preferencesEditor =

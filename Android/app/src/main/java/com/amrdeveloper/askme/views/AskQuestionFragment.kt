@@ -51,7 +51,7 @@ class AskQuestionFragment : Fragment(){
         if(item.itemId == R.id.sendMenu){
             val question = mAskQuestionLayoutBinding.questionEditText.text.str()
             val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked.str()
-            val fromUser = Session().getUserId(context!!).str()
+            val fromUser = Session.getUserId(context!!).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
             val questionData = QuestionData(question,fromUser, toUser, isAnonymously)
             askNewQuestion(questionData)
@@ -62,7 +62,7 @@ class AskQuestionFragment : Fragment(){
 
     private fun askNewQuestion(questionData: QuestionData){
         AskmeClient.getQuestionService().createNewQueestion(
-            token = Session().getUserToken(context!!).str(),
+            token = Session.getUserToken(context!!).str(),
             question = questionData
         ).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {

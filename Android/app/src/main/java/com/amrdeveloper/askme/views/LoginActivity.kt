@@ -53,10 +53,9 @@ class LoginActivity : AppCompatActivity() {
         mLoginViewModel.getSessionLiveData().observe(this, Observer {
             mLoginActivity.loadingBar.gone()
             if(it != null){
-                val session = Session()
                 val email: String = mLoginActivity.emailInputEdit.text.str()
                 val password: String = mLoginActivity.passInputEdit.text.str()
-                session.login(applicationContext, it.userId, email, password, it.authToken)
+                Session.login(applicationContext, it.userId, email, password, it.authToken)
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

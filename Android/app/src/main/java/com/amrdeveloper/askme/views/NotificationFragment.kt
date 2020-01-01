@@ -37,9 +37,8 @@ class NotificationFragment: Fragment(){
 
         notiListSetup()
 
-        val session = Session()
-        val id = session.getUserId(context!!).toString()
-        val token = session.getUserToken(context!!).toString()
+        val id = Session.getUserId(context!!).toString()
+        val token = Session.getUserToken(context!!).toString()
 
         mListLayoutBinding.loadingBar.show()
 

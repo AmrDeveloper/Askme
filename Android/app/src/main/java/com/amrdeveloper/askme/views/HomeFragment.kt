@@ -97,13 +97,13 @@ class HomeFragment : Fragment() {
                 when(reaction){
                     Reaction.REACATED -> {
                         val body = ReactionData(
-                            Session().getUserId(context!!).str(),
+                            Session.getUserId(context!!).str(),
                             toUser,
                             answerId.str()
                         )
                         AskmeClient.getReactionService()
                             .deleteAnswerReaction(
-                                token = Session().getHeaderToken(context!!).str(),
+                                token = Session.getHeaderToken(context!!).str(),
                                 reactionData = body
                             ).enqueue(object : Callback<String> {
                                 override fun onResponse(
@@ -124,10 +124,10 @@ class HomeFragment : Fragment() {
                             })
                     }
                     Reaction.UN_REACATED -> {
-                        val body = ReactionData(Session().getUserId(context!!).str(), answerId.str(), "")
+                        val body = ReactionData(Session.getUserId(context!!).str(), answerId.str(), "")
                         AskmeClient.getReactionService()
                             .createAnswerReaction(
-                                token = Session().getHeaderToken(context!!).str(),
+                                token = Session.getHeaderToken(context!!).str(),
                                 reactionData = body
                             ).enqueue(object : Callback<String> {
                                 override fun onResponse(

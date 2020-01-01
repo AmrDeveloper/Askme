@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun userRouter(){
-        if (Session().isUserLogined(this)) {
+        if (Session.isUserLogined(this)) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         } else {

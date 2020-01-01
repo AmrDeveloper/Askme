@@ -58,7 +58,7 @@ class ProfileViewModel : ViewModel() {
     }
 
     fun updateUserAvatar(context: Context, avatar : Uri){
-        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session().getUserEmail(context).str())
+        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session.getUserEmail(context).str())
 
         val imagePath = FileUtils.getImagePath(context, avatar)
         val imageFile = File(imagePath)
@@ -81,7 +81,7 @@ class ProfileViewModel : ViewModel() {
     }
 
     fun updateUserWallpaper(context: Context, wallpaper : Uri){
-        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session().getUserEmail(context).str())
+        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session.getUserEmail(context).str())
 
         val imagePath = FileUtils.getImagePath(context, wallpaper)
         val imageFile = File(imagePath)

@@ -52,7 +52,7 @@ class AnswerQuestionFragment : Fragment() {
         if(item.itemId == R.id.sendMenu){
             val questionID = arguments?.getString(Constants.QUESTION_ID).str()
             val answerBody = mAnswerQuestionLayoutBinding.answerEditText.text.str()
-            val fromUserId = Session().getUserId(context!!).str()
+            val fromUserId = Session.getUserId(context!!).str()
             val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
             answerOneQuestion(answerData)
@@ -63,7 +63,7 @@ class AnswerQuestionFragment : Fragment() {
     private fun getQuestionInformation(){
         val questionID = arguments?.getString(Constants.QUESTION_ID).str()
         AskmeClient.getQuestionService().getQuestionById(
-            token = Session().getHeaderToken(context!!).str(),
+            token = Session.getHeaderToken(context!!).str(),
             questionId = questionID
         ).enqueue(object : Callback<Question>{
             override fun onResponse(call: Call<Question>, response: Response<Question>) {
@@ -91,7 +91,7 @@ class AnswerQuestionFragment : Fragment() {
 
     private fun answerOneQuestion(answerData: AnswerData){
         AskmeClient.getAnswerService().answerOneQuestion(
-            token = Session().getHeaderToken(context!!).str(),
+            token = Session.getHeaderToken(context!!).str(),
             answerData = answerData
         ).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {

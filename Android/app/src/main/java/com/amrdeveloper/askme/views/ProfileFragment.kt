@@ -58,7 +58,7 @@ class ProfileFragment : Fragment(){
 
         mProfileBinding.listLayout.loadingBar.show()
 
-        mProfileViewModel.loadUserInformation(mUserId, Session().getUserId(context!!).str())
+        mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(context!!).str())
         mProfileViewModel.loadUserFeed(mUserId)
 
         mProfileViewModel.getUserLiveData().observe(this, Observer {
@@ -116,7 +116,7 @@ class ProfileFragment : Fragment(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.logoutMenu){
-            Session().logout(context!!)
+            Session.logout(context!!)
 
             val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
@@ -127,7 +127,7 @@ class ProfileFragment : Fragment(){
     private fun updateUserInfoFromArguments(){
         mUserId = arguments?.getString(Constants.USER_ID).str()
         if (mUserId.isNullString()) {
-            mUserId = Session().getUserId(context!!).str()
+            mUserId = Session.getUserId(context!!).str()
             setupEditMode()
         }else{
             hideEditMode()
@@ -157,7 +157,7 @@ class ProfileFragment : Fragment(){
         userAvatar.loadImage(user.avatarUrl)
         userWallpaper.loadImage(user.wallpaperUrl)
 
-        if (user.id != Session().getUserId(context!!)) {
+        if (user.id != Session.getUserId(context!!)) {
             updateFollowCardView(user.isUserFollow)
         } else {
             mProfileBinding.followCardView.gone()
@@ -230,8 +230,8 @@ class ProfileFragment : Fragment(){
     }
 
     private fun followCardViewListener(){
-        val followData = FollowData(Session().getUserId(context!!).str(), mUserId)
-        val token = Session().getUserToken(context!!).str()
+        val followData = FollowData(Session.getUserId(context!!).str(), mUserId)
+        val token = Session.getUserToken(context!!).str()
 
         when (Follow.valueOf(mProfileBinding.followCardView.tag.toString())) {
             Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)
