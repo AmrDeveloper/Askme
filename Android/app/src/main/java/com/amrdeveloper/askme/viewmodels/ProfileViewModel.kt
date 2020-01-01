@@ -1,5 +1,7 @@
 package com.amrdeveloper.askme.viewmodels
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,19 +11,31 @@ import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
+import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Feed
 import com.amrdeveloper.askme.models.Follow
 import com.amrdeveloper.askme.models.FollowData
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.net.Response
+import com.amrdeveloper.askme.utils.FileUtils
+import com.amrdeveloper.askme.utils.Session
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 import java.lang.Exception
+
+private const val TAG = "ProfileViewModel"
 
 class ProfileViewModel : ViewModel() {
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private val followLiveData : MutableLiveData<Follow> = MutableLiveData()
+    private val avatarLiveData : MutableLiveData<Response> = MutableLiveData()
+    private val wallpaperLiveData : MutableLiveData<Response> = MutableLiveData()
     private var feedPagedList: LiveData<PagedList<Feed>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
 
@@ -43,6 +57,52 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
+    fun updateUserAvatar(context: Context, avatar : Uri){
+        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session().getUserEmail(context).str())
+
+        val imagePath = FileUtils.getImagePath(context, avatar)
+        val imageFile = File(imagePath)
+        val requestFile: RequestBody = RequestBody.create(MediaType.parse(FileUtils.getFileType(context, avatar)), imageFile)
+        val avatarBody =  MultipartBody.Part.createFormData("avatar", imageFile.name, requestFile)
+
+        viewModelScope.launch(Dispatchers.IO){
+            try{
+                val response = AskmeClient.getUserService().updateUserAvatar(emailBody, avatarBody)
+                when(response.code()){
+                    200 -> avatarLiveData.postValue(Response.SUCCESS)
+                    401 -> avatarLiveData.postValue(Response.NO_AUTH)
+                    else -> avatarLiveData.postValue(Response.FAILURE)
+                }
+            }catch(exception : Exception){
+                avatarLiveData.postValue(Response.FAILURE)
+                Log.d(TAG, "Invalid Request")
+            }
+        }
+    }
+
+    fun updateUserWallpaper(context: Context, wallpaper : Uri){
+        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session().getUserEmail(context).str())
+
+        val imagePath = FileUtils.getImagePath(context, wallpaper)
+        val imageFile = File(imagePath)
+        val requestFile: RequestBody = RequestBody.create(MediaType.parse(FileUtils.getFileType(context, wallpaper)), imageFile)
+        val wallpaperBody =  MultipartBody.Part.createFormData("wallpaper", imageFile.name, requestFile)
+
+        viewModelScope.launch(Dispatchers.IO){
+            try{
+                val response = AskmeClient.getUserService().updateUserWallpaper(emailBody, wallpaperBody)
+                when(response.code()){
+                    200 -> wallpaperLiveData.postValue(Response.SUCCESS)
+                    401 -> wallpaperLiveData.postValue(Response.NO_AUTH)
+                    else -> wallpaperLiveData.postValue(Response.FAILURE)
+                }
+            }catch(exception : Exception){
+                wallpaperLiveData.postValue(Response.FAILURE)
+                Log.d(TAG, "Invalid Request")
+            }
+        }
+    }
+
     fun followUser(token: String, followData: FollowData){
         viewModelScope.launch(Dispatchers.IO){
             try{
@@ -51,7 +111,7 @@ class ProfileViewModel : ViewModel() {
                     followLiveData.postValue(Follow.FOLLOW)
                 }
             }catch (exception : Exception){
-                Log.d("Follow", "Invalid Request")
+                Log.d(TAG, "Invalid Request")
             }
         }
     }
@@ -64,7 +124,7 @@ class ProfileViewModel : ViewModel() {
                     followLiveData.postValue(Follow.UN_FOLLOW)
                 }
             }catch (exception : Exception){
-                Log.d("Follow", "Invalid Request")
+                Log.d(TAG, "Invalid Request")
             }
         }
     }
@@ -74,6 +134,10 @@ class ProfileViewModel : ViewModel() {
     fun getFeedPagedList() = feedPagedList
 
     fun getFollowLiveData() = followLiveData
+
+    fun getAvatarLiveData() = avatarLiveData
+
+    fun getWallpaperLiveData() = wallpaperLiveData
 
     private inner class FeedDataSourceFactory(var userId : String) : DataSource.Factory<Int,Feed>() {
 

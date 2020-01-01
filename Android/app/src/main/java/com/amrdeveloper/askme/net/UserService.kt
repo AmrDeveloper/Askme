@@ -42,6 +42,13 @@ interface UserService {
     @PUT("users/avatar")
     suspend fun updateUserAvatar(
         @Part("email") email: RequestBody,
-        @Part image: MultipartBody.Part
+        @Part avatar : MultipartBody.Part
+    ): Response<String>
+
+    @Multipart
+    @PUT("users/wallpaper")
+    suspend fun updateUserWallpaper(
+        @Part("email") email: RequestBody,
+        @Part wallpaper : MultipartBody.Part
     ): Response<String>
 }

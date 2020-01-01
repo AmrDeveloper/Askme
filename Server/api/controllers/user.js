@@ -389,7 +389,6 @@ exports.updateActive = (req, res) => {
 exports.updateUserAvatar = (req, res) => {
     const file = req.file;
     if (file == undefined) {
-        console.log("Not file")
         res.status(status.BAD_REQUEST).json({
             message: "Can't upload iamge"
         });

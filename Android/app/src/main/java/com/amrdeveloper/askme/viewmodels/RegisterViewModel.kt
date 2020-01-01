@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.amrdeveloper.askme.events.RegisterSuccessEvent
 import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.net.AskmeClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
 
 class RegisterViewModel : ViewModel(){
 
@@ -21,7 +19,6 @@ class RegisterViewModel : ViewModel(){
                 val response = AskmeClient.getUserService().register(registerData)
                 when (response.code()) {
                     200 -> {
-                        EventBus.getDefault().post(RegisterSuccessEvent())
                         registerLiveData.postValue("valid")
                     }
                     400 -> {
