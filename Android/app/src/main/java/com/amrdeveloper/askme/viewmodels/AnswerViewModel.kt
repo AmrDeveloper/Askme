@@ -10,8 +10,6 @@ import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.net.ResponseType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import java.lang.Exception
 
 private const val TAG = "AnswerViewModel"
@@ -21,17 +19,15 @@ class AnswerViewModel : ViewModel(){
     private val questionLiveData : MutableLiveData<Question> = MutableLiveData()
     private val answerLiveData : MutableLiveData<ResponseType> = MutableLiveData()
 
-    fun getQuetionById(token : String, id : String){
-        AskmeClient.getQuestionService().getQuestionById(token, id)
-            .enqueue(object : Callback<Question>{
-            override fun onResponse(call: Call<Question>, question: retrofit2.Response<Question>) {
-                questionLiveData.postValue(question.body())
-            }
-
-            override fun onFailure(call: Call<Question>, t: Throwable) {
+    fun getQuestionById(token : String, id : String){
+        viewModelScope.launch(Dispatchers.IO){
+            try{
+                val question = AskmeClient.getQuestionService().getQuestionById(token, id)
+                questionLiveData.postValue(question)
+            }catch (exception : Exception){
                 Log.d(TAG,"Invalid Answer Request")
             }
-        })
+        }
     }
 
     fun answerQuestion(token : String, answerData: AnswerData){

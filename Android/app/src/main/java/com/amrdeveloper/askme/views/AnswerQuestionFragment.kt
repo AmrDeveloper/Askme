@@ -42,7 +42,7 @@ class AnswerQuestionFragment : Fragment() {
 
         val token = Session.getHeaderToken(context!!).str()
         val questionID = arguments?.getString(Constants.QUESTION_ID).str()
-        mAnswerViewModel.getQuetionById(token, questionID)
+        mAnswerViewModel.getQuestionById(token, questionID)
 
         mAnswerViewModel.getQuestinLiveData().observe(this, Observer {
             bindQuestionInformation(it)

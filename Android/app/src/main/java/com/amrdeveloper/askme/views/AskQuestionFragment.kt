@@ -7,20 +7,21 @@ import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.QuestionData
 import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
-import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.Session
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.amrdeveloper.askme.viewmodels.QuestionViewModel
 
 class AskQuestionFragment : Fragment(){
 
+    private lateinit var mQuestionViewModel : QuestionViewModel
     private lateinit var mAskQuestionLayoutBinding: AskQuestionLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +36,18 @@ class AskQuestionFragment : Fragment(){
     ): View? {
         mAskQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
+        mQuestionViewModel = ViewModelProviders.of(this).get(QuestionViewModel::class.java)
+
+        mQuestionViewModel.getQuestionLiveData().observe(this, Observer {
+            when(it){
+                ResponseType.SUCCESS -> {
+                    fragmentManager?.popBackStackImmediate()
+                }
+                ResponseType.FAILURE -> {
+                    Log.d("QUESTION","Invalid")
+                }
+            }
+        })
 
         bindUserInformation()
         updateQuestionLength()
@@ -54,30 +67,10 @@ class AskQuestionFragment : Fragment(){
             val fromUser = Session.getUserId(context!!).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
             val questionData = QuestionData(question,fromUser, toUser, isAnonymously)
-            askNewQuestion(questionData)
-
+            val token = Session.getUserToken(context!!).str()
+            mQuestionViewModel.askNewQuestion(token, questionData)
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun askNewQuestion(questionData: QuestionData){
-        AskmeClient.getQuestionService().createNewQuestion(
-            token = Session.getUserToken(context!!).str(),
-            question = questionData
-        ).enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                if(response.code() == 200) {
-                    fragmentManager?.popBackStackImmediate()
-                }else{
-                    Log.d("QUESTION","Invalid ${response.code()}")
-
-                }
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.d("QUESTION","Invalid")
-            }
-        })
     }
 
     private fun bindUserInformation(){
