@@ -38,7 +38,7 @@ router.put('/status', checkAuth, controller.updateStatus);
 
 router.put('/active', checkAuth, controller.updateActive);
 
-router.put('/avatar', multerController.uploadAvatar.single('avatar'), checkAuth, controller.updateUserAvatar);
+router.put('/avatar', multerController.uploadAvatar.single('avatar'), controller.updateUserAvatar);
 
 router.put('/wallpaper', multerController.uploadWallpaper.single('wallpaper'), checkAuth, controller.updateUserWallpaper);
 

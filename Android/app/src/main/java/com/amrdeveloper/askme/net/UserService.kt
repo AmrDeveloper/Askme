@@ -4,6 +4,8 @@ import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.models.User
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -35,4 +37,11 @@ interface UserService {
         @Query("count") count: Int = DEFAULT_QUERY_COUNT,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
     ): List<User>
+
+    @Multipart
+    @PUT("users/avatar")
+    suspend fun updateUserAvatar(
+        @Part("email") email: RequestBody,
+        @Part image: MultipartBody.Part
+    ): Response<String>
 }

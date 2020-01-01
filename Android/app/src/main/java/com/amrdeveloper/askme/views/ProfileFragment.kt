@@ -1,9 +1,17 @@
 package com.amrdeveloper.askme.views
 
+import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.*
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,10 +25,20 @@ import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Follow
 import com.amrdeveloper.askme.models.FollowData
 import com.amrdeveloper.askme.models.User
+import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.ProfileViewModel
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+
 
 class ProfileFragment : Fragment(){
 
@@ -34,11 +52,13 @@ class ProfileFragment : Fragment(){
     private val LOG_TAG = "ProfileFragment"
     private val REQUEST_AVATAR_ID = 1996
     private val REQUEST_WALLPAPER_ID = 1997
+    private val PERMISSION_EXTERNAL_STORAGE = 1998
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -200,24 +220,84 @@ class ProfileFragment : Fragment(){
     }
 
     private fun changeAvatarImage(){
-        val photoPickerIntent = Intent(Intent.ACTION_PICK)
-        photoPickerIntent.type = "image/*"
-        startActivityForResult(photoPickerIntent, REQUEST_AVATAR_ID)
+        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
+            == PackageManager.PERMISSION_GRANTED) {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, REQUEST_AVATAR_ID)
+        }else{
+            ActivityCompat.requestPermissions(activity!!,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                PERMISSION_EXTERNAL_STORAGE)
+        }
     }
 
     private fun changeWallpaperImage(){
-        val photoPickerIntent = Intent(Intent.ACTION_PICK)
-        photoPickerIntent.type = "image/*"
-        startActivityForResult(photoPickerIntent, REQUEST_WALLPAPER_ID)
+        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
+            == PackageManager.PERMISSION_GRANTED) {
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, REQUEST_WALLPAPER_ID)
+        }else{
+            ActivityCompat.requestPermissions(activity!!,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                PERMISSION_EXTERNAL_STORAGE)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == Activity.RESULT_OK){
            when(requestCode){
-               REQUEST_AVATAR_ID -> {}
-               REQUEST_WALLPAPER_ID -> {}
+               REQUEST_AVATAR_ID -> {
+                  CoroutineScope(Dispatchers.IO).launch {
+                      val imageUri = data?.data
+                      val path = getPath(context!!,imageUri)
+                      val file = File(path)
+                      val requestFile: RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                      val avatar =  MultipartBody.Part.createFormData("avatar", file.name, requestFile)
+
+                      val email = RequestBody.create(MediaType.parse("multipart/form-data"),Session().getUserEmail(context!!).str())
+
+                      try{
+                          val response = AskmeClient.getUserService().updateUserAvatar(email, avatar)
+                          if(response.code() == 200){
+                              withContext(Dispatchers.Main){
+                                  Toast.makeText(context, "Image Updated", Toast.LENGTH_SHORT).show()
+                              }
+                          }else{
+                              withContext(Dispatchers.Main){
+                                  Toast.makeText(context, "Image Not ${response.message()}", Toast.LENGTH_SHORT).show()
+                              }
+                          }
+                      }catch (exception : Exception){
+                          Log.d(LOG_TAG, "Invalid Request : ${exception.message}")
+                      }
+                  }
+               }
+               REQUEST_WALLPAPER_ID -> {
+
+               }
            }
         }
+    }
+
+    fun getPath(context: Context, uri: Uri?): String? {
+        var result: String? = null
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+
+        val cursor =
+            context.contentResolver.query(uri!!, proj, null, null, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                val column_index = cursor.getColumnIndexOrThrow(proj[0])
+                result = cursor.getString(column_index)
+            }
+            cursor.close()
+        }
+        if (result == null) {
+            result = "Not found"
+        }
+        return result
     }
 }
