@@ -1,1 +1,3 @@
 server/node_modules
+server/storage/avatar/**
+server/storage/wallpaper/**
