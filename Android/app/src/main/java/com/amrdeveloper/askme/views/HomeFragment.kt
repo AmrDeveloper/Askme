@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,13 +20,15 @@ import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
+import dagger.android.support.DaggerFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : DaggerFragment() {
 
-    private lateinit var mFeedAdapter : FeedAdapter
+    @Inject lateinit var mFeedAdapter : FeedAdapter
     private lateinit var mHomeViewModel : HomeViewModel
     private lateinit var mListLayoutBinding: ListLayoutBinding
 
@@ -75,7 +76,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupUserList(){
-        mFeedAdapter = FeedAdapter()
         mListLayoutBinding.listItems.setHasFixedSize(true)
         mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
         mListLayoutBinding.listItems.adapter = mFeedAdapter
@@ -93,7 +93,7 @@ class HomeFragment : Fragment() {
         })
 
         mFeedAdapter.setOnReactionListener(object : FeedAdapter.OnReactionClick {
-            override fun onReactClick(answerId: Int, toUser : String,reaction: Reaction, callback: FeedAdapter.Callback){
+            override fun onReactClick(answerId: Int, toUser : String, reaction: Reaction, callback: FeedAdapter.Callback){
                 when(reaction){
                     Reaction.REACATED -> {
                         val body = ReactionData(

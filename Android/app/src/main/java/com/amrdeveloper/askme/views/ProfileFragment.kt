@@ -9,7 +9,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,15 +23,17 @@ import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.ProfileViewModel
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
+import javax.inject.Inject
 
-class ProfileFragment : Fragment(){
+class ProfileFragment : DaggerFragment(){
 
     private lateinit var mUserId: String
     private lateinit var mCurrentUser : User
 
-    private lateinit var mFeedAdapter: FeedAdapter
+    @Inject lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
     private lateinit var mProfileViewModel : ProfileViewModel
 
@@ -135,7 +136,6 @@ class ProfileFragment : Fragment(){
     }
 
     private fun setupFeedRecyclerView() {
-        mFeedAdapter = FeedAdapter()
         mProfileBinding.listLayout.listItems.setHasFixedSize(true)
         mProfileBinding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
         mProfileBinding.listLayout.listItems.isNestedScrollingEnabled = false

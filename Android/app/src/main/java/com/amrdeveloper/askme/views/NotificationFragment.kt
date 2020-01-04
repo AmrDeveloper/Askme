@@ -20,11 +20,14 @@ import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.utils.Session
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class NotificationFragment: Fragment(){
+
+class NotificationFragment: DaggerFragment(){
 
     private lateinit var mListLayoutBinding: ListLayoutBinding
-    private lateinit var mNotificationAdapter: NotificationAdapter
+    @Inject lateinit var mNotificationAdapter: NotificationAdapter
     private lateinit var mNotificationViewModel: NotificationViewModel
 
     override fun onCreateView(
@@ -53,7 +56,6 @@ class NotificationFragment: Fragment(){
     }
 
     private fun notiListSetup(){
-        mNotificationAdapter = NotificationAdapter()
         mListLayoutBinding.listItems.setHasFixedSize(true)
         mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
         mListLayoutBinding.listItems.adapter = mNotificationAdapter

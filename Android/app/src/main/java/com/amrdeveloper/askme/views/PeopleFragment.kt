@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +16,12 @@ import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class PeopleFragment : Fragment() {
+class PeopleFragment : DaggerFragment() {
 
-    private lateinit var mUserAdapter: PeopleAdapter
+    @Inject lateinit var mUserAdapter: PeopleAdapter
     private lateinit var mPeopleViewModel : UserViewModel
     private lateinit var mListLayoutBinding: ListLayoutBinding
 
@@ -62,7 +63,6 @@ class PeopleFragment : Fragment() {
     }
 
     private fun setupUserList() {
-        mUserAdapter = PeopleAdapter()
         mListLayoutBinding.listItems.setHasFixedSize(true)
         mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
         mListLayoutBinding.listItems.adapter = mUserAdapter

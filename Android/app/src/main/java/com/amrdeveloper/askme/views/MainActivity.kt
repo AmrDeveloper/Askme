@@ -3,7 +3,6 @@ package com.amrdeveloper.askme.views
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.*
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
@@ -13,8 +12,9 @@ import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.utils.ShortcutUtils
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.android.support.DaggerAppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity() {
 
     private var mActionBar: ActionBar? = null
     private lateinit var mMainActivity: ActivityMainBinding
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         if(intent.action == Intent.ACTION_VIEW){
             mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
-            supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
+            //supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
         }else{
             val shortcutAction = intent.action.str()
             ShortcutUtils.executeAction(shortcutAction, mMainActivity.mainNavigation)
