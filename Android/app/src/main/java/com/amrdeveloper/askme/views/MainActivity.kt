@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,8 @@ import com.amrdeveloper.askme.*
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.openFragmentInto
+import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.ShortcutUtils
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -22,10 +25,14 @@ class MainActivity : AppCompatActivity() {
 
         mActionBar = supportActionBar
         mMainActivity.mainNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelection)
-        mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
-        supportFragmentManager.openFragmentInto(R.id.viewContainers,
-            HomeFragment()
-        )
+
+        if(intent.action == Intent.ACTION_VIEW){
+            mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
+            supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
+        }else{
+            val shortcutAction = intent.action.str()
+            ShortcutUtils.executeAction(shortcutAction, mMainActivity.mainNavigation)
+        }
     }
 
     private val onNavigationItemSelection =

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:icon="@drawable/ic_home"
+        android:shortcutId="open_home"
+        android:shortcutLongLabel="@string/home"
+        android:shortcutShortLabel="@string/home">
+        <intent
+            android:action="com.amrdeveloper.askme.action.home"
+            android:targetClass="com.amrdeveloper.askme.views.MainActivity"
+            android:targetPackage="com.amrdeveloper.askme" />
+    </shortcut>
+
+    <shortcut
+        android:icon="@drawable/ic_whatshot"
+        android:shortcutId="open_notifications"
+        android:shortcutLongLabel="@string/notifications"
+        android:shortcutShortLabel="@string/notifications">
+        <intent
+            android:action="com.amrdeveloper.askme.action.notifications"
+            android:targetClass="com.amrdeveloper.askme.views.MainActivity"
+            android:targetPackage="com.amrdeveloper.askme" />
+    </shortcut>
+
+    <shortcut
+        android:icon="@drawable/ic_people"
+        android:shortcutId="open_people"
+        android:shortcutLongLabel="@string/people"
+        android:shortcutShortLabel="@string/people">
+        <intent
+            android:action="com.amrdeveloper.askme.action.people"
+            android:targetClass="com.amrdeveloper.askme.views.MainActivity"
+            android:targetPackage="com.amrdeveloper.askme" />
+    </shortcut>
+
+    <shortcut
+        android:icon="@drawable/ic_profile"
+        android:shortcutId="open_profile"
+        android:shortcutLongLabel="@string/profile"
+        android:shortcutShortLabel="@string/profile">
+        <intent
+            android:action="com.amrdeveloper.askme.action.profile"
+            android:targetClass="com.amrdeveloper.askme.views.MainActivity"
+            android:targetPackage="com.amrdeveloper.askme" />
+    </shortcut>
+</shortcuts>
