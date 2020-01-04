@@ -9,6 +9,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.User
+import com.amrdeveloper.askme.net.PagingConfig
 
 class UserViewModel : ViewModel(){
 
@@ -21,24 +22,14 @@ class UserViewModel : ViewModel(){
         val userDataSourceFactory = UserDataSourceFactory()
         liveDataSource = userDataSourceFactory.getUserLiveDataSource()
 
-        val config: PagedList.Config =
-            PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .build()
-
-        usersLiveData = LivePagedListBuilder(userDataSourceFactory, config).build()
+        usersLiveData = LivePagedListBuilder(userDataSourceFactory, PagingConfig.getConfig()).build()
     }
 
     fun searchPeopleList(query : String){
         val userDataSourceFactory = UserSearchDataSourceFactory(query)
         searchLiveDataSource = userDataSourceFactory.getUserSearchLiveDataSource()
 
-        val config: PagedList.Config =
-            PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .build()
-
-        usersSearchLiveData = LivePagedListBuilder(userDataSourceFactory, config).build()
+        usersSearchLiveData = LivePagedListBuilder(userDataSourceFactory, PagingConfig.getConfig()).build()
     }
 
     fun getUserPagedList() = usersLiveData

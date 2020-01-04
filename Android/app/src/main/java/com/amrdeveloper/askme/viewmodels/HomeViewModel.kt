@@ -9,6 +9,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.Feed
+import com.amrdeveloper.askme.net.PagingConfig
 
 class HomeViewModel : ViewModel(){
 
@@ -19,12 +20,7 @@ class HomeViewModel : ViewModel(){
         val homeDataSourceFactory = HomeDataSourceFactory(id)
         liveDataSource = homeDataSourceFactory.getHomeLiveDataSource()
 
-        val config: PagedList.Config =
-            PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .build()
-
-        homePagedList = LivePagedListBuilder(homeDataSourceFactory, config).build()
+        homePagedList = LivePagedListBuilder(homeDataSourceFactory, PagingConfig.getConfig()).build()
     }
 
     fun getFeedPagedList() = homePagedList

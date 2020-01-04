@@ -9,6 +9,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.Notification
+import com.amrdeveloper.askme.net.PagingConfig
 
 class NotificationViewModel : ViewModel() {
 
@@ -19,12 +20,7 @@ class NotificationViewModel : ViewModel() {
         val dataSourceFactory = NotificationDataSourceFactory(id, token)
         liveDataSource = dataSourceFactory.getNotificationLiveDataSource()
 
-        val config: PagedList.Config =
-            PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .build()
-
-        notificationPagedList = LivePagedListBuilder(dataSourceFactory, config).build()
+        notificationPagedList = LivePagedListBuilder(dataSourceFactory, PagingConfig.getConfig()).build()
     }
 
     fun getNotificationList() = notificationPagedList

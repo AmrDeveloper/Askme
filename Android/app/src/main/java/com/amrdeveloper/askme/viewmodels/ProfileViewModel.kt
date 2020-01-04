@@ -17,6 +17,7 @@ import com.amrdeveloper.askme.models.Follow
 import com.amrdeveloper.askme.models.FollowData
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.net.PagingConfig
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
@@ -43,11 +44,7 @@ class ProfileViewModel : ViewModel() {
         val feedDataSourceFactory = FeedDataSourceFactory(userId)
         liveDataSource = feedDataSourceFactory.getFeedLiveDataSource()
 
-        val config: PagedList.Config = PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .build()
-
-        feedPagedList = LivePagedListBuilder(feedDataSourceFactory, config).build()
+        feedPagedList = LivePagedListBuilder(feedDataSourceFactory, PagingConfig.getConfig()).build()
     }
 
     fun loadUserInformation(userId : String, localId : String){
