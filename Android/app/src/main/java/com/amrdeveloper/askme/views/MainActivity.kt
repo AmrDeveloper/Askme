@@ -28,7 +28,7 @@ class MainActivity : DaggerAppCompatActivity() {
         mActionBar = supportActionBar
         mMainActivity.mainNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelection)
 
-        if(intent.action == Intent.ACTION_VIEW){
+        if(intent.action == null) {
             mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
             supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
         }else{
