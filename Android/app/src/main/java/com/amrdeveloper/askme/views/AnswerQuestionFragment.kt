@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
@@ -43,7 +42,7 @@ class AnswerQuestionFragment : DaggerFragment() {
     ): View? {
         mAnswerQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
-        mAnswerViewModel = ViewModelProviders.of(this).get(AnswerViewModel::class.java)
+        mAnswerViewModel = ViewModelProviders.of(this, providerFactory).get(AnswerViewModel::class.java)
 
         val token = Session.getHeaderToken(context!!).str()
         val questionID = arguments?.getString(Constants.QUESTION_ID).str()

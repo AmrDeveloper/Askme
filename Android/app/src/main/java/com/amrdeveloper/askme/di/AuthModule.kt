@@ -8,9 +8,9 @@ import retrofit2.Retrofit
 @Module
 class AuthModule {
 
-    @MainScope
+    @AuthScope
     @Provides
-    fun provideUAuthService(retrofit: Retrofit) : AuthService {
+    fun provideAuthService(retrofit: Retrofit) : AuthService {
         return retrofit.create(AuthService::class.java)
     }
 }

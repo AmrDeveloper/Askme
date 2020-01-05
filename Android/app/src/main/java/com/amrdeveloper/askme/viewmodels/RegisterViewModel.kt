@@ -5,19 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.models.RegisterData
-import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.net.AuthService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class RegisterViewModel @Inject constructor(): ViewModel(){
+class RegisterViewModel @Inject constructor(private val authService: AuthService): ViewModel(){
 
     private val registerLiveData : MutableLiveData<String> = MutableLiveData()
 
     fun userRegister(registerData: RegisterData){
         viewModelScope.launch(Dispatchers.IO){
             try{
-                val response = AskmeClient.getUserService().register(registerData)
+                val response = authService.register(registerData)
                 when (response.code()) {
                     200 -> {
                         registerLiveData.postValue("valid")

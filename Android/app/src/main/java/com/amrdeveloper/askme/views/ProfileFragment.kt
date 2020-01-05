@@ -54,7 +54,7 @@ class ProfileFragment : DaggerFragment(){
         savedInstanceState: Bundle?
     ): View? {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
-        mProfileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        mProfileViewModel = ViewModelProviders.of(this, providerFactory).get(ProfileViewModel::class.java)
 
         updateUserInfoFromArguments()
         setupFeedRecyclerView()

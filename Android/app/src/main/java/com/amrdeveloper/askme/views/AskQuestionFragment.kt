@@ -41,7 +41,7 @@ class AskQuestionFragment : DaggerFragment(){
     ): View? {
         mAskQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
-        mQuestionViewModel = ViewModelProviders.of(this).get(QuestionViewModel::class.java)
+        mQuestionViewModel = ViewModelProviders.of(this, providerFactory).get(QuestionViewModel::class.java)
 
         mQuestionViewModel.getQuestionLiveData().observe(this, Observer {
             when(it){

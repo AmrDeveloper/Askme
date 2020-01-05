@@ -3,14 +3,15 @@ package com.amrdeveloper.askme.viewmodels
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.Feed
-import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
+import com.amrdeveloper.askme.net.FeedService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class FeedDataSource(var userId: String,
-                     private val scope: CoroutineScope) :
+                     private val scope: CoroutineScope,
+                     private val feedService: FeedService) :
     PageKeyedDataSource<Int, Feed>() {
 
     override fun loadInitial(
@@ -19,7 +20,7 @@ class FeedDataSource(var userId: String,
     ) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList = AskmeClient.getFeedService().getUserFeed(userId = userId)
+                val feedList = feedService.getUserFeed(userId = userId)
                 if (feedList.size == DEFAULT_QUERY_COUNT) {
                     callback.onResult(feedList, null, 1)
                 } else {
@@ -34,7 +35,7 @@ class FeedDataSource(var userId: String,
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList = AskmeClient.getFeedService().getUserFeed(userId = userId, offset = params.key)
+                val feedList = feedService.getUserFeed(userId = userId, offset = params.key)
                 if (params.key > 1) {
                     callback.onResult(feedList, params.key - 1)
                 } else {
@@ -49,7 +50,7 @@ class FeedDataSource(var userId: String,
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList =  AskmeClient.getFeedService().getUserFeed(userId = userId, offset = params.key)
+                val feedList =  feedService.getUserFeed(userId = userId, offset = params.key)
                 if (feedList.size == DEFAULT_QUERY_COUNT) {
                     callback.onResult(feedList, params.key + 1)
                 } else {

@@ -3,7 +3,6 @@ package com.amrdeveloper.askme.viewmodels
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.User
-import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
 import com.amrdeveloper.askme.net.UserService
 import kotlinx.coroutines.CoroutineScope

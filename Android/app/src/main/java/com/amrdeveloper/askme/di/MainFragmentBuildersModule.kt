@@ -1,9 +1,6 @@
 package com.amrdeveloper.askme.di
 
-import com.amrdeveloper.askme.views.HomeFragment
-import com.amrdeveloper.askme.views.NotificationFragment
-import com.amrdeveloper.askme.views.PeopleFragment
-import com.amrdeveloper.askme.views.ProfileFragment
+import com.amrdeveloper.askme.views.*
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -21,4 +18,11 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment() : ProfileFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeAskQuestionFragment() : AskQuestionFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeAnswerQuestionFragment() : AnswerQuestionFragment
 }

@@ -21,13 +21,13 @@ class LoginActivity : DaggerAppCompatActivity() {
 
     private lateinit var mLoginViewModel : LoginViewModel
     private lateinit var mLoginActivity: ActivityLoginBinding
-    @Inject
-    lateinit var providerFactory : ViewModelProviderFactory
+
+    @Inject lateinit var providerFactory : ViewModelProviderFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mLoginActivity = DataBindingUtil.setContentView(this, R.layout.activity_login)
-        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        mLoginViewModel = ViewModelProviders.of(this, providerFactory).get(LoginViewModel::class.java)
 
         mLoginActivity.registerTxt.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))

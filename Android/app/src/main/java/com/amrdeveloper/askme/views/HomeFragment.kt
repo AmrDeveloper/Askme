@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -19,12 +18,8 @@ import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
-import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.utils.Session
 import dagger.android.support.DaggerFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class HomeFragment : DaggerFragment() {
@@ -98,56 +93,18 @@ class HomeFragment : DaggerFragment() {
             override fun onReactClick(answerId: Int, toUser : String, reaction: Reaction, callback: FeedAdapter.Callback){
                 when(reaction){
                     Reaction.REACATED -> {
-                        val body = ReactionData(
-                            Session.getUserId(context!!).str(),
-                            toUser,
-                            answerId.str()
-                        )
-                        AskmeClient.getReactionService()
-                            .deleteAnswerReaction(
-                                token = Session.getHeaderToken(context!!).str(),
-                                reactionData = body
-                            ).enqueue(object : Callback<String> {
-                                override fun onResponse(
-                                    call: Call<String>,
-                                    response: Response<String>
-                                ) {
-                                    if(response.code() == 200){
-                                        callback.onCallback(true)
-                                    }else{
-                                        callback.onCallback(false)
-                                    }
-                                }
+                        val token = Session.getHeaderToken(context!!).str()
+                        val id =  Session.getUserId(context!!).str()
+                        val body = ReactionData(id, toUser, answerId.str())
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    Log.d(LOG_TAG, "Can't react this post")
-                                    callback.onCallback(false)
-                                }
-                            })
+                        mHomeViewModel.unreactAnswer(token, body, callback)
                     }
                     Reaction.UN_REACATED -> {
-                        val body = ReactionData(Session.getUserId(context!!).str(), answerId.str(), "")
-                        AskmeClient.getReactionService()
-                            .createAnswerReaction(
-                                token = Session.getHeaderToken(context!!).str(),
-                                reactionData = body
-                            ).enqueue(object : Callback<String> {
-                                override fun onResponse(
-                                    call: Call<String>,
-                                    response: Response<String>
-                                ) {
-                                    if(response.code() == 200){
-                                        callback.onCallback(true)
-                                    }else{
-                                        callback.onCallback(false)
-                                    }
-                                }
+                        val token = Session.getHeaderToken(context!!).str()
+                        val id =  Session.getUserId(context!!).str()
+                        val body = ReactionData(id, answerId.str(), "")
 
-                                override fun onFailure(call: Call<String>, t: Throwable) {
-                                    Log.d(LOG_TAG, "Can't react this post")
-                                    callback.onCallback(false)
-                                }
-                            })
+                        mHomeViewModel.reactAnswer(token, body, callback)
                     }
                 }
             }

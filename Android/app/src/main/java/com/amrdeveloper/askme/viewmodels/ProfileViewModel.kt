@@ -16,9 +16,7 @@ import com.amrdeveloper.askme.models.Feed
 import com.amrdeveloper.askme.models.Follow
 import com.amrdeveloper.askme.models.FollowData
 import com.amrdeveloper.askme.models.User
-import com.amrdeveloper.askme.net.AskmeClient
-import com.amrdeveloper.askme.net.PagingConfig
-import com.amrdeveloper.askme.net.ResponseType
+import com.amrdeveloper.askme.net.*
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +30,9 @@ import javax.inject.Inject
 
 private const val TAG = "ProfileViewModel"
 
-class ProfileViewModel @Inject constructor() : ViewModel() {
+class ProfileViewModel @Inject constructor(private val userService: UserService,
+                                           private val followService: FollowService,
+                                           private val feedService: FeedService) : ViewModel() {
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private val followLiveData : MutableLiveData<Follow> = MutableLiveData()
@@ -50,7 +50,7 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
 
     fun loadUserInformation(userId : String, localId : String){
         viewModelScope.launch(Dispatchers.IO){
-            val user =  AskmeClient.getUserService().getUserById(userId, localId)
+            val user =  userService.getUserById(userId, localId)
             userLiveData.postValue(user)
         }
     }
@@ -65,7 +65,7 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO){
             try{
-                val response = AskmeClient.getUserService().updateUserAvatar(emailBody, avatarBody)
+                val response = userService.updateUserAvatar(emailBody, avatarBody)
                 when(response.code()){
                     200 -> avatarLiveData.postValue(ResponseType.SUCCESS)
                     401 -> avatarLiveData.postValue(ResponseType.NO_AUTH)
@@ -88,7 +88,7 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
 
         viewModelScope.launch(Dispatchers.IO){
             try{
-                val response = AskmeClient.getUserService().updateUserWallpaper(emailBody, wallpaperBody)
+                val response = userService.updateUserWallpaper(emailBody, wallpaperBody)
                 when(response.code()){
                     200 -> wallpaperLiveData.postValue(ResponseType.SUCCESS)
                     401 -> wallpaperLiveData.postValue(ResponseType.NO_AUTH)
@@ -104,7 +104,7 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
     fun followUser(token: String, followData: FollowData){
         viewModelScope.launch(Dispatchers.IO){
             try{
-                val response = AskmeClient.getFollowService().followUser("auth $token", followData)
+                val response = followService.followUser("auth $token", followData)
                 if (response.code() == 200) {
                     followLiveData.postValue(Follow.FOLLOW)
                 }
@@ -117,7 +117,7 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
     fun unfollowUser(token: String, followData: FollowData){
         viewModelScope.launch(Dispatchers.IO){
             try{
-                val response = AskmeClient.getFollowService().unFollowUser("auth $token", followData)
+                val response = followService.unFollowUser("auth $token", followData)
                 if (response.code() == 200) {
                     followLiveData.postValue(Follow.UN_FOLLOW)
                 }
@@ -142,7 +142,7 @@ class ProfileViewModel @Inject constructor() : ViewModel() {
         private val feedLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
 
         override fun create(): DataSource<Int, Feed> {
-            val feedDataSource = FeedDataSource(userId, viewModelScope)
+            val feedDataSource = FeedDataSource(userId, viewModelScope, feedService)
             feedLiveDataSource.postValue(feedDataSource)
             return feedDataSource
         }

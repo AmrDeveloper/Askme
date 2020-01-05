@@ -12,6 +12,6 @@ data class ReactionData(
     @SerializedName("answerId")
     val answerId : String,
 
-    @SerializedName("answerId")
+    @SerializedName("reactionsType")
     val reactionType : Int = 0
 )

@@ -6,19 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.models.SessionData
-import com.amrdeveloper.askme.net.AskmeClient
+import com.amrdeveloper.askme.net.AuthService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor() : ViewModel(){
+class LoginViewModel @Inject constructor(private val authService: AuthService) : ViewModel(){
 
     private val sessionLiveData : MutableLiveData<SessionData> = MutableLiveData()
 
     fun userLogin(loginData: LoginData){
         viewModelScope.launch(Dispatchers.IO){
             try{
-                val response = AskmeClient.getUserService().login(loginData)
+                val response = authService.login(loginData)
                 if (response.code() == 200) {
                     val sessionData = response.body()
                     sessionLiveData.postValue(sessionData)
