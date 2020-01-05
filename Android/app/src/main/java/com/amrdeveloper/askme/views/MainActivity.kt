@@ -2,6 +2,7 @@ package com.amrdeveloper.askme.views
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.*
@@ -9,6 +10,7 @@ import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,8 +32,12 @@ class MainActivity : DaggerAppCompatActivity() {
             mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
             supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
         }else{
-            val shortcutAction = intent.action.str()
-            ShortcutUtils.executeAction(shortcutAction, mMainActivity.mainNavigation)
+            if(Session.isUserLogined(this)) {
+                val shortcutAction = intent.action.str()
+                ShortcutUtils.executeAction(shortcutAction, mMainActivity.mainNavigation)
+            }else{
+                Toast.makeText(this, "No Authentication", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
