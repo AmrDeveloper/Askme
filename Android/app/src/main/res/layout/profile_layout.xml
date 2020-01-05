@@ -17,7 +17,7 @@
             <RelativeLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen250dp">
+                android:layout_height="@dimen/dimen225dp">
 
                 <ImageView
                     android:id="@+id/userWallpaper"
@@ -69,24 +69,12 @@
                     app:civ_border_width="@dimen/dimen1dp"
                     app:civ_circle_background_color="@color/orange" />
 
-                <TextView
-                    android:id="@+id/userName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/userAvatarLayout"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:lines="1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimen22sp"
-                    android:textStyle="bold|italic"
-                    tools:text="Amr Developer" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/followCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/userName"
+                    android:layout_below="@id/userAvatarLayout"
                     android:layout_centerHorizontal="true"
                     app:cardBackgroundColor="@color/darkBlue"
                     app:cardCornerRadius="@dimen/dimen5dp"
@@ -137,6 +125,17 @@
                     android:textSize="@dimen/dimen18sp"
                     android:textStyle="bold" />
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/dimen30sp"
+                android:textStyle="bold|italic"
+                tools:text="Amr Developer" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/analysisCardView"

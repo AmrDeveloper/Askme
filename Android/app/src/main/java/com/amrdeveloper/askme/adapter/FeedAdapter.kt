@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
     }
 
     interface Callback{
-        fun onCallback(state : Boolean)
+        fun onCallback()
     }
 
     private lateinit var onReactionClick : OnReactionClick
@@ -52,27 +53,24 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
             if(::onReactionClick.isInitialized){
                 holder.itemView.reactionsTxt.setOnClickListener {
-                    onReactionClick.onReactClick(
-                        currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted,
+                    onReactionClick.onReactClick(currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted,
                         object : Callback {
-                            override fun onCallback(state: Boolean) {
-                                if (state) {
-                                    when (currentFeed.isReacted) {
-                                        Reaction.REACATED -> {
-                                            currentList?.get(position)?.reactionsNum =
-                                                currentList?.get(position)?.reactionsNum?.plus(1)!!
-                                            currentList?.get(position)?.isReacted =
-                                                Reaction.UN_REACATED
-                                        }
-                                        Reaction.UN_REACATED -> {
-                                            currentList?.get(position)?.reactionsNum =
-                                                currentList?.get(position)?.reactionsNum?.minus(1)!!
-                                            currentList?.get(position)?.isReacted =
-                                                Reaction.REACATED
-                                        }
+                            override fun onCallback() {
+                                when (currentFeed.isReacted) {
+                                    Reaction.REACATED -> {
+                                        currentList?.get(position)?.reactionsNum =
+                                            currentList?.get(position)?.reactionsNum?.minus(1)!!
+                                        currentList?.get(position)?.isReacted =
+                                            Reaction.UN_REACATED
                                     }
-                                    notifyDataSetChanged()
+                                    Reaction.UN_REACATED -> {
+                                        currentList?.get(position)?.reactionsNum =
+                                            currentList?.get(position)?.reactionsNum?.plus(1)!!
+                                        currentList?.get(position)?.isReacted =
+                                            Reaction.REACATED
+                                    }
                                 }
+                                notifyDataSetChanged()
                             }
                         })
                 }

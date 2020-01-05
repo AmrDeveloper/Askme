@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/', controller.getPostReactions)
 
-router.post('/', controller.createNewReaction);
+router.post('/react', controller.createNewReaction);
 
-router.delete('/', controller.deleteReaction);
+router.post('/unreact', controller.deleteReaction);
 
 module.exports = router;

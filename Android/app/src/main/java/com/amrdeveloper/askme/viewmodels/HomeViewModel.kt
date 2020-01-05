@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,7 @@ import com.amrdeveloper.askme.net.PagingConfig
 import com.amrdeveloper.askme.net.ReactionService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 import javax.inject.Inject
 
@@ -37,12 +39,12 @@ class HomeViewModel @Inject constructor(private val feedService: FeedService,
             try{
                 val response = reactionService.createAnswerReaction(token, reactionData)
                 if(response.code() == 200){
-                    callback.onCallback(true)
-                }else{
-                    callback.onCallback(false)
+                    withContext(Dispatchers.Main){
+                        callback.onCallback()
+                    }
                 }
             }catch (exception : Exception){
-                callback.onCallback(false)
+                Log.d("HomeViewModel","Invalid React ${exception.message}")
             }
         }
     }
@@ -52,12 +54,12 @@ class HomeViewModel @Inject constructor(private val feedService: FeedService,
             try{
                 val response = reactionService.deleteAnswerReaction(token, reactionData)
                 if(response.code() == 200){
-                    callback.onCallback(true)
-                }else{
-                    callback.onCallback(false)
+                    withContext(Dispatchers.Main){
+                        callback.onCallback()
+                    }
                 }
             }catch (exception : Exception){
-                callback.onCallback(false)
+                Log.d("HomeViewModel","Invalid unreact ${exception.message}")
             }
         }
     }
