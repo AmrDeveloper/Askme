@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,6 @@ import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.utils.Session
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
-
 
 class NotificationFragment: DaggerFragment(){
 

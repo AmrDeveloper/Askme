@@ -3,7 +3,6 @@ package com.amrdeveloper.askme.views
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,8 +11,9 @@ import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.databinding.ActivityRegisterBinding
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.viewmodels.RegisterViewModel
+import dagger.android.support.DaggerAppCompatActivity
 
-class RegisterActivity : AppCompatActivity(){
+class RegisterActivity : DaggerAppCompatActivity(){
 
     private lateinit var mRegisterViewModel : RegisterViewModel
     private lateinit var mRegisterActivity: ActivityRegisterBinding

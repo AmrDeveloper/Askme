@@ -28,7 +28,7 @@ class MainActivity : DaggerAppCompatActivity() {
 
         if(intent.action == Intent.ACTION_VIEW){
             mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
-            //supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
+            supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
         }else{
             val shortcutAction = intent.action.str()
             ShortcutUtils.executeAction(shortcutAction, mMainActivity.mainNavigation)

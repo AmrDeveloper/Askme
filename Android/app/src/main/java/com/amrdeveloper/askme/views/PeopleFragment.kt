@@ -35,7 +35,7 @@ class PeopleFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
+        mListLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
 
         setupUserList()
 

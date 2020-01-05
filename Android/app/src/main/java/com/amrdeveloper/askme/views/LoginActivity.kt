@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,8 +13,9 @@ import com.amrdeveloper.askme.databinding.ActivityLoginBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.viewmodels.LoginViewModel
+import dagger.android.support.DaggerAppCompatActivity
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : DaggerAppCompatActivity() {
 
     private lateinit var mLoginViewModel : LoginViewModel
     private lateinit var mLoginActivity: ActivityLoginBinding
