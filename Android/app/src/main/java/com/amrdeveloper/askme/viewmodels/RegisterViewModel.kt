@@ -8,8 +8,9 @@ import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.net.AskmeClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel(){
+class RegisterViewModel @Inject constructor(): ViewModel(){
 
     private val registerLiveData : MutableLiveData<String> = MutableLiveData()
 

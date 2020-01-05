@@ -9,9 +9,11 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.Feed
+import com.amrdeveloper.askme.net.FeedService
 import com.amrdeveloper.askme.net.PagingConfig
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel(){
+class HomeViewModel @Inject constructor(private val feedService: FeedService): ViewModel(){
 
     private var homePagedList: LiveData<PagedList<Feed>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
@@ -30,7 +32,7 @@ class HomeViewModel : ViewModel(){
         private val homeLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
 
         override fun create(): DataSource<Int, Feed> {
-            val feedDataSource = HomeDataSource(userId, viewModelScope)
+            val feedDataSource = HomeDataSource(userId, viewModelScope, feedService)
             homeLiveDataSource.postValue(feedDataSource)
             return feedDataSource
         }

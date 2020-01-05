@@ -14,6 +14,7 @@ import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Reaction
 import com.amrdeveloper.askme.models.ReactionData
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
@@ -31,6 +32,7 @@ class HomeFragment : DaggerFragment() {
     @Inject lateinit var mFeedAdapter : FeedAdapter
     private lateinit var mHomeViewModel : HomeViewModel
     private lateinit var mListLayoutBinding: ListLayoutBinding
+    @Inject lateinit var providerFactory : ViewModelProviderFactory
 
     private val LOG_TAG = "HomeFragment"
 
@@ -45,7 +47,7 @@ class HomeFragment : DaggerFragment() {
         savedInstanceState: Bundle?
     ): View? {
         mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
-        mHomeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        mHomeViewModel = ViewModelProviders.of(this, providerFactory).get(HomeViewModel::class.java)
 
         setupUserList()
 

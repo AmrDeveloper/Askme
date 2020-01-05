@@ -9,8 +9,9 @@ import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.net.AskmeClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel(){
+class LoginViewModel @Inject constructor() : ViewModel(){
 
     private val sessionLiveData : MutableLiveData<SessionData> = MutableLiveData()
 

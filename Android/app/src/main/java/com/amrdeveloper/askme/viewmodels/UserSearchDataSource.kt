@@ -5,13 +5,15 @@ import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.AskmeClient
 import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
+import com.amrdeveloper.askme.net.UserService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class UserSearchDataSource(private val query: String,
-                           private val scope: CoroutineScope) :
+                           private val scope: CoroutineScope,
+                           private val userService: UserService) :
     PageKeyedDataSource<Int, User>() {
     override fun loadInitial(
         params: LoadInitialParams<Int>,
@@ -19,7 +21,7 @@ class UserSearchDataSource(private val query: String,
     ) {
         scope.launch(Dispatchers.IO){
             try{
-                val users = AskmeClient.getUserService().getUsersSearch(query)
+                val users = userService.getUsersSearch(query)
                 if(users.size == DEFAULT_QUERY_COUNT){
                     callback.onResult(users, null, 1)
                 }else{
@@ -34,7 +36,7 @@ class UserSearchDataSource(private val query: String,
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
-                val users = AskmeClient.getUserService().getUsersSearch(query, params.key)
+                val users = userService.getUsersSearch(query, params.key)
                 if(params.key > 1){
                     callback.onResult(users, params.key - 1)
                 }else{
@@ -49,7 +51,7 @@ class UserSearchDataSource(private val query: String,
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
-                val users = AskmeClient.getUserService().getUsersSearch(query, params.key)
+                val users = userService.getUsersSearch(query, params.key)
                 if(users.size == DEFAULT_QUERY_COUNT){
                     callback.onResult(users, params.key + 1)
                 }else{

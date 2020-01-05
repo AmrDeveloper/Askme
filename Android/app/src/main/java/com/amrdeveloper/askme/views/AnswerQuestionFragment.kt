@@ -15,16 +15,21 @@ import com.amrdeveloper.askme.models.AnswerData
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Question
 import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.viewmodels.AnswerViewModel
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class AnswerQuestionFragment : Fragment() {
+class AnswerQuestionFragment : DaggerFragment() {
 
     private lateinit var mQuestion: Question
     private lateinit var mAnswerViewModel : AnswerViewModel
     private lateinit var mAnswerQuestionLayoutBinding: AnswerQuestionLayoutBinding
+
+    @Inject lateinit var providerFactory : ViewModelProviderFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

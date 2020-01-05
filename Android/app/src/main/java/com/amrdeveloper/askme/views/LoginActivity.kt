@@ -10,15 +10,19 @@ import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.databinding.ActivityLoginBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.viewmodels.LoginViewModel
 import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
 class LoginActivity : DaggerAppCompatActivity() {
 
     private lateinit var mLoginViewModel : LoginViewModel
     private lateinit var mLoginActivity: ActivityLoginBinding
+    @Inject
+    lateinit var providerFactory : ViewModelProviderFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

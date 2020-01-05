@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Follow
@@ -36,6 +37,7 @@ class ProfileFragment : DaggerFragment(){
     @Inject lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
     private lateinit var mProfileViewModel : ProfileViewModel
+    @Inject lateinit var providerFactory : ViewModelProviderFactory
 
     private val REQUEST_AVATAR_ID = 1996
     private val REQUEST_WALLPAPER_ID = 1997

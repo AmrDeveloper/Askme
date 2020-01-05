@@ -11,10 +11,11 @@ import com.amrdeveloper.askme.net.ResponseType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
 private const val TAG = "AnswerViewModel"
 
-class AnswerViewModel : ViewModel(){
+class AnswerViewModel @Inject constructor() : ViewModel(){
 
     private val questionLiveData : MutableLiveData<Question> = MutableLiveData()
     private val answerLiveData : MutableLiveData<ResponseType> = MutableLiveData()

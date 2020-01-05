@@ -10,8 +10,10 @@ import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.PagingConfig
+import com.amrdeveloper.askme.net.UserService
+import javax.inject.Inject
 
-class UserViewModel : ViewModel(){
+class UserViewModel @Inject constructor(private val userService: UserService) : ViewModel(){
 
     private var usersLiveData : LiveData<PagedList<User>> = MutableLiveData()
     private var usersSearchLiveData : LiveData<PagedList<User>> = MutableLiveData()
@@ -40,7 +42,7 @@ class UserViewModel : ViewModel(){
         private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
 
         override fun create(): DataSource<Int, User> {
-            val userDataSource = UserDataSource(viewModelScope)
+            val userDataSource = UserDataSource(viewModelScope, userService)
             userLiveDataSource.postValue(userDataSource)
             return userDataSource
         }
@@ -53,7 +55,7 @@ class UserViewModel : ViewModel(){
         private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
 
         override fun create(): DataSource<Int, User> {
-            val userDataSource = UserSearchDataSource(query, viewModelScope)
+            val userDataSource = UserSearchDataSource(query, viewModelScope, userService)
             userLiveDataSource.postValue(userDataSource)
             return userDataSource
         }

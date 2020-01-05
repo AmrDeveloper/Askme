@@ -14,6 +14,7 @@ import com.amrdeveloper.askme.adapter.PeopleAdapter
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import dagger.android.support.DaggerFragment
@@ -24,6 +25,7 @@ class PeopleFragment : DaggerFragment() {
     @Inject lateinit var mUserAdapter: PeopleAdapter
     private lateinit var mPeopleViewModel : UserViewModel
     private lateinit var mListLayoutBinding: ListLayoutBinding
+    @Inject lateinit var providerFactory : ViewModelProviderFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +41,7 @@ class PeopleFragment : DaggerFragment() {
 
         setupUserList()
 
-        mPeopleViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
+        mPeopleViewModel = ViewModelProviders.of(this, providerFactory).get(UserViewModel::class.java)
 
         mPeopleViewModel.loadPeopleList()
 
@@ -83,7 +85,6 @@ class PeopleFragment : DaggerFragment() {
     private val userSearchViewListener = object : SearchView.OnQueryTextListener{
         override fun onQueryTextChange(newText: String?): Boolean{
             if(newText!!.isEmpty()){
-                Toast.makeText(context, "Search Closed", Toast.LENGTH_SHORT).show()
                 mPeopleViewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
                 mUserAdapter.submitList(mPeopleViewModel.getUserPagedList().value)
             }

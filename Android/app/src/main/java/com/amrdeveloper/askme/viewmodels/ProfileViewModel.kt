@@ -28,10 +28,11 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 import java.lang.Exception
+import javax.inject.Inject
 
 private const val TAG = "ProfileViewModel"
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel @Inject constructor() : ViewModel() {
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private val followLiveData : MutableLiveData<Follow> = MutableLiveData()

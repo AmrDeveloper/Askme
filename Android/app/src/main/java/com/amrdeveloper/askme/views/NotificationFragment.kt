@@ -15,6 +15,7 @@ import com.amrdeveloper.askme.models.Action
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
@@ -27,6 +28,7 @@ class NotificationFragment: DaggerFragment(){
     private lateinit var mListLayoutBinding: ListLayoutBinding
     @Inject lateinit var mNotificationAdapter: NotificationAdapter
     private lateinit var mNotificationViewModel: NotificationViewModel
+    @Inject lateinit var providerFactory : ViewModelProviderFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +36,7 @@ class NotificationFragment: DaggerFragment(){
         savedInstanceState: Bundle?
     ): View? {
         mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
-        mNotificationViewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
+        mNotificationViewModel = ViewModelProviders.of(this, providerFactory).get(NotificationViewModel::class.java)
 
         notiListSetup()
 

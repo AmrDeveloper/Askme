@@ -9,14 +9,18 @@ import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.databinding.ActivityRegisterBinding
+import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.viewmodels.RegisterViewModel
 import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
 class RegisterActivity : DaggerAppCompatActivity(){
 
     private lateinit var mRegisterViewModel : RegisterViewModel
     private lateinit var mRegisterActivity: ActivityRegisterBinding
+    @Inject
+    lateinit var providerFactory : ViewModelProviderFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

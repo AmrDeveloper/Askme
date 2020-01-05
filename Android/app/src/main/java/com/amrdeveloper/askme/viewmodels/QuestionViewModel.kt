@@ -9,8 +9,9 @@ import com.amrdeveloper.askme.net.ResponseType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
-class QuestionViewModel : ViewModel(){
+class QuestionViewModel @Inject constructor(): ViewModel(){
 
     private val questionLiveData : MutableLiveData<ResponseType> = MutableLiveData()
 

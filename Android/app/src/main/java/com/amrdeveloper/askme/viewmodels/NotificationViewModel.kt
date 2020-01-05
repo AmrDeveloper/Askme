@@ -9,9 +9,11 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
 import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.Notification
+import com.amrdeveloper.askme.net.NotificationService
 import com.amrdeveloper.askme.net.PagingConfig
+import javax.inject.Inject
 
-class NotificationViewModel : ViewModel() {
+class NotificationViewModel @Inject constructor(private val notificationService: NotificationService): ViewModel() {
 
     private var notificationPagedList: LiveData<PagedList<Notification>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Notification>>
@@ -32,7 +34,7 @@ class NotificationViewModel : ViewModel() {
             MutableLiveData()
 
         override fun create(): DataSource<Int, Notification> {
-            val dataSource = NotificationDataSource(userId, token, viewModelScope)
+            val dataSource = NotificationDataSource(userId, token, viewModelScope, notificationService)
             notificationLiveDataSource.postValue(dataSource)
             return dataSource
         }
