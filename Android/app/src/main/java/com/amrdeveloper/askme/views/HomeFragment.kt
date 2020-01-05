@@ -102,7 +102,7 @@ class HomeFragment : DaggerFragment() {
                     Reaction.UN_REACATED -> {
                         val token = Session.getHeaderToken(context!!).str()
                         val id =  Session.getUserId(context!!).str()
-                        val body = ReactionData(id, answerId.str(), "")
+                        val body = ReactionData(id, toUser, answerId.str())
 
                         mHomeViewModel.reactAnswer(token, body, callback)
                     }
