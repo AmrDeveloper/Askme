@@ -14,7 +14,7 @@ router.post('/login', controller.userLogin);
 
 router.post('/register', controller.registerNewUser);
 
-router.delete('/', controller.deleteAllUsers);
+router.delete('/all', controller.deleteAllUsers);
 
 router.delete('/avatar', controller.deleteUserAvatar);
 
@@ -22,7 +22,7 @@ router.delete('/wallpaper', controller.deleteUserWallpaper);
 
 router.delete('/status', checkAuth, controller.deleteUserStatus);
 
-router.delete('/:id', checkAuth, controller.deleteOneUser);
+router.delete('/', checkAuth, controller.deleteOneUser);
 
 router.put('/name', checkAuth, controller.updateName);
 

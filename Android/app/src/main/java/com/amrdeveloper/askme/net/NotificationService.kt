@@ -1,9 +1,8 @@
 package com.amrdeveloper.askme.net
 
 import com.amrdeveloper.askme.models.Notification
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Query
+import retrofit2.Response
+import retrofit2.http.*
 
 interface NotificationService {
 
@@ -14,4 +13,10 @@ interface NotificationService {
         @Query("count") count: Int = DEFAULT_QUERY_COUNT,
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
     ): List<Notification>
+
+    @PUT("notifications/open/{id}")
+    suspend fun makeNotificationOpened(
+        @Header("authorization") token: String,
+        @Path("id") id: String
+    ): Response<String>
 }

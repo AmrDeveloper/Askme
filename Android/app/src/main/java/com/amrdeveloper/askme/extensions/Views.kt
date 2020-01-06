@@ -1,8 +1,12 @@
 package com.amrdeveloper.askme.extensions
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.net.API_SERVER_URL
 import com.amrdeveloper.askme.utils.formatDateForJoin
@@ -63,4 +67,12 @@ fun ImageView.loadImage(imageUrl: String?) {
     }
     val imagePath = API_SERVER_URL + imageUrl.replace("\\", "/")
     Picasso.get().load(imagePath).error(R.drawable.ic_profile).into(this)
+}
+
+fun View.backgroundColor(context : Context, @ColorRes colorId : Int){
+    this.setBackgroundColor(ContextCompat.getColor(context, colorId))
+}
+
+fun CardView.backgroundColor(context : Context, @ColorRes colorId : Int){
+    this.setCardBackgroundColor(ContextCompat.getColor(context, colorId))
 }

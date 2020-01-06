@@ -15,6 +15,6 @@ router.delete('/',  controller.deleteAllNotifications);
 
 router.delete('/:id', controller.deleteNotificationByID);
 
-router.put('/readed', controller.makeNotificationReaded);
+router.put('/open/:id', controller.makeNotificationReaded);
 
 module.exports = router;

@@ -5,8 +5,8 @@
     android:id="@+id/notificationCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="@dimen/dimen2dp"
+    app:cardElevation="@dimen/dimen2dp"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout

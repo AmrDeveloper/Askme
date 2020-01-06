@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,8 @@ import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
+import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.models.Open
 import com.amrdeveloper.askme.utils.Session
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -62,6 +65,13 @@ class NotificationFragment: DaggerFragment(){
 
         mNotificationAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
             override fun onItemClick(notification: Notification) {
+                if(notification.isOpened == Open.UN_OPENED) {
+                    val token = Session.getHeaderToken(context!!).str()
+                    mNotificationViewModel.makeNotificationReaded(notification.id.str(), token)
+                    notification.isOpened = Open.OPENED
+                    mNotificationAdapter.notifyDataSetChanged()
+                }
+
                 when(notification.action){
                     Action.QUESTION -> {
                         val answerQuestionFragment = AnswerQuestionFragment()

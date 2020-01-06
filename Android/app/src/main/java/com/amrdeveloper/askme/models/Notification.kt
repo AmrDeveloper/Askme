@@ -19,5 +19,5 @@ data class Notification(
     val data: String,
 
     @SerializedName("opened")
-    val isOpened: String
+    var isOpened: Open
 )

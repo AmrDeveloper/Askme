@@ -26,7 +26,7 @@ exports.getAllNotifications = (req, res) => {
 };
 
 exports.getNotificationByID = (req, res) => {
-    const notificationID = req.param.id;
+    const notificationID = req.params.id;
 
     notificationModel.getNotificationByID(notificationID)
         .then(result => {
@@ -43,7 +43,7 @@ exports.getNotificationByID = (req, res) => {
 exports.getUnReadedNotification = (req, res) => {
     var offset = req.query.offset;
     var count = req.query.count;
-    const id = req.param.id;
+    const id = req.params.id;
     if (offset == null) {
         offset = QUERY_DEFAULT_OFFSET;
     }
@@ -102,7 +102,7 @@ exports.deleteAllNotifications = (req, res) => {
 };
 
 exports.deleteNotificationByID = (req, res) => {
-    const notificationID = req.param.id;
+    const notificationID = req.params.id;
 
     notificationModel.deleteNotificationByID(notificationID)
         .then(state => {
@@ -119,8 +119,8 @@ exports.deleteNotificationByID = (req, res) => {
 };
 
 exports.makeNotificationReaded = (req, res) => {
-    const notificationID = req.param.id;
-
+    const notificationID = req.params.id;
+    
     notificationModel.makeNotificationReaded(notificationID)
         .then(state => {
             if (state) {
