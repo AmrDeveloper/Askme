@@ -25,11 +25,11 @@ data class RegisterData(
     }
 
     fun isValidName() : Boolean{
-        return true
+        return Validation.isValidName(name)
     }
 
     fun isValidUsername() : Boolean{
-        return true
+        return Validation.isValidUsername(username)
     }
 
     fun isValidEmail() : Boolean{

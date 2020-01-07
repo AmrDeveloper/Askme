@@ -82,6 +82,9 @@ class NotificationFragment: DaggerFragment(){
 
                         fragmentManager?.openFragmentInto(R.id.viewContainers, answerQuestionFragment)
                     }
+                    Action.ANSWER -> {
+
+                    }
                 }
             }
         })

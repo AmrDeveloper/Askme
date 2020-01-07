@@ -27,8 +27,12 @@ exports.createNewAnswer = (req, res) => {
         currentDate
     ];
 
-    answerModel.createNewAnswer(args).then(state => {
-        if (state) {
+    answerModel.createNewAnswer(args).then(result => {
+        if (result[0]) {
+
+            const answerId = result[1];
+            notificationModel.creatAnswerNotification(toUser, answerId);
+
             res.status(status.OK).json({
                 message: "answer is created",
             });

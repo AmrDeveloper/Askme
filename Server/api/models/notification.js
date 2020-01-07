@@ -84,6 +84,18 @@ exports.createQuestionNotification = (toUser, questionId) => new Promise((resolv
     this.createNewNotification(args).then(state => resolve(state));
 });
 
+exports.creatAnswerNotification = (toUser, answerId) => new Promise((resolve, reject) => {
+    const args = [
+        toUser,
+        "Someone answer your question check it now",
+        "answer",
+        0,
+        new Date().toISOString(),
+        answerId.toString() 
+    ];
+    this.createNewNotification(args).then(state => resolve(state));
+});
+
 exports.deleteAllNotifications = () => new Promise((resolve, reject) => {
     const query = 'DELETE FROM notifications';
     database.query(query, (err, result) => {
