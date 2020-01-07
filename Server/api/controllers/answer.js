@@ -14,7 +14,9 @@ exports.getAnswerByID = (req, res) => {
 
 exports.getQuestionAnswer = (req, res) => {
     const id = req.params.id;
-    answerModel.getQuestionAnswer(id).then(result => {
+    const userId = req.query.userId;
+    const args = [userId, id];
+    answerModel.getQuestionAnswer(args).then(result => {
         res.status(status.OK).json(result);
     });
 };

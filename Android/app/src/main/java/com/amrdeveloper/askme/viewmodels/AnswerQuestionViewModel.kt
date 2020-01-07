@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 private const val TAG = "AnswerViewModel"
 
-class AnswerViewModel @Inject constructor(private val questionService: QuestionService,
-                                          private val answerService: AnswerService) : ViewModel(){
+class AnswerQuestionViewModel @Inject constructor(private val questionService: QuestionService,
+                                                  private val answerService: AnswerService) : ViewModel(){
 
     private val questionLiveData : MutableLiveData<Question> = MutableLiveData()
     private val answerLiveData : MutableLiveData<ResponseType> = MutableLiveData()

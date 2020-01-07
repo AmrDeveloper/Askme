@@ -18,14 +18,14 @@ import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.net.ResponseType
-import com.amrdeveloper.askme.viewmodels.AnswerViewModel
+import com.amrdeveloper.askme.viewmodels.AnswerQuestionViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class AnswerQuestionFragment : DaggerFragment() {
 
     private lateinit var mQuestion: Question
-    private lateinit var mAnswerViewModel : AnswerViewModel
+    private lateinit var mAnswerQuestionViewModel : AnswerQuestionViewModel
     private lateinit var mAnswerQuestionLayoutBinding: AnswerQuestionLayoutBinding
 
     @Inject lateinit var providerFactory : ViewModelProviderFactory
@@ -42,18 +42,18 @@ class AnswerQuestionFragment : DaggerFragment() {
     ): View? {
         mAnswerQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
-        mAnswerViewModel = ViewModelProviders.of(this, providerFactory).get(AnswerViewModel::class.java)
+        mAnswerQuestionViewModel = ViewModelProviders.of(this, providerFactory).get(AnswerQuestionViewModel::class.java)
 
         val token = Session.getHeaderToken(context!!).str()
         val questionID = arguments?.getString(Constants.QUESTION_ID).str()
-        mAnswerViewModel.getQuestionById(token, questionID)
+        mAnswerQuestionViewModel.getQuestionById(token, questionID)
 
-        mAnswerViewModel.getQuestinLiveData().observe(this, Observer {
+        mAnswerQuestionViewModel.getQuestinLiveData().observe(this, Observer {
             bindQuestionInformation(it)
             mQuestion = it
         })
 
-        mAnswerViewModel.getAnswerLiveData().observe(this, Observer {
+        mAnswerQuestionViewModel.getAnswerLiveData().observe(this, Observer {
             when(it){
                 ResponseType.SUCCESS ->  fragmentManager?.popBackStackImmediate()
                 ResponseType.FAILURE -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
@@ -78,7 +78,7 @@ class AnswerQuestionFragment : DaggerFragment() {
             val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
             val token = Session.getHeaderToken(context!!).str()
-            mAnswerViewModel.answerQuestion(token, answerData)
+            mAnswerQuestionViewModel.answerQuestion(token, answerData)
         }
         return super.onOptionsItemSelected(item)
     }

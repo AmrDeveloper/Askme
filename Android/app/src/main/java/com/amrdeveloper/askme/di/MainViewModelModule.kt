@@ -36,6 +36,11 @@ abstract class MainViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(AnswerViewModel::class)
-    abstract fun bindAnswerViewModel(answerViewModel: AnswerViewModel) : ViewModel
+    @ViewModelKey(AnswerQuestionViewModel::class)
+    abstract fun bindAnswerViewModel(answerQuestionViewModel: AnswerQuestionViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(QuestionAnswerViewModel::class)
+    abstract fun bindQuestionAnswerViewModel(questionAnswerViewModel: QuestionAnswerViewModel) : ViewModel
 }

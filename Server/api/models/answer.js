@@ -16,6 +16,7 @@ exports.getAnswerByID = args => new Promise((resolve, reject) => {
 
 exports.getQuestionAnswer = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT id,
+                                   body AS answerBody,
                                    toUser AS toUserId,
                                    (SELECT username FROM users WHERE toUser = users.id) AS toUsername, 
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS toUserAvatar,
@@ -23,8 +24,10 @@ exports.getQuestionAnswer = args => new Promise((resolve, reject) => {
                                    (SELECT username FROM users WHERE fromUser = users.id) AS fromUsername, 
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS fromUserAvatar,
                                    questionId,
-                                   (SELECT title FROM questions WHERE questionId = questions.id) AS fromUser,
+                                   (SELECT title FROM questions WHERE questionId = questions.id) AS questionBody,
                                    (SELECT anonymous FROM questions WHERE questionId = questions.id) AS isAnonymous,
+                                   (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions,
+                                   (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND toUser = ?) AS isReacted,
                                    answerdDate
                                    FROM answers WHERE id = ?`;
     database.query(query, args, (err, result) => {
