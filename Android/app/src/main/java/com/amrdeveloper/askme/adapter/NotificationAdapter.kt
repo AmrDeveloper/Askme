@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.extensions.backgroundColor
+import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.setFormattedDateForPost
+import com.amrdeveloper.askme.models.Action
 import com.amrdeveloper.askme.models.Open
 import kotlinx.android.synthetic.main.notification_list_item.view.*
 
@@ -50,6 +52,12 @@ class NotificationAdapter :
         fun bingNotification(notification: Notification) {
             itemView.notificationBody.text = notification.body
             itemView.notificationDate.setFormattedDateForPost(notification.createdDate)
+
+            when(notification.action){
+                Action.QUESTION -> itemView.notificationIcon.setImageResource(R.drawable.ic_question)
+                Action.ANSWER -> itemView.notificationIcon.setImageResource(R.drawable.ic_answer)
+                Action.FOLLOW -> itemView.notificationIcon.setImageResource(R.drawable.ic_followers)
+            }
 
             if(notification.isOpened == Open.UN_OPENED){
                 itemView.notificationCardView.backgroundColor(itemView.context, R.color.whiteOrange)

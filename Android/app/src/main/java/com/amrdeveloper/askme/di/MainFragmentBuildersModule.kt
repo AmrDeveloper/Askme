@@ -25,4 +25,7 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeAnswerQuestionFragment() : AnswerQuestionFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeQuestionAnswerFragment() : QuestionAnswerFragment
 }

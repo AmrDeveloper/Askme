@@ -12,6 +12,13 @@ exports.getAnswerByID = (req, res) => {
     });
 };
 
+exports.getQuestionAnswer = (req, res) => {
+    const id = req.params.id;
+    answerModel.getQuestionAnswer(id).then(result => {
+        res.status(status.OK).json(result);
+    });
+};
+
 exports.createNewAnswer = (req, res) => {
     const body = req.body.body;
     const questionId = req.body.questionId;

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/questionUserAvatar"
+                android:layout_width="@dimen/dimen50dp"
+                android:layout_height="@dimen/dimen50dp"
+                android:layout_margin="@dimen/dimen5dp"
+                android:src="@drawable/ic_profile"
+                app:cardCornerRadius="@dimen/dimen4dp"
+                app:cardElevation="@dimen/dimen4dp"
+                app:civ_border_color="@color/orange"
+                app:civ_border_width="@dimen/dimen1dp" />
+
+            <TextView
+                android:id="@+id/questionUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/questionUserAvatar"
+                android:shadowColor="@color/darkBlue"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/dimen18sp"
+                android:textStyle="bold"
+                tools:text="AmrDeveloper" />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen5dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="@dimen/dimen4dp"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/questionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen5dp"
+                android:gravity="start"
+                android:maxLength="300"
+                android:textColor="@color/darkBlue"
+                tools:text="How are you bro ?" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen5dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="@dimen/dimen4dp"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/answerText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen5dp"
+                android:gravity="start"
+                android:maxLength="300"
+                android:textColor="@color/darkBlue"
+                tools:text="How are you bro ?" />
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/answerUserAvatar"
+                android:layout_width="@dimen/dimen50dp"
+                android:layout_height="@dimen/dimen50dp"
+                android:layout_margin="@dimen/dimen5dp"
+                android:src="@drawable/ic_profile"
+                app:cardCornerRadius="@dimen/dimen4dp"
+                app:cardElevation="@dimen/dimen4dp"
+                app:civ_border_color="@color/orange"
+                app:civ_border_width="@dimen/dimen1dp" />
+
+            <TextView
+                android:id="@+id/answerUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/answerUserAvatar"
+                android:shadowColor="@color/darkBlue"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/dimen18sp"
+                android:textStyle="bold"
+                tools:text="AmrDeveloper" />
+
+            <TextView
+                android:id="@+id/reactionsTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/dimen5dp"
+                android:drawableStart="@drawable/ic_react"
+                android:drawablePadding="@dimen/dimen2dp"
+                android:gravity="center"
+                android:textColor="@color/darkBlue"
+                tools:text="10" />
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

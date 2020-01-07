@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,7 +82,13 @@ class NotificationFragment: DaggerFragment(){
                         fragmentManager?.openFragmentInto(R.id.viewContainers, answerQuestionFragment)
                     }
                     Action.ANSWER -> {
+                        val questionAnswerFragment = QuestionAnswerFragment()
 
+                        val args = Bundle()
+                        args.putString(Constants.ANSWER_ID, notification.data)
+                        questionAnswerFragment.arguments = args
+
+                        fragmentManager?.openFragmentInto(R.id.viewContainers, questionAnswerFragment)
                     }
                 }
             }
