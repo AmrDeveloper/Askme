@@ -26,6 +26,7 @@ exports.getUserFeed = (req, res) => {
 
     const args = [userId, id, parseInt(count), parseInt(offset)]
     feedModel.getUserFeed(args).then(result => {
+        console.log(`Feed ${id}  : ${result.length}`)
         res.status(status.OK).json(result);
     })
 };
@@ -45,6 +46,7 @@ exports.getHomeFeed = (req, res) => {
 
     const args = [id, id, parseInt(count), parseInt(offset)]
     feedModel.getHomeFeed(args).then(result => {
+        console.log(`Home ${id}  : ${result.length}`)
         res.status(status.OK).json(result);
     })
 };

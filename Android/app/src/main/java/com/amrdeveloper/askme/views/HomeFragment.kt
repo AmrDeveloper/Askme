@@ -46,9 +46,7 @@ class HomeFragment : DaggerFragment() {
 
         setupUserList()
 
-        mHomeViewModel.loadUserHomeFeed("15")
-        //val session = Session()
-        //mHomeViewModel.loadUserHomeFeed(session.getUserId(context!!).str())
+        mHomeViewModel.loadUserHomeFeed(Session.getUserId(context!!).str())
 
         mListLayoutBinding.loadingBar.show()
 

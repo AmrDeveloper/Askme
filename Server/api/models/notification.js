@@ -66,7 +66,7 @@ exports.createFollowNotification = (toUser, fromUser) => new Promise((resolve, r
         "One user start following you",
         "follow",
         0,
-        new Date().toISOString(),
+        Date.now(),
         fromUser.toString()
     ];
     this.createNewNotification(args).then(state => resolve(state));
@@ -78,7 +78,7 @@ exports.createQuestionNotification = (toUser, questionId) => new Promise((resolv
         "You have new Question check it now",
         "question",
         0,
-        new Date().toISOString(),
+        Date.now(),
         questionId.toString() 
     ];
     this.createNewNotification(args).then(state => resolve(state));
@@ -90,7 +90,7 @@ exports.creatAnswerNotification = (toUser, answerId) => new Promise((resolve, re
         "Someone answer your question check it now",
         "answer",
         0,
-        new Date().toISOString(),
+        Date.now(),
         answerId.toString() 
     ];
     this.createNewNotification(args).then(state => resolve(state));

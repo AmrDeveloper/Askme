@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
@@ -71,7 +70,7 @@ class AskQuestionFragment : DaggerFragment(){
             val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked.str()
             val fromUser = Session.getUserId(context!!).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
-            val questionData = QuestionData(question,fromUser, toUser, isAnonymously)
+            val questionData = QuestionData(question,toUser, fromUser, isAnonymously)
             val token = Session.getUserToken(context!!).str()
             mQuestionViewModel.askNewQuestion(token, questionData)
         }
@@ -90,13 +89,8 @@ class AskQuestionFragment : DaggerFragment(){
 
     private fun updateQuestionLength(){
         mAskQuestionLayoutBinding.questionEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
+            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(editable : Editable?) {
                 mAskQuestionLayoutBinding.questionLength.text = (300 - editable!!.length).str()

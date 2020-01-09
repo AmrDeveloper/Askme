@@ -27,8 +27,8 @@ class HomeViewModel @Inject constructor(private val feedService: FeedService,
     private var homePagedList: LiveData<PagedList<Feed>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
 
-    fun loadUserHomeFeed(id : String){
-        val homeDataSourceFactory = HomeDataSourceFactory(id)
+    fun loadUserHomeFeed(userId : String){
+        val homeDataSourceFactory = HomeDataSourceFactory(userId)
         liveDataSource = homeDataSourceFactory.getHomeLiveDataSource()
 
         homePagedList = LivePagedListBuilder(homeDataSourceFactory, PagingConfig.getConfig()).build()

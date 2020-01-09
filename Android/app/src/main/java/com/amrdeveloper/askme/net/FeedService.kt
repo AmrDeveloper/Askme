@@ -8,7 +8,8 @@ interface FeedService {
 
     @GET("feeds/")
     suspend fun getUserFeed(
-        @Query("id") userId: String,
+        @Query("id") id: String,
+        @Query("userId") userId : String = "",
         @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
         @Query("count") count: Int = DEFAULT_QUERY_COUNT
     ): List<Feed>

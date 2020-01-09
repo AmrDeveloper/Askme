@@ -13,7 +13,7 @@ exports.getUserFeed = (args) => new Promise((resolve, reject) => {
                                    (SELECT email FROM users WHERE toUser = users.id) AS toUserEmail,
                                    (SELECT avatar FROM users WHERE toUser = users.id) AS toUserAvatar,
                                    (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions,
-                                   (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND toUser = ?) AS isReacted,
+                                   (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND fromUser = ?) AS isReacted,
                                    answers.answerdDate AS answerDate
                     FROM answers WHERE fromUser = ? LIMIT ? OFFSET ?`;
     database.query(query, args, (err, result) => {
@@ -35,7 +35,7 @@ exports.getHomeFeed = (args) => new Promise((resolve, reject) => {
                                     (SELECT email FROM users WHERE answers.toUser = users.id) AS toUserEmail,
                                     (SELECT avatar FROM users WHERE answers.toUser = users.id) AS toUserAvatar,
                                     (SELECT COUNT(*) FROM reactions WHERE answerId = answers.id) AS reactions,
-                                    (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND toUser = ?) AS isReacted,
+                                    (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM reactions WHERE answerId = answers.id AND fromUser = ?) AS isReacted,
                                     answers.answerdDate AS answerDate
                    FROM answers JOIN follows 
                    ON answers.fromUser = follows.toUser AND follows.fromUser = ?

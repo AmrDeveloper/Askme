@@ -62,7 +62,7 @@ class ProfileFragment : DaggerFragment(){
         mProfileBinding.listLayout.loadingBar.show()
 
         mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(context!!).str())
-        mProfileViewModel.loadUserFeed(mUserId)
+        mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(context!!).str())
 
         mProfileViewModel.getUserLiveData().observe(this, Observer {
             mCurrentUser = it

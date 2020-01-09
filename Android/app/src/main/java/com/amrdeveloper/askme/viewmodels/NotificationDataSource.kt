@@ -28,7 +28,7 @@ class NotificationDataSource(private var userId: String,
                     callback.onResult(notifications, null, 0)
                 }
             }catch (exception : Exception) {
-                Log.d("Notification", "Invalid Request")
+                Log.d("Notification", "Invalid Request ${exception.message}")
             }
         }
     }
@@ -43,7 +43,7 @@ class NotificationDataSource(private var userId: String,
                     callback.onResult(notifications, null)
                 }
             }catch (exception : Exception) {
-                Log.d("Notification", "Invalid Request")
+                Log.d("Notification", "Invalid Request ${exception.message}")
             }
         }
     }
@@ -58,7 +58,7 @@ class NotificationDataSource(private var userId: String,
                     callback.onResult(notifications, null)
                 }
             }catch (exception : Exception) {
-                Log.d("Notification", "Invalid Request")
+                Log.d("Notification", "Invalid Request ${exception.message}")
             }
         }
     }

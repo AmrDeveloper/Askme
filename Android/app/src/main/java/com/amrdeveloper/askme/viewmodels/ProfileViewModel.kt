@@ -41,8 +41,8 @@ class ProfileViewModel @Inject constructor(private val userService: UserService,
     private var feedPagedList: LiveData<PagedList<Feed>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
 
-    fun loadUserFeed(userId : String){
-        val feedDataSourceFactory = FeedDataSourceFactory(userId)
+    fun loadUserFeed(id: String, userId : String){
+        val feedDataSourceFactory = FeedDataSourceFactory(id, userId)
         liveDataSource = feedDataSourceFactory.getFeedLiveDataSource()
 
         feedPagedList = LivePagedListBuilder(feedDataSourceFactory, PagingConfig.getConfig()).build()
@@ -137,12 +137,12 @@ class ProfileViewModel @Inject constructor(private val userService: UserService,
 
     fun getWallpaperLiveData() = wallpaperLiveData
 
-    private inner class FeedDataSourceFactory(var userId : String) : DataSource.Factory<Int,Feed>() {
+    private inner class FeedDataSourceFactory(var id : String, var userId: String) : DataSource.Factory<Int,Feed>() {
 
         private val feedLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
 
         override fun create(): DataSource<Int, Feed> {
-            val feedDataSource = FeedDataSource(userId, viewModelScope, feedService)
+            val feedDataSource = FeedDataSource(id, userId, viewModelScope, feedService)
             feedLiveDataSource.postValue(feedDataSource)
             return feedDataSource
         }

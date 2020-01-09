@@ -9,7 +9,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class FeedDataSource(var userId: String,
+class FeedDataSource(var id: String,
+                     var userId : String,
                      private val scope: CoroutineScope,
                      private val feedService: FeedService) :
     PageKeyedDataSource<Int, Feed>() {
@@ -20,7 +21,7 @@ class FeedDataSource(var userId: String,
     ) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList = feedService.getUserFeed(userId = userId)
+                val feedList = feedService.getUserFeed(id, userId)
                 if (feedList.size == DEFAULT_QUERY_COUNT) {
                     callback.onResult(feedList, null, 1)
                 } else {
@@ -35,7 +36,7 @@ class FeedDataSource(var userId: String,
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList = feedService.getUserFeed(userId = userId, offset = params.key)
+                val feedList = feedService.getUserFeed(id = id,userId = userId, offset = params.key)
                 if (params.key > 1) {
                     callback.onResult(feedList, params.key - 1)
                 } else {
@@ -50,7 +51,7 @@ class FeedDataSource(var userId: String,
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList =  feedService.getUserFeed(userId = userId, offset = params.key)
+                val feedList =  feedService.getUserFeed(id = id,userId = userId, offset = params.key)
                 if (feedList.size == DEFAULT_QUERY_COUNT) {
                     callback.onResult(feedList, params.key + 1)
                 } else {

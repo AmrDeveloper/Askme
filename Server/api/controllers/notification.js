@@ -21,6 +21,7 @@ exports.getAllNotifications = (req, res) => {
 
     notificationModel.getUserNotifications(args)
         .then(result => {
+            console.log(`result ${id}  : ${result.length}`)
             res.status(status.OK).json(result);
         });
 };
@@ -63,7 +64,6 @@ exports.createNewNotification = (req, rse) => {
     const toUser = req.body.toUser;
     const body = req.body.body;
     const action = req.body.action;
-    //const currentDate = new Date().toISOString();
     const currentDate = Date.now();
 
     if(action == null){

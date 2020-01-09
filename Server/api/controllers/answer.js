@@ -1,5 +1,6 @@
 const status = require('../../utilities/server_status');
 const answerModel = require('../models/answer');
+const notificationModel = require('../models/notification');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;

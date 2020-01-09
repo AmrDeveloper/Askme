@@ -10,7 +10,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class HomeDataSource(var userId : String,
+class HomeDataSource(
+                     val userId : String,
                      private val scope: CoroutineScope,
                      private val feedService: FeedService) :
     PageKeyedDataSource<Int, Feed>(){

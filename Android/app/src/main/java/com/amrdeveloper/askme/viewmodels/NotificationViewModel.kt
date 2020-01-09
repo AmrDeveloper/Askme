@@ -22,8 +22,8 @@ class NotificationViewModel @Inject constructor(private val notificationService:
     private var notificationPagedList: LiveData<PagedList<Notification>> = MutableLiveData()
     private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Notification>>
 
-    fun loadUserNotifications(id : String, token : String){
-        val dataSourceFactory = NotificationDataSourceFactory(id, token)
+    fun loadUserNotifications(userId : String, token : String){
+        val dataSourceFactory = NotificationDataSourceFactory(userId, token)
         liveDataSource = dataSourceFactory.getNotificationLiveDataSource()
 
         notificationPagedList = LivePagedListBuilder(dataSourceFactory, PagingConfig.getConfig()).build()
