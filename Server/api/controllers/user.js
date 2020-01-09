@@ -1,6 +1,7 @@
 const status = require('../../utilities/server_status');
 const userModel = require('../models/user');
 const fileSystem = require('fs');
+const dateUtils = require('../../utilities/date_utils');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -26,7 +27,7 @@ exports.registerNewUser = (req, res) => {
     const email = req.body.email.toLowerCase();
     const username = req.body.username;
     const password = req.body.password;
-    const currentDate = Date.now();
+    const currentDate = dateUtils.currentDate();
     const color = "ORANGE";
 
     const info = [

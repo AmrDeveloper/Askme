@@ -1,3 +1,3 @@
-module.exports.currentDate = function(){
+module.exports.currentDate = () => {
     return Date.now();
 }

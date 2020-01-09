@@ -1,6 +1,7 @@
 const status = require('../../utilities/server_status');
 const questionModel = require('../models/question');
 const notificationModel = require('../models/notification');
+const dateUtils = require('../../utilities/date_utils');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -65,7 +66,7 @@ exports.createNewQuestion = (req, res) => {
     const toUser = req.body.toUser;
     const fromUser = req.body.fromUser;
     const anonymous = req.body.anonymous;
-    const currentDate = Date.now();
+    const currentDate = dateUtils.currentDate();
 
     const args = [
         title,

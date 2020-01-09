@@ -1,5 +1,6 @@
 const status = require('../../utilities/server_status');
 const notificationModel = require('../models/notification');
+const dateUtils = require('../../utilities/date_utils');
 
 const QUERY_DEFAULT_OFFSET = 0;
 const QUERY_DEFAULT_COUNT = 25;
@@ -64,7 +65,7 @@ exports.createNewNotification = (req, rse) => {
     const toUser = req.body.toUser;
     const body = req.body.body;
     const action = req.body.action;
-    const currentDate = Date.now();
+    const currentDate = dateUtils.currentDate();
 
     if(action == null){
         action = "normal";

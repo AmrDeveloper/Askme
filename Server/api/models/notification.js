@@ -1,4 +1,5 @@
 const database = require('../../database/config');
+const dateUtils = require('../../utilities/date_utils');
 
 exports.getUserNotifications = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT 
@@ -66,7 +67,7 @@ exports.createFollowNotification = (toUser, fromUser) => new Promise((resolve, r
         "One user start following you",
         "follow",
         0,
-        Date.now(),
+        dateUtils.currentDate(),
         fromUser.toString()
     ];
     this.createNewNotification(args).then(state => resolve(state));
@@ -78,7 +79,7 @@ exports.createQuestionNotification = (toUser, questionId) => new Promise((resolv
         "You have new Question check it now",
         "question",
         0,
-        Date.now(),
+        dateUtils.currentDate(),
         questionId.toString() 
     ];
     this.createNewNotification(args).then(state => resolve(state));
@@ -90,7 +91,7 @@ exports.creatAnswerNotification = (toUser, answerId) => new Promise((resolve, re
         "Someone answer your question check it now",
         "answer",
         0,
-        Date.now(),
+        dateUtils.currentDate(),
         answerId.toString() 
     ];
     this.createNewNotification(args).then(state => resolve(state));
