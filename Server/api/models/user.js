@@ -59,7 +59,7 @@ exports.queryUsers = args => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
-                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes,
+                                   (SELECT COUNT(*) FROM reactions WHERE toUser = users.id) AS likes,
                                    (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM follows WHERE fromUser = ? and toUser = users.id) AS isFollow
                   FROM users LIMIT ? OFFSET ?`;
 
@@ -85,7 +85,7 @@ exports.getOneUser = args => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
-                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes,
+                                   (SELECT COUNT(*) FROM reactions WHERE toUser = users.id) AS likes,
                                    (SELECT IF(COUNT(*) >= 1, TRUE, FALSE) FROM follows WHERE fromUser = ? and toUser = users.id) AS isFollow
                   FROM users WHERE id = ? LIMIT 1`;
 
@@ -141,7 +141,7 @@ exports.searchUsers = (args) => new Promise((resolve, reject) => {
                                    (SELECT COUNT(*) FROM follows WHERE toUser = users.id) AS followers,
                                    (SELECT COUNT(*) FROM questions WHERE fromUser = users.id) AS questions,
                                    (SELECT COUNT(*) FROM answers WHERE fromUser = users.id) AS answers,
-                                   (SELECT COUNT(*) FROM reactions WHERE fromUser = users.id) AS likes
+                                   (SELECT COUNT(*) FROM reactions WHERE toUser = users.id) AS likes
                   FROM users WHERE
                                 name LIKE ? OR
                                 username LIKE ? OR
