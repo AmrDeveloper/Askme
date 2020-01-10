@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dimen5dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/statusEdit"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/dimen5dp"
+        android:hint="@string/new_status"
+        android:lines="1"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/changeButton"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dimen5dp"
+        android:text="@string/change"
+        android:background="@color/darkBlue"
+        android:textColor="@color/orange"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

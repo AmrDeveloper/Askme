@@ -34,7 +34,7 @@ router.put('/password', checkAuth, controller.updatePassword);
 
 router.put('/address', checkAuth, controller.updateAddress);
 
-router.put('/status', checkAuth, controller.updateStatus);
+router.put('/status', controller.updateStatus);
 
 router.put('/active', checkAuth, controller.updateActive);
 

@@ -29,4 +29,15 @@
     <string name="save">Save</string>
     <string name="share">Share</string>
     <string name="settings">Settings</string>
+
+    <!--Settings-->
+    <string name="change_status">Change Status</string>
+    <string name="change_color">Change Color</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_location">Change Location</string>
+    <string name="change">Change</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="new_status">New Status</string>
+    <string name="your_location">Your Location</string>
 </resources>

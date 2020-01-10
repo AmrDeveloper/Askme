@@ -1,13 +1,15 @@
 package com.amrdeveloper.askme.utils
 
 import android.content.Context
+import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.Theme
 
 object Session {
 
     fun login(context: Context, id : String, email: String, password: String, token: String): Boolean {
         val preferencesEditor =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
         preferencesEditor.putString(Constants.USER_ID, id)
         preferencesEditor.putString(Constants.EMAIL, email)
         preferencesEditor.putString(Constants.PASSWORD, password)
@@ -17,19 +19,19 @@ object Session {
 
     fun logout(context: Context): Boolean {
         val preferencesEditor =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
         return preferencesEditor.clear().commit()
     }
 
     fun getUserId(context: Context): String? {
         val preferences =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
         return preferences.getString(Constants.USER_ID, "")
     }
 
     fun getUserToken(context: Context): String? {
         val preferences =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
         return preferences.getString(Constants.LOGIN_TOKEN, "")
     }
 
@@ -39,47 +41,60 @@ object Session {
 
     fun getUserEmail(context: Context): String? {
         val preferences =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
         return preferences.getString(Constants.EMAIL, "")
+    }
+
+    fun getUserColor(context: Context) : Theme {
+        val preferences =
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+        return Theme.valueOf(preferences.getString(Constants.COLOR, Theme.ORANGE.name).str())
     }
 
     fun getUserPassword(context: Context): String? {
         val preferences =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
         return preferences.getString(Constants.PASSWORD, "")
     }
 
     fun updateUserId(context: Context, id: String): Boolean {
         val preferencesEditor =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
         preferencesEditor.putString(Constants.USER_ID, id)
         return preferencesEditor.commit()
     }
 
     fun updateToken(context: Context, token: String): Boolean {
         val preferencesEditor =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
         preferencesEditor.putString(Constants.LOGIN_TOKEN, token)
         return preferencesEditor.commit()
     }
 
     fun updateEmail(context: Context, email: String): Boolean {
         val preferencesEditor =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
         preferencesEditor.putString(Constants.EMAIL, email)
         return preferencesEditor.commit()
     }
 
     fun updatePassword(context: Context, password: String): Boolean {
         val preferencesEditor =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE).edit()
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
         preferencesEditor.putString(Constants.PASSWORD, password)
+        return preferencesEditor.commit()
+    }
+
+    fun updateColor(context: Context, theme : Theme) : Boolean{
+        val preferencesEditor =
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
+        preferencesEditor.putString(Constants.COLOR, theme.name)
         return preferencesEditor.commit()
     }
 
     fun isUserLogined(context: Context) : Boolean{
         val preferences =
-            context.getSharedPreferences(Constants.SESSION_PREFERNSE, Context.MODE_PRIVATE)
+            context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
         return preferences.getString(Constants.LOGIN_TOKEN,"").isNullOrBlank().not()
     }
 }

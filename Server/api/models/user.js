@@ -96,7 +96,7 @@ exports.getOneUser = args => new Promise((resolve, reject) => {
 });
 
 exports.getUserPassword = args => new Promise((resolve, reject) => {
-    const sqlQuery = 'SELECT password FROM users WHERE email = ?';
+    const sqlQuery = 'SELECT password FROM users WHERE id = ?';
     database.query(sqlQuery, args, (err, result) => {
         if (err) throw err;
         if (result.length == 1) {
@@ -253,7 +253,7 @@ exports.updateEmail = args => new Promise((resolve, reject) => {
 });
 
 exports.updatePassword = args => new Promise((resolve, reject) => {
-    const updateQuery = 'UPDATE users SET password = ? WHERE email = ?';
+    const updateQuery = 'UPDATE users SET password = ? WHERE id = ?';
 
     database.query(updateQuery, args, (err, result) => {
         if (err) throw err;
@@ -266,7 +266,7 @@ exports.updatePassword = args => new Promise((resolve, reject) => {
 });
 
 exports.updateAddress = args => new Promise((resolve, reject) => {
-    const updateQuery = 'UPDATE users SET address = ? WHERE email = ?';
+    const updateQuery = 'UPDATE users SET address = ? WHERE id = ?';
 
     database.query(updateQuery, args, (err, result) => {
         if (err) throw err;
@@ -279,7 +279,7 @@ exports.updateAddress = args => new Promise((resolve, reject) => {
 });
 
 exports.updateStatus = args => new Promise((resolve, reject) => {
-    const updateQuery = 'UPDATE status FROM users SET status = ? WHERE email = ?';
+    const updateQuery = 'UPDATE users SET status = ? WHERE id = ?';
 
     database.query(updateQuery, args, (err, result) => {
         if (err) throw err;
@@ -331,7 +331,7 @@ exports.updateUserWallpaper = args => new Promise((resolve, reject) => {
 });
 
 exports.updateUserColor = args => new Promise((resolve, reject) => {
-    const updateQuery = "UPDATE users SET color = ? WHERE email = ?";
+    const updateQuery = "UPDATE users SET color = ? WHERE id = ?";
     database.query(updateQuery, args, (err, result) => {
         if (err) throw err;
         if (result['affectedRows'] == 1) {

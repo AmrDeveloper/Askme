@@ -23,6 +23,7 @@
     <dimen name="dimen18sp">18sp</dimen>
     <dimen name="dimen20sp">20sp</dimen>
     <dimen name="dimen22sp">22sp</dimen>
+    <dimen name="dimen25sp">25sp</dimen>
     <dimen name="dimen30sp">30sp</dimen>
     <dimen name="dimen35sp">35sp</dimen>
 </resources>

@@ -113,16 +113,22 @@ class ProfileFragment : DaggerFragment(){
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.logout_menu, menu)
+        inflater.inflate(R.menu.profile_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.logoutMenu){
-            Session.logout(context!!)
-
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
+        when(item.itemId){
+            R.id.logoutMenu -> {
+                Session.logout(context!!)
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+                activity?.finish()
+            }
+            R.id.settingsMenu -> {
+                val intent = Intent(context, SettingsActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

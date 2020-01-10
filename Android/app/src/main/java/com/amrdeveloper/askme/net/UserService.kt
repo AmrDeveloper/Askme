@@ -1,5 +1,9 @@
 package com.amrdeveloper.askme.net
 
+import com.amrdeveloper.askme.models.ColorBody
+import com.amrdeveloper.askme.models.LocationBody
+import com.amrdeveloper.askme.models.PasswordBody
+import com.amrdeveloper.askme.models.StatusBody
 import com.amrdeveloper.askme.models.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -40,4 +44,28 @@ interface UserService {
         @Part("email") email: RequestBody,
         @Part wallpaper : MultipartBody.Part
     ): Response<String>
+
+    @PUT("users/status")
+    suspend fun updateUserStatus(
+        @Header("authorization") token : String,
+        @Body statusBody: StatusBody
+    ) : Response<String>
+
+    @PUT("users/address")
+    suspend fun updateUserAddress(
+        @Header("authorization") token : String,
+        @Body locationBody: LocationBody
+    ) : Response<String>
+
+    @PUT("users/color")
+    suspend fun updateUserColor(
+        @Header("authorization") token : String,
+        @Body colorBody: ColorBody
+    ) : Response<String>
+
+    @PUT("users/password")
+    suspend fun updateUserPassword(
+        @Header("authorization") token : String,
+        @Body passwordBody: PasswordBody
+    ) : Response<String>
 }

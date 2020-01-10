@@ -33,7 +33,6 @@ class HomeFragment : DaggerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -56,18 +55,6 @@ class HomeFragment : DaggerFragment() {
         })
 
         return mListLayoutBinding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.settings_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.settingsMenu){
-
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun setupUserList(){

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".views.SettingsActivity">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_askme"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dimen5dp"
+            android:onClick="changeStatusAction"
+            app:civ_border_color="@color/darkBlue"
+            app:civ_border_width="@dimen/dimen5dp" />
+
+        <TextView
+            android:id="@+id/changeStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen2dp"
+            android:background="@color/darkBlue"
+            android:gravity="center"
+            android:padding="@dimen/dimen5dp"
+            android:text="@string/change_status"
+            android:onClick="changeStatusAction"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/dimen25sp" />
+
+        <TextView
+            android:id="@+id/changeColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen2dp"
+            android:background="@color/darkBlue"
+            android:gravity="center"
+            android:padding="@dimen/dimen5dp"
+            android:text="@string/change_color"
+            android:textColor="@color/orange"
+            android:onClick="changeColorAction"
+            android:textSize="@dimen/dimen25sp" />
+
+        <TextView
+            android:id="@+id/changeLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen2dp"
+            android:background="@color/darkBlue"
+            android:gravity="center"
+            android:padding="@dimen/dimen5dp"
+            android:text="@string/change_location"
+            android:onClick="changeLocationAction"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/dimen25sp" />
+
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen2dp"
+            android:background="@color/darkBlue"
+            android:gravity="center"
+            android:padding="@dimen/dimen5dp"
+            android:onClick="changePasswordAction"
+            android:text="@string/change_password"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/dimen25sp" />
+    </LinearLayout>
+</layout>

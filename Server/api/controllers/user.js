@@ -288,10 +288,10 @@ exports.updateEmail = (req, res) => {
 };
 
 exports.updatePassword = (req, res) => {
-    const email = req.body.email.toLowerCase();
+    const id = req.body.id;
     const password = req.body.password;
 
-    userModel.getUserPassword(email).then(result => {
+    userModel.getUserPassword(id).then(result => {
         const state = result[0];
         if (state) {
             const oldPassword = result[1][0]['password'];
@@ -304,7 +304,7 @@ exports.updatePassword = (req, res) => {
                     userModel.hashPassword(password).then(hashedPassword => {
                         const args = [
                             hashedPassword,
-                            email
+                            id
                         ];
                         userModel.updatePassword(args).then(state => {
                             if (state) {
@@ -325,11 +325,11 @@ exports.updatePassword = (req, res) => {
 };
 
 exports.updateAddress = (req, res) => {
-    const email = req.body.email.toLowerCase();
+    const id = req.body.id;
     const address = req.body.address;
     const args = [
         address,
-        email
+        id
     ];
 
     userModel.updateAddress(args).then(state => {
@@ -346,12 +346,9 @@ exports.updateAddress = (req, res) => {
 }
 
 exports.updateStatus = (req, res) => {
-    const email = req.body.email.toLowerCase();
-    const status = req.body.status;
-    const args = [
-        status,
-        email
-    ];
+    const id = req.body.id;
+    const userStatus = req.body.status;
+    const args = [userStatus, id];
 
     userModel.updateStatus(args).then(state => {
         if (state) {
@@ -360,7 +357,7 @@ exports.updateStatus = (req, res) => {
             });
         } else {
             res.status(status.BAD_REQUEST).json({
-                message: "Can't update status"
+                message: "Invalid Information"
             });
         }
     });
@@ -461,8 +458,10 @@ exports.updateUserWallpaper = (req, res) => {
 };
 
 exports.updateUserColor = (req, res) => {
-    const email = req.body.email.toLowerCase();
-    userModel.updateUserColor(email).then(state => {
+    const id = req.body.id;
+    const color = req.body.color;
+    const args = [color, id];
+    userModel.updateUserColor(args).then(state => {
         if (state) {
             res.status(status.OK).json({
                 message: "Color changed",

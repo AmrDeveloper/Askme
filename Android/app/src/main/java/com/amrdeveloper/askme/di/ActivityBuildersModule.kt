@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.di
 
+import com.amrdeveloper.askme.views.SettingsActivity
 import com.amrdeveloper.askme.views.LoginActivity
 import com.amrdeveloper.askme.views.MainActivity
 import com.amrdeveloper.askme.views.RegisterActivity
@@ -36,4 +37,15 @@ abstract class ActivityBuildersModule {
         ]
     )
     abstract fun contributeMainActivity(): MainActivity
+
+
+    @MainScope
+    @ContributesAndroidInjector(
+        modules = [
+            MainFragmentBuildersModule::class,
+            MainViewModelModule::class,
+            MainModule::class
+        ]
+    )
+    abstract fun contributeSettingsActivity(): SettingsActivity
 }
