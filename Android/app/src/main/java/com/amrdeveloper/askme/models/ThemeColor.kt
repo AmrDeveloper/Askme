@@ -17,5 +17,8 @@ enum class ThemeColor {
     RED,
 
     @SerializedName("GREEN")
-    GREEN
+    GREEN,
+
+    @SerializedName("PURPLE")
+    PURPLE
 }

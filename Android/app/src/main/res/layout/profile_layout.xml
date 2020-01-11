@@ -42,7 +42,7 @@
                         android:layout_centerHorizontal="true"
                         android:contentDescription="@string/user_avatar"
                         android:src="@drawable/ic_profile"
-                        app:civ_border_color="@color/orange"
+                        app:civ_border_color="?attr/colorPrimary"
                         app:civ_border_width="@dimen/dimen3dp" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -55,7 +55,7 @@
                         android:src="@drawable/ic_camera"
                         app:civ_border_color="@color/darkBlue"
                         app:civ_border_width="@dimen/dimen1dp"
-                        app:civ_circle_background_color="@color/orange" />
+                        app:civ_circle_background_color="?attr/colorPrimary" />
                 </RelativeLayout>
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -67,8 +67,7 @@
                     android:src="@drawable/ic_mode_edit"
                     app:civ_border_color="@color/darkBlue"
                     app:civ_border_width="@dimen/dimen1dp"
-                    app:civ_circle_background_color="@color/orange" />
-
+                    app:civ_circle_background_color="?attr/colorPrimary" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/followCardView"
@@ -91,7 +90,7 @@
                             android:layout_height="match_parent"
                             android:contentDescription="@string/follow"
                             android:src="@drawable/ic_feed"
-                            app:civ_border_color="@color/orange"
+                            app:civ_border_color="?attr/colorPrimary"
                             app:civ_border_width="@dimen/dimen1dp"
                             app:civ_circle_background_color="@color/darkBlue" />
 
@@ -104,7 +103,7 @@
                             android:paddingStart="@dimen/dimen5dp"
                             android:paddingEnd="@dimen/dimen5dp"
                             android:text="@string/follow"
-                            android:textColor="@color/orange"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/dimen16sp"
                             android:textStyle="italic" />
                     </RelativeLayout>
@@ -118,12 +117,12 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="@dimen/dimen10dp"
                     android:layout_marginEnd="@dimen/dimen20dp"
-                    android:background="@color/orange"
+                    android:background="?attr/colorPrimary"
                     android:text="@string/ask_my_anything"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/dimen18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold|italic" />
             </RelativeLayout>
 
             <TextView
@@ -167,6 +166,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:padding="@dimen/dimen5dp"
+                        android:textStyle="bold"
                         tools:text="Time is limited don't waste it" />
 
                     <TextView

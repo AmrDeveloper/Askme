@@ -20,6 +20,13 @@
         <item name="cardViewStyle">@style/CardView</item>
     </style>
 
+    <style name="PurpleTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/darkBlue</item>
+        <item name="colorAccent">@color/green</item>
+        <item name="cardViewStyle">@style/CardView</item>
+    </style>
+
     <style name="BlueTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/blue</item>
         <item name="colorPrimaryDark">@color/darkBlue</item>

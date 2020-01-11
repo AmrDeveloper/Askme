@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/dimen5dp"
             android:onClick="changeStatusAction"
-            app:civ_border_color="@color/darkBlue"
+            app:civ_border_color="?attr/colorPrimary"
             app:civ_border_width="@dimen/dimen5dp" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:padding="@dimen/dimen5dp"
             android:text="@string/change_status"
             android:onClick="changeStatusAction"
-            android:textColor="@color/orange"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/dimen25sp" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:padding="@dimen/dimen5dp"
             android:text="@string/change_color"
-            android:textColor="@color/orange"
+            android:textColor="?attr/colorPrimary"
             android:onClick="changeColorAction"
             android:textSize="@dimen/dimen25sp" />
 
@@ -55,7 +55,7 @@
             android:padding="@dimen/dimen5dp"
             android:text="@string/change_location"
             android:onClick="changeLocationAction"
-            android:textColor="@color/orange"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/dimen25sp" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:padding="@dimen/dimen5dp"
             android:onClick="changePasswordAction"
             android:text="@string/change_password"
-            android:textColor="@color/orange"
+            android:textColor="?attr/colorPrimary"
             android:textSize="@dimen/dimen25sp" />
     </LinearLayout>
 </layout>

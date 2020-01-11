@@ -12,6 +12,7 @@ object ThemeFactory {
             ThemeColor.BLUE -> R.style.BlueTheme
             ThemeColor.RED -> R.style.RedTheme
             ThemeColor.GREEN -> R.style.GreenTheme
+            ThemeColor.PURPLE -> R.style.PurpleTheme
         }
     }
 }

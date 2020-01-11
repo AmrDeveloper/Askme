@@ -19,7 +19,7 @@
             android:layout_height="50dp"
             android:src="@drawable/ic_notifications_active"
             android:layout_centerVertical="true"
-            app:civ_border_color="@color/orange"
+            app:civ_border_color="?attr/colorPrimary"
             app:civ_border_width="2dp" />
 
         <TextView
