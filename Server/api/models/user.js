@@ -33,12 +33,14 @@ exports.login = (email, password) => new Promise((resolve, reject) => {
 exports.register = user => new Promise((resolve, reject) => {
     const query = "INSERT INTO users(name, email, username , password, joinDate, color) VALUES (?, ? , ? , ?, ?, ?)";
     database.query(query, user, (err, result) => {
-        if (err) throw err;
-        if (result['affectedRows'] == 1) {
-            resolve(true);
-        }
-        else {
-            resolve(false);
+        if (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+                resolve(false);
+            } else {
+                throw err;
+            }
+        }else{
+            resolve(result['affectedRows'] == 1);
         }
     });
 });

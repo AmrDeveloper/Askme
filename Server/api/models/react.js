@@ -17,9 +17,16 @@ exports.createNewReaction = args => new Promise((resolve, reject) => {
     const sqlQuery = 'INSERT INTO reactions (fromUser, toUser, answerId, react) VALUES (?, ?, ?, ?)';
 
     database.query(sqlQuery, args, (err, result) => {
-        if (err) throw err;
-        const isValidRequest = result['affectedRows'] == 1;
-        resolve(isValidRequest);
+        if (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+                resolve(false);
+            } else {
+                throw err;
+            }
+        } else {
+            const isValidRequest = result['affectedRows'] == 1;
+            resolve(isValidRequest);
+        }
     });
 });
 

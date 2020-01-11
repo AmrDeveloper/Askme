@@ -40,9 +40,16 @@ exports.createNewAnswer = args => new Promise((resolve, reject) => {
     const query = 'INSERT INTO answers(body, questionId, toUser, fromUser, answerdDate) VALUES (?, ?, ?, ?, ?)';
 
     database.query(query, args, (err, result) => {
-        if (err) throw err;
-        const isValidRequest = result['affectedRows'] == 1;
-        resolve([isValidRequest, result.insertId]);
+        if (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+                resolve([false]);
+            } else {
+                throw err;
+            }
+        } else {
+            const isValidRequest = result['affectedRows'] == 1;
+            resolve([isValidRequest, result.insertId]);
+        }
     });
 });
 

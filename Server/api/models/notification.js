@@ -55,9 +55,16 @@ exports.createNewNotification = args => new Promise((resolve, reject) => {
     const query = 'INSERT INTO notifications(toUser, body, action, opened, createdDate, data) VALUES(?, ?, ?, ?, ?, ?)';
 
     database.query(query, args, (err, result) => {
-        if (err) throw err;
-        const isValidCreation = (result['affectedRows'] == 1);
-        resolve(isValidCreation);
+        if (err) {
+            if (err.code === 'ER_DUP_ENTRY') {
+                resolve(false);
+            } else {
+                throw err;
+            }
+        } else {
+            const isValidCreation = (result['affectedRows'] == 1);
+            resolve(isValidCreation);
+        }
     });
 });
 
@@ -80,7 +87,7 @@ exports.createQuestionNotification = (toUser, questionId) => new Promise((resolv
         "question",
         0,
         dateUtils.currentDate(),
-        questionId.toString() 
+        questionId.toString()
     ];
     this.createNewNotification(args).then(state => resolve(state));
 });
@@ -92,7 +99,7 @@ exports.creatAnswerNotification = (toUser, answerId) => new Promise((resolve, re
         "answer",
         0,
         dateUtils.currentDate(),
-        answerId.toString() 
+        answerId.toString()
     ];
     this.createNewNotification(args).then(state => resolve(state));
 });

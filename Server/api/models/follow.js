@@ -57,12 +57,13 @@ exports.followUser = args => new Promise((resolve, reject) => {
         if (err) {
             if (err.code == 'ER_DUP_ENTRY' || err.errno == 1062) {
                 resolve(false);
-                return;
+            } else {
+                throw err;
             }
-            throw err;
+        } else {
+            const isValidRequest = result['affectedRows'] == 1;
+            resolve(isValidRequest);
         }
-        const isValidRequest = result['affectedRows'] == 1;
-        resolve(isValidRequest);
     });
 });
 
