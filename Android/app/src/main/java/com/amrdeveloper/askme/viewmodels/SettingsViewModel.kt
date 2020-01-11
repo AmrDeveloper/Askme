@@ -21,7 +21,7 @@ class SettingsViewModel @Inject constructor(private val userService: UserService
 
     private val colorLiveData : MutableLiveData<ResponseData<ThemeColor>> = MutableLiveData()
 
-    private val passwordLiveData : MutableLiveData<ResponseType> = MutableLiveData()
+    private val passwordLiveData : MutableLiveData<ResponseData<String>> = MutableLiveData()
 
     fun changeUserStatus(token : String, userId : String, status : String){
         viewModelScope.launch(Dispatchers.IO){
@@ -83,12 +83,12 @@ class SettingsViewModel @Inject constructor(private val userService: UserService
                val response = userService.updateUserPassword(token, passwordBody)
                Log.d("UPDATE","Message ${response.message()}")
                when(response.code()){
-                   200 -> statusLiveData.postValue(ResponseType.SUCCESS)
-                   403 -> statusLiveData.postValue(ResponseType.NO_AUTH)
-                   else -> statusLiveData.postValue(ResponseType.FAILURE)
+                   200 -> passwordLiveData.postValue(ResponseData(ResponseType.SUCCESS, password))
+                   403 -> passwordLiveData.postValue(ResponseData(ResponseType.NO_AUTH, ""))
+                   else -> passwordLiveData.postValue(ResponseData(ResponseType.FAILURE, ""))
                }
            }catch (exception : Exception){
-               statusLiveData.postValue(ResponseType.FAILURE)
+               passwordLiveData.postValue(ResponseData(ResponseType.FAILURE, ""))
            }
        }
     }

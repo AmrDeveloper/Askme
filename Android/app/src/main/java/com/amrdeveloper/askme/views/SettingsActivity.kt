@@ -74,9 +74,9 @@ class SettingsActivity : DaggerAppCompatActivity() , SharedPreferences.OnSharedP
         })
 
         mSettingsViewModel.getPasswordLiveData().observe(this, Observer {
-            when(it){
+            when(it.responseType){
                 ResponseType.SUCCESS -> {
-                    //TODO : Store password in Session
+                    Session.updatePassword(this, it.data)
                     Toast.makeText(this, "Color Password", Toast.LENGTH_SHORT).show()
                 }
                 ResponseType.FAILURE -> {
