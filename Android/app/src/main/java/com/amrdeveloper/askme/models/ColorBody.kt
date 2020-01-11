@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class ColorBody(
 
     @SerializedName("id")
-    val id : String
+    val id: String,
 
-    //TODO : Will add color later
+    @SerializedName("color")
+    val color: String
 )

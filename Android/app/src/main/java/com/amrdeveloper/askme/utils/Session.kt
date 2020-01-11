@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.utils
 import android.content.Context
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Constants
-import com.amrdeveloper.askme.models.Theme
+import com.amrdeveloper.askme.models.ThemeColor
 
 object Session {
 
@@ -45,10 +45,10 @@ object Session {
         return preferences.getString(Constants.EMAIL, "")
     }
 
-    fun getUserColor(context: Context) : Theme {
+    fun getUserColor(context: Context) : ThemeColor {
         val preferences =
             context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
-        return Theme.valueOf(preferences.getString(Constants.COLOR, Theme.ORANGE.name).str())
+        return ThemeColor.valueOf(preferences.getString(Constants.COLOR, ThemeColor.ORANGE.name).str())
     }
 
     fun getUserPassword(context: Context): String? {
@@ -85,10 +85,10 @@ object Session {
         return preferencesEditor.commit()
     }
 
-    fun updateColor(context: Context, theme : Theme) : Boolean{
+    fun updateColor(context: Context, themeColor : ThemeColor) : Boolean{
         val preferencesEditor =
             context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
-        preferencesEditor.putString(Constants.COLOR, theme.name)
+        preferencesEditor.putString(Constants.COLOR, themeColor.name)
         return preferencesEditor.commit()
     }
 

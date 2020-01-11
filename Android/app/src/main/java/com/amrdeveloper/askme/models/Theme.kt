@@ -1,18 +1,11 @@
 package com.amrdeveloper.askme.models
 
-import com.google.gson.annotations.SerializedName
+import androidx.annotation.ColorRes
+import androidx.annotation.StyleRes
+import com.amrdeveloper.askme.models.ThemeColor
 
-enum class Theme {
-
-    @SerializedName("ORANGE")
-    ORANGE,
-
-    @SerializedName("BLUE")
-    BLUE,
-
-    @SerializedName("BLACK")
-    BLACK,
-
-    @SerializedName("BLACK")
-    REG
-}
+class Theme(
+    @ColorRes val colorValue : Int,
+    @StyleRes val colorStyle : Int,
+    val themeColor : ThemeColor
+)

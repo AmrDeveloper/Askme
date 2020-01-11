@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.hdodenhof.circleimageview.CircleImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/colorImageView"
+    android:layout_width="@dimen/dimen50dp"
+    android:layout_height="@dimen/dimen75dp"
+    android:layout_margin="@dimen/dimen75dp"
+    android:padding="@dimen/dimen5dp"
+    android:src="@color/darkBlue"
+    app:civ_border_color="@color/orange"
+    app:civ_border_width="@dimen/dimen1dp"
+    app:civ_circle_background_color="@color/darkBlue" />

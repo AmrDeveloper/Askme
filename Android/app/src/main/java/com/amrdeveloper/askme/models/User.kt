@@ -50,7 +50,7 @@ data class User(
     val reactionsNum: Int,
 
     @SerializedName("color")
-    val userColor : Theme,
+    val userColor : ThemeColor,
 
     @SerializedName("isFollow")
     val isUserFollow : Follow

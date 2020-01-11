@@ -1,33 +1,39 @@
 package com.amrdeveloper.askme.views
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.amrdeveloper.askme.adapter.ColorGridAdapter
 import com.amrdeveloper.askme.R
+import com.amrdeveloper.askme.utils.ThemeManager
 import com.amrdeveloper.askme.viewmodels.SettingsViewModel
 import com.amrdeveloper.askme.databinding.ActivitySettingsBinding
 import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.net.ResponseType
+import com.amrdeveloper.askme.models.themeList
 import com.amrdeveloper.askme.utils.Session
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
-class SettingsActivity : DaggerAppCompatActivity() {
+class SettingsActivity : DaggerAppCompatActivity() , SharedPreferences.OnSharedPreferenceChangeListener{
 
     private lateinit var mSettingsViewModel: SettingsViewModel
     @Inject lateinit var providerFactory: ViewModelProviderFactory
     private lateinit var mSettingsActivityBinding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeManager.setUserTheme(this)
         super.onCreate(savedInstanceState)
+
         mSettingsActivityBinding = DataBindingUtil.setContentView(this,
             R.layout.activity_settings
         )
@@ -56,9 +62,9 @@ class SettingsActivity : DaggerAppCompatActivity() {
         })
 
         mSettingsViewModel.getColorLiveData().observe(this, Observer {
-            when(it){
+            when(it.responseType){
                 ResponseType.SUCCESS -> {
-                    //TODO : Store password in Session
+                    Session.updateColor(this, it.data)
                     Toast.makeText(this, "Color Changed", Toast.LENGTH_SHORT).show()
                 }
                 ResponseType.FAILURE -> {
@@ -136,7 +142,31 @@ class SettingsActivity : DaggerAppCompatActivity() {
     }
 
     fun changeColorAction(v: View) {
-        //TODO : need to make custom dialog with color circles :D and adapter
+        val dialogView = layoutInflater.inflate(R.layout.change_color_dialog, null)
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setTitle("Change App Theme")
+        dialogBuilder.setCancelable(true)
+        dialogBuilder.setView(dialogView)
+        val alertDialog = dialogBuilder.create()
+
+        val colorGridView : GridView = dialogView.findViewById(R.id.colorGridView)
+
+        val colorGridAdapter =
+            ColorGridAdapter(this, themeList)
+        colorGridView.adapter = colorGridAdapter
+
+        colorGridView.setOnItemClickListener {_, _, position, _ ->
+            val themeName = colorGridAdapter.getItem(position)!!.themeColor
+
+            val token = Session.getHeaderToken(this).str()
+            val userId = Session.getUserId(this).str()
+
+            mSettingsViewModel.changeUserColor(token, userId, themeName)
+
+            alertDialog.cancel()
+        }
+
+        dialogBuilder.show()
     }
 
     fun changePasswordAction(v: View) {
@@ -172,5 +202,24 @@ class SettingsActivity : DaggerAppCompatActivity() {
         }
 
         dialogBuilder.show()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+            .unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(p0: SharedPreferences?, key: String?) {
+        if (key == Constants.COLOR) {
+            intent.action = "INTENT_CHANGE_THEME"
+            recreate()
+        }
     }
 }

@@ -1,28 +1,32 @@
 package com.amrdeveloper.askme.views
 
-import android.content.Intent
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.databinding.DataBindingUtil
-import com.amrdeveloper.askme.*
+import com.amrdeveloper.askme.R
+import com.amrdeveloper.askme.utils.ThemeManager
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
-
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
 
     private var mActionBar: ActionBar? = null
     private lateinit var mMainActivity: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ThemeManager.setUserTheme(this)
         super.onCreate(savedInstanceState)
+
         mMainActivity = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         mActionBar = supportActionBar
@@ -80,4 +84,23 @@ class MainActivity : DaggerAppCompatActivity() {
             }
             return@OnNavigationItemSelectedListener false
         }
+
+    override fun onStart() {
+        super.onStart()
+        getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+            .registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+            .unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(p0: SharedPreferences?, key: String?) {
+        if (key == Constants.COLOR) {
+            intent.action = "INTENT_CHANGE_THEME"
+            recreate()
+        }
+    }
 }

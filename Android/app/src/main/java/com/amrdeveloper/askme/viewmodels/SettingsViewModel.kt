@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.amrdeveloper.askme.models.ColorBody
-import com.amrdeveloper.askme.models.LocationBody
-import com.amrdeveloper.askme.models.PasswordBody
-import com.amrdeveloper.askme.models.StatusBody
+import com.amrdeveloper.askme.models.*
+import com.amrdeveloper.askme.net.ResponseData
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.net.UserService
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +19,7 @@ class SettingsViewModel @Inject constructor(private val userService: UserService
 
     private val locationLiveData : MutableLiveData<ResponseType> = MutableLiveData()
 
-    private val colorLiveData : MutableLiveData<ResponseType> = MutableLiveData()
+    private val colorLiveData : MutableLiveData<ResponseData<ThemeColor>> = MutableLiveData()
 
     private val passwordLiveData : MutableLiveData<ResponseType> = MutableLiveData()
 
@@ -60,20 +58,19 @@ class SettingsViewModel @Inject constructor(private val userService: UserService
         }
     }
 
-    fun changeUserColor(token : String, userId : String, color : String){
+    fun changeUserColor(token : String, userId : String, color : ThemeColor){
         viewModelScope.launch(Dispatchers.IO){
             try{
-                //TODO : will add color later
-                val colorBody = ColorBody(userId)
+                val colorBody = ColorBody(userId, color.name)
                 val response = userService.updateUserColor(token, colorBody)
                 Log.d("UPDATE","Message ${response.message()}")
                 when(response.code()){
-                    200 -> passwordLiveData.postValue(ResponseType.SUCCESS)
-                    403 -> passwordLiveData.postValue(ResponseType.NO_AUTH)
-                    else -> passwordLiveData.postValue(ResponseType.FAILURE)
+                    200 -> colorLiveData.postValue(ResponseData(ResponseType.SUCCESS, color))
+                    403 -> colorLiveData.postValue(ResponseData(ResponseType.NO_AUTH, ThemeColor.ORANGE))
+                    else -> colorLiveData.postValue(ResponseData(ResponseType.FAILURE, ThemeColor.ORANGE))
                 }
             }catch (exception : Exception){
-                passwordLiveData.postValue(ResponseType.FAILURE)
+                colorLiveData.postValue(ResponseData(ResponseType.FAILURE, ThemeColor.ORANGE))
             }
         }
     }
