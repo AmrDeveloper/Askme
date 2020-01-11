@@ -29,6 +29,7 @@
     <string name="save">Save</string>
     <string name="share">Share</string>
     <string name="settings">Settings</string>
+    <string name="fullscreen">fullscreen</string>
 
     <!--Settings-->
     <string name="change_status">Change Status</string>
