@@ -24,6 +24,8 @@ exports.getUserFeed = (req, res) => {
         userId = 0;
     }
 
+    offset = offset * count;
+
     const args = [userId, id, parseInt(count), parseInt(offset)]
     feedModel.getUserFeed(args).then(result => {
         console.log(`Feed ${id}  : ${result.length}`)
@@ -43,6 +45,8 @@ exports.getHomeFeed = (req, res) => {
     if (count == null || count > QUERY_MAX_COUNT) {
         count = QUERY_DEFAULT_COUNT;
     }
+
+    offset = offset * count;
 
     const args = [id, id, parseInt(count), parseInt(offset)]
     feedModel.getHomeFeed(args).then(result => {

@@ -16,6 +16,8 @@ exports.getPostReactions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
+    offset = offset * count;
+
     const answerId = req.body.answerId;
 
     const args = [answerId, parseInt(count), parseInt(offset)];

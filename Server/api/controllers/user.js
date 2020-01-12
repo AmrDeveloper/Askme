@@ -84,6 +84,8 @@ exports.getAllUsers = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
+    offset = offset * count;
+
     const args = [userId, parseInt(count), parseInt(offset)];
 
     userModel.queryUsers(args).then(result => {
@@ -120,6 +122,8 @@ exports.searchUsers = (req, res) => {
     if (count == null || count > QUERY_MAX_COUNT) {
         count = QUERY_DEFAULT_COUNT;
     }
+
+    offset = offset * count;
 
     const searchQuery = '%' + keyword + '%';
 

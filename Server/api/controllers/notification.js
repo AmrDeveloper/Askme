@@ -18,6 +18,8 @@ exports.getAllNotifications = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
+    offset = offset * count;
+
     const args = [id, parseInt(count), parseInt(offset)];
 
     notificationModel.getUserNotifications(args)
@@ -53,6 +55,8 @@ exports.getUnReadedNotification = (req, res) => {
     if (count == null || count > QUERY_MAX_COUNT) {
         count = QUERY_DEFAULT_COUNT;
     }
+
+    offset = offset * count;
 
     const args = [id, parseInt(count), parseInt(offset)];
 

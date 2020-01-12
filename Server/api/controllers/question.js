@@ -20,6 +20,8 @@ exports.getUserQuestions = (req, res) => {
         count = QUERY_DEFAULT_COUNT;
     }
 
+    offset = offset * count;
+    
     const args = [userId, parseInt(count), parseInt(offset)];
 
     questionModel.getUserQuestions(args).then(result => {

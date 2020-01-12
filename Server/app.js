@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
-    const status = err.status || 500;
+    const status = error.status || 500;
     res.status(status);
     res.json({
         error: {

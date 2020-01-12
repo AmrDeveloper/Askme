@@ -21,6 +21,7 @@ import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.models.themeList
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.Validation
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 
@@ -186,7 +187,7 @@ class SettingsActivity : DaggerAppCompatActivity() , SharedPreferences.OnSharedP
             val oldPasswordTxt = oldPassword.text.str()
             if (Session.getUserPassword(this) == oldPasswordTxt) {
                 val newPasswordTxt = newPassword.text.str()
-                if(oldPasswordTxt == newPasswordTxt){
+                if(oldPasswordTxt == newPasswordTxt || Validation.isValidPassword(newPasswordTxt).not()){
                     Toast.makeText(applicationContext, "New password is equal old password", Toast.LENGTH_SHORT)
                         .show()
                 }else{
