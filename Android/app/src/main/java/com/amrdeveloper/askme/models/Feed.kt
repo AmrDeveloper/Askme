@@ -36,6 +36,9 @@ data class Feed(
     @SerializedName("toUserAvatar")
     var toUserAvatar : String,
 
+    @SerializedName("anonymous")
+    val anonymously: Anonymously,
+
     @SerializedName("reactions")
     var reactionsNum : Int,
 

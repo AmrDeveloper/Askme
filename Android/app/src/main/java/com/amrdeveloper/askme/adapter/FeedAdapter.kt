@@ -1,6 +1,5 @@
 package com.amrdeveloper.askme.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.Feed
 import com.amrdeveloper.askme.models.Reaction
 import com.amrdeveloper.askme.extensions.*
+import com.amrdeveloper.askme.models.Anonymously
 import kotlinx.android.synthetic.main.feed_list_item.view.*
 
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
@@ -42,8 +42,10 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         currentFeed.notNull {
             holder.bingFeed(currentFeed!!)
             if(::onUsernameClick.isInitialized){
-                holder.itemView.questionFrom.setOnClickListener {
-                    onUsernameClick.onUserClick(currentFeed.toUserId.str())
+                if(currentFeed.anonymously == Anonymously.NOT_ANONYMOSLY) {
+                    holder.itemView.questionFrom.setOnClickListener {
+                        onUsernameClick.onUserClick(currentFeed.toUserId.str())
+                    }
                 }
 
                 holder.itemView.answerFrom.setOnClickListener {
@@ -91,12 +93,18 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         fun bingFeed(feed: Feed) {
             itemView.questionTxt.text = feed.questionBody
             itemView.answerTxt.text = feed.answerBody
-            itemView.questionFrom.text = feed.toUserName
+
+            if(feed.anonymously == Anonymously.NOT_ANONYMOSLY) {
+                itemView.questionFrom.text = feed.toUserName
+                itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
+            }else{
+                itemView.questionFrom.text = "Anonymous user"
+            }
+
             itemView.answerFrom.text = feed.fromUserName
             itemView.answerDateTxt.setFormattedDateForPost(feed.answerDate)
             itemView.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
 
-            itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
             itemView.answerUserAvatar.loadImage(feed.fromUserAvatar)
 
             updateReactedIcon(feed.isReacted)
