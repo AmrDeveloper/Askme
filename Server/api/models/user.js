@@ -111,8 +111,8 @@ exports.getUserPassword = args => new Promise((resolve, reject) => {
 });
 
 exports.getUserAvatar = args => new Promise((resolve, reject) => {
-    const updateQuery = "SELECT avatar FROM users WHERE email = ?";
-    database.query(updateQuery, args, (err, result) => {
+    const selectQuery = "SELECT avatar FROM users WHERE email = ?";
+    database.query(selectQuery, args, (err, result) => {
         if (err) throw err;
         const oldAvatar = result[0]['avatar'];
         resolve(oldAvatar);
@@ -120,16 +120,17 @@ exports.getUserAvatar = args => new Promise((resolve, reject) => {
 });
 
 exports.getUserWallpaper = args => new Promise((resolve, reject) => {
-    const updateQuery = "SELECT wallpaper FROM users WHERE email = ?";
-    database.query(updateQuery, args, (err, result) => {
+    const selectQuery = "SELECT wallpaper FROM users WHERE email = ?";
+    database.query(selectQuery, args, (err, result) => {
         if (err) throw err;
-        const oldAvatar = result[0]['wallpaper'];
-        resolve(oldAvatar);
+        const oldWallpaper = result[0]['wallpaper'];
+        resolve(oldWallpaper);
     });
 });
 
 exports.searchUsers = (args) => new Promise((resolve, reject) => {
-    const query = `SELECT DISTINCT users.name, 
+    const query = `SELECT DISTINCT users.id,
+                                   users.name, 
                                    users.username,
                                    users.email,
                                    users.avatar,

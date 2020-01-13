@@ -63,6 +63,7 @@ fun TextView.setPluralsText(id : Int, value : Int) {
 
 fun ImageView.loadImage(imageUrl: String?) {
     if(imageUrl.isNullOrEmpty()){
+        Picasso.get().load(R.drawable.ic_profile).error(R.drawable.ic_profile).into(this)
         return
     }
     val imagePath = API_SERVER_URL + imageUrl.replace("\\", "/")

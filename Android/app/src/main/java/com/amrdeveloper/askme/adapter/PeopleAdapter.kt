@@ -1,5 +1,6 @@
 package com.amrdeveloper.askme.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,7 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
             holder.bingUser(user!!)
             holder.itemView.setOnClickListener {
                 if(::mOnclickListener.isInitialized){
+                    Log.d("Adapter","Avatar : ${user.avatarUrl}")
                     mOnclickListener.onClick(user)
                 }
             }
@@ -49,7 +51,6 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
             itemView.reactionsTxt.text = user.reactionsNum.toString()
 
             itemView.userAvatar.loadImage(user.avatarUrl)
-            //TODO : Change Border Color depend on user fav color
         }
     }
 }

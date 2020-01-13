@@ -15,8 +15,8 @@ const wallpaperStorage = multer.diskStorage({
         callback(null, 'storage/wallpaper/');
     },
     filename: (request, file, callback) => {
-        const avatarName = Date.now() + file.originalname;
-        callback(null, avatarName);
+        const wallpaperName = Date.now() + file.originalname;
+        callback(null, wallpaperName);
     }
 });
 

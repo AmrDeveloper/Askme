@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -85,7 +86,7 @@ class PeopleFragment : DaggerFragment() {
     private val userSearchViewListener = object : SearchView.OnQueryTextListener{
         override fun onQueryTextChange(newText: String?): Boolean{
             if(newText!!.isEmpty()){
-                mPeopleViewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
+                if(view != null) mPeopleViewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
                 mUserAdapter.submitList(mPeopleViewModel.getUserPagedList().value)
             }
             return true
