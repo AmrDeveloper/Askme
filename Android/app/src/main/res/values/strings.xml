@@ -41,4 +41,5 @@
     <string name="new_password">New Password</string>
     <string name="new_status">New Status</string>
     <string name="your_location">Your Location</string>
+    <string name="anonymous_user">Anonymous user</string>
 </resources>

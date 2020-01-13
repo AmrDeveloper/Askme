@@ -17,6 +17,7 @@ import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
 import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.models.Anonymously
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.viewmodels.AnswerQuestionViewModel
 import dagger.android.support.DaggerFragment
@@ -85,8 +86,13 @@ class AnswerQuestionFragment : DaggerFragment() {
 
     private fun bindQuestionInformation(question : Question){
         mAnswerQuestionLayoutBinding.questionText.text = question.title
-        mAnswerQuestionLayoutBinding.userUsername.text = question.fromUserName
-        mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar)
+
+        if(question.anonymously == Anonymously.ANONYMOSLY){
+            mAnswerQuestionLayoutBinding.userUsername.text = getString(R.string.anonymous_user)
+        }else{
+            mAnswerQuestionLayoutBinding.userUsername.text = question.fromUserName
+            mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar)
+        }
     }
 
     private fun updateQuestionLength(){
