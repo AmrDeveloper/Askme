@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.viewmodels
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.User
-import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
+import com.amrdeveloper.askme.net.DEFAULT_QUERY_PAGE_SIZE
 import com.amrdeveloper.askme.net.UserService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +20,7 @@ class UserDataSource(private val scope: CoroutineScope,
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersQuery()
-                if(users.size == DEFAULT_QUERY_COUNT){
+                if(users.size == DEFAULT_QUERY_PAGE_SIZE){
                     callback.onResult(users, null, 1)
                 }else{
                     callback.onResult(users, null, 0)
@@ -34,7 +34,7 @@ class UserDataSource(private val scope: CoroutineScope,
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
-                val users = userService.getUsersQuery(offset = params.key)
+                val users = userService.getUsersQuery(page = params.key)
                 if(params.key > 1){
                     callback.onResult(users, params.key - 1)
                 }else{
@@ -49,8 +49,8 @@ class UserDataSource(private val scope: CoroutineScope,
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
-                val users = userService.getUsersQuery(offset = params.key)
-                if(users.size == DEFAULT_QUERY_COUNT){
+                val users = userService.getUsersQuery(page = params.key)
+                if(users.size == DEFAULT_QUERY_PAGE_SIZE){
                     callback.onResult(users, params.key + 1)
                 }else{
                     callback.onResult(users, null)

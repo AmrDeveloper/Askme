@@ -10,8 +10,8 @@ interface NotificationService {
     suspend fun getUserNotifications(
         @Header("authorization") token: String,
         @Query("id") userId: String,
-        @Query("count") count: Int = DEFAULT_QUERY_COUNT,
-        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
+        @Query("page") page: Int = DEFAULT_QUERY_PAGE_NUM,
+        @Query("page_size") page_size : Int = DEFAULT_QUERY_PAGE_SIZE
     ): List<Notification>
 
     @PUT("notifications/open/{id}")

@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.viewmodels
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.Notification
-import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
+import com.amrdeveloper.askme.net.DEFAULT_QUERY_PAGE_SIZE
 import com.amrdeveloper.askme.net.NotificationService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class NotificationDataSource(private var userId: String,
         scope.launch(Dispatchers.IO){
             try {
                 val notifications = notificationService.getUserNotifications(userId = userId, token = "auth $token")
-                if (notifications.size == DEFAULT_QUERY_COUNT) {
+                if (notifications.size == DEFAULT_QUERY_PAGE_SIZE) {
                     callback.onResult(notifications, null, 1)
                 } else {
                     callback.onResult(notifications, null, 0)
@@ -52,7 +52,7 @@ class NotificationDataSource(private var userId: String,
         scope.launch(Dispatchers.IO){
             try{
                 val notifications = notificationService.getUserNotifications(userId = userId, token = "auth $token")
-                if (notifications.size == DEFAULT_QUERY_COUNT) {
+                if (notifications.size == DEFAULT_QUERY_PAGE_SIZE) {
                     callback.onResult(notifications, params.key + 1)
                 } else {
                     callback.onResult(notifications, null)

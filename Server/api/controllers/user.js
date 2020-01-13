@@ -3,8 +3,8 @@ const userModel = require('../models/user');
 const fileSystem = require('fs');
 const dateUtils = require('../../utilities/date_utils');
 
-const QUERY_DEFAULT_OFFSET = 0;
-const QUERY_DEFAULT_COUNT = 25;
+const QUERY_DEFAULT_PAGE = 0;
+const QUERY_DEFAULT_PAGE_SIZE = 25;
 const QUERY_MAX_COUNT = 50;
 
 exports.userLogin = (req, res) => {
@@ -69,24 +69,24 @@ exports.registerNewUser = (req, res) => {
 
 exports.getAllUsers = (req, res) => {
     var userId = req.query.userId;
-    var offset = req.query.offset;
-    var count = req.query.count;
+    var page = req.query.page;
+    var page_size = req.query.page_size;
 
     if (userId == null) {
         userId = 0;
     }
 
-    if (offset == null) {
-        offset = QUERY_DEFAULT_OFFSET;
+    if (page == null) {
+        page = QUERY_DEFAULT_PAGE;
     }
 
-    if (count == null || count > QUERY_MAX_COUNT) {
-        count = QUERY_DEFAULT_COUNT;
+    if (page_size == null || page_size > QUERY_MAX_COUNT) {
+        page_size = QUERY_DEFAULT_PAGE_SIZE;
     }
 
-    offset = offset * count;
+    const offset = page * page_size;
 
-    const args = [userId, parseInt(count), parseInt(offset)];
+    const args = [userId, parseInt(page_size), parseInt(offset)];
 
     userModel.queryUsers(args).then(result => {
         res.status(status.OK).json(result)
@@ -108,26 +108,26 @@ exports.getOneUser = (req, res) => {
 
 exports.searchUsers = (req, res) => {
     const keyword = req.query.q.toLowerCase();
-    var offset = req.query.offset;
-    var count = req.query.count;
+    var page = req.query.page;
+    var page_size = req.query.page_size;
 
     if(keyword == null || keyword.length < 3){
         res.status(status.BAD_REQUEST).send("Query must be more than 3 chars")
     }
 
-    if (offset == null) {
-        offset = QUERY_DEFAULT_OFFSET;
+    if (page == null) {
+        page = QUERY_DEFAULT_PAGE;
     }
 
-    if (count == null || count > QUERY_MAX_COUNT) {
-        count = QUERY_DEFAULT_COUNT;
+    if (page_size == null || page_size > QUERY_MAX_COUNT) {
+        page_size = QUERY_DEFAULT_PAGE_SIZE;
     }
 
-    offset = offset * count;
+    const offset = page * page_size;
 
     const searchQuery = '%' + keyword + '%';
 
-    const args = [searchQuery, searchQuery, searchQuery, parseInt(count), parseInt(offset)];
+    const args = [searchQuery, searchQuery, searchQuery, parseInt(page_size), parseInt(offset)];
 
     userModel.searchUsers(args).then(result => {
         res.status(status.OK).json(result)

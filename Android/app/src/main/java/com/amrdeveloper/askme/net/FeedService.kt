@@ -10,14 +10,14 @@ interface FeedService {
     suspend fun getUserFeed(
         @Query("id") id: String,
         @Query("userId") userId : String = "",
-        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
-        @Query("count") count: Int = DEFAULT_QUERY_COUNT
+        @Query("page") page: Int = DEFAULT_QUERY_PAGE_NUM,
+        @Query("page_size") page_size: Int = DEFAULT_QUERY_PAGE_SIZE
     ): List<Feed>
 
     @GET("feeds/home")
     suspend fun getHomeFeed(
         @Query("id") userId: String,
-        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET,
-        @Query("count") count: Int = DEFAULT_QUERY_COUNT
+        @Query("page") page: Int = DEFAULT_QUERY_PAGE_NUM,
+        @Query("page_size") page_size: Int = DEFAULT_QUERY_PAGE_SIZE
     ): List<Feed>
 }

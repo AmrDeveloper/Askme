@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.viewmodels
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.User
-import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
+import com.amrdeveloper.askme.net.DEFAULT_QUERY_PAGE_SIZE
 import com.amrdeveloper.askme.net.UserService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,7 @@ class UserSearchDataSource(private val query: String,
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersSearch(query)
-                if(users.size == DEFAULT_QUERY_COUNT){
+                if(users.size == DEFAULT_QUERY_PAGE_SIZE){
                     callback.onResult(users, null, 1)
                 }else{
                     callback.onResult(users, null, 0)
@@ -51,7 +51,7 @@ class UserSearchDataSource(private val query: String,
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersSearch(query, params.key)
-                if(users.size == DEFAULT_QUERY_COUNT){
+                if(users.size == DEFAULT_QUERY_PAGE_SIZE){
                     callback.onResult(users, params.key + 1)
                 }else{
                     callback.onResult(users, null)

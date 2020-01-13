@@ -20,15 +20,15 @@ interface UserService {
 
     @GET("users/")
     suspend fun getUsersQuery(
-        @Query("count") count: Int = DEFAULT_QUERY_COUNT,
-        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
+        @Query("page") page: Int = DEFAULT_QUERY_PAGE_NUM,
+        @Query("page_size") page_size : Int = DEFAULT_QUERY_PAGE_SIZE
     ): List<User>
 
     @GET("users/search")
     suspend fun getUsersSearch(
         @Query("q") query: String,
-        @Query("count") count: Int = DEFAULT_QUERY_COUNT,
-        @Query("offset") offset: Int = DEFAULT_QUERY_OFFSET
+        @Query("page") page : Int = DEFAULT_QUERY_PAGE_NUM,
+        @Query("page_size") page_size : Int = DEFAULT_QUERY_PAGE_SIZE
     ): List<User>
 
     @Multipart

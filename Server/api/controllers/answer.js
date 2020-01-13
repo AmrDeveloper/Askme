@@ -2,10 +2,6 @@ const status = require('../../utilities/server_status');
 const answerModel = require('../models/answer');
 const notificationModel = require('../models/notification');
 
-const QUERY_DEFAULT_OFFSET = 0;
-const QUERY_DEFAULT_COUNT = 25;
-const QUERY_MAX_COUNT = 50;
-
 exports.getAnswerByID = (req, res) => {
     const id = req.params.id;
     answerModel.getAnswerByID(id).then(result => {

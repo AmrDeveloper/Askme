@@ -1,26 +1,31 @@
 const status = require('../../utilities/server_status');
 const reactModel = require('../models/react');
 
-const QUERY_DEFAULT_OFFSET = 0;
-const QUERY_DEFAULT_COUNT = 25;
+const QUERY_DEFAULT_PAGE = 0;
+const QUERY_DEFAULT_PAGE_SIZE = 25;
 const QUERY_MAX_COUNT = 50;
 
 exports.getPostReactions = (req, res) => {
-    var offset = req.query.offset;
-    var count = req.query.count;
-    if (offset == null) {
-        offset = QUERY_DEFAULT_OFFSET;
+    var page = req.query.page;
+    var page_size = req.query.page_size;
+
+    if (userId == null) {
+        userId = 0;
     }
 
-    if (count == null || count > QUERY_MAX_COUNT) {
-        count = QUERY_DEFAULT_COUNT;
+    if (page == null) {
+        page = QUERY_DEFAULT_PAGE;
     }
 
-    offset = offset * count;
+    if (page_size == null || page_size > QUERY_MAX_COUNT) {
+        page_size = QUERY_DEFAULT_PAGE_SIZE;
+    }
+
+    const offset = page * page_size;
 
     const answerId = req.body.answerId;
 
-    const args = [answerId, parseInt(count), parseInt(offset)];
+    const args = [answerId, parseInt(page_size), parseInt(offset)];
 
     reactModel.getPostReactions(args).then(result => {
         res.status(status.OK).json(result);

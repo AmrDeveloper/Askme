@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.viewmodels
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.amrdeveloper.askme.models.Feed
-import com.amrdeveloper.askme.net.DEFAULT_QUERY_COUNT
+import com.amrdeveloper.askme.net.DEFAULT_QUERY_PAGE_SIZE
 import com.amrdeveloper.askme.net.FeedService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class FeedDataSource(var id: String,
         scope.launch(Dispatchers.IO){
             try{
                 val feedList = feedService.getUserFeed(id, userId)
-                if (feedList.size == DEFAULT_QUERY_COUNT) {
+                if (feedList.size == DEFAULT_QUERY_PAGE_SIZE) {
                     callback.onResult(feedList, null, 1)
                 } else {
                     callback.onResult(feedList, null, 0)
@@ -36,7 +36,7 @@ class FeedDataSource(var id: String,
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList = feedService.getUserFeed(id = id,userId = userId, offset = params.key)
+                val feedList = feedService.getUserFeed(id = id,userId = userId, page = params.key)
                 if (params.key > 1) {
                     callback.onResult(feedList, params.key - 1)
                 } else {
@@ -51,8 +51,8 @@ class FeedDataSource(var id: String,
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try{
-                val feedList =  feedService.getUserFeed(id = id,userId = userId, offset = params.key)
-                if (feedList.size == DEFAULT_QUERY_COUNT) {
+                val feedList =  feedService.getUserFeed(id = id,userId = userId, page = params.key)
+                if (feedList.size == DEFAULT_QUERY_PAGE_SIZE) {
                     callback.onResult(feedList, params.key + 1)
                 } else {
                     callback.onResult(feedList, null)
