@@ -67,10 +67,12 @@ class AskQuestionFragment : DaggerFragment(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
             val question = mAskQuestionLayoutBinding.questionEditText.text.str()
-            val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked.str()
+            val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked
+            var isAnonymous = "0"
+            if(isAnonymously) isAnonymous = "1"
             val fromUser = Session.getUserId(context!!).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
-            val questionData = QuestionData(question,toUser, fromUser, isAnonymously)
+            val questionData = QuestionData(question,toUser, fromUser, isAnonymous)
             val token = Session.getUserToken(context!!).str()
             mQuestionViewModel.askNewQuestion(token, questionData)
         }
