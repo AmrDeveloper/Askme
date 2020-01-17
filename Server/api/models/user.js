@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.login = (email, password) => new Promise((resolve, reject) => {
-    const sqlQuery = `SELECT id, password FROM users WHERE email = ? LIMIT 1`;
+    const sqlQuery = `SELECT id, color, password FROM users WHERE email = ? LIMIT 1`;
 
     database.query(sqlQuery, email, ((err, result) => {
         if (err) throw err;
@@ -17,6 +17,7 @@ exports.login = (email, password) => new Promise((resolve, reject) => {
                         if (err) throw err;
                         resolve([true, {
                             "id": result[0]['id'],
+                            "color" : result[0]['color'],
                             "token": token
                         }]);
                     });
