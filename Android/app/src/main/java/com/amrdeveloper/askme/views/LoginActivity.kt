@@ -59,7 +59,8 @@ class LoginActivity : DaggerAppCompatActivity() {
             if(it != null){
                 val email: String = mLoginActivity.emailInputEdit.text.str()
                 val password: String = mLoginActivity.passInputEdit.text.str()
-                Session.login(applicationContext, it.userId, email, password, it.authToken)
+                
+                Session.login(applicationContext, email, password, it)
 
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)

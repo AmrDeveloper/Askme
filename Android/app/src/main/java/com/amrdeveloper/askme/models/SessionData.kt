@@ -7,5 +7,8 @@ data class SessionData(
     var userId : String,
 
     @SerializedName("token")
-    var authToken : String
+    var authToken : String,
+
+    @SerializedName("color")
+    val color : String
 )

@@ -3,17 +3,19 @@ package com.amrdeveloper.askme.utils
 import android.content.Context
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Constants
+import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.models.ThemeColor
 
 object Session {
 
-    fun login(context: Context, id : String, email: String, password: String, token: String): Boolean {
+    fun login(context: Context, email: String, password: String, sessionData: SessionData): Boolean {
         val preferencesEditor =
             context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
-        preferencesEditor.putString(Constants.USER_ID, id)
         preferencesEditor.putString(Constants.EMAIL, email)
         preferencesEditor.putString(Constants.PASSWORD, password)
-        preferencesEditor.putString(Constants.LOGIN_TOKEN, token)
+        preferencesEditor.putString(Constants.USER_ID, sessionData.userId)
+        preferencesEditor.putString(Constants.COLOR, sessionData.color)
+        preferencesEditor.putString(Constants.LOGIN_TOKEN, sessionData.authToken)
         return preferencesEditor.commit()
     }
 
