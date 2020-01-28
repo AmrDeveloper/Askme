@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.models.RegisterData
+import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.net.AuthService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class RegisterViewModel @Inject constructor(private val authService: AuthService): ViewModel(){
 
-    private val registerLiveData : MutableLiveData<String> = MutableLiveData()
+    private val registerLiveData : MutableLiveData<SessionData> = MutableLiveData()
 
     fun userRegister(registerData: RegisterData){
         viewModelScope.launch(Dispatchers.IO){
@@ -20,13 +21,11 @@ class RegisterViewModel @Inject constructor(private val authService: AuthService
                 val response = authService.register(registerData)
                 when (response.code()) {
                     200 -> {
-                        registerLiveData.postValue("valid")
-                    }
-                    400 -> {
-                        registerLiveData.postValue("invalid")
+                        val sessionData = response.body()
+                        registerLiveData.postValue(sessionData)
                     }
                     else -> {
-                        registerLiveData.postValue("invalid")
+                        registerLiveData.postValue(null)
                     }
                 }
             }catch (exception : Exception){

@@ -48,9 +48,9 @@ exports.registerNewUser = (req, res) => {
                     color
                 ];
 
-                userModel.register(user).then(state => {
-                    if (state) {
-                        res.status(status.OK).send("Valid Register");
+                userModel.register(user).then(result => {
+                    if (result[0]) {
+                        res.status(status.OK).json(result[1]);
                     } else {
                         res.status(status.BAD_REQUEST).send("Invalid Register");
                     }

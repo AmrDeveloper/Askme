@@ -16,6 +16,6 @@ interface AuthService {
 
     @POST("users/register")
     @Headers("content-type: application/json")
-    suspend fun register(@Body body: RegisterData): Response<String>
+    suspend fun register(@Body body: RegisterData): Response<SessionData>
 
 }

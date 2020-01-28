@@ -11,6 +11,7 @@ import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.databinding.ActivityRegisterBinding
 import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.*
+import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.RegisterViewModel
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
@@ -50,9 +51,16 @@ class RegisterActivity : DaggerAppCompatActivity(){
 
         mRegisterViewModel.getRegisterLiveData().observe(this, Observer {
             mRegisterActivity.loadingBar.gone()
-            if(it == "valid"){
+            if(it != null){
                 Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, LoginActivity::class.java))
+
+                val email: String = mRegisterActivity.emailInputEdit.text.str()
+                val password: String = mRegisterActivity.passInputEdit.text.str()
+
+                Session.login(applicationContext, email, password, it)
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 finish()
             }else{
                 Toast.makeText(this, "Invalid Register", Toast.LENGTH_SHORT).show()

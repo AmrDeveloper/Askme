@@ -36,12 +36,24 @@ exports.register = user => new Promise((resolve, reject) => {
     database.query(query, user, (err, result) => {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY') {
-                resolve(false);
+                resolve([false]);
             } else {
                 throw err;
             }
         }else{
-            resolve(result['affectedRows'] == 1);
+            if(result['affectedRows'] == 1){
+                const email = user[1];
+                jwt.sign(email, process.env.JWT_KEY, (err, token) => {
+                    if (err) throw err;
+                    resolve([true, {
+                        "id": result.insertId,
+                        "color" : "ORANGE",
+                        "token": token
+                    }]);
+                });
+            }else{
+                resolve([false]);
+            }
         }
     });
 });
