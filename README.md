@@ -1,4 +1,8 @@
 # Askme
+![GitHub search hit counter](https://img.shields.io/github/search/AmrDeveloper/Askme/askme)
+[![GitHub stars](https://img.shields.io/github/stars/AmrDeveloper/Askme)](https://github.com/AmrDeveloper/Askme/stargazers)
+[![GitHub license](https://img.shields.io/github/license/AmrDeveloper/Askme)](https://github.com/AmrDeveloper/Askme/blob/master/LICENSE)
+
 Social media app to ask and answer user questions and interact with users
 
 ### Features : 
