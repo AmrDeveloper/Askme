@@ -21,7 +21,7 @@ class UserDataSource(private val scope: CoroutineScope,
             try{
                 val users = userService.getUsersQuery()
                 if(users.size == DEFAULT_QUERY_PAGE_SIZE){
-                    callback.onResult(users, null, 1)
+                    callback.onResult(users, null, 2)
                 }else{
                     callback.onResult(users, null, 0)
                 }
@@ -31,7 +31,7 @@ class UserDataSource(private val scope: CoroutineScope,
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersQuery(page = params.key)
@@ -46,7 +46,7 @@ class UserDataSource(private val scope: CoroutineScope,
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersQuery(page = params.key)

@@ -24,7 +24,7 @@ class HomeDataSource(
             try {
                 val feedList = feedService.getHomeFeed(userId = userId)
                 if (feedList.size == DEFAULT_QUERY_PAGE_SIZE) {
-                    callback.onResult(feedList, null, 1)
+                    callback.onResult(feedList, null, 2)
                 } else {
                     callback.onResult(feedList, null, 0)
                 }
@@ -34,7 +34,7 @@ class HomeDataSource(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try {
                 val feedList = feedService.getHomeFeed(userId = userId,page = params.key)
@@ -49,7 +49,7 @@ class HomeDataSource(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Feed>) {
         scope.launch(Dispatchers.IO){
             try {
                 val feedList = feedService.getHomeFeed(userId = userId,page = params.key)

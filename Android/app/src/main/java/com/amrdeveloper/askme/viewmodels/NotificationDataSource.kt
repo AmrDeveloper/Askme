@@ -23,7 +23,7 @@ class NotificationDataSource(private var userId: String,
             try {
                 val notifications = notificationService.getUserNotifications(userId = userId, token = "auth $token")
                 if (notifications.size == DEFAULT_QUERY_PAGE_SIZE) {
-                    callback.onResult(notifications, null, 1)
+                    callback.onResult(notifications, null, 2)
                 } else {
                     callback.onResult(notifications, null, 0)
                 }
@@ -33,7 +33,7 @@ class NotificationDataSource(private var userId: String,
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Notification>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Notification>) {
         scope.launch(Dispatchers.IO){
             try {
                 val notifications = notificationService.getUserNotifications(userId = userId, token = "auth $token")
@@ -48,7 +48,7 @@ class NotificationDataSource(private var userId: String,
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Notification>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Notification>) {
         scope.launch(Dispatchers.IO){
             try{
                 val notifications = notificationService.getUserNotifications(userId = userId, token = "auth $token")

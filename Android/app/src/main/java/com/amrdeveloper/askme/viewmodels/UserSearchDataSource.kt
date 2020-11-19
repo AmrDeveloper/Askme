@@ -22,7 +22,7 @@ class UserSearchDataSource(private val query: String,
             try{
                 val users = userService.getUsersSearch(query)
                 if(users.size == DEFAULT_QUERY_PAGE_SIZE){
-                    callback.onResult(users, null, 1)
+                    callback.onResult(users, null, 2)
                 }else{
                     callback.onResult(users, null, 0)
                 }
@@ -32,7 +32,7 @@ class UserSearchDataSource(private val query: String,
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersSearch(query, params.key)
@@ -47,7 +47,7 @@ class UserSearchDataSource(private val query: String,
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, User>) {
         scope.launch(Dispatchers.IO){
             try{
                 val users = userService.getUsersSearch(query, params.key)
