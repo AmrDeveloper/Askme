@@ -4,7 +4,6 @@ exports.getUserFollowing = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT users.name, 
                     users.username,
                     users.email,
-                    users.email,
                     users.avatar,
                     users.address,
                     users.status,
@@ -28,7 +27,6 @@ exports.getUserFollowing = args => new Promise((resolve, reject) => {
 exports.getUserFollowers = args => new Promise((resolve, reject) => {
     const query = `SELECT DISTINCT users.name, 
                     users.username,
-                    users.email,
                     users.email,
                     users.avatar,
                     users.address,
