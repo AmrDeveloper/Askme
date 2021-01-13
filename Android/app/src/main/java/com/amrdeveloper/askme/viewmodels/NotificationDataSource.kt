@@ -25,7 +25,7 @@ class NotificationDataSource(private var userId: String,
                 if (notifications.size == DEFAULT_QUERY_PAGE_SIZE) {
                     callback.onResult(notifications, null, 2)
                 } else {
-                    callback.onResult(notifications, null, 0)
+                    callback.onResult(notifications, null, null)
                 }
             }catch (exception : Exception) {
                 Log.d("Notification", "Invalid Request ${exception.message}")

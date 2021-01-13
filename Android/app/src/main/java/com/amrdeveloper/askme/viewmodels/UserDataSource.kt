@@ -23,7 +23,7 @@ class UserDataSource(private val scope: CoroutineScope,
                 if(users.size == DEFAULT_QUERY_PAGE_SIZE){
                     callback.onResult(users, null, 2)
                 }else{
-                    callback.onResult(users, null, 0)
+                    callback.onResult(users, null, null)
                 }
             }catch (exception : Exception){
                 Log.d("User", "Invalid Request")

@@ -25,7 +25,7 @@ class FeedDataSource(var id: String,
                 if (feedList.size == DEFAULT_QUERY_PAGE_SIZE) {
                     callback.onResult(feedList, null, 2)
                 } else {
-                    callback.onResult(feedList, null, 0)
+                    callback.onResult(feedList, null, null)
                 }
             }catch (exception : Exception){
                 Log.d("Feed", "Invalid Request")
