@@ -14,6 +14,15 @@ Go to Server directory
 cd Server
 ```
 
+Ceate directories for storage/avatar and storage/wallpaper
+
+```
+mkdir storage
+cd storage
+mkdir avatar
+mkdir wallpaper
+```
+
 Install Server Dependencies
 
 ```
