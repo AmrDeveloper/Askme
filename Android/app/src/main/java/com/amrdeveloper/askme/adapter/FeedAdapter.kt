@@ -96,7 +96,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
             if(feed.anonymously == Anonymously.NOT_ANONYMOSLY) {
                 itemView.questionFrom.text = feed.toUserName
-                itemView.questionUserAvatar.loadImage(feed.toUserAvatar)
+                itemView.questionUserAvatar.loadImage(feed.toUserAvatar, R.drawable.ic_profile)
             }else{
                 itemView.questionFrom.text = "Anonymous user"
             }
@@ -105,7 +105,7 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
             itemView.answerDateTxt.setFormattedDateForPost(feed.answerDate)
             itemView.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
 
-            itemView.answerUserAvatar.loadImage(feed.fromUserAvatar)
+            itemView.answerUserAvatar.loadImage(feed.fromUserAvatar, R.drawable.ic_profile)
 
             updateReactedIcon(feed.isReacted)
         }

@@ -162,8 +162,8 @@ class ProfileFragment : DaggerFragment(){
         userQuestions.text = user.questionsNum.str()
         userAnswers.text = user.answersNum.str()
 
-        userAvatar.loadImage(user.avatarUrl)
-        userWallpaper.loadImage(user.wallpaperUrl)
+        userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
+        userWallpaper.loadImage(user.wallpaperUrl, R.drawable.ic_wallpaper)
 
         if (user.id != Session.getUserId(context!!)) {
             updateFollowCardView(user.isUserFollow)

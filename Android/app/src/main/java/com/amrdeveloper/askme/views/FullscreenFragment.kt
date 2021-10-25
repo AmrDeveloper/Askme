@@ -30,7 +30,7 @@ class FullscreenFragment : Fragment(){
         mFullscreenLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.fullscreen_layout, container, false)
 
         val imageUrl = arguments?.getString(Constants.AVATAR_URL)
-        mFullscreenLayoutBinding.imageView.loadImage(imageUrl)
+        mFullscreenLayoutBinding.imageView.loadImage(imageUrl, R.drawable.ic_profile)
 
         return mFullscreenLayoutBinding.root
     }

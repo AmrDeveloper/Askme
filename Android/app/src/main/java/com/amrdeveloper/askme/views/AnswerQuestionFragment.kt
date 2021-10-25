@@ -91,7 +91,7 @@ class AnswerQuestionFragment : DaggerFragment() {
             mAnswerQuestionLayoutBinding.userUsername.text = getString(R.string.anonymous_user)
         }else{
             mAnswerQuestionLayoutBinding.userUsername.text = question.fromUserName
-            mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar)
+            mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar, R.drawable.ic_profile)
         }
     }
 

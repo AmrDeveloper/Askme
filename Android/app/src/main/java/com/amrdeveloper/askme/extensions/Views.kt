@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.net.API_SERVER_URL
 import com.amrdeveloper.askme.utils.formatDateForJoin
 import com.amrdeveloper.askme.utils.formatDateForPost
@@ -23,14 +22,6 @@ fun View.hide() {
 
 fun View.gone() {
     this.visibility = View.GONE
-}
-
-fun View.clickable() {
-    this.isClickable = true
-}
-
-fun View.unClickable() {
-    this.isClickable = false
 }
 
 fun TextView.setTextOrGone(text: String?) {
@@ -57,21 +48,12 @@ fun TextView.setFormattedDateForPost(time : Long) {
     this.text = formatDateForPost(time).str()
 }
 
-fun TextView.setPluralsText(id : Int, value : Int) {
-    this.text = this.resources.getQuantityString(id, value,value)
-}
-
-fun ImageView.loadImage(imageUrl: String?) {
-    if(imageUrl.isNullOrEmpty()){
-        Picasso.get().load(R.drawable.ic_profile).error(R.drawable.ic_profile).into(this)
-        return
-    }
+fun ImageView.loadImage(imageUrl: String?, defaultDrawableId : Int) {
+    if(imageUrl.isNullOrEmpty()) return
     val imagePath = API_SERVER_URL + imageUrl.replace("\\", "/")
-    Picasso.get().load(imagePath).error(R.drawable.ic_profile).into(this)
-}
-
-fun View.backgroundColor(context : Context, @ColorRes colorId : Int){
-    this.setBackgroundColor(ContextCompat.getColor(context, colorId))
+    Picasso.get()
+        .load(imagePath)
+        .error(defaultDrawableId).into(this)
 }
 
 fun CardView.backgroundColor(context : Context, @ColorRes colorId : Int){

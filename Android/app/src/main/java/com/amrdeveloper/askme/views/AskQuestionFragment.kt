@@ -86,7 +86,7 @@ class AskQuestionFragment : DaggerFragment(){
 
         mAskQuestionLayoutBinding.userName.text = name
         mAskQuestionLayoutBinding.userUsername.text = username
-        mAskQuestionLayoutBinding.userAvatar.loadImage(avatarUrl)
+        mAskQuestionLayoutBinding.userAvatar.loadImage(avatarUrl, R.drawable.ic_profile)
     }
 
     private fun updateQuestionLength(){

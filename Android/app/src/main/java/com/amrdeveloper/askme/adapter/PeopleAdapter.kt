@@ -50,7 +50,7 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
             itemView.usernameTxt.text = user.username
             itemView.reactionsTxt.text = user.reactionsNum.toString()
 
-            itemView.userAvatar.loadImage(user.avatarUrl)
+            itemView.userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
         }
     }
 }

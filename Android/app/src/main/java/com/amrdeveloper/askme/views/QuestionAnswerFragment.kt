@@ -56,11 +56,11 @@ class QuestionAnswerFragment : DaggerFragment(){
     private fun bindAnswer(answer : Answer){
         mQuestionAnswerBinding.questionUsername.text = answer.toUserName
         mQuestionAnswerBinding.questionText.text = answer.questionBody
-        mQuestionAnswerBinding.questionUserAvatar.loadImage(answer.toUserAvatar)
+        mQuestionAnswerBinding.questionUserAvatar.loadImage(answer.toUserAvatar, R.drawable.ic_profile)
 
         mQuestionAnswerBinding.answerUsername.text = answer.toUserName
         mQuestionAnswerBinding.answerText.text = answer.answerBody
-        mQuestionAnswerBinding.answerUserAvatar.loadImage(answer.fromUserAvatar)
+        mQuestionAnswerBinding.answerUserAvatar.loadImage(answer.fromUserAvatar, R.drawable.ic_profile)
 
         mQuestionAnswerBinding.reactionsTxt.text = answer.reactionsNum.str()
 
