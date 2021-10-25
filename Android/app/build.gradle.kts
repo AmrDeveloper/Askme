@@ -60,12 +60,6 @@ dependencies {
     implementation(Libraries.daggerHitl)
     kapt(Libraries.daggerHiltCompiler)
 
-    implementation (Libraries.dagger)
-    kapt (Libraries.daggerCompiler)
-    implementation (Libraries.daggerAndroid)
-    implementation (Libraries.daggerAndroidSupport)
-    kapt (Libraries.daggerAndroidProcessor)
-
     implementation (Libraries.timber)
     debugImplementation(Libraries.leakCanary)
 

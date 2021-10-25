@@ -13,7 +13,6 @@ object Versions {
     const val coroutinesVersion = "1.3.3"
 
     const val daggerHiltVersion = "2.39.1"
-    const val daggerVersion = "2.22"
 
     const val pagingVersion = "2.1.1"
     const val lifecycleExtensionVersion = "2.1.0"
