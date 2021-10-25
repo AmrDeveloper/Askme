@@ -1,6 +1,6 @@
 object Versions {
     const val kotlin = "1.5.30"
-    const val gradle = "4.2.0"
+    const val gradle = "7.0.2"
 
     const val compileSdkVersion = 31
     const val minSdkVersion = 21

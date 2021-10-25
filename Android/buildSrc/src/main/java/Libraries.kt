@@ -1,6 +1,6 @@
 object Libraries {
 
-    const val kotlinStdLib =  "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
+    const val kotlinStdLib =  "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     const val appCompat =  "androidx.appcompat:appcompat:${Versions.appcompatVersion}"
     const val ktsCore =  "androidx.core:core-ktx:${Versions.ktsCoreVersion}"
     const val recyclerView =  "androidx.recyclerview:recyclerview:${Versions.recyclerVersion}"
