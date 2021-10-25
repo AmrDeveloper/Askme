@@ -32,7 +32,7 @@ exports.getQuestionAnswer = args => new Promise((resolve, reject) => {
                                    FROM answers WHERE id = ?`;
     database.query(query, args, (err, result) => {
         if (err) throw err;
-        resolve(result);
+        resolve(result[0]);
     });
 });
 
