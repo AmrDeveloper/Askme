@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath (Config.Dependencies.androidPlugin)
         classpath (Config.Dependencies.kotlinGradlePlugin)
+        classpath (Config.Dependencies.daggerHiltPlugin)
     }
 }
 
