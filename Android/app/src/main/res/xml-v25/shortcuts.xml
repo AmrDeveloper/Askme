@@ -12,7 +12,7 @@
     </shortcut>
 
     <shortcut
-        android:icon="@drawable/ic_whatshot"
+        android:icon="@drawable/ic_notifications_active"
         android:shortcutId="open_notifications"
         android:shortcutLongLabel="@string/notifications"
         android:shortcutShortLabel="@string/notifications">
