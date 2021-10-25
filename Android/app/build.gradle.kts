@@ -60,6 +60,9 @@ dependencies {
     implementation (Libraries.daggerAndroidSupport)
     kapt (Libraries.daggerAndroidProcessor)
 
+    implementation (Libraries.timber)
+    debugImplementation(Libraries.leakCanary)
+
     testImplementation (Libraries.junit)
     androidTestImplementation (Libraries.junitExt)
     androidTestImplementation (Libraries.espressoCore)

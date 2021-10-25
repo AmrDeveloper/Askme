@@ -22,6 +22,9 @@ object Versions {
     const val materialVersion = "1.2.0-alpha03"
     const val circleImageView = "3.0.1"
 
+    const val timber = "5.0.1"
+    const val leakCanary = "2.7"
+
     const val junit = "4.12"
     const val junitExt = "1.1.1"
     const val espressoCore = "3.2.0"

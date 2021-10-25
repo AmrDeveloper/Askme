@@ -27,6 +27,9 @@ object Libraries {
     const val daggerAndroidSupport =  "com.google.dagger:dagger-android-support:${Versions.daggerVersion}"
     const val daggerAndroidProcessor = "com.google.dagger:dagger-android-processor:${Versions.daggerVersion}"
 
+    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
+
     const val junit = "junit:junit:${Versions.junit}"
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExt}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
