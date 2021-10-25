@@ -6,30 +6,30 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.adapter.ColorGridAdapter
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.utils.ThemeManager
 import com.amrdeveloper.askme.viewmodels.SettingsViewModel
 import com.amrdeveloper.askme.databinding.ActivitySettingsBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.models.themeList
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.Validation
-import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class SettingsActivity : DaggerAppCompatActivity() , SharedPreferences.OnSharedPreferenceChangeListener{
+@AndroidEntryPoint
+class SettingsActivity : AppCompatActivity() , SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private lateinit var mSettingsViewModel: SettingsViewModel
-    @Inject lateinit var providerFactory: ViewModelProviderFactory
     private lateinit var mSettingsActivityBinding: ActivitySettingsBinding
+
+    private val mSettingsViewModel by viewModels<SettingsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeManager.setUserTheme(this)
@@ -38,7 +38,6 @@ class SettingsActivity : DaggerAppCompatActivity() , SharedPreferences.OnSharedP
         mSettingsActivityBinding = DataBindingUtil.setContentView(this,
             R.layout.activity_settings
         )
-        mSettingsViewModel = ViewModelProviders.of(this, providerFactory).get(SettingsViewModel::class.java)
 
         mSettingsViewModel.getStatusLiveData().observe(this, Observer {
             when(it){

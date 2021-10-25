@@ -6,18 +6,21 @@ import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.models.QuestionData
 import com.amrdeveloper.askme.net.QuestionService
 import com.amrdeveloper.askme.net.ResponseType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-class QuestionViewModel @Inject constructor(private val questionService: QuestionService): ViewModel(){
+@HiltViewModel
+class QuestionViewModel @Inject constructor(private val questionService: QuestionService) :
+    ViewModel() {
 
-    private val questionLiveData : MutableLiveData<ResponseType> = MutableLiveData()
+    private val questionLiveData: MutableLiveData<ResponseType> = MutableLiveData()
 
-    fun askNewQuestion(token : String, questionData: QuestionData){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
+    fun askNewQuestion(token: String, questionData: QuestionData) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
                 val response = questionService.createNewQuestion(token, questionData)
                 when {
                     response.code() == 200 -> {
@@ -30,7 +33,7 @@ class QuestionViewModel @Inject constructor(private val questionService: Questio
                         questionLiveData.postValue(ResponseType.FAILURE)
                     }
                 }
-            }catch (exception : Exception){
+            } catch (exception: Exception) {
                 questionLiveData.postValue(ResponseType.FAILURE)
             }
         }

@@ -9,13 +9,13 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.adapter.FeedAdapter
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Follow
@@ -24,20 +24,21 @@ import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.ProfileViewModel
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
-import javax.inject.Inject
 
-class ProfileFragment : DaggerFragment(){
+@AndroidEntryPoint
+
+class ProfileFragment : Fragment(){
 
     private lateinit var mUserId: String
     private lateinit var mCurrentUser : User
 
-    @Inject lateinit var mFeedAdapter: FeedAdapter
+    lateinit var mFeedAdapter: FeedAdapter
     private lateinit var mProfileBinding: ProfileLayoutBinding
-    private lateinit var mProfileViewModel : ProfileViewModel
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
+
+    private val mProfileViewModel by viewModels<ProfileViewModel>()
 
     private val REQUEST_AVATAR_ID = 1996
     private val REQUEST_WALLPAPER_ID = 1997
@@ -54,7 +55,6 @@ class ProfileFragment : DaggerFragment(){
         savedInstanceState: Bundle?
     ): View? {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
-        mProfileViewModel = ViewModelProviders.of(this, providerFactory).get(ProfileViewModel::class.java)
 
         updateUserInfoFromArguments()
         setupFeedRecyclerView()
@@ -144,6 +144,7 @@ class ProfileFragment : DaggerFragment(){
     }
 
     private fun setupFeedRecyclerView() {
+        mFeedAdapter = FeedAdapter()
         mProfileBinding.listLayout.listItems.setHasFixedSize(true)
         mProfileBinding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
         mProfileBinding.listLayout.listItems.isNestedScrollingEnabled = false

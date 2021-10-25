@@ -3,30 +3,29 @@ package com.amrdeveloper.askme.views
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.RegisterData
 import com.amrdeveloper.askme.databinding.ActivityRegisterBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.RegisterViewModel
-import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class RegisterActivity : DaggerAppCompatActivity(){
+@AndroidEntryPoint
 
-    private lateinit var mRegisterViewModel : RegisterViewModel
+class RegisterActivity : AppCompatActivity(){
+
     private lateinit var mRegisterActivity: ActivityRegisterBinding
 
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
+    private val mRegisterViewModel by viewModels<RegisterViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mRegisterActivity = DataBindingUtil.setContentView(this, R.layout.activity_register)
-        mRegisterViewModel = ViewModelProviders.of(this, providerFactory).get(RegisterViewModel::class.java)
 
         mRegisterActivity.loginTxt.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))

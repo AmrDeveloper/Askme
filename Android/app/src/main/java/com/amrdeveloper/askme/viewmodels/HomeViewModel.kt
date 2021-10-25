@@ -15,12 +15,14 @@ import com.amrdeveloper.askme.models.ReactionData
 import com.amrdeveloper.askme.net.FeedService
 import com.amrdeveloper.askme.net.PagingConfig
 import com.amrdeveloper.askme.net.ReactionService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 import javax.inject.Inject
 
+@HiltViewModel
 class HomeViewModel @Inject constructor(private val feedService: FeedService,
                                         private val reactionService: ReactionService): ViewModel(){
 

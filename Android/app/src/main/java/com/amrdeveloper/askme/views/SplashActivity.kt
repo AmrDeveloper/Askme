@@ -6,7 +6,9 @@ import android.os.Bundle
 import com.amrdeveloper.askme.R
 
 import com.amrdeveloper.askme.utils.Session
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

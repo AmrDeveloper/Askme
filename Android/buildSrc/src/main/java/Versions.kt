@@ -11,11 +11,14 @@ object Versions {
     const val picassoVersion = "2.71828"
     const val retrofitVersion = "2.6.3"
     const val coroutinesVersion = "1.3.3"
+
+    const val daggerHiltVersion = "2.39.1"
     const val daggerVersion = "2.22"
 
     const val pagingVersion = "2.1.1"
     const val lifecycleExtensionVersion = "2.1.0"
     const val lifecycleViewModelVersion = "2.1.0"
+    const val fragmentExtensionVersion = "1.3.6"
 
     const val cardVersion = "1.0.0"
     const val recyclerVersion = "1.1.0"

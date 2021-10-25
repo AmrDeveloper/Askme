@@ -9,6 +9,7 @@ import com.amrdeveloper.askme.models.Question
 import com.amrdeveloper.askme.net.AnswerService
 import com.amrdeveloper.askme.net.QuestionService
 import com.amrdeveloper.askme.net.ResponseType
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -16,6 +17,7 @@ import javax.inject.Inject
 
 private const val TAG = "AnswerViewModel"
 
+@HiltViewModel
 class AnswerQuestionViewModel @Inject constructor(private val questionService: QuestionService,
                                                   private val answerService: AnswerService) : ViewModel(){
 

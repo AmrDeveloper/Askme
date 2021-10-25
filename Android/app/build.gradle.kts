@@ -3,6 +3,7 @@ plugins {
     id(Config.Plugins.kotlinPlugin)
     id(Config.Plugins.kotlinExtensionsPlugin)
     id(Config.Plugins.kotlinKaptPlugin)
+    id(Config.Plugins.daggerHiltPlugin)
 }
 
 android {
@@ -51,8 +52,13 @@ dependencies {
     implementation (Libraries.coroutinesAndroid)
 
     implementation (Libraries.paging)
+
     implementation (Libraries.lifecycleExtension)
     implementation (Libraries.lifecycleViewModel)
+    implementation (Libraries.fragmentExtension)
+
+    implementation(Libraries.daggerHitl)
+    kapt(Libraries.daggerHiltCompiler)
 
     implementation (Libraries.dagger)
     kapt (Libraries.daggerCompiler)

@@ -6,27 +6,25 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.QuestionData
 import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.QuestionViewModel
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class AskQuestionFragment : DaggerFragment(){
+@AndroidEntryPoint
+class AskQuestionFragment : Fragment(){
 
-    private lateinit var mQuestionViewModel : QuestionViewModel
     private lateinit var mAskQuestionLayoutBinding: AskQuestionLayoutBinding
-
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
+    private val mQuestionViewModel by viewModels<QuestionViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +38,6 @@ class AskQuestionFragment : DaggerFragment(){
     ): View? {
         mAskQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
-        mQuestionViewModel = ViewModelProviders.of(this, providerFactory).get(QuestionViewModel::class.java)
 
         mQuestionViewModel.getQuestionLiveData().observe(this, Observer {
             when(it){

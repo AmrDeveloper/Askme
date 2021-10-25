@@ -12,7 +12,9 @@ import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.extensions.toServerImageUrl
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.utils.Downloader
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FullscreenFragment : Fragment(){
 
     private lateinit var mFullscreenLayoutBinding: FullscreenLayoutBinding

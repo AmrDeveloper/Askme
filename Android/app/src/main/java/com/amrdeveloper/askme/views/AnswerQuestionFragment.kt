@@ -7,29 +7,28 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.AnswerData
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Question
 import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Anonymously
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.viewmodels.AnswerQuestionViewModel
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class AnswerQuestionFragment : DaggerFragment() {
+@AndroidEntryPoint
+class AnswerQuestionFragment : Fragment() {
 
     private lateinit var mQuestion: Question
-    private lateinit var mAnswerQuestionViewModel : AnswerQuestionViewModel
     private lateinit var mAnswerQuestionLayoutBinding: AnswerQuestionLayoutBinding
 
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
+    private val mAnswerQuestionViewModel by viewModels <AnswerQuestionViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +42,6 @@ class AnswerQuestionFragment : DaggerFragment() {
     ): View? {
         mAnswerQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
-        mAnswerQuestionViewModel = ViewModelProviders.of(this, providerFactory).get(AnswerQuestionViewModel::class.java)
 
         val token = Session.getHeaderToken(context!!).str()
         val questionID = arguments?.getString(Constants.QUESTION_ID).str()

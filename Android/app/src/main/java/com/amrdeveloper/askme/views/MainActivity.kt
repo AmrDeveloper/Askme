@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.utils.ThemeManager
@@ -17,8 +18,10 @@ import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : DaggerAppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
 
     private var mActionBar: ActionBar? = null
     private lateinit var mMainActivity: ActivityMainBinding

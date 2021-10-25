@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.models.LoginData
 import com.amrdeveloper.askme.models.SessionData
 import com.amrdeveloper.askme.net.AuthService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class LoginViewModel @Inject constructor(private val authService: AuthService) : ViewModel(){
 
     private val sessionLiveData : MutableLiveData<SessionData> = MutableLiveData()

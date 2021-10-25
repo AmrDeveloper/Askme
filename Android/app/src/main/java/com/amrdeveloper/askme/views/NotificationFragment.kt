@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.viewmodels.NotificationViewModel
 import com.amrdeveloper.askme.R
@@ -15,22 +16,22 @@ import com.amrdeveloper.askme.models.Action
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Open
 import com.amrdeveloper.askme.utils.Session
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class NotificationFragment: DaggerFragment(){
+@AndroidEntryPoint
+class NotificationFragment: Fragment(){
 
     private lateinit var mListLayoutBinding: ListLayoutBinding
     @Inject lateinit var mNotificationAdapter: NotificationAdapter
-    private lateinit var mNotificationViewModel: NotificationViewModel
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
+
+    private val mNotificationViewModel by viewModels<NotificationViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,6 @@ class NotificationFragment: DaggerFragment(){
         savedInstanceState: Bundle?
     ): View? {
         mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
-        mNotificationViewModel = ViewModelProviders.of(this, providerFactory).get(NotificationViewModel::class.java)
 
         notiListSetup()
 

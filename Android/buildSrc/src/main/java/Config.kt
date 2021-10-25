@@ -5,6 +5,7 @@ object Config {
     object Dependencies {
         const val androidPlugin = "com.android.tools.build:gradle:${Versions.gradle}"
         const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        const val daggerHiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.daggerHiltVersion}"
     }
 
     object Plugins {
@@ -12,5 +13,6 @@ object Config {
         const val kotlinPlugin = "kotlin-android"
         const val kotlinExtensionsPlugin = "kotlin-android-extensions"
         const val kotlinKaptPlugin = "kotlin-kapt"
+        const val daggerHiltPlugin = "dagger.hilt.android.plugin"
     }
 }

@@ -19,6 +19,7 @@ import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.*
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
@@ -30,6 +31,7 @@ import javax.inject.Inject
 
 private const val TAG = "ProfileViewModel"
 
+@HiltViewModel
 class ProfileViewModel @Inject constructor(private val userService: UserService,
                                            private val followService: FollowService,
                                            private val feedService: FeedService) : ViewModel() {

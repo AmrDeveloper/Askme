@@ -8,11 +8,13 @@ import com.amrdeveloper.askme.models.*
 import com.amrdeveloper.askme.net.ResponseData
 import com.amrdeveloper.askme.net.ResponseType
 import com.amrdeveloper.askme.net.UserService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
+@HiltViewModel
 class SettingsViewModel @Inject constructor(private val userService: UserService) : ViewModel(){
 
     private val statusLiveData : MutableLiveData<ResponseType> = MutableLiveData()

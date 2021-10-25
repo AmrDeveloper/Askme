@@ -11,8 +11,10 @@ import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.net.PagingConfig
 import com.amrdeveloper.askme.net.UserService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class UserViewModel @Inject constructor(private val userService: UserService) : ViewModel(){
 
     private var usersLiveData : LiveData<PagedList<User>> = MutableLiveData()

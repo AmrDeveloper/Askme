@@ -1,13 +1,13 @@
 package com.amrdeveloper.askme.views
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.viewmodels.UserViewModel
@@ -15,18 +15,18 @@ import com.amrdeveloper.askme.adapter.PeopleAdapter
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.User
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.gone
 import com.amrdeveloper.askme.extensions.openFragmentInto
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class PeopleFragment : DaggerFragment() {
+@AndroidEntryPoint
+class PeopleFragment : Fragment() {
 
     @Inject lateinit var mUserAdapter: PeopleAdapter
-    private lateinit var mPeopleViewModel : UserViewModel
     private lateinit var mListLayoutBinding: ListLayoutBinding
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
+
+    private val mPeopleViewModel by viewModels<UserViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +41,6 @@ class PeopleFragment : DaggerFragment() {
         mListLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
 
         setupUserList()
-
-        mPeopleViewModel = ViewModelProviders.of(this, providerFactory).get(UserViewModel::class.java)
 
         mPeopleViewModel.loadPeopleList()
 

@@ -12,11 +12,13 @@ import androidx.paging.PagedList
 import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.net.NotificationService
 import com.amrdeveloper.askme.net.PagingConfig
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
+@HiltViewModel
 class NotificationViewModel @Inject constructor(private val notificationService: NotificationService): ViewModel() {
 
     private var notificationPagedList: LiveData<PagedList<Notification>> = MutableLiveData()

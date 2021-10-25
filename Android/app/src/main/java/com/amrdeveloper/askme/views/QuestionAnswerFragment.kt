@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.QuestionAnswerLayoutBinding
-import com.amrdeveloper.askme.di.ViewModelProviderFactory
 import com.amrdeveloper.askme.extensions.loadImage
 import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.str
@@ -20,15 +20,15 @@ import com.amrdeveloper.askme.models.Reaction
 import com.amrdeveloper.askme.models.ReactionData
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.viewmodels.QuestionAnswerViewModel
-import dagger.android.support.DaggerFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class QuestionAnswerFragment : DaggerFragment(){
+@AndroidEntryPoint
+class QuestionAnswerFragment : Fragment(){
 
     private lateinit var mQuestionAnswer: Answer
-    @Inject lateinit var providerFactory : ViewModelProviderFactory
     private lateinit var mQuestionAnswerBinding : QuestionAnswerLayoutBinding
-    private lateinit var mQuestionAnswerViewModel : QuestionAnswerViewModel
+
+    private val mQuestionAnswerViewModel by viewModels<QuestionAnswerViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +37,6 @@ class QuestionAnswerFragment : DaggerFragment(){
     ): View? {
         mQuestionAnswerBinding =
             DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
-        mQuestionAnswerViewModel = ViewModelProviders.of(this, providerFactory).get(QuestionAnswerViewModel::class.java)
 
         val token = Session.getHeaderToken(context!!).str()
         val answerId = arguments?.getString(Constants.ANSWER_ID).str()

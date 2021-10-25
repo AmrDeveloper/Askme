@@ -9,12 +9,14 @@ import com.amrdeveloper.askme.models.Reaction
 import com.amrdeveloper.askme.models.ReactionData
 import com.amrdeveloper.askme.net.AnswerService
 import com.amrdeveloper.askme.net.ReactionService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
+@HiltViewModel
 class QuestionAnswerViewModel @Inject constructor(private val answerService: AnswerService,
                                                   private val reactionService: ReactionService) : ViewModel(){
 
