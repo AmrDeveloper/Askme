@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.amrdeveloper.askme.views.ProfileFragment"
+        android:name="com.amrdeveloper.askme.ui.profile.ProfileFragment"
         android:label="ProfileFragment">
         <argument
             android:name="id"
@@ -30,11 +30,11 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.amrdeveloper.askme.views.SettingsFragment"
+        android:name="com.amrdeveloper.askme.ui.settings.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.amrdeveloper.askme.views.HomeFragment"
+        android:name="com.amrdeveloper.askme.ui.home.HomeFragment"
         android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.amrdeveloper.askme.views.NotificationFragment"
+        android:name="com.amrdeveloper.askme.ui.notification.NotificationFragment"
         android:label="NotificationFragment" >
         <action
             android:id="@+id/action_notificationFragment_to_answerQuestionFragment"
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/peopleFragment"
-        android:name="com.amrdeveloper.askme.views.PeopleFragment"
+        android:name="com.amrdeveloper.askme.ui.people.PeopleFragment"
         android:label="PeopleFragment">
         <action
             android:id="@+id/action_peopleFragment_to_profileFragment"
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.amrdeveloper.askme.views.RegisterFragment"
+        android:name="com.amrdeveloper.askme.ui.register.RegisterFragment"
         android:label="RegisterFragment">
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
@@ -102,7 +102,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.amrdeveloper.askme.views.LoginFragment"
+        android:name="com.amrdeveloper.askme.ui.login.LoginFragment"
         android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
@@ -121,7 +121,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.amrdeveloper.askme.views.SplashFragment"
+        android:name="com.amrdeveloper.askme.ui.splash.SplashFragment"
         android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
@@ -140,22 +140,26 @@
     </fragment>
     <fragment
         android:id="@+id/questionAnswerFragment"
-        android:name="com.amrdeveloper.askme.views.QuestionAnswerFragment"
+        android:name="com.amrdeveloper.askme.ui.questionanswer.QuestionAnswerFragment"
         android:label="QuestionAnswerFragment" >
         <argument
             android:name="answer_id"
             app:argType="string"/>
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_questionAnswerFragment_to_peopleFragment"
             app:destination="@id/peopleFragment" />
     </fragment>
     <fragment
         android:id="@+id/answerQuestionFragment"
-        android:name="com.amrdeveloper.askme.views.AnswerQuestionFragment"
+        android:name="com.amrdeveloper.askme.ui.answerquestion.AnswerQuestionFragment"
         android:label="AnswerQuestionFragment" />
     <fragment
         android:id="@+id/fullscreenFragment"
-        android:name="com.amrdeveloper.askme.views.FullscreenFragment"
+        android:name="com.amrdeveloper.askme.ui.fullscreen.FullscreenFragment"
         android:label="FullscreenFragment" >
 
         <argument
@@ -164,7 +168,7 @@
     </fragment>
     <fragment
         android:id="@+id/askQuestionFragment"
-        android:name="com.amrdeveloper.askme.views.AskQuestionFragment"
+        android:name="com.amrdeveloper.askme.ui.askquestion.AskQuestionFragment"
         android:label="AskQuestionFragment">
 
         <argument
@@ -175,15 +179,12 @@
             android:name="name"
             app:argType="string"/>
 
-
         <argument
             android:name="username"
             app:argType="string"/>
 
-
         <argument
             android:name="avatar_url"
             app:argType="string"/>
-
     </fragment>
 </navigation>

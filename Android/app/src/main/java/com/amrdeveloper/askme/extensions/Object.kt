@@ -1,6 +1,6 @@
 package com.amrdeveloper.askme.extensions
 
-import com.amrdeveloper.askme.net.API_SERVER_URL
+import com.amrdeveloper.askme.data.remote.net.API_SERVER_URL
 
 fun <T : Any> T?.notNull(f: (it: T) -> Unit) {
     if (this != null) f(this)

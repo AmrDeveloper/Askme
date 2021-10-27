@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".views.SettingsActivity">
+        tools:context=".ui.views.SettingsActivity">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="150dp"

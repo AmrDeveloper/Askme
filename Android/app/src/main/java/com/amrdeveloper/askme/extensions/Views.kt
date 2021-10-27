@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import com.amrdeveloper.askme.net.API_SERVER_URL
+import com.amrdeveloper.askme.data.remote.net.API_SERVER_URL
 import com.amrdeveloper.askme.utils.formatDateForJoin
 import com.amrdeveloper.askme.utils.formatDateForPost
 import com.squareup.picasso.Picasso

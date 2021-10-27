@@ -1,8 +1,6 @@
 package com.amrdeveloper.askme.utils
 
 import android.app.Activity
-import com.amrdeveloper.askme.utils.Session
-import com.amrdeveloper.askme.utils.ThemeFactory
 
 object ThemeManager {
 

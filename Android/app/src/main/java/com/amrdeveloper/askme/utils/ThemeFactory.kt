@@ -1,7 +1,7 @@
 package com.amrdeveloper.askme.utils
 
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.models.ThemeColor
+import com.amrdeveloper.askme.data.ThemeColor
 
 object ThemeFactory {
 

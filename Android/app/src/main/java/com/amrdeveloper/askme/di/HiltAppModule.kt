@@ -1,9 +1,9 @@
 package com.amrdeveloper.askme.di
 
-import com.amrdeveloper.askme.adapter.FeedAdapter
-import com.amrdeveloper.askme.adapter.NotificationAdapter
-import com.amrdeveloper.askme.adapter.PeopleAdapter
-import com.amrdeveloper.askme.net.*
+import com.amrdeveloper.askme.data.remote.net.*
+import com.amrdeveloper.askme.ui.adapter.FeedAdapter
+import com.amrdeveloper.askme.ui.adapter.NotificationAdapter
+import com.amrdeveloper.askme.ui.adapter.PeopleAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
