@@ -16,8 +16,8 @@ import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.databinding.QuestionAnswerLayoutBinding
-import com.amrdeveloper.askme.extensions.loadImage
-import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.loadImage
+import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.AndroidEntryPoint
 

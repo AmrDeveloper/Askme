@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.extensions
+package com.amrdeveloper.askme.utils
 
 import com.amrdeveloper.askme.data.remote.net.API_SERVER_URL
 

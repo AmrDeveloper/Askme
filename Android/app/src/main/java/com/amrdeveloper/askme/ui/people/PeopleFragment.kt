@@ -15,7 +15,7 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
-import com.amrdeveloper.askme.extensions.gone
+import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.ui.adapter.PeopleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

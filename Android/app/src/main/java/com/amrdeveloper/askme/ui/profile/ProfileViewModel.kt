@@ -17,7 +17,7 @@ import com.amrdeveloper.askme.data.FollowData
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.data.remote.datasource.FeedDataSource
 import com.amrdeveloper.askme.data.remote.net.*
-import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.lifecycle.HiltViewModel

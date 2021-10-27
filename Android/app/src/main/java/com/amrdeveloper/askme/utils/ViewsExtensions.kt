@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.extensions
+package com.amrdeveloper.askme.utils
 
 import android.content.Context
 import android.view.View
@@ -8,8 +8,6 @@ import androidx.annotation.ColorRes
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.amrdeveloper.askme.data.remote.net.API_SERVER_URL
-import com.amrdeveloper.askme.utils.formatDateForJoin
-import com.amrdeveloper.askme.utils.formatDateForPost
 import com.squareup.picasso.Picasso
 
 fun View.show() {

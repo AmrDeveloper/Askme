@@ -11,7 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
-import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
 import com.amrdeveloper.askme.utils.ThemeManager

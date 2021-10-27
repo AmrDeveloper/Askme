@@ -4,7 +4,6 @@ import android.content.Context
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.SessionData
 import com.amrdeveloper.askme.data.ThemeColor
-import com.amrdeveloper.askme.extensions.str
 
 object Session {
 

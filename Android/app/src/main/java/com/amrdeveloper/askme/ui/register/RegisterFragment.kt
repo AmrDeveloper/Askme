@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.databinding.FragmentRegisterBinding
-import com.amrdeveloper.askme.extensions.gone
-import com.amrdeveloper.askme.extensions.show
-import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.gone
+import com.amrdeveloper.askme.utils.show
+import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.AndroidEntryPoint
 

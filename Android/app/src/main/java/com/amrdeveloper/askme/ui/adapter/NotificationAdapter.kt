@@ -10,9 +10,9 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Action
 import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.data.Open
-import com.amrdeveloper.askme.extensions.backgroundColor
-import com.amrdeveloper.askme.extensions.notNull
-import com.amrdeveloper.askme.extensions.setFormattedDateForPost
+import com.amrdeveloper.askme.utils.backgroundColor
+import com.amrdeveloper.askme.utils.notNull
+import com.amrdeveloper.askme.utils.setFormattedDateForPost
 import kotlinx.android.synthetic.main.notification_list_item.view.*
 
 class NotificationAdapter :

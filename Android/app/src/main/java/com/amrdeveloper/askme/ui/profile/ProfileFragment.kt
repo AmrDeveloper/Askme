@@ -21,9 +21,8 @@ import com.amrdeveloper.askme.data.FollowData
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.data.remote.net.ResponseType
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
-import com.amrdeveloper.askme.extensions.*
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
-import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*

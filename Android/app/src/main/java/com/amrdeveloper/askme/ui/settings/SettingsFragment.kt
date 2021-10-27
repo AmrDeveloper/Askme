@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.ui.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.remote.net.ResponseType
 import com.amrdeveloper.askme.data.themeList
 import com.amrdeveloper.askme.databinding.FragmentSettingsBinding
-import com.amrdeveloper.askme.extensions.str
+import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.ui.adapter.ColorGridAdapter
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.Validation

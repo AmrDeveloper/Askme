@@ -3,7 +3,6 @@ package com.amrdeveloper.askme.utils
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
-import com.amrdeveloper.askme.extensions.str
 
 object FileUtils {
 
