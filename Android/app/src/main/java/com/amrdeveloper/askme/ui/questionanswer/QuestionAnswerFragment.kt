@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Answer
@@ -34,15 +33,15 @@ class QuestionAnswerFragment : Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mQuestionAnswerBinding =
             DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
 
-        val token = Session.getHeaderToken(context!!).str()
+        val token = Session.getHeaderToken(requireContext()).str()
         val answerId = arguments?.getString(Constants.ANSWER_ID).str()
-        val userId = Session.getUserId(context!!).str()
+        val userId = Session.getUserId(requireContext()).str()
 
-        mQuestionAnswerViewModel.getAnswerLiveData().observe(this, Observer {
+        mQuestionAnswerViewModel.getAnswerLiveData().observe(viewLifecycleOwner, {
             bindAnswer(it)
             mQuestionAnswer = it
         })
@@ -65,10 +64,10 @@ class QuestionAnswerFragment : Fragment(){
 
 
         if(answer.isReacted == Reaction.REACATED){
-            mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(context!!, R.color.orange))
+            mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
             mQuestionAnswerBinding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
         }else{
-            mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(context!! ,R.color.black))
+            mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(requireContext() ,R.color.black))
             mQuestionAnswerBinding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_react,0,0,0)
         }
     }
@@ -87,7 +86,7 @@ class QuestionAnswerFragment : Fragment(){
         mQuestionAnswerBinding.reactionsTxt.setOnClickListener{
             when(mQuestionAnswer.isReacted){
                 Reaction.REACATED -> {
-                    val token = Session.getHeaderToken(context!!).str()
+                    val token = Session.getHeaderToken(requireContext()).str()
                     val answerId = mQuestionAnswer.answerId.str()
                     val toUserId = mQuestionAnswer.toUserId
                     val fromUserId = mQuestionAnswer.fromUserId
@@ -96,7 +95,7 @@ class QuestionAnswerFragment : Fragment(){
                 }
 
                 Reaction.UN_REACATED -> {
-                    val token = Session.getHeaderToken(context!!).str()
+                    val token = Session.getHeaderToken(requireContext()).str()
                     val answerId = mQuestionAnswer.answerId.str()
                     val toUserId = mQuestionAnswer.toUserId
                     val fromUserId = mQuestionAnswer.fromUserId

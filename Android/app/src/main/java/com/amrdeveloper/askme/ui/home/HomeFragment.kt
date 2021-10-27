@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
@@ -40,11 +39,11 @@ class HomeFragment : Fragment() {
 
         setupUserList()
 
-        mHomeViewModel.loadUserHomeFeed(Session.getUserId(context!!).str())
+        mHomeViewModel.loadUserHomeFeed(Session.getUserId(requireContext()).str())
 
         mListLayoutBinding.loadingBar.show()
 
-        mHomeViewModel.getFeedPagedList().observe(this, Observer {
+        mHomeViewModel.getFeedPagedList().observe(viewLifecycleOwner, {
             mFeedAdapter.submitList(it)
             mListLayoutBinding.loadingBar.gone()
         })
@@ -69,15 +68,15 @@ class HomeFragment : Fragment() {
             override fun onReactClick(answerId: Int, toUser : String, reaction: Reaction, callback: FeedAdapter.Callback){
                 when(reaction){
                     Reaction.REACATED -> {
-                        val token = Session.getHeaderToken(context!!).str()
-                        val id =  Session.getUserId(context!!).str()
+                        val token = Session.getHeaderToken(requireContext()).str()
+                        val id =  Session.getUserId(requireContext()).str()
                         val body = ReactionData(id, toUser, answerId.str())
 
                         mHomeViewModel.unreactAnswer(token, body, callback)
                     }
                     Reaction.UN_REACATED -> {
-                        val token = Session.getHeaderToken(context!!).str()
-                        val id =  Session.getUserId(context!!).str()
+                        val token = Session.getHeaderToken(requireContext()).str()
+                        val id =  Session.getUserId(requireContext()).str()
                         val body = ReactionData(id, toUser, answerId.str())
 
                         mHomeViewModel.reactAnswer(token, body, callback)

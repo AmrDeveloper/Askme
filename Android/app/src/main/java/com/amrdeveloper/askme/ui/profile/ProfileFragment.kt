@@ -12,7 +12,6 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
@@ -55,7 +54,7 @@ class ProfileFragment : Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
 
         updateUserInfoFromArguments()
@@ -63,20 +62,20 @@ class ProfileFragment : Fragment(){
 
         mProfileBinding.listLayout.loadingBar.show()
 
-        mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(context!!).str())
-        mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(context!!).str())
+        mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(requireContext()).str())
+        mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(requireContext()).str())
 
-        mProfileViewModel.getUserLiveData().observe(this, Observer {
+        mProfileViewModel.getUserLiveData().observe(viewLifecycleOwner, {
             mCurrentUser = it
             bindUserProfile(it)
         })
 
-        mProfileViewModel.getFeedPagedList().observe(this, Observer {
+        mProfileViewModel.getFeedPagedList().observe(viewLifecycleOwner, {
             mFeedAdapter.submitList(it)
             mProfileBinding.listLayout.loadingBar.gone()
         })
 
-        mProfileViewModel.getAvatarLiveData().observe(this, Observer {
+        mProfileViewModel.getAvatarLiveData().observe(viewLifecycleOwner, {
             when(it){
                 ResponseType.SUCCESS -> {
                     Toast.makeText(context, "Update Avatar Success", Toast.LENGTH_SHORT).show()
@@ -90,7 +89,7 @@ class ProfileFragment : Fragment(){
             }
         })
 
-        mProfileViewModel.getWallpaperLiveData().observe(this, Observer {
+        mProfileViewModel.getWallpaperLiveData().observe(viewLifecycleOwner, {
             when(it){
                 ResponseType.SUCCESS -> {
                     Toast.makeText(context, "Update Wallpaper Success", Toast.LENGTH_SHORT).show()
@@ -104,7 +103,7 @@ class ProfileFragment : Fragment(){
             }
         })
 
-        mProfileViewModel.getFollowLiveData().observe(this, Observer {updateFollowCardView(it)})
+        mProfileViewModel.getFollowLiveData().observe(viewLifecycleOwner, {updateFollowCardView(it)})
 
         mProfileBinding.askmeButton.setOnClickListener {openAskQuestionFragment()}
 
@@ -122,7 +121,7 @@ class ProfileFragment : Fragment(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.logoutMenu -> {
-                Session.logout(context!!)
+                Session.logout(requireContext())
                 findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
             }
             R.id.settingsMenu -> {
@@ -135,7 +134,7 @@ class ProfileFragment : Fragment(){
     private fun updateUserInfoFromArguments(){
         mUserId = arguments?.getString(Constants.USER_ID).str()
         if (mUserId.isNullString()) {
-            mUserId = Session.getUserId(context!!).str()
+            mUserId = Session.getUserId(requireContext()).str()
             setupEditMode()
         }else{
             hideEditMode()
@@ -165,7 +164,7 @@ class ProfileFragment : Fragment(){
         userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
         userWallpaper.loadImage(user.wallpaperUrl, R.drawable.ic_wallpaper)
 
-        if (user.id != Session.getUserId(context!!)) {
+        if (user.id != Session.getUserId(requireContext())) {
             updateFollowCardView(user.isUserFollow)
         } else {
             mProfileBinding.followCardView.gone()
@@ -223,8 +222,8 @@ class ProfileFragment : Fragment(){
     }
 
     private fun followCardViewListener(){
-        val followData = FollowData(Session.getUserId(context!!).str(), mUserId)
-        val token = Session.getUserToken(context!!).str()
+        val followData = FollowData(Session.getUserId(requireContext()).str(), mUserId)
+        val token = Session.getUserToken(requireContext()).str()
 
         when (Follow.valueOf(mProfileBinding.followCardView.tag.toString())) {
             Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)
@@ -233,26 +232,26 @@ class ProfileFragment : Fragment(){
     }
 
     private fun changeAvatarImage(){
-        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
             == PackageManager.PERMISSION_GRANTED) {
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, REQUEST_AVATAR_ID)
         }else{
-            ActivityCompat.requestPermissions(activity!!,
+            ActivityCompat.requestPermissions(requireActivity(),
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 PERMISSION_EXTERNAL_STORAGE)
         }
     }
 
     private fun changeWallpaperImage(){
-        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
             == PackageManager.PERMISSION_GRANTED) {
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, REQUEST_WALLPAPER_ID)
         }else{
-            ActivityCompat.requestPermissions(activity!!,
+            ActivityCompat.requestPermissions(requireActivity(),
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 PERMISSION_EXTERNAL_STORAGE)
         }
@@ -264,11 +263,11 @@ class ProfileFragment : Fragment(){
            when(requestCode){
                REQUEST_AVATAR_ID -> {
                    val avatarUri = data?.data
-                   mProfileViewModel.updateUserAvatar(context!!, avatarUri!!)
+                   mProfileViewModel.updateUserAvatar(requireContext(), avatarUri!!)
                }
                REQUEST_WALLPAPER_ID -> {
                    val wallpaperUri = data?.data
-                   mProfileViewModel.updateUserWallpaper(context!!, wallpaperUri!!)
+                   mProfileViewModel.updateUserWallpaper(requireContext(), wallpaperUri!!)
                }
            }
         }

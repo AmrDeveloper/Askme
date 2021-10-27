@@ -44,7 +44,7 @@ class PeopleFragment : Fragment() {
 
         mPeopleViewModel.loadPeopleList()
 
-        mPeopleViewModel.getUserPagedList().observe(this, Observer {
+        mPeopleViewModel.getUserPagedList().observe(viewLifecycleOwner, {
             mUserAdapter.submitList(it)
             mListLayoutBinding.loadingBar.gone()
         })

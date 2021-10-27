@@ -52,7 +52,7 @@ class FullscreenFragment : Fragment(){
 
     private fun saveImageAction(){
         val imageUrl = arguments?.getString(Constants.AVATAR_URL)?.toServerImageUrl().str()
-        Downloader.downloadImage(context!!, imageUrl)
+        Downloader.downloadImage(requireContext(), imageUrl)
     }
 
     private fun shareImageAction(){

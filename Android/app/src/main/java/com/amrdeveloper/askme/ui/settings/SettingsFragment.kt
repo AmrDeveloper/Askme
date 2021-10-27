@@ -103,7 +103,6 @@ class SettingsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Invalid Status", Toast.LENGTH_SHORT)
                     .show()
             }else{
-                Log.d("UPDATE", "Start Request")
                 val token = Session.getHeaderToken(requireContext()).str()
                 val userId = Session.getUserId(requireContext()).str()
                 mSettingsViewModel.changeUserStatus(token, userId, statusTxt)

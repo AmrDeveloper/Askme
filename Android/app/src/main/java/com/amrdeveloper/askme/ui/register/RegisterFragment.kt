@@ -24,7 +24,7 @@ class RegisterFragment : Fragment() {
     private lateinit var binding : FragmentRegisterBinding
     private val viewModel by viewModels<RegisterViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
         setupObservers()

@@ -42,8 +42,8 @@ class NotificationFragment: Fragment(){
 
         notiListSetup()
 
-        val id = Session.getUserId(context!!).toString()
-        val token = Session.getUserToken(context!!).toString()
+        val id = Session.getUserId(requireContext()).toString()
+        val token = Session.getUserToken(requireContext()).toString()
 
         mListLayoutBinding.loadingBar.show()
 
@@ -65,7 +65,7 @@ class NotificationFragment: Fragment(){
         mNotificationAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
             override fun onItemClick(notification: Notification) {
                 if(notification.isOpened == Open.UN_OPENED) {
-                    val token = Session.getHeaderToken(context!!).str()
+                    val token = Session.getHeaderToken(requireContext()).str()
                     mNotificationViewModel.makeNotificationReaded(notification.id.str(), token)
                     notification.isOpened = Open.OPENED
                     mNotificationAdapter.notifyDataSetChanged()

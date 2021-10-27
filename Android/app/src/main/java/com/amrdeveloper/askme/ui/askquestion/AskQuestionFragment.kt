@@ -8,7 +8,6 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
@@ -39,7 +38,7 @@ class AskQuestionFragment : Fragment(){
         mAskQuestionLayoutBinding =
             DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
 
-        mQuestionViewModel.getQuestionLiveData().observe(this, Observer {
+        mQuestionViewModel.getQuestionLiveData().observe(viewLifecycleOwner, {
             when(it){
                 ResponseType.SUCCESS -> {
                     findNavController().navigateUp()
@@ -67,10 +66,10 @@ class AskQuestionFragment : Fragment(){
             val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked
             var isAnonymous = "0"
             if(isAnonymously) isAnonymous = "1"
-            val fromUser = Session.getUserId(context!!).str()
+            val fromUser = Session.getUserId(requireContext()).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
             val questionData = QuestionData(question,toUser, fromUser, isAnonymous)
-            val token = Session.getUserToken(context!!).str()
+            val token = Session.getUserToken(requireContext()).str()
             mQuestionViewModel.askNewQuestion(token, questionData)
         }
         return super.onOptionsItemSelected(item)
