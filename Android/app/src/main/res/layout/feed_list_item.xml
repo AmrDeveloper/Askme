@@ -19,82 +19,81 @@
             android:layout_width="@dimen/dimen35dp"
             android:layout_height="@dimen/dimen35dp"
             android:src="@drawable/ic_profile"
-            app:civ_border_color="@color/darkBlue"
+            app:civ_border_color="?colorPrimary"
             app:civ_border_width="@dimen/dimen1dp" />
 
         <TextView
             android:id="@+id/questionTxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/questionUserAvatar"
             android:layout_marginStart="@dimen/dimen1dp"
-            android:layout_toEndOf="@id/questionUserAvatar"
             android:lines="2"
-            android:padding="@dimen/dimen2dp"
+            android:padding="@dimen/dimen5dp"
             android:textColor="@color/darkBlue"
             tools:text="Hello how are you bro?" />
 
         <TextView
             android:id="@+id/questionFrom"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/questionTxt"
+            android:layout_height="@dimen/dimen35dp"
             android:gravity="center"
+            android:layout_toEndOf="@id/questionUserAvatar"
             android:padding="@dimen/dimen3dp"
             android:textColor="@color/darkBlue"
             android:textStyle="bold"
-            tools:text="Asked By" />
+            tools:text="AmrDeveloper" />
 
         <TextView
             android:id="@+id/answerDateTxt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/questionTxt"
+            android:layout_height="@dimen/dimen35dp"
             android:layout_toEndOf="@id/questionFrom"
             android:gravity="center"
             android:padding="@dimen/dimen3dp"
             tools:text="9 h ago" />
 
-        <TextView
-            android:id="@+id/answerTxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/answerDateTxt"
-            android:lines="2"
-            android:padding="@dimen/dimen2dp"
-            android:textColor="@color/darkBlue"
-            tools:text="I am find thanks for question byo" />
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/answerUserAvatar"
             android:layout_width="@dimen/dimen35dp"
             android:layout_height="@dimen/dimen35dp"
-            android:layout_below="@+id/answerTxt"
+            android:layout_toStartOf="@id/answerFrom"
+            android:layout_below="@id/questionTxt"
             android:src="@drawable/ic_profile"
-            app:civ_border_color="@color/darkBlue"
+            app:civ_border_color="?colorPrimary"
             app:civ_border_width="@dimen/dimen1dp" />
 
         <TextView
             android:id="@+id/answerFrom"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen35dp"
-            android:layout_below="@id/answerTxt"
-            android:layout_toEndOf="@id/answerUserAvatar"
+            android:layout_below="@id/questionTxt"
+            android:layout_alignParentEnd="true"
             android:gravity="center"
             android:padding="@dimen/dimen2dp"
-            android:textStyle="bold"
             android:textColor="@color/darkBlue"
-            tools:text="amrdeveloper" />
+            android:textStyle="bold"
+            tools:text="AmrDeveloper2" />
 
         <TextView
             android:id="@+id/reactionsTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/answerTxt"
             android:layout_alignParentEnd="true"
             android:drawableStart="@drawable/ic_react"
             android:drawablePadding="@dimen/dimen2dp"
             android:gravity="center"
             android:textColor="@color/darkBlue"
             tools:text="10" />
+
+        <TextView
+            android:id="@+id/answerTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/answerUserAvatar"
+            android:padding="@dimen/dimen5dp"
+            android:gravity="end"
+            android:textColor="@color/darkBlue"
+            tools:text="I am find thanks for question byo" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
