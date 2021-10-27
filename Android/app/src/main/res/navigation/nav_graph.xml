@@ -19,12 +19,24 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_profileFragment_to_fullscreenFragment"
             app:destination="@id/fullscreenFragment" />
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_profileFragment_to_askQuestionFragment"
             app:destination="@id/askQuestionFragment" />
     </fragment>
@@ -63,9 +75,17 @@
         android:name="com.amrdeveloper.askme.ui.notification.NotificationFragment"
         android:label="NotificationFragment" >
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_notificationFragment_to_answerQuestionFragment"
             app:destination="@id/answerQuestionFragment" />
         <action
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_notificationFragment_to_questionAnswerFragment"
             app:destination="@id/questionAnswerFragment" />
     </fragment>
