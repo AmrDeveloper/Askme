@@ -22,6 +22,10 @@ object Libraries {
     const val lifecycleViewModel =  "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModelVersion}"
     const val fragmentExtension = "androidx.fragment:fragment-ktx:${Versions.fragmentExtensionVersion}"
 
+    const val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigationVersion}"
+    const val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigationVersion}"
+    const val legacySupport = "androidx.legacy:legacy-support-v4:${Versions.legacySupportVersion}"
+
     const val daggerHitl = "com.google.dagger:hilt-android:${Versions.daggerHiltVersion}"
     const val daggerHiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.daggerHiltVersion}"
 

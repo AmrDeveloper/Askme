@@ -19,6 +19,9 @@ object Versions {
     const val lifecycleViewModelVersion = "2.1.0"
     const val fragmentExtensionVersion = "1.3.6"
 
+    const val navigationVersion = "2.3.5"
+    const val legacySupportVersion = "1.0.0"
+
     const val cardVersion = "1.0.0"
     const val recyclerVersion = "1.1.0"
     const val materialVersion = "1.2.0-alpha03"

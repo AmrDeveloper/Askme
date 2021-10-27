@@ -57,6 +57,10 @@ dependencies {
     implementation (Libraries.lifecycleViewModel)
     implementation (Libraries.fragmentExtension)
 
+    implementation (Libraries.navigationFragment)
+    implementation (Libraries.navigationUi)
+    implementation (Libraries.legacySupport)
+
     implementation(Libraries.daggerHitl)
     kapt(Libraries.daggerHiltCompiler)
 
