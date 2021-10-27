@@ -22,11 +22,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".views.SettingsActivity" android:label="@string/settings"/>
-        <activity android:name=".views.LoginActivity" />
-        <activity android:name=".views.RegisterActivity" />
-        <activity android:name=".views.MainActivity" />
-        <activity android:name=".views.SplashActivity" android:exported="true">
+        <activity android:name=".views.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

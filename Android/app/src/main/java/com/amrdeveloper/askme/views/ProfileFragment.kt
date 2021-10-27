@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.profile_layout.*
 import kotlinx.android.synthetic.main.user_grid_analysis.*
 
 @AndroidEntryPoint
-
 class ProfileFragment : Fragment(){
 
     private lateinit var mUserId: String
@@ -121,13 +120,10 @@ class ProfileFragment : Fragment(){
         when(item.itemId){
             R.id.logoutMenu -> {
                 Session.logout(context!!)
-                val intent = Intent(context, LoginActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
+                fragmentManager?.openFragmentInto(R.id.viewContainers, LoginFragment())
             }
             R.id.settingsMenu -> {
-                val intent = Intent(context, SettingsActivity::class.java)
-                startActivity(intent)
+                fragmentManager?.openFragmentInto(R.id.viewContainers, SettingsFragment())
             }
         }
         return super.onOptionsItemSelected(item)

@@ -7,8 +7,11 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.utils.ThemeManager
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.extensions.notNull
 import com.amrdeveloper.askme.extensions.openFragmentInto
@@ -16,8 +19,8 @@ import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
+import com.amrdeveloper.askme.utils.ThemeManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.android.support.DaggerAppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

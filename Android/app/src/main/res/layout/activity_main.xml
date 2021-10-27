@@ -7,12 +7,13 @@
         android:layout_height="match_parent"
         tools:context=".views.MainActivity">
 
-        <FrameLayout
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/viewContainers"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/mainNavigation"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/mainNavigation"
