@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.FragmentRegisterBinding
 import com.amrdeveloper.askme.extensions.gone
-import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.RegisterData
@@ -45,7 +45,7 @@ class RegisterFragment : Fragment() {
 
                 Session.login(requireContext(), email, password, it)
 
-                fragmentManager?.openFragmentInto(R.id.viewContainers, HomeFragment())
+                findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
             }else{
                 Toast.makeText(requireContext(), "Invalid Register", Toast.LENGTH_SHORT).show()
             }
@@ -54,7 +54,7 @@ class RegisterFragment : Fragment() {
 
     private fun setupListeners() {
         binding.loginTxt.setOnClickListener {
-            fragmentManager?.openFragmentInto(R.id.viewContainers, LoginFragment())
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         binding.registerButton.setOnClickListener {

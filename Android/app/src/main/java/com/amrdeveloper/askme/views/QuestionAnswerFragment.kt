@@ -5,14 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.QuestionAnswerLayoutBinding
 import com.amrdeveloper.askme.extensions.loadImage
-import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Answer
 import com.amrdeveloper.askme.models.Constants
@@ -63,6 +64,7 @@ class QuestionAnswerFragment : Fragment(){
 
         mQuestionAnswerBinding.reactionsTxt.text = answer.reactionsNum.str()
 
+
         if(answer.isReacted == Reaction.REACATED){
             mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(context!!, R.color.orange))
             mQuestionAnswerBinding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
@@ -74,23 +76,13 @@ class QuestionAnswerFragment : Fragment(){
 
     private fun viewsClickListeners(){
         mQuestionAnswerBinding.questionUsername.setOnClickListener {
-            val profileFragment = ProfileFragment()
-
-            val args = Bundle()
-            args.putString(Constants.USER_ID, mQuestionAnswer.toUserId)
-            profileFragment.arguments = args
-
-            fragmentManager?.openFragmentInto(R.id.viewContainers, profileFragment)
+            val bundle = bundleOf(Constants.USER_ID to mQuestionAnswer.toUserId)
+            findNavController().navigate(R.id.action_questionAnswerFragment_to_peopleFragment, bundle)
         }
 
         mQuestionAnswerBinding.answerUsername.setOnClickListener{
-            val profileFragment = ProfileFragment()
-
-            val args = Bundle()
-            args.putString(Constants.USER_ID,  mQuestionAnswer.fromUserId)
-            profileFragment.arguments = args
-
-            fragmentManager?.openFragmentInto(R.id.viewContainers, profileFragment)
+            val bundle = bundleOf(Constants.USER_ID to mQuestionAnswer.fromUserId)
+            findNavController().navigate(R.id.action_questionAnswerFragment_to_peopleFragment, bundle)
         }
 
         mQuestionAnswerBinding.reactionsTxt.setOnClickListener{

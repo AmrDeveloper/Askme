@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.models.AnswerData
 import com.amrdeveloper.askme.models.Constants
@@ -54,7 +55,7 @@ class AnswerQuestionFragment : Fragment() {
 
         mAnswerQuestionViewModel.getAnswerLiveData().observe(this, Observer {
             when(it){
-                ResponseType.SUCCESS ->  fragmentManager?.popBackStackImmediate()
+                ResponseType.SUCCESS ->  findNavController().navigateUp()
                 ResponseType.FAILURE -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
                 else -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
             }

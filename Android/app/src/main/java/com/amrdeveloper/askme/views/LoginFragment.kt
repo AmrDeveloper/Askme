@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.FragmentLoginBinding
 import com.amrdeveloper.askme.extensions.gone
-import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.LoginData
@@ -42,8 +42,7 @@ class LoginFragment : Fragment() {
                 val password: String = binding.passInputEdit.text.str()
 
                 Session.login(requireContext(), email, password, it)
-
-                fragmentManager?.openFragmentInto(R.id.viewContainers, HomeFragment())
+                findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             } else {
                 Toast.makeText(requireContext(), "Invalid Login", Toast.LENGTH_SHORT).show()
             }
@@ -52,7 +51,7 @@ class LoginFragment : Fragment() {
 
     private fun setupListener() {
         binding.registerTxt.setOnClickListener {
-            fragmentManager?.openFragmentInto(R.id.viewContainers, RegisterFragment())
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         binding.loginButton.setOnClickListener {

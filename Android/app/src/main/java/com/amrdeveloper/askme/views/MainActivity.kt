@@ -7,14 +7,9 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
-import com.amrdeveloper.askme.extensions.notNull
-import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.utils.Session
@@ -26,26 +21,26 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private var mActionBar: ActionBar? = null
-    private lateinit var mMainActivity: ActivityMainBinding
+    private var supportedActionBar: ActionBar? = null
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeManager.setUserTheme(this)
         super.onCreate(savedInstanceState)
 
-        mMainActivity = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        mActionBar = supportActionBar
-        mMainActivity.mainNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelection)
+        supportedActionBar = supportActionBar
+        binding.mainNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelection)
 
-        if(intent.action == null) {
-            mMainActivity.mainNavigation.selectedItemId = R.id.navigation_home
-            supportFragmentManager.openFragmentInto(R.id.viewContainers, HomeFragment())
-        }else{
-            if(Session.isUserLogined(this)) {
+        if (intent.action == null) {
+            binding.mainNavigation.selectedItemId = R.id.navigation_home
+            findNavController(this,R.id.viewContainers).navigate(R.id.homeFragment)
+        } else {
+            if (Session.isUserLogined(this)) {
                 val shortcutAction = intent.action.str()
-                ShortcutUtils.executeAction(shortcutAction, mMainActivity.mainNavigation)
-            }else{
+                ShortcutUtils.executeAction(shortcutAction, binding.mainNavigation)
+            } else {
                 Toast.makeText(this, "No Authentication", Toast.LENGTH_SHORT).show()
             }
         }
@@ -53,38 +48,30 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     private val onNavigationItemSelection =
         BottomNavigationView.OnNavigationItemSelectedListener { menu ->
-            val selectedId = mMainActivity.mainNavigation.selectedItemId
+            val selectedId = binding.mainNavigation.selectedItemId
             if(selectedId == menu.itemId){
                 return@OnNavigationItemSelectedListener false
             }
 
             when (menu.itemId) {
                 R.id.navigation_home -> {
-                    mActionBar.notNull { it.title = "Home" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
-                        HomeFragment()
-                    )
+                    supportedActionBar?.let { it.title = "Home" }
+                    findNavController(this,R.id.viewContainers).navigate(R.id.homeFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_notifications -> {
-                    mActionBar.notNull { it.title = "Notifications" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
-                        NotificationFragment()
-                    )
+                    supportedActionBar?.let { it.title = "Notifications" }
+                    findNavController(this,R.id.viewContainers).navigate(R.id.notificationFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_people -> {
-                    mActionBar.notNull { it.title = "People" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
-                        PeopleFragment()
-                    )
+                    supportedActionBar?.let { it.title = "People" }
+                    findNavController(this,R.id.viewContainers).navigate(R.id.peopleFragment)
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_profile -> {
-                    mActionBar.notNull { it.title = "Profile" }
-                    supportFragmentManager.openFragmentInto(R.id.viewContainers,
-                        ProfileFragment()
-                    )
+                    supportedActionBar?.let { it.title = "Profile" }
+                    findNavController(this,R.id.viewContainers).navigate(R.id.profileFragment)
                     return@OnNavigationItemSelectedListener true
                 }
             }

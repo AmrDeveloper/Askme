@@ -7,10 +7,26 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.amrdeveloper.askme.views.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
+        <argument
+            android:name="id"
+            app:argType="string" />
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_fullscreenFragment"
+            app:destination="@id/fullscreenFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_askQuestionFragment"
+            app:destination="@id/askQuestionFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -19,65 +35,155 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.amrdeveloper.askme.views.HomeFragment"
-        android:label="HomeFragment" >
+        android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
+            app:destination="@id/notificationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_homeFragment_to_peopleFragment"
-            app:destination="@id/peopleFragment" />
+            app:destination="@id/peopleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.amrdeveloper.askme.views.NotificationFragment"
-        android:label="NotificationFragment" />
+        android:label="NotificationFragment" >
+        <action
+            android:id="@+id/action_notificationFragment_to_answerQuestionFragment"
+            app:destination="@id/answerQuestionFragment" />
+        <action
+            android:id="@+id/action_notificationFragment_to_questionAnswerFragment"
+            app:destination="@id/questionAnswerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/peopleFragment"
         android:name="com.amrdeveloper.askme.views.PeopleFragment"
-        android:label="PeopleFragment" />
+        android:label="PeopleFragment">
+        <action
+            android:id="@+id/action_peopleFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.amrdeveloper.askme.views.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:label="RegisterFragment">
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.amrdeveloper.askme.views.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            app:destination="@id/registerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.amrdeveloper.askme.views.SplashFragment"
-        android:label="SplashFragment" >
+        android:label="SplashFragment">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/questionAnswerFragment"
+        android:name="com.amrdeveloper.askme.views.QuestionAnswerFragment"
+        android:label="QuestionAnswerFragment" >
+        <argument
+            android:name="answer_id"
+            app:argType="string"/>
         <action
-            android:id="@+id/action_splashFragment_to_loginFragment2"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_splashFragment_to_loginFragment3"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_splashFragment_to_loginFragment4"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_questionAnswerFragment_to_peopleFragment"
+            app:destination="@id/peopleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/answerQuestionFragment"
+        android:name="com.amrdeveloper.askme.views.AnswerQuestionFragment"
+        android:label="AnswerQuestionFragment" />
+    <fragment
+        android:id="@+id/fullscreenFragment"
+        android:name="com.amrdeveloper.askme.views.FullscreenFragment"
+        android:label="FullscreenFragment" >
+
+        <argument
+            android:name="avatar_url"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/askQuestionFragment"
+        android:name="com.amrdeveloper.askme.views.AskQuestionFragment"
+        android:label="AskQuestionFragment">
+
+        <argument
+            android:name="id"
+            app:argType="string"/>
+
+        <argument
+            android:name="name"
+            app:argType="string"/>
+
+
+        <argument
+            android:name="username"
+            app:argType="string"/>
+
+
+        <argument
+            android:name="avatar_url"
+            app:argType="string"/>
+
     </fragment>
 </navigation>

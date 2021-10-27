@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.viewmodels.HomeViewModel
 import com.amrdeveloper.askme.R
@@ -15,7 +16,6 @@ import com.amrdeveloper.askme.models.Reaction
 import com.amrdeveloper.askme.models.ReactionData
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
-import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.utils.Session
@@ -58,13 +58,9 @@ class HomeFragment : Fragment() {
 
         mFeedAdapter.setOnUsernameListener(object : FeedAdapter.OnUsernameClick {
             override fun onUserClick(userId: String) {
-                val profileFragment = ProfileFragment()
-
                 val args = Bundle()
                 args.putString(Constants.USER_ID, userId)
-                profileFragment.arguments = args
-
-                fragmentManager?.openFragmentInto(R.id.viewContainers, profileFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_profileFragment, args)
             }
         })
 

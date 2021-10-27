@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.viewmodels.NotificationViewModel
 import com.amrdeveloper.askme.R
@@ -17,7 +19,6 @@ import com.amrdeveloper.askme.models.Constants
 import com.amrdeveloper.askme.models.Notification
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.extensions.gone
-import com.amrdeveloper.askme.extensions.openFragmentInto
 import com.amrdeveloper.askme.extensions.show
 import com.amrdeveloper.askme.extensions.str
 import com.amrdeveloper.askme.models.Open
@@ -71,25 +72,13 @@ class NotificationFragment: Fragment(){
                     mNotificationAdapter.notifyDataSetChanged()
                 }
 
-                when(notification.action){
-                    Action.QUESTION -> {
-                        val answerQuestionFragment = AnswerQuestionFragment()
-
-                        val args = Bundle()
-                        args.putString(Constants.QUESTION_ID, notification.data)
-                        answerQuestionFragment.arguments = args
-
-                        fragmentManager?.openFragmentInto(R.id.viewContainers, answerQuestionFragment)
-                    }
-                    Action.ANSWER -> {
-                        val questionAnswerFragment = QuestionAnswerFragment()
-
-                        val args = Bundle()
-                        args.putString(Constants.ANSWER_ID, notification.data)
-                        questionAnswerFragment.arguments = args
-
-                        fragmentManager?.openFragmentInto(R.id.viewContainers, questionAnswerFragment)
-                    }
+                if (notification.action == Action.QUESTION) {
+                    val bundle = bundleOf(Constants.QUESTION_ID to notification.data)
+                    findNavController().navigate(R.id.action_notificationFragment_to_answerQuestionFragment, bundle)
+                }
+                else if (notification.action == Action.ANSWER) {
+                    val bundle = bundleOf(Constants.ANSWER_ID to notification.data)
+                    findNavController().navigate(R.id.action_notificationFragment_to_questionAnswerFragment, bundle)
                 }
             }
         })
