@@ -17,24 +17,20 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FullscreenFragment : Fragment(){
 
-    private lateinit var mFullscreenLayoutBinding: FullscreenLayoutBinding
+    private lateinit var binding: FullscreenLayoutBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mFullscreenLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.fullscreen_layout, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fullscreen_layout, container, false)
 
         val imageUrl = arguments?.getString(Constants.AVATAR_URL)
-        mFullscreenLayoutBinding.imageView.loadImage(imageUrl, R.drawable.ic_profile)
+        binding.imageView.loadImage(imageUrl, R.drawable.ic_profile)
 
-        return mFullscreenLayoutBinding.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

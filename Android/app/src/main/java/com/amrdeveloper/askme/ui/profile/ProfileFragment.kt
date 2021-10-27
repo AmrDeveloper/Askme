@@ -49,11 +49,7 @@ class ProfileFragment : Fragment(){
         arguments?.get(Constants.USER_ID)?.let { mUserId = it as String }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
 
         updateUserInfoFromArguments()
@@ -64,6 +60,31 @@ class ProfileFragment : Fragment(){
         mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(requireContext()).str())
         mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(requireContext()).str())
 
+        setupObservers()
+
+        setupFullScreenOption()
+        return mProfileBinding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.profile_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logoutMenu -> {
+                Session.logout(requireContext())
+                findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+            }
+            R.id.settingsMenu -> {
+                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupObservers( ) {
         mProfileViewModel.getUserLiveData().observe(viewLifecycleOwner, {
             mCurrentUser = it
             bindUserProfile(it)
@@ -107,27 +128,6 @@ class ProfileFragment : Fragment(){
         mProfileBinding.askmeButton.setOnClickListener {openAskQuestionFragment()}
 
         mProfileBinding.askmeFollowMe.setOnClickListener {followCardViewListener()}
-
-        setupFullScreenOption()
-        return mProfileBinding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.profile_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.logoutMenu -> {
-                Session.logout(requireContext())
-                findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
-            }
-            R.id.settingsMenu -> {
-                findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun updateUserInfoFromArguments(){

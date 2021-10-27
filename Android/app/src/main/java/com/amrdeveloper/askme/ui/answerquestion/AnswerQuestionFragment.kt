@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Anonymously
@@ -26,42 +25,26 @@ import dagger.hilt.android.AndroidEntryPoint
 class AnswerQuestionFragment : Fragment() {
 
     private lateinit var mQuestion: Question
-    private lateinit var mAnswerQuestionLayoutBinding: AnswerQuestionLayoutBinding
+    private lateinit var binding: AnswerQuestionLayoutBinding
 
-    private val mAnswerQuestionViewModel by viewModels <AnswerQuestionViewModel>()
+    private val viewModel by viewModels <AnswerQuestionViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mAnswerQuestionLayoutBinding =
-            DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
 
-        val token = Session.getHeaderToken(context!!).str()
+        setupObservers()
+
+        val token = Session.getHeaderToken(requireContext()).str()
         val questionID = arguments?.getString(Constants.QUESTION_ID).str()
-        mAnswerQuestionViewModel.getQuestionById(token, questionID)
-
-        mAnswerQuestionViewModel.getQuestinLiveData().observe(this, Observer {
-            bindQuestionInformation(it)
-            mQuestion = it
-        })
-
-        mAnswerQuestionViewModel.getAnswerLiveData().observe(this, Observer {
-            when(it){
-                ResponseType.SUCCESS ->  findNavController().navigateUp()
-                ResponseType.FAILURE -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
-                else -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
-            }
-        })
+        viewModel.getQuestionById(token, questionID)
 
         updateQuestionLength()
-        return mAnswerQuestionLayoutBinding.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,39 +55,50 @@ class AnswerQuestionFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
             val questionID = arguments?.getString(Constants.QUESTION_ID).str()
-            val answerBody = mAnswerQuestionLayoutBinding.answerEditText.text.str()
-            val fromUserId = Session.getUserId(context!!).str()
+            val answerBody = binding.answerEditText.text.str()
+            val fromUserId = Session.getUserId(requireContext()).str()
             val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
-            val token = Session.getHeaderToken(context!!).str()
-            mAnswerQuestionViewModel.answerQuestion(token, answerData)
+            val token = Session.getHeaderToken(requireContext()).str()
+            viewModel.answerQuestion(token, answerData)
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun setupObservers() {
+        viewModel.getQuestinLiveData().observe(viewLifecycleOwner, {
+            bindQuestionInformation(it)
+            mQuestion = it
+        })
+
+        viewModel.getAnswerLiveData().observe(viewLifecycleOwner, {
+            when(it){
+                ResponseType.SUCCESS ->  findNavController().navigateUp()
+                ResponseType.FAILURE -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(context, "Invalid Answer Request", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     private fun bindQuestionInformation(question : Question){
-        mAnswerQuestionLayoutBinding.questionText.text = question.title
+        binding.questionText.text = question.title
 
         if(question.anonymously == Anonymously.ANONYMOSLY){
-            mAnswerQuestionLayoutBinding.userUsername.text = getString(R.string.anonymous_user)
+            binding.userUsername.text = getString(R.string.anonymous_user)
         }else{
-            mAnswerQuestionLayoutBinding.userUsername.text = question.fromUserName
-            mAnswerQuestionLayoutBinding.userAvatar.loadImage(question.fromUserAvatar, R.drawable.ic_profile)
+            binding.userUsername.text = question.fromUserName
+            binding.userAvatar.loadImage(question.fromUserAvatar, R.drawable.ic_profile)
         }
     }
 
     private fun updateQuestionLength(){
-        mAnswerQuestionLayoutBinding.answerEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+        binding.answerEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            }
-
-            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(editable : Editable?) {
-                mAnswerQuestionLayoutBinding.questionLength.text = (300 - editable!!.length).str()
+                binding.questionLength.text = (300 - editable!!.length).str()
             }
         })
     }

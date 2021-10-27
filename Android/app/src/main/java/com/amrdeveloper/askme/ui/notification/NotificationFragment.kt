@@ -1,6 +1,7 @@
 package com.amrdeveloper.askme.ui.notification
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
@@ -23,52 +23,49 @@ import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.ui.adapter.NotificationAdapter
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class NotificationFragment: Fragment(){
 
-    private lateinit var mListLayoutBinding: ListLayoutBinding
-    @Inject lateinit var mNotificationAdapter: NotificationAdapter
+    private lateinit var notificationAdapter: NotificationAdapter
 
-    private val mNotificationViewModel by viewModels<NotificationViewModel>()
+    private lateinit var binding: ListLayoutBinding
+    private val viewModel by viewModels<NotificationViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mListLayoutBinding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
 
-        notiListSetup()
+        setupNotificationsList()
 
         val id = Session.getUserId(requireContext()).toString()
         val token = Session.getUserToken(requireContext()).toString()
 
-        mListLayoutBinding.loadingBar.show()
+        viewModel.loadUserNotifications(id, token)
 
-        mNotificationViewModel.loadUserNotifications(id, token)
+        setupObservers()
 
-        mNotificationViewModel.getNotificationList().observe(this, Observer {
-            mNotificationAdapter.submitList(it)
-            mListLayoutBinding.loadingBar.gone()
-        })
-
-        return mListLayoutBinding.root
+        return binding.root
     }
 
-    private fun notiListSetup(){
-        mListLayoutBinding.listItems.setHasFixedSize(true)
-        mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
-        mListLayoutBinding.listItems.adapter = mNotificationAdapter
+    private fun setupObservers() {
+        viewModel.getNotificationList().observe(viewLifecycleOwner, {
+            notificationAdapter.submitList(it)
+        })
+    }
 
-        mNotificationAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
+    private fun setupNotificationsList(){
+        notificationAdapter = NotificationAdapter()
+        binding.listItems.setHasFixedSize(true)
+        binding.listItems.layoutManager = LinearLayoutManager(context)
+        binding.listItems.adapter = notificationAdapter
+
+        notificationAdapter.setOnItemClickListener(object : NotificationAdapter.OnItemClickListener {
             override fun onItemClick(notification: Notification) {
                 if(notification.isOpened == Open.UN_OPENED) {
                     val token = Session.getHeaderToken(requireContext()).str()
-                    mNotificationViewModel.makeNotificationReaded(notification.id.str(), token)
+                    viewModel.makeNotificationReaded(notification.id.str(), token)
                     notification.isOpened = Open.OPENED
-                    mNotificationAdapter.notifyDataSetChanged()
+                    notificationAdapter.notifyDataSetChanged()
                 }
 
                 if (notification.action == Action.QUESTION) {

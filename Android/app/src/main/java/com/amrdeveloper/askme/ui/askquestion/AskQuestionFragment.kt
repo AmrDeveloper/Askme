@@ -22,37 +22,22 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AskQuestionFragment : Fragment(){
 
-    private lateinit var mAskQuestionLayoutBinding: AskQuestionLayoutBinding
-    private val mQuestionViewModel by viewModels<QuestionViewModel>()
+    private lateinit var binding: AskQuestionLayoutBinding
+    private val viewModel by viewModels<QuestionViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mAskQuestionLayoutBinding =
-            DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.ask_question_layout, container, false)
 
-        mQuestionViewModel.getQuestionLiveData().observe(viewLifecycleOwner, {
-            when(it){
-                ResponseType.SUCCESS -> {
-                    findNavController().navigateUp()
-                }
-                ResponseType.FAILURE -> {
-                    Log.d("QUESTION","Invalid")
-                }
-            }
-        })
-
+        setupObservers()
         bindUserInformation()
         updateQuestionLength()
 
-        return mAskQuestionLayoutBinding.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -62,17 +47,24 @@ class AskQuestionFragment : Fragment(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
-            val question = mAskQuestionLayoutBinding.questionEditText.text.str()
-            val isAnonymously = mAskQuestionLayoutBinding.anonymouslySwitch.isChecked
+            val question = binding.questionEditText.text.str()
+            val isAnonymously = binding.anonymouslySwitch.isChecked
             var isAnonymous = "0"
             if(isAnonymously) isAnonymous = "1"
             val fromUser = Session.getUserId(requireContext()).str()
             val toUser = arguments?.getString(Constants.USER_ID).str()
             val questionData = QuestionData(question,toUser, fromUser, isAnonymous)
             val token = Session.getUserToken(requireContext()).str()
-            mQuestionViewModel.askNewQuestion(token, questionData)
+            viewModel.askNewQuestion(token, questionData)
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setupObservers() {
+        viewModel.getQuestionLiveData().observe(viewLifecycleOwner, {
+            if (it == ResponseType.SUCCESS) findNavController().navigateUp()
+            else if (it == ResponseType.FAILURE) Log.d("QUESTION","Invalid")
+        })
     }
 
     private fun bindUserInformation(){
@@ -80,18 +72,18 @@ class AskQuestionFragment : Fragment(){
         val username = arguments?.getString(Constants.USERNAME)
         val avatarUrl = arguments?.getString(Constants.AVATAR_URL)
 
-        mAskQuestionLayoutBinding.userName.text = name
-        mAskQuestionLayoutBinding.userUsername.text = username
-        mAskQuestionLayoutBinding.userAvatar.loadImage(avatarUrl, R.drawable.ic_profile)
+        binding.userName.text = name
+        binding.userUsername.text = username
+        binding.userAvatar.loadImage(avatarUrl, R.drawable.ic_profile)
     }
 
     private fun updateQuestionLength(){
-        mAskQuestionLayoutBinding.questionEditText.addTextChangedListener(object : TextWatcher {
+        binding.questionEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(editable : Editable?) {
-                mAskQuestionLayoutBinding.questionLength.text = (300 - editable!!.length).str()
+                binding.questionLength.text = (300 - editable!!.length).str()
             }
         })
     }

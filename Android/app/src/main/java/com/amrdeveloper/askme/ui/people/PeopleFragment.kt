@@ -15,41 +15,33 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
-import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.ui.adapter.PeopleAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class PeopleFragment : Fragment() {
 
-    @Inject lateinit var mUserAdapter: PeopleAdapter
-    private lateinit var mListLayoutBinding: ListLayoutBinding
+    private lateinit var peopleAdapter: PeopleAdapter
 
-    private val mPeopleViewModel by viewModels<PeopleViewModel>()
+    private lateinit var binding: ListLayoutBinding
+
+    private val viewModel by viewModels<PeopleViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        mListLayoutBinding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
 
         setupUserList()
 
-        mPeopleViewModel.loadPeopleList()
+        viewModel.loadPeopleList()
 
-        mPeopleViewModel.getUserPagedList().observe(viewLifecycleOwner, {
-            mUserAdapter.submitList(it)
-            mListLayoutBinding.loadingBar.gone()
-        })
+        setupObservers()
 
-        return mListLayoutBinding.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -63,12 +55,19 @@ class PeopleFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun setupUserList() {
-        mListLayoutBinding.listItems.setHasFixedSize(true)
-        mListLayoutBinding.listItems.layoutManager = LinearLayoutManager(context)
-        mListLayoutBinding.listItems.adapter = mUserAdapter
+    private fun setupObservers() {
+        viewModel.getUserPagedList().observe(viewLifecycleOwner, {
+            peopleAdapter.submitList(it)
+        })
+    }
 
-        mUserAdapter.setOnUserClickListener(object : PeopleAdapter.OnUserClickListener {
+    private fun setupUserList() {
+        peopleAdapter = PeopleAdapter()
+        binding.listItems.setHasFixedSize(true)
+        binding.listItems.layoutManager = LinearLayoutManager(context)
+        binding.listItems.adapter = peopleAdapter
+
+        peopleAdapter.setOnUserClickListener(object : PeopleAdapter.OnUserClickListener {
             override fun onClick(user: User) {
                 val bundle = bundleOf(Constants.USER_ID to user.id)
                 findNavController().navigate(R.id.action_peopleFragment_to_profileFragment, bundle)
@@ -78,25 +77,26 @@ class PeopleFragment : Fragment() {
 
     private val userSearchViewListener = object : SearchView.OnQueryTextListener{
         override fun onQueryTextChange(newText: String?): Boolean{
-            if(newText!!.isEmpty()){
-                if(view != null) mPeopleViewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
-                mUserAdapter.submitList(mPeopleViewModel.getUserPagedList().value)
+            newText?.let {
+                if (it.isEmpty()) return@let
+                if(view != null) viewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
+                peopleAdapter.submitList(viewModel.getUserPagedList().value)
             }
             return true
         }
 
         override fun onQueryTextSubmit(query: String?): Boolean {
-            if(query.isNullOrEmpty() || query.trim().length < 3){
+            return if(query.isNullOrEmpty() || query.trim().length < 3){
                 Toast.makeText(context, "Invalid Query", Toast.LENGTH_SHORT).show()
-                return false
+                false
             }else{
-                if(mPeopleViewModel.getUsersSearchList().hasActiveObservers().not()){
-                    mPeopleViewModel.getUsersSearchList().observe(viewLifecycleOwner, Observer {
-                        mUserAdapter.submitList(it)
+                if(viewModel.getUsersSearchList().hasActiveObservers().not()){
+                    viewModel.getUsersSearchList().observe(viewLifecycleOwner, {
+                        peopleAdapter.submitList(it)
                     })
                 }
-                mPeopleViewModel.searchPeopleList(query)
-                return true
+                viewModel.searchPeopleList(query)
+                true
             }
         }
     }

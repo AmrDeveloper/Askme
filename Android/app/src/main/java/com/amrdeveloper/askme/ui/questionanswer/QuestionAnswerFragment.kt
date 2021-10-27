@@ -29,11 +29,7 @@ class QuestionAnswerFragment : Fragment(){
 
     private val mQuestionAnswerViewModel by viewModels<QuestionAnswerViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mQuestionAnswerBinding =
             DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
 
@@ -41,14 +37,18 @@ class QuestionAnswerFragment : Fragment(){
         val answerId = arguments?.getString(Constants.ANSWER_ID).str()
         val userId = Session.getUserId(requireContext()).str()
 
-        mQuestionAnswerViewModel.getAnswerLiveData().observe(viewLifecycleOwner, {
-            bindAnswer(it)
-            mQuestionAnswer = it
-        })
+        setupObservers()
 
         mQuestionAnswerViewModel.getQuestionAnswer(token, answerId, userId)
         viewsClickListeners()
         return mQuestionAnswerBinding.root
+    }
+
+    private fun setupObservers() {
+        mQuestionAnswerViewModel.getAnswerLiveData().observe(viewLifecycleOwner, {
+            bindAnswer(it)
+            mQuestionAnswer = it
+        })
     }
 
     private fun bindAnswer(answer : Answer){

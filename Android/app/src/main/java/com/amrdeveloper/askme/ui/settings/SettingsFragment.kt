@@ -27,7 +27,7 @@ class SettingsFragment : Fragment() {
 
     private lateinit var binding : FragmentSettingsBinding
 
-    private val mSettingsViewModel by viewModels<SettingsViewModel>()
+    private val viewModel by viewModels<SettingsViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
@@ -39,7 +39,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        mSettingsViewModel.getStatusLiveData().observe(viewLifecycleOwner, {
+        viewModel.getStatusLiveData().observe(viewLifecycleOwner, {
             if (it == ResponseType.SUCCESS) {
                 Toast.makeText(requireContext(), "Status Changed", Toast.LENGTH_SHORT).show()
             }
@@ -48,7 +48,7 @@ class SettingsFragment : Fragment() {
             }
         })
 
-        mSettingsViewModel.getLocationLiveData().observe(viewLifecycleOwner, {
+        viewModel.getLocationLiveData().observe(viewLifecycleOwner, {
             if (it == ResponseType.SUCCESS) {
                 Toast.makeText(requireContext(), "Location Changed", Toast.LENGTH_SHORT).show()
             }
@@ -57,7 +57,7 @@ class SettingsFragment : Fragment() {
             }
         })
 
-        mSettingsViewModel.getColorLiveData().observe(viewLifecycleOwner, {
+        viewModel.getColorLiveData().observe(viewLifecycleOwner, {
             if (it.responseType == ResponseType.SUCCESS) {
                 Session.updateColor(requireContext(), it.data)
                 Toast.makeText(requireContext(), "Color Changed", Toast.LENGTH_SHORT).show()
@@ -67,7 +67,7 @@ class SettingsFragment : Fragment() {
             }
         })
 
-        mSettingsViewModel.getPasswordLiveData().observe(viewLifecycleOwner, {
+        viewModel.getPasswordLiveData().observe(viewLifecycleOwner, {
             if (it.responseType == ResponseType.SUCCESS) {
                 Session.updatePassword(requireContext(), it.data)
                 Toast.makeText(requireContext(), "Color Password", Toast.LENGTH_SHORT).show()
@@ -104,7 +104,7 @@ class SettingsFragment : Fragment() {
             }else{
                 val token = Session.getHeaderToken(requireContext()).str()
                 val userId = Session.getUserId(requireContext()).str()
-                mSettingsViewModel.changeUserStatus(token, userId, statusTxt)
+                viewModel.changeUserStatus(token, userId, statusTxt)
             }
 
             alertDialog.dismiss()
@@ -131,7 +131,7 @@ class SettingsFragment : Fragment() {
             }else{
                 val token = Session.getHeaderToken(requireContext()).str()
                 val userId = Session.getUserId(requireContext()).str()
-                mSettingsViewModel.changeUserLocation(token, userId, locationTxt)
+                viewModel.changeUserLocation(token, userId, locationTxt)
             }
 
             alertDialog.dismiss()
@@ -159,7 +159,7 @@ class SettingsFragment : Fragment() {
             val token = Session.getHeaderToken(requireContext()).str()
             val userId = Session.getUserId(requireContext()).str()
 
-            mSettingsViewModel.changeUserColor(token, userId, themeName)
+            viewModel.changeUserColor(token, userId, themeName)
 
             alertDialog.cancel()
         }
@@ -190,7 +190,7 @@ class SettingsFragment : Fragment() {
                 }else{
                     val token = Session.getHeaderToken(requireContext()).str()
                     val userId = Session.getUserId(requireContext()).str()
-                    mSettingsViewModel.changeUserPassword(token, userId, newPasswordTxt)
+                    viewModel.changeUserPassword(token, userId, newPasswordTxt)
                 }
             } else {
                 Toast.makeText(requireContext(), "Invalid Old Password", Toast.LENGTH_SHORT)
