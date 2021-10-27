@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object HiltAppModule {
+object AppModule {
 
     @Singleton
     @Provides
