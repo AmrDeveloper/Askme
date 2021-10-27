@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true">
@@ -22,7 +21,7 @@
                 <ImageView
                     android:id="@+id/userWallpaper"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/dimen200dp"
                     android:alpha=".6"
                     android:background="@color/darkBlue"
                     android:contentDescription="@string/user_wallpaper"
@@ -30,20 +29,23 @@
 
                 <RelativeLayout
                     android:id="@+id/userAvatarLayout"
-                    android:layout_width="@dimen/dimen100dp"
-                    android:layout_height="@dimen/dimen100dp"
+                    android:layout_width="@dimen/dimen150dp"
+                    android:layout_height="@dimen/dimen150dp"
+                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginTop="@dimen/dimen10dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/userAvatar"
-                        android:layout_width="@dimen/dimen100dp"
-                        android:layout_height="@dimen/dimen100dp"
+                        android:layout_width="@dimen/dimen200dp"
+                        android:layout_height="@dimen/dimen200dp"
                         android:layout_centerHorizontal="true"
                         android:contentDescription="@string/user_avatar"
                         android:src="@drawable/ic_profile"
-                        app:civ_border_color="?attr/colorPrimary"
-                        app:civ_border_width="@dimen/dimen3dp" />
+                        app:civ_border_color="?colorPrimaryDark"
+                        app:civ_border_width="@dimen/dimen3dp"
+                        app:civ_circle_background_color="?colorPrimary" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/changeAvatarAction"
@@ -63,66 +65,14 @@
                     android:layout_width="@dimen/dimen25dp"
                     android:layout_height="@dimen/dimen25dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="@dimen/dimen5dp"
-                    android:src="@drawable/ic_mode_edit"
+                    android:layout_marginStart="@dimen/dimen5dp"
+                    android:layout_marginTop="@dimen/dimen5dp"
+                    android:layout_marginEnd="@dimen/dimen5dp"
+                    android:layout_marginBottom="@dimen/dimen5dp"
+                    android:src="@drawable/ic_camera"
                     app:civ_border_color="@color/darkBlue"
                     app:civ_border_width="@dimen/dimen1dp"
                     app:civ_circle_background_color="?attr/colorPrimary" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/followCardView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/userAvatarLayout"
-                    android:layout_centerHorizontal="true"
-                    app:cardBackgroundColor="@color/darkBlue"
-                    app:cardCornerRadius="@dimen/dimen5dp"
-                    app:cardElevation="@dimen/dimen2dp"
-                    app:cardUseCompatPadding="true">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dimen35dp">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/followIcon"
-                            android:layout_width="@dimen/dimen30dp"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/follow"
-                            android:src="@drawable/ic_feed"
-                            app:civ_border_color="?attr/colorPrimary"
-                            app:civ_border_width="@dimen/dimen1dp"
-                            app:civ_circle_background_color="@color/darkBlue" />
-
-                        <TextView
-                            android:id="@+id/followingTxt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_toEndOf="@id/followIcon"
-                            android:gravity="center"
-                            android:paddingStart="@dimen/dimen5dp"
-                            android:paddingEnd="@dimen/dimen5dp"
-                            android:text="@string/follow"
-                            android:textColor="?attr/colorPrimary"
-                            android:textSize="@dimen/dimen16sp"
-                            android:textStyle="italic" />
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <Button
-                    android:id="@+id/askmeButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen40dp"
-                    android:layout_below="@id/followCardView"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="@dimen/dimen10dp"
-                    android:layout_marginEnd="@dimen/dimen20dp"
-                    android:background="?attr/colorPrimary"
-                    android:text="@string/ask_my_anything"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/dimen18sp"
-                    android:textStyle="bold|italic" />
             </RelativeLayout>
 
             <TextView
@@ -135,6 +85,48 @@
                 android:textSize="@dimen/dimen30sp"
                 android:textStyle="bold|italic"
                 tools:text="Amr Developer" />
+
+            <TextView
+                android:id="@+id/userStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dimen5dp"
+                android:textStyle="bold"
+                tools:text="Time is limited don't waste it" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/askmeFollowMe"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen40dp"
+                    android:layout_margin="@dimen/dimen10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="?colorPrimary"
+                    android:gravity="center"
+                    android:text="@string/follow"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold|italic" />
+
+                <Button
+                    android:id="@+id/askmeButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen40dp"
+                    android:layout_margin="@dimen/dimen10dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="?colorPrimary"
+                    android:gravity="center"
+                    android:text="@string/ask_my_anything"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/analysisCardView"
@@ -161,20 +153,13 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/userStatus"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="@dimen/dimen5dp"
-                        android:textStyle="bold"
-                        tools:text="Time is limited don't waste it" />
-
-                    <TextView
                         android:id="@+id/userAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_location"
+                        android:drawablePadding="@dimen/dimen5dp"
                         android:padding="@dimen/dimen5dp"
+                        android:drawableTint="?colorPrimary"
                         tools:text="Alexandria, Egypt" />
 
                     <TextView
@@ -182,6 +167,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_time"
+                        android:drawableTint="?colorPrimary"
+                        android:drawablePadding="@dimen/dimen5dp"
                         android:padding="@dimen/dimen5dp"
                         tools:text="2 years ago" />
                 </LinearLayout>

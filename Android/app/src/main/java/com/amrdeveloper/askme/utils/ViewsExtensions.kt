@@ -39,7 +39,7 @@ fun TextView.setTextOrHide(text: String?) {
 }
 
 fun TextView.setFormattedJoinDate(time : Long) {
-    this.text = formatDateForJoin(time).str()
+    this.text = "Joined in ${formatDateForJoin(time).str()}"
 }
 
 fun TextView.setFormattedDateForPost(time : Long) {

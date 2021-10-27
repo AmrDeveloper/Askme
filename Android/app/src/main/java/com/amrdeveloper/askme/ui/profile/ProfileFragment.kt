@@ -106,7 +106,7 @@ class ProfileFragment : Fragment(){
 
         mProfileBinding.askmeButton.setOnClickListener {openAskQuestionFragment()}
 
-        mProfileBinding.followCardView.setOnClickListener {followCardViewListener()}
+        mProfileBinding.askmeFollowMe.setOnClickListener {followCardViewListener()}
 
         setupFullScreenOption()
         return mProfileBinding.root
@@ -150,7 +150,7 @@ class ProfileFragment : Fragment(){
 
     private fun bindUserProfile(user: User) {
         userName.setTextOrGone(user.username)
-        userAddress.setTextOrGone(user.address)
+        userAddress.setTextOrGone("Lived in ${user.address}")
         userStatus.setTextOrGone(user.status)
         userJoinDate.setFormattedJoinDate(user.joinDate)
 
@@ -166,7 +166,7 @@ class ProfileFragment : Fragment(){
         if (user.id != Session.getUserId(requireContext())) {
             updateFollowCardView(user.isUserFollow)
         } else {
-            mProfileBinding.followCardView.gone()
+            mProfileBinding.askmeFollowMe.gone()
         }
     }
 
@@ -185,14 +185,12 @@ class ProfileFragment : Fragment(){
     private fun updateFollowCardView(follow: Follow) {
         when (follow) {
             Follow.FOLLOW -> {
-                mProfileBinding.followingTxt.text = getString(R.string.following)
-                mProfileBinding.followIcon.setImageResource(R.drawable.ic_done_all)
-                mProfileBinding.followCardView.tag = Follow.FOLLOW
+                mProfileBinding.askmeFollowMe.text = getString(R.string.following)
+                mProfileBinding.askmeFollowMe.tag = Follow.FOLLOW
             }
             Follow.UN_FOLLOW -> {
-                mProfileBinding.followingTxt.text = getString(R.string.follow)
-                mProfileBinding.followIcon.setImageResource(R.drawable.ic_feed)
-                mProfileBinding.followCardView.tag = Follow.UN_FOLLOW
+                mProfileBinding.askmeFollowMe.text = getString(R.string.follow)
+                mProfileBinding.askmeFollowMe.tag = Follow.UN_FOLLOW
             }
         }
     }
@@ -224,7 +222,7 @@ class ProfileFragment : Fragment(){
         val followData = FollowData(Session.getUserId(requireContext()).str(), mUserId)
         val token = Session.getUserToken(requireContext()).str()
 
-        when (Follow.valueOf(mProfileBinding.followCardView.tag.toString())) {
+        when (Follow.valueOf(mProfileBinding.askmeFollowMe.tag.toString())) {
             Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)
             Follow.UN_FOLLOW -> mProfileViewModel.followUser(token ,followData)
         }
@@ -236,7 +234,7 @@ class ProfileFragment : Fragment(){
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, REQUEST_AVATAR_ID)
-        }else{
+        } else{
             ActivityCompat.requestPermissions(requireActivity(),
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 PERMISSION_EXTERNAL_STORAGE)
@@ -249,7 +247,7 @@ class ProfileFragment : Fragment(){
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             startActivityForResult(photoPickerIntent, REQUEST_WALLPAPER_ID)
-        }else{
+        } else{
             ActivityCompat.requestPermissions(requireActivity(),
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 PERMISSION_EXTERNAL_STORAGE)
