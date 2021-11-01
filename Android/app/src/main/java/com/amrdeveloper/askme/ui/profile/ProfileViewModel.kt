@@ -51,8 +51,12 @@ class ProfileViewModel @Inject constructor(private val userService: UserService,
 
     fun loadUserInformation(userId : String, localId : String){
         viewModelScope.launch(Dispatchers.IO){
-            val user =  userService.getUserById(userId, localId)
-            userLiveData.postValue(user)
+            try {
+                val user =  userService.getUserById(userId, localId)
+                userLiveData.postValue(user)
+            } catch (e : Exception) {
+                Log.d(TAG, "Invalid Request")
+            }
         }
     }
 
