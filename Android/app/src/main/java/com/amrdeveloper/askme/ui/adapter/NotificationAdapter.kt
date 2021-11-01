@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -10,10 +9,10 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Action
 import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.data.Open
+import com.amrdeveloper.askme.databinding.NotificationListItemBinding
 import com.amrdeveloper.askme.utils.backgroundColor
 import com.amrdeveloper.askme.utils.notNull
 import com.amrdeveloper.askme.utils.setFormattedDateForPost
-import kotlinx.android.synthetic.main.notification_list_item.view.*
 
 class NotificationAdapter :
     PagedListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DIFF_CALL_BACK) {
@@ -26,8 +25,8 @@ class NotificationAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.notification_list_item, parent, false)
-        return NotificationViewHolder(view)
+        val binding = NotificationListItemBinding.inflate(inflater, parent, false)
+        return NotificationViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
@@ -46,20 +45,20 @@ class NotificationAdapter :
         mItemClickListener = listener
     }
 
-    class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class NotificationViewHolder(val binding : NotificationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bingNotification(notification: Notification) {
-            itemView.notificationBody.text = notification.body
-            itemView.notificationDate.setFormattedDateForPost(notification.createdDate)
+            binding.notificationBody.text = notification.body
+            binding.notificationDate.setFormattedDateForPost(notification.createdDate)
 
             when(notification.action){
-                Action.QUESTION -> itemView.notificationIcon.setImageResource(R.drawable.ic_question)
-                Action.ANSWER -> itemView.notificationIcon.setImageResource(R.drawable.ic_answer)
-                Action.FOLLOW -> itemView.notificationIcon.setImageResource(R.drawable.ic_followers)
+                Action.QUESTION -> binding.notificationIcon.setImageResource(R.drawable.ic_question)
+                Action.ANSWER -> binding.notificationIcon.setImageResource(R.drawable.ic_answer)
+                Action.FOLLOW -> binding.notificationIcon.setImageResource(R.drawable.ic_followers)
             }
 
             if(notification.isOpened == Open.UN_OPENED){
-                itemView.notificationCardView.backgroundColor(itemView.context, R.color.whiteOrange)
+                binding.notificationCardView.backgroundColor(itemView.context, R.color.whiteOrange)
             }
         }
     }

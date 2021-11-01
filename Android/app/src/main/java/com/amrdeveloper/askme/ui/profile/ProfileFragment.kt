@@ -24,8 +24,6 @@ import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import com.amrdeveloper.askme.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.profile_layout.*
-import kotlinx.android.synthetic.main.user_grid_analysis.*
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(){
@@ -149,19 +147,19 @@ class ProfileFragment : Fragment(){
     }
 
     private fun bindUserProfile(user: User) {
-        userName.setTextOrGone(user.username)
-        userAddress.setTextOrGone("Lived in ${user.address}")
-        userStatus.setTextOrGone(user.status)
-        userJoinDate.setFormattedJoinDate(user.joinDate)
+        mProfileBinding.userName.setTextOrGone(user.username)
+        mProfileBinding.userAddress.setTextOrGone("Lived in ${user.address}")
+        mProfileBinding.userStatus.setTextOrGone(user.status)
+        mProfileBinding.userJoinDate.setFormattedJoinDate(user.joinDate)
 
-        userFollowing.text = user.followingNum.str()
-        userFollowers.text = user.followersNum.str()
-        userLikes.text = user.reactionsNum.str()
-        userQuestions.text = user.questionsNum.str()
-        userAnswers.text = user.answersNum.str()
+//        mProfileBinding.userFollowing.text = user.followingNum.str()
+//        mProfileBinding.userFollowers.text = user.followersNum.str()
+//        mProfileBinding.userLikes.text = user.reactionsNum.str()
+//        mProfileBinding.userQuestions.text = user.questionsNum.str()
+//        mProfileBinding.userAnswers.text = user.answersNum.str()
 
-        userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
-        userWallpaper.loadImage(user.wallpaperUrl, R.drawable.ic_wallpaper)
+        mProfileBinding.userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
+        mProfileBinding.userWallpaper.loadImage(user.wallpaperUrl, R.drawable.ic_wallpaper)
 
         if (user.id != Session.getUserId(requireContext())) {
             updateFollowCardView(user.isUserFollow)

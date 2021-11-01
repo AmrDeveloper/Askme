@@ -11,7 +11,6 @@ object Config {
     object Plugins {
         const val androidPlugin = "com.android.application"
         const val kotlinPlugin = "kotlin-android"
-        const val kotlinExtensionsPlugin = "kotlin-android-extensions"
         const val kotlinKaptPlugin = "kotlin-kapt"
         const val daggerHiltPlugin = "dagger.hilt.android.plugin"
     }

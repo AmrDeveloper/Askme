@@ -12,7 +12,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@mipmap/ic_askme"
+            android:src="@mipmap/ic_askme_logo"
             android:layout_gravity="center"
             android:layout_margin="@dimen/dimen5dp"
             app:civ_border_color="?attr/colorPrimary"

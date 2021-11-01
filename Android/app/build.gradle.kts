@@ -1,7 +1,6 @@
 plugins {
     id(Config.Plugins.androidPlugin)
     id(Config.Plugins.kotlinPlugin)
-    id(Config.Plugins.kotlinExtensionsPlugin)
     id(Config.Plugins.kotlinKaptPlugin)
     id(Config.Plugins.daggerHiltPlugin)
 }

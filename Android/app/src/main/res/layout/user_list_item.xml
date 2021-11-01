@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/dimen5dp"
-    android:orientation="vertical"
-    app:cardCornerRadius="@dimen/dimen5dp"
-    app:cardElevation="@dimen/dimen5dp">
-
-    <RelativeLayout
+<layout>
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen5dp"
+        android:orientation="vertical"
+        app:cardCornerRadius="@dimen/dimen5dp"
+        app:cardElevation="@dimen/dimen5dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userAvatar"
-            android:layout_width="@dimen/dimen50dp"
-            android:layout_height="@dimen/dimen50dp"
-            android:layout_centerVertical="true"
-            android:layout_margin="@dimen/dimen3dp"
-            android:src="@drawable/ic_profile"
-            app:civ_border_color="?colorPrimary"
-            app:civ_border_width="@dimen/dimen1dp" />
-
-        <TextView
-            android:id="@+id/usernameTxt"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/dimen5dp"
-            android:layout_marginBottom="@dimen/dimen5dp"
-            android:layout_toStartOf="@id/reactionsTxt"
-            android:layout_toEndOf="@id/userAvatar"
-            android:lines="1"
-            android:textColor="@color/darkBlue"
-            android:textSize="@dimen/dimen20sp"
-            android:textStyle="bold"
-            tools:text="AmrDeveloper" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/reactionsTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/usernameTxt"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/dimen5dp"
-            android:layout_marginBottom="@dimen/dimen5dp"
-            android:drawableStart="@drawable/ic_react"
-            android:drawablePadding="@dimen/dimen5dp"
-            android:gravity="center"
-            tools:text="20" />
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userAvatar"
+                android:layout_width="@dimen/dimen50dp"
+                android:layout_height="@dimen/dimen50dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/dimen3dp"
+                android:src="@drawable/ic_profile"
+                app:civ_border_color="?colorPrimary"
+                app:civ_border_width="@dimen/dimen1dp" />
+
+            <TextView
+                android:id="@+id/usernameTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/dimen5dp"
+                android:layout_marginBottom="@dimen/dimen5dp"
+                android:layout_toStartOf="@id/reactionsTxt"
+                android:layout_toEndOf="@id/userAvatar"
+                android:lines="1"
+                android:textColor="@color/darkBlue"
+                android:textSize="@dimen/dimen20sp"
+                android:textStyle="bold"
+                tools:text="AmrDeveloper" />
+
+            <TextView
+                android:id="@+id/reactionsTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/usernameTxt"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/dimen5dp"
+                android:layout_marginBottom="@dimen/dimen5dp"
+                android:drawableStart="@drawable/ic_react"
+                android:drawablePadding="@dimen/dimen5dp"
+                android:gravity="center"
+                tools:text="20" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

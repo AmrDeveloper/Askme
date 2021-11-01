@@ -1,7 +1,6 @@
 package com.amrdeveloper.askme.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.paging.PagedListAdapter
@@ -11,8 +10,8 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Anonymously
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.Reaction
+import com.amrdeveloper.askme.databinding.FeedListItemBinding
 import com.amrdeveloper.askme.utils.*
-import kotlinx.android.synthetic.main.feed_list_item.view.*
 
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
@@ -33,28 +32,28 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.feed_list_item, parent, false)
-        return FeedViewHolder(view)
+        val binding = FeedListItemBinding.inflate(inflater, parent, false)
+        return FeedViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
-        val currentFeed : Feed? = getItem(position)
+        val currentFeed : Feed = getItem(position) ?: return
         currentFeed.notNull {
-            holder.bingFeed(currentFeed!!)
+            holder.bingFeed(currentFeed)
             if(::onUsernameClick.isInitialized){
                 if(currentFeed.anonymously == Anonymously.NOT_ANONYMOSLY) {
-                    holder.itemView.questionFrom.setOnClickListener {
+                    holder.binding.questionFrom.setOnClickListener {
                         onUsernameClick.onUserClick(currentFeed.toUserId.str())
                     }
                 }
 
-                holder.itemView.answerFrom.setOnClickListener {
+                holder.binding.answerFrom.setOnClickListener {
                     onUsernameClick.onUserClick(currentFeed.fromUserId.str())
                 }
             }
 
             if(::onReactionClick.isInitialized){
-                holder.itemView.reactionsTxt.setOnClickListener {
+                holder.binding.reactionsTxt.setOnClickListener {
                     onReactionClick.onReactClick(currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted,
                         object : Callback {
                             override fun onCallback() {
@@ -88,24 +87,24 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         onUsernameClick = listener
     }
 
-    class FeedViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class FeedViewHolder(val binding : FeedListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bingFeed(feed: Feed) {
-            itemView.questionTxt.text = feed.questionBody
-            itemView.answerTxt.text = feed.answerBody
+            binding.questionTxt.text = feed.questionBody
+            binding.answerTxt.text = feed.answerBody
 
-            if(feed.anonymously == Anonymously.NOT_ANONYMOSLY) {
-                itemView.questionFrom.text = feed.toUserName
-                itemView.questionUserAvatar.loadImage(feed.toUserAvatar, R.drawable.ic_profile)
-            }else{
-                itemView.questionFrom.text = "Anonymous user"
+            if (feed.anonymously == Anonymously.NOT_ANONYMOSLY) {
+                binding.questionFrom.text = feed.toUserName
+                binding.questionUserAvatar.loadImage(feed.toUserAvatar, R.drawable.ic_profile)
+            } else {
+                binding.questionFrom.text = "Anonymous user"
             }
 
-            itemView.answerFrom.text = feed.fromUserName
-            itemView.answerDateTxt.setFormattedDateForPost(feed.answerDate)
-            itemView.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
+            binding.answerFrom.text = feed.fromUserName
+            binding.answerDateTxt.setFormattedDateForPost(feed.answerDate)
+            binding.reactionsTxt.setTextOrHide(feed.reactionsNum.toString())
 
-            itemView.answerUserAvatar.loadImage(feed.fromUserAvatar, R.drawable.ic_profile)
+            binding.answerUserAvatar.loadImage(feed.fromUserAvatar, R.drawable.ic_profile)
 
             updateReactedIcon(feed.isReacted)
         }
@@ -113,12 +112,12 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         private fun updateReactedIcon(reaction: Reaction){
             when(reaction){
                 Reaction.REACATED -> {
-                    itemView.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
-                    itemView.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
+                    binding.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context, R.color.orange))
+                    binding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
                 }
                 Reaction.UN_REACATED -> {
-                    itemView.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context ,R.color.black))
-                    itemView.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_react,0,0,0)
+                    binding.reactionsTxt.setTextColor(ContextCompat.getColor(itemView.context ,R.color.black))
+                    binding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_react,0,0,0)
                 }
             }
         }

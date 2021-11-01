@@ -2,16 +2,15 @@ package com.amrdeveloper.askme.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.User
+import com.amrdeveloper.askme.databinding.UserListItemBinding
 import com.amrdeveloper.askme.utils.loadImage
 import com.amrdeveloper.askme.utils.notNull
-import kotlinx.android.synthetic.main.user_list_item.view.*
 
 class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_CALL_BACK){
 
@@ -23,8 +22,8 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.user_list_item, parent, false)
-        return UserViewHolder(view)
+        val binding = UserListItemBinding.inflate(inflater, parent, false)
+        return UserViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -44,13 +43,12 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
         mOnclickListener = listener
     }
 
-    class UserViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    class UserViewHolder(val binding : UserListItemBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bingUser(user : User){
-            itemView.usernameTxt.text = user.username
-            itemView.reactionsTxt.text = user.reactionsNum.toString()
-
-            itemView.userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
+            binding.usernameTxt.text = user.username
+            binding.reactionsTxt.text = user.reactionsNum.toString()
+            binding.userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
         }
     }
 }
