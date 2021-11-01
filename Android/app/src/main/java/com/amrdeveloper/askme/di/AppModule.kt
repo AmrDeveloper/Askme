@@ -1,9 +1,6 @@
 package com.amrdeveloper.askme.di
 
 import com.amrdeveloper.askme.data.remote.net.*
-import com.amrdeveloper.askme.ui.adapter.FeedAdapter
-import com.amrdeveloper.askme.ui.adapter.NotificationAdapter
-import com.amrdeveloper.askme.ui.adapter.PeopleAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -73,23 +70,5 @@ object AppModule {
     @Provides
     fun provideNotificationService(retrofit: Retrofit) : NotificationService {
         return retrofit.create(NotificationService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideFeedAdapter() : FeedAdapter {
-        return FeedAdapter()
-    }
-
-    @Singleton
-    @Provides
-    fun providePeopleAdapter() : PeopleAdapter {
-        return PeopleAdapter()
-    }
-
-    @Singleton
-    @Provides
-    fun provideNotificationAdapter() : NotificationAdapter {
-        return NotificationAdapter()
     }
 }
