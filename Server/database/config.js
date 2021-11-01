@@ -1,11 +1,12 @@
 const mysql = require('mysql');
-const schema = require('../database/schema');
+const schema = require( '../database/schema');
 
 const databaseConfig = {
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
     password: '',
     database: 'askme',
+    port: '3306'
 };
 
 const connection = mysql.createConnection(databaseConfig);
