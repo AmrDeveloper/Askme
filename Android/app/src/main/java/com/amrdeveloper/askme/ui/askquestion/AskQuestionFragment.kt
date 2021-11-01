@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.*
-import com.amrdeveloper.askme.data.source.remote.net.ResponseType
+import com.amrdeveloper.askme.data.ResponseType
 import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.loadImage

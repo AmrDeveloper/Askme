@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.source.remote.net.ResponseType
+import com.amrdeveloper.askme.data.ResponseType
 import com.amrdeveloper.askme.data.themeList
 import com.amrdeveloper.askme.databinding.FragmentSettingsBinding
 import com.amrdeveloper.askme.ui.adapter.ColorGridAdapter

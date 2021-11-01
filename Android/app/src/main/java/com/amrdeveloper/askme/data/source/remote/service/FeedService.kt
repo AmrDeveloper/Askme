@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.data.source.remote.net
+package com.amrdeveloper.askme.data.source.remote.service
 
 import com.amrdeveloper.askme.data.DEFAULT_QUERY_PAGE_NUM
 import com.amrdeveloper.askme.data.DEFAULT_QUERY_PAGE_SIZE

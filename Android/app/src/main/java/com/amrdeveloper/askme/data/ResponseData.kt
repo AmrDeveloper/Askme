@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.data.source.remote.net
+package com.amrdeveloper.askme.data
 
 data class ResponseData<T>(
     val responseType: ResponseType,

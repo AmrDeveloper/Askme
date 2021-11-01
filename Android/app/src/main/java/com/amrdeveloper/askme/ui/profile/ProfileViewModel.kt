@@ -11,7 +11,7 @@ import androidx.paging.PagingConfig
 import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.data.source.FeedDataSource
 import com.amrdeveloper.askme.data.source.remote.paging.FeedPagingDataSource
-import com.amrdeveloper.askme.data.source.remote.net.*
+import com.amrdeveloper.askme.data.source.remote.service.*
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.lifecycle.HiltViewModel

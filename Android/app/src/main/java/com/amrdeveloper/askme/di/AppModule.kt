@@ -5,7 +5,7 @@ import com.amrdeveloper.askme.data.source.*
 import com.amrdeveloper.askme.data.source.remote.FeedRemoteDataSource
 import com.amrdeveloper.askme.data.source.remote.NotificationRemoteDataSource
 import com.amrdeveloper.askme.data.source.remote.UserRemoteDataSource
-import com.amrdeveloper.askme.data.source.remote.net.*
+import com.amrdeveloper.askme.data.source.remote.service.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

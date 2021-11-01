@@ -2,7 +2,7 @@ package com.amrdeveloper.askme.data.source.remote
 
 import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.data.source.NotificationDataSource
-import com.amrdeveloper.askme.data.source.remote.net.NotificationService
+import com.amrdeveloper.askme.data.source.remote.service.NotificationService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

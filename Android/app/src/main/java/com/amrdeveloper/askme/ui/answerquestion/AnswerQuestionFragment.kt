@@ -14,7 +14,7 @@ import com.amrdeveloper.askme.data.Anonymously
 import com.amrdeveloper.askme.data.AnswerData
 import com.amrdeveloper.askme.data.QUESTION_ID
 import com.amrdeveloper.askme.data.Question
-import com.amrdeveloper.askme.data.source.remote.net.ResponseType
+import com.amrdeveloper.askme.data.ResponseType
 import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.loadImage

@@ -9,7 +9,7 @@ import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.data.source.FeedDataSource
 import com.amrdeveloper.askme.data.source.remote.paging.HomePagingDataSource
-import com.amrdeveloper.askme.data.source.remote.net.ReactionService
+import com.amrdeveloper.askme.data.source.remote.service.ReactionService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect

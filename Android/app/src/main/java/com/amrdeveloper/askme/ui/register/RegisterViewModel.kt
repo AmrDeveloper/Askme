@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.data.SessionData
-import com.amrdeveloper.askme.data.source.remote.net.AuthService
+import com.amrdeveloper.askme.data.source.remote.service.AuthService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

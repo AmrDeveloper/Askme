@@ -2,7 +2,7 @@ package com.amrdeveloper.askme.data.source.remote
 
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.source.FeedDataSource
-import com.amrdeveloper.askme.data.source.remote.net.FeedService
+import com.amrdeveloper.askme.data.source.remote.service.FeedService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

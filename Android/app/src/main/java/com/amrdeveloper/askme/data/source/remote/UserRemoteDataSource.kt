@@ -2,7 +2,7 @@ package com.amrdeveloper.askme.data.source.remote
 
 import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.data.source.UserDataSource
-import com.amrdeveloper.askme.data.source.remote.net.UserService
+import com.amrdeveloper.askme.data.source.remote.service.UserService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

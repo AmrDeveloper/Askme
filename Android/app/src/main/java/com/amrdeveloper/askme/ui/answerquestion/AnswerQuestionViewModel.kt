@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.AnswerData
 import com.amrdeveloper.askme.data.Question
-import com.amrdeveloper.askme.data.source.remote.net.AnswerService
-import com.amrdeveloper.askme.data.source.remote.net.QuestionService
-import com.amrdeveloper.askme.data.source.remote.net.ResponseType
+import com.amrdeveloper.askme.data.source.remote.service.AnswerService
+import com.amrdeveloper.askme.data.source.remote.service.QuestionService
+import com.amrdeveloper.askme.data.ResponseType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
