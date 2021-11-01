@@ -2,9 +2,7 @@ package com.amrdeveloper.askme.di
 
 import com.amrdeveloper.askme.data.SERVER_API_URL
 import com.amrdeveloper.askme.data.source.*
-import com.amrdeveloper.askme.data.source.remote.FeedRemoteDataSource
-import com.amrdeveloper.askme.data.source.remote.NotificationRemoteDataSource
-import com.amrdeveloper.askme.data.source.remote.UserRemoteDataSource
+import com.amrdeveloper.askme.data.source.remote.*
 import com.amrdeveloper.askme.data.source.remote.service.*
 import dagger.Module
 import dagger.Provides
@@ -79,6 +77,12 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideAuthDataSource(authService: AuthService) : AuthDataSource {
+        return AuthRemoteDataSource(authService)
+    }
+
+    @Singleton
+    @Provides
     fun provideFeedDataSource(feedService: FeedService) : FeedDataSource {
         return FeedRemoteDataSource(feedService)
     }
@@ -95,4 +99,21 @@ object AppModule {
         return NotificationRemoteDataSource(notificationService)
     }
 
+    @Singleton
+    @Provides
+    fun provideQuestionDataSource(questionService: QuestionService) : QuestionDataSource {
+        return QuestionRemoteDataSource(questionService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAnswerDataSource(answerService: AnswerService) : AnswerDataSource {
+        return AnswerRemoteDataSource(answerService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideReactionDataSource(reactionService: ReactionService) : ReactionDataSource {
+        return ReactionRemoteDataSource(reactionService)
+    }
 }

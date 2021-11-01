@@ -7,8 +7,8 @@ import retrofit2.Response
 
 interface AuthDataSource {
 
-    suspend fun login(body : LoginData) : Response<SessionData>
+    suspend fun login(body : LoginData) : Result<Response<SessionData>>
 
-    suspend fun register(body : RegisterData) : Response<SessionData>
+    suspend fun register(body : RegisterData) : Result<Response<SessionData>>
 
 }
