@@ -16,7 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FullscreenFragment : Fragment(){
 
-    private lateinit var binding: FullscreenLayoutBinding
+    private var _binding: FullscreenLayoutBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class FullscreenFragment : Fragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fullscreen_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fullscreen_layout, container, false)
 
         val imageUrl = arguments?.getString(Constants.AVATAR_URL)
         binding.imageView.loadImage(imageUrl, R.drawable.ic_profile)
@@ -57,5 +58,10 @@ class FullscreenFragment : Fragment(){
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share Image")
         sharingIntent.putExtra(Intent.EXTRA_TEXT, imageUrl)
         startActivity(Intent.createChooser(sharingIntent,resources.getString(R.string.share)))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

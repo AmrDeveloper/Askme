@@ -136,7 +136,9 @@
                 app:cardElevation="@dimen/dimen2dp"
                 app:cardUseCompatPadding="true">
 
-                <include layout="@layout/user_grid_analysis" />
+                <include
+                    android:id="@+id/analysisCardLayout"
+                    layout="@layout/user_grid_analysis" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView

@@ -24,11 +24,13 @@ class NotificationFragment: Fragment(){
 
     private lateinit var notificationAdapter: NotificationAdapter
 
-    private lateinit var binding: ListLayoutBinding
+    private var _binding: ListLayoutBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel by viewModels<NotificationViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
 
         setupNotificationsList()
 
@@ -76,5 +78,10 @@ class NotificationFragment: Fragment(){
                 )
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

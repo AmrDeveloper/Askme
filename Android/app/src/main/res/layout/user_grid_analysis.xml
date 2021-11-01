@@ -1,172 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:columnCount="5">
+<layout>
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:columnCount="5">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_columnWeight="1"
-        android:layout_gravity="fill_horizontal"
-        android:gravity="center"
-        app:cardElevation="@dimen/dimen2dp"
-        app:cardUseCompatPadding="true">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/reactionsIc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/dimen1dp"
-                android:src="@drawable/ic_react" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/reactionsIc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/dimen1dp"
+                    android:src="@drawable/ic_react" />
 
-            <TextView
-                android:id="@+id/userLikes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/reactionsIc"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                tools:text="10" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/userLikes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/reactionsIc"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    tools:text="10" />
+            </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_columnWeight="1"
-        android:layout_gravity="fill_horizontal"
-        android:gravity="center"
-        app:cardElevation="@dimen/dimen2dp"
-        app:cardUseCompatPadding="true">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/questionsIc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/dimen1dp"
-                android:src="@drawable/ic_question" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/questionsIc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/dimen1dp"
+                    android:src="@drawable/ic_question" />
 
-            <TextView
-                android:id="@+id/userQuestions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/questionsIc"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                tools:text="10" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/userQuestions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/questionsIc"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    tools:text="10" />
+            </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_columnWeight="1"
-        android:layout_gravity="fill_horizontal"
-        android:gravity="center"
-        app:cardElevation="@dimen/dimen2dp"
-        app:cardUseCompatPadding="true">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/answersIc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/dimen1dp"
-                android:src="@drawable/ic_answer" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/answersIc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/dimen1dp"
+                    android:src="@drawable/ic_answer" />
 
-            <TextView
-                android:id="@+id/userAnswers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/answersIc"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                tools:text="10" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/userAnswers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/answersIc"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    tools:text="10" />
+            </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_columnWeight="1"
-        android:layout_gravity="fill_horizontal"
-        android:gravity="center"
-        app:cardElevation="@dimen/dimen2dp"
-        app:cardUseCompatPadding="true">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/followersIc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/dimen1dp"
-                android:src="@drawable/ic_followers" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/followersIc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/dimen1dp"
+                    android:src="@drawable/ic_followers" />
 
-            <TextView
-                android:id="@+id/userFollowers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/followersIc"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                tools:text="10" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/userFollowers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/followersIc"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    tools:text="10" />
+            </RelativeLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_columnWeight="1"
-        android:layout_gravity="fill_horizontal"
-        android:gravity="center"
-        app:cardElevation="@dimen/dimen2dp"
-        app:cardUseCompatPadding="true">
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill_horizontal"
+            android:gravity="center"
+            app:cardElevation="@dimen/dimen2dp"
+            app:cardUseCompatPadding="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/followingIc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:padding="@dimen/dimen1dp"
-                android:src="@drawable/ic_followers" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/followingIc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:padding="@dimen/dimen1dp"
+                    android:src="@drawable/ic_followers" />
 
-            <TextView
-                android:id="@+id/userFollowing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/followingIc"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                tools:text="10" />
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-</GridLayout>
+                <TextView
+                    android:id="@+id/userFollowing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/followingIc"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    tools:text="10" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </GridLayout>
+</layout>

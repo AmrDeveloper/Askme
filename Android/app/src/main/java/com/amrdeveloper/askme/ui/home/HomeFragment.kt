@@ -23,12 +23,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private lateinit var feedAdapter : FeedAdapter
-    private lateinit var binding: ListLayoutBinding
+
+    private var _binding: ListLayoutBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel  by viewModels<HomeViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
 
         setupUserList()
 
@@ -75,5 +77,10 @@ class HomeFragment : Fragment() {
             feedAdapter.submitList(it)
             binding.loadingBar.gone()
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

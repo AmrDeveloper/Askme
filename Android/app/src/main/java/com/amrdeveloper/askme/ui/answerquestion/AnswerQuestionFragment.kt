@@ -24,7 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class AnswerQuestionFragment : Fragment() {
 
     private lateinit var mQuestion: Question
-    private lateinit var binding: AnswerQuestionLayoutBinding
+    private var _binding: AnswerQuestionLayoutBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel by viewModels <AnswerQuestionViewModel>()
 
@@ -34,7 +35,7 @@ class AnswerQuestionFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.answer_question_layout, container, false)
 
         setupObservers()
 
@@ -100,5 +101,10 @@ class AnswerQuestionFragment : Fragment() {
                 binding.questionLength.text = (300 - editable!!.length).toString()
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

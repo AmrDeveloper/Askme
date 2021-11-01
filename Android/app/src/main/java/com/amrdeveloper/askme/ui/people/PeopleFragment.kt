@@ -21,7 +21,8 @@ class PeopleFragment : Fragment() {
 
     private lateinit var peopleAdapter: PeopleAdapter
 
-    private lateinit var binding: ListLayoutBinding
+    private var _binding: ListLayoutBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel by viewModels<PeopleViewModel>()
 
@@ -31,7 +32,7 @@ class PeopleFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.list_layout, container, false)
 
         setupUserList()
 
@@ -95,5 +96,10 @@ class PeopleFragment : Fragment() {
                 true
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

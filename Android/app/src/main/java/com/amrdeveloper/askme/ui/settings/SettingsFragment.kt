@@ -24,12 +24,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
 
-    private lateinit var binding : FragmentSettingsBinding
+    private var _binding : FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
 
     private val viewModel by viewModels<SettingsViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false)
 
         setupObservers()
         setupListeners()
@@ -199,5 +200,10 @@ class SettingsFragment : Fragment() {
         }
 
         dialogBuilder.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -25,6 +25,10 @@ import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import com.amrdeveloper.askme.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val REQUEST_AVATAR_ID = 1996
+private const val REQUEST_WALLPAPER_ID = 1997
+private const val PERMISSION_EXTERNAL_STORAGE = 1998
+
 @AndroidEntryPoint
 class ProfileFragment : Fragment(){
 
@@ -32,13 +36,11 @@ class ProfileFragment : Fragment(){
     private lateinit var mCurrentUser : User
 
     lateinit var mFeedAdapter: FeedAdapter
-    private lateinit var mProfileBinding: ProfileLayoutBinding
+
+    private var _binding: ProfileLayoutBinding? = null
+    private val binding get() = _binding!!
 
     private val mProfileViewModel by viewModels<ProfileViewModel>()
-
-    private val REQUEST_AVATAR_ID = 1996
-    private val REQUEST_WALLPAPER_ID = 1997
-    private val PERMISSION_EXTERNAL_STORAGE = 1998
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +50,12 @@ class ProfileFragment : Fragment(){
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mProfileBinding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.profile_layout, container, false)
 
         updateUserInfoFromArguments()
         setupFeedRecyclerView()
 
-        mProfileBinding.listLayout.loadingBar.show()
+        binding.listLayout.loadingBar.show()
 
         mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(requireContext()).toString())
         mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(requireContext()).toString())
@@ -61,7 +63,7 @@ class ProfileFragment : Fragment(){
         setupObservers()
 
         setupFullScreenOption()
-        return mProfileBinding.root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -90,7 +92,7 @@ class ProfileFragment : Fragment(){
 
         mProfileViewModel.getFeedPagedList().observe(viewLifecycleOwner, {
             mFeedAdapter.submitList(it)
-            mProfileBinding.listLayout.loadingBar.gone()
+            binding.listLayout.loadingBar.gone()
         })
 
         mProfileViewModel.getAvatarLiveData().observe(viewLifecycleOwner, {
@@ -123,9 +125,9 @@ class ProfileFragment : Fragment(){
 
         mProfileViewModel.getFollowLiveData().observe(viewLifecycleOwner, {updateFollowCardView(it)})
 
-        mProfileBinding.askmeButton.setOnClickListener {openAskQuestionFragment()}
+        binding.askmeButton.setOnClickListener {openAskQuestionFragment()}
 
-        mProfileBinding.askmeFollowMe.setOnClickListener {followCardViewListener()}
+        binding.askmeFollowMe.setOnClickListener {followCardViewListener()}
     }
 
     private fun updateUserInfoFromArguments(){
@@ -140,41 +142,41 @@ class ProfileFragment : Fragment(){
 
     private fun setupFeedRecyclerView() {
         mFeedAdapter = FeedAdapter()
-        mProfileBinding.listLayout.listItems.setHasFixedSize(true)
-        mProfileBinding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
-        mProfileBinding.listLayout.listItems.isNestedScrollingEnabled = false
-        mProfileBinding.listLayout.listItems.adapter = mFeedAdapter
+        binding.listLayout.listItems.setHasFixedSize(true)
+        binding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
+        binding.listLayout.listItems.isNestedScrollingEnabled = false
+        binding.listLayout.listItems.adapter = mFeedAdapter
     }
 
     private fun bindUserProfile(user: User) {
-        mProfileBinding.userName.setTextOrGone(user.username)
-        mProfileBinding.userAddress.setTextOrGone("Lived in ${user.address}")
-        mProfileBinding.userStatus.setTextOrGone(user.status)
-        mProfileBinding.userJoinDate.setFormattedJoinDate(user.joinDate)
+        binding.userName.setTextOrGone(user.username)
+        binding.userAddress.setTextOrGone("Lived in ${user.address}")
+        binding.userStatus.setTextOrGone(user.status)
+        binding.userJoinDate.setFormattedJoinDate(user.joinDate)
 
-//        mProfileBinding.userFollowing.text = user.followingNum.str()
-//        mProfileBinding.userFollowers.text = user.followersNum.str()
-//        mProfileBinding.userLikes.text = user.reactionsNum.str()
-//        mProfileBinding.userQuestions.text = user.questionsNum.str()
-//        mProfileBinding.userAnswers.text = user.answersNum.str()
+        binding.analysisCardLayout.userFollowing.text = user.followingNum.toString()
+        binding.analysisCardLayout.userFollowers.text = user.followersNum.toString()
+        binding.analysisCardLayout.userLikes.text = user.reactionsNum.toString()
+        binding.analysisCardLayout.userQuestions.text = user.questionsNum.toString()
+        binding.analysisCardLayout.userAnswers.text = user.answersNum.toString()
 
-        mProfileBinding.userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
-        mProfileBinding.userWallpaper.loadImage(user.wallpaperUrl, R.drawable.ic_wallpaper)
+        binding.userAvatar.loadImage(user.avatarUrl, R.drawable.ic_profile)
+        binding.userWallpaper.loadImage(user.wallpaperUrl, R.drawable.ic_wallpaper)
 
         if (user.id != Session.getUserId(requireContext())) {
             updateFollowCardView(user.isUserFollow)
         } else {
-            mProfileBinding.askmeFollowMe.gone()
+            binding.askmeFollowMe.gone()
         }
     }
 
     private fun setupFullScreenOption(){
-        mProfileBinding.userAvatar.setOnClickListener {
+        binding.userAvatar.setOnClickListener {
             val bundle = bundleOf(Constants.AVATAR_URL to mCurrentUser.avatarUrl)
             findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
         }
 
-        mProfileBinding.userWallpaper.setOnClickListener {
+        binding.userWallpaper.setOnClickListener {
             val bundle = bundleOf(Constants.AVATAR_URL to mCurrentUser.wallpaperUrl)
             findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
         }
@@ -183,24 +185,24 @@ class ProfileFragment : Fragment(){
     private fun updateFollowCardView(follow: Follow) {
         when (follow) {
             Follow.FOLLOW -> {
-                mProfileBinding.askmeFollowMe.text = getString(R.string.following)
-                mProfileBinding.askmeFollowMe.tag = Follow.FOLLOW
+                binding.askmeFollowMe.text = getString(R.string.following)
+                binding.askmeFollowMe.tag = Follow.FOLLOW
             }
             Follow.UN_FOLLOW -> {
-                mProfileBinding.askmeFollowMe.text = getString(R.string.follow)
-                mProfileBinding.askmeFollowMe.tag = Follow.UN_FOLLOW
+                binding.askmeFollowMe.text = getString(R.string.follow)
+                binding.askmeFollowMe.tag = Follow.UN_FOLLOW
             }
         }
     }
 
     private fun setupEditMode(){
-        mProfileBinding.changeAvatarAction.setOnClickListener { changeAvatarImage() }
-        mProfileBinding.changeWallpaperAction.setOnClickListener { changeWallpaperImage() }
+        binding.changeAvatarAction.setOnClickListener { changeAvatarImage() }
+        binding.changeWallpaperAction.setOnClickListener { changeWallpaperImage() }
     }
 
     private fun hideEditMode(){
-        mProfileBinding.changeAvatarAction.gone()
-        mProfileBinding.changeWallpaperAction.gone()
+        binding.changeAvatarAction.gone()
+        binding.changeWallpaperAction.gone()
         mProfileViewModel.getFollowLiveData().removeObservers(this)
         mProfileViewModel.getAvatarLiveData().removeObservers(this)
         mProfileViewModel.getWallpaperLiveData().removeObservers(this)
@@ -220,7 +222,7 @@ class ProfileFragment : Fragment(){
         val followData = FollowData(Session.getUserId(requireContext()).toString(), mUserId)
         val token = Session.getUserToken(requireContext()).toString()
 
-        when (Follow.valueOf(mProfileBinding.askmeFollowMe.tag.toString())) {
+        when (Follow.valueOf(binding.askmeFollowMe.tag.toString())) {
             Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)
             Follow.UN_FOLLOW -> mProfileViewModel.followUser(token ,followData)
         }
@@ -266,5 +268,10 @@ class ProfileFragment : Fragment(){
                }
            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

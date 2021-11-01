@@ -20,11 +20,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
-    private lateinit var binding : FragmentRegisterBinding
+    private var _binding : FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
+
+
     private val viewModel by viewModels<RegisterViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
 
         setupObservers()
         setupListeners()
@@ -72,4 +75,8 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -24,13 +24,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class QuestionAnswerFragment : Fragment(){
 
     private lateinit var mQuestionAnswer: Answer
-    private lateinit var mQuestionAnswerBinding : QuestionAnswerLayoutBinding
+
+    private var _binding : QuestionAnswerLayoutBinding? = null
+    private val binding get() = _binding!!
 
     private val mQuestionAnswerViewModel by viewModels<QuestionAnswerViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        mQuestionAnswerBinding =
-            DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
 
         val token = Session.getHeaderToken(requireContext()).toString()
         val answerId = arguments?.getString(Constants.ANSWER_ID).toString()
@@ -40,7 +41,7 @@ class QuestionAnswerFragment : Fragment(){
 
         mQuestionAnswerViewModel.getQuestionAnswer(token, answerId, userId)
         viewsClickListeners()
-        return mQuestionAnswerBinding.root
+        return binding.root
     }
 
     private fun setupObservers() {
@@ -51,38 +52,38 @@ class QuestionAnswerFragment : Fragment(){
     }
 
     private fun bindAnswer(answer : Answer){
-        mQuestionAnswerBinding.questionUsername.text = answer.toUserName
-        mQuestionAnswerBinding.questionText.text = answer.questionBody
-        mQuestionAnswerBinding.questionUserAvatar.loadImage(answer.toUserAvatar, R.drawable.ic_profile)
+        binding.questionUsername.text = answer.toUserName
+        binding.questionText.text = answer.questionBody
+        binding.questionUserAvatar.loadImage(answer.toUserAvatar, R.drawable.ic_profile)
 
-        mQuestionAnswerBinding.answerUsername.text = answer.toUserName
-        mQuestionAnswerBinding.answerText.text = answer.answerBody
-        mQuestionAnswerBinding.answerUserAvatar.loadImage(answer.fromUserAvatar, R.drawable.ic_profile)
+        binding.answerUsername.text = answer.toUserName
+        binding.answerText.text = answer.answerBody
+        binding.answerUserAvatar.loadImage(answer.fromUserAvatar, R.drawable.ic_profile)
 
-        mQuestionAnswerBinding.reactionsTxt.text = answer.reactionsNum.toString()
+        binding.reactionsTxt.text = answer.reactionsNum.toString()
 
 
         if(answer.isReacted == Reaction.REACATED){
-            mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
-            mQuestionAnswerBinding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
+            binding.reactionsTxt.setTextColor(ContextCompat.getColor(requireContext(), R.color.orange))
+            binding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_reacted,0,0,0)
         }else{
-            mQuestionAnswerBinding.reactionsTxt.setTextColor(ContextCompat.getColor(requireContext() ,R.color.black))
-            mQuestionAnswerBinding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_react,0,0,0)
+            binding.reactionsTxt.setTextColor(ContextCompat.getColor(requireContext() ,R.color.black))
+            binding.reactionsTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_react,0,0,0)
         }
     }
 
     private fun viewsClickListeners(){
-        mQuestionAnswerBinding.questionUsername.setOnClickListener {
+        binding.questionUsername.setOnClickListener {
             val bundle = bundleOf(Constants.USER_ID to mQuestionAnswer.toUserId)
             findNavController().navigate(R.id.action_questionAnswerFragment_to_peopleFragment, bundle)
         }
 
-        mQuestionAnswerBinding.answerUsername.setOnClickListener{
+        binding.answerUsername.setOnClickListener{
             val bundle = bundleOf(Constants.USER_ID to mQuestionAnswer.fromUserId)
             findNavController().navigate(R.id.action_questionAnswerFragment_to_peopleFragment, bundle)
         }
 
-        mQuestionAnswerBinding.reactionsTxt.setOnClickListener{
+        binding.reactionsTxt.setOnClickListener{
             when(mQuestionAnswer.isReacted){
                 Reaction.REACATED -> {
                     val token = Session.getHeaderToken(requireContext()).toString()
@@ -103,5 +104,10 @@ class QuestionAnswerFragment : Fragment(){
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
