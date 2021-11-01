@@ -39,11 +39,11 @@ fun TextView.setTextOrHide(text: String?) {
 }
 
 fun TextView.setFormattedJoinDate(time : Long) {
-    this.text = "Joined in ${formatDateForJoin(time).str()}"
+    this.text = "Joined in ${formatDateForJoin(time)}"
 }
 
 fun TextView.setFormattedDateForPost(time : Long) {
-    this.text = formatDateForPost(time).str()
+    this.text = formatDateForPost(time)
 }
 
 fun ImageView.loadImage(imageUrl: String?, defaultDrawableId : Int) {

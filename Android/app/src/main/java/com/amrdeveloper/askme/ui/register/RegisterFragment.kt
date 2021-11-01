@@ -12,10 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.databinding.FragmentRegisterBinding
+import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.utils.show
-import com.amrdeveloper.askme.utils.str
-import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,8 +38,8 @@ class RegisterFragment : Fragment() {
             if(it != null){
                 Toast.makeText(requireContext(), "Register Success", Toast.LENGTH_SHORT).show()
 
-                val email: String = binding.emailInputEdit.text.str()
-                val password: String = binding.passInputEdit.text.str()
+                val email: String = binding.emailInputEdit.text.toString()
+                val password: String = binding.passInputEdit.text.toString()
 
                 Session.login(requireContext(), email, password, it)
 
@@ -57,10 +56,10 @@ class RegisterFragment : Fragment() {
         }
 
         binding.registerButton.setOnClickListener {
-            val name = binding.nameInputEdit.text.str()
-            val email = binding.emailInputEdit.text.str()
-            val username = binding.usernameInputEdit.text.str()
-            val password = binding.passInputEdit.text.str()
+            val name = binding.nameInputEdit.text.toString()
+            val email = binding.emailInputEdit.text.toString()
+            val username = binding.usernameInputEdit.text.toString()
+            val password = binding.passInputEdit.text.toString()
 
             val registerData = RegisterData(name, email, username , password)
 

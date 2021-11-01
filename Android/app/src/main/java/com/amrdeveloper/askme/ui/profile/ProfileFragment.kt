@@ -55,8 +55,8 @@ class ProfileFragment : Fragment(){
 
         mProfileBinding.listLayout.loadingBar.show()
 
-        mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(requireContext()).str())
-        mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(requireContext()).str())
+        mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(requireContext()).toString())
+        mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(requireContext()).toString())
 
         setupObservers()
 
@@ -129,9 +129,9 @@ class ProfileFragment : Fragment(){
     }
 
     private fun updateUserInfoFromArguments(){
-        mUserId = arguments?.getString(Constants.USER_ID).str()
-        if (mUserId.isNullString()) {
-            mUserId = Session.getUserId(requireContext()).str()
+        mUserId = arguments?.getString(Constants.USER_ID).toString()
+        if (mUserId.isEmpty() || mUserId == "null") {
+            mUserId = Session.getUserId(requireContext()).toString()
             setupEditMode()
         }else{
             hideEditMode()
@@ -217,8 +217,8 @@ class ProfileFragment : Fragment(){
     }
 
     private fun followCardViewListener(){
-        val followData = FollowData(Session.getUserId(requireContext()).str(), mUserId)
-        val token = Session.getUserToken(requireContext()).str()
+        val followData = FollowData(Session.getUserId(requireContext()).toString(), mUserId)
+        val token = Session.getUserToken(requireContext()).toString()
 
         when (Follow.valueOf(mProfileBinding.askmeFollowMe.tag.toString())) {
             Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)

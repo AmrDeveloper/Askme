@@ -12,10 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.databinding.FragmentLoginBinding
+import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.utils.show
-import com.amrdeveloper.askme.utils.str
-import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,8 +36,8 @@ class LoginFragment : Fragment() {
         viewModel.getSessionLiveData().observe(viewLifecycleOwner, {
             binding.loadingBar.gone()
             if (it != null) {
-                val email: String = binding.emailInputEdit.text.str()
-                val password: String = binding.passInputEdit.text.str()
+                val email: String = binding.emailInputEdit.text.toString()
+                val password: String = binding.passInputEdit.text.toString()
 
                 Session.login(requireContext(), email, password, it)
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)

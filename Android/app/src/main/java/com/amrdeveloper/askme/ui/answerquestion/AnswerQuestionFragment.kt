@@ -16,9 +16,8 @@ import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Question
 import com.amrdeveloper.askme.data.remote.net.ResponseType
 import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
-import com.amrdeveloper.askme.utils.loadImage
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,8 +38,8 @@ class AnswerQuestionFragment : Fragment() {
 
         setupObservers()
 
-        val token = Session.getHeaderToken(requireContext()).str()
-        val questionID = arguments?.getString(Constants.QUESTION_ID).str()
+        val token = Session.getHeaderToken(requireContext()).toString()
+        val questionID = arguments?.getString(Constants.QUESTION_ID).toString()
         viewModel.getQuestionById(token, questionID)
 
         updateQuestionLength()
@@ -54,12 +53,12 @@ class AnswerQuestionFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
-            val questionID = arguments?.getString(Constants.QUESTION_ID).str()
-            val answerBody = binding.answerEditText.text.str()
-            val fromUserId = Session.getUserId(requireContext()).str()
+            val questionID = arguments?.getString(Constants.QUESTION_ID).toString()
+            val answerBody = binding.answerEditText.text.toString()
+            val fromUserId = Session.getUserId(requireContext()).toString()
             val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
-            val token = Session.getHeaderToken(requireContext()).str()
+            val token = Session.getHeaderToken(requireContext()).toString()
             viewModel.answerQuestion(token, answerData)
         }
         return super.onOptionsItemSelected(item)
@@ -98,7 +97,7 @@ class AnswerQuestionFragment : Fragment() {
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(editable : Editable?) {
-                binding.questionLength.text = (300 - editable!!.length).str()
+                binding.questionLength.text = (300 - editable!!.length).toString()
             }
         })
     }

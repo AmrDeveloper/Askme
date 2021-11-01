@@ -16,7 +16,6 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.remote.net.ResponseType
 import com.amrdeveloper.askme.data.themeList
 import com.amrdeveloper.askme.databinding.FragmentSettingsBinding
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.ui.adapter.ColorGridAdapter
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.Validation
@@ -97,13 +96,13 @@ class SettingsFragment : Fragment() {
         val statusEdit : EditText = dialogView.findViewById(R.id.statusEdit)
 
         changeButton.setOnClickListener {
-            val statusTxt = statusEdit.text.str()
+            val statusTxt = statusEdit.text.toString()
             if(statusTxt.isEmpty()){
                 Toast.makeText(requireContext(), "Invalid Status", Toast.LENGTH_SHORT)
                     .show()
             }else{
-                val token = Session.getHeaderToken(requireContext()).str()
-                val userId = Session.getUserId(requireContext()).str()
+                val token = Session.getHeaderToken(requireContext()).toString()
+                val userId = Session.getUserId(requireContext()).toString()
                 viewModel.changeUserStatus(token, userId, statusTxt)
             }
 
@@ -124,13 +123,13 @@ class SettingsFragment : Fragment() {
         val locationEdit : EditText = dialogView.findViewById(R.id.locationEdit)
 
         changeButton.setOnClickListener {
-            val locationTxt = locationEdit.text.str()
+            val locationTxt = locationEdit.text.toString()
             if(locationTxt.isEmpty()){
                 Toast.makeText(requireContext(), "Invalid Location", Toast.LENGTH_SHORT)
                     .show()
             }else{
-                val token = Session.getHeaderToken(requireContext()).str()
-                val userId = Session.getUserId(requireContext()).str()
+                val token = Session.getHeaderToken(requireContext()).toString()
+                val userId = Session.getUserId(requireContext()).toString()
                 viewModel.changeUserLocation(token, userId, locationTxt)
             }
 
@@ -156,8 +155,8 @@ class SettingsFragment : Fragment() {
         colorGridView.setOnItemClickListener {_, _, position, _ ->
             val themeName = colorGridAdapter.getItem(position)!!.themeColor
 
-            val token = Session.getHeaderToken(requireContext()).str()
-            val userId = Session.getUserId(requireContext()).str()
+            val token = Session.getHeaderToken(requireContext()).toString()
+            val userId = Session.getUserId(requireContext()).toString()
 
             viewModel.changeUserColor(token, userId, themeName)
 
@@ -181,15 +180,15 @@ class SettingsFragment : Fragment() {
         val newPassword: EditText = dialogView.findViewById(R.id.newPasswordEdit)
 
         changeButton.setOnClickListener {
-            val oldPasswordTxt = oldPassword.text.str()
+            val oldPasswordTxt = oldPassword.text.toString()
             if (Session.getUserPassword(requireContext()) == oldPasswordTxt) {
-                val newPasswordTxt = newPassword.text.str()
+                val newPasswordTxt = newPassword.text.toString()
                 if(oldPasswordTxt == newPasswordTxt || Validation.isValidPassword(newPasswordTxt).not()){
                     Toast.makeText(requireContext(), "New password is equal old password", Toast.LENGTH_SHORT)
                         .show()
                 }else{
-                    val token = Session.getHeaderToken(requireContext()).str()
-                    val userId = Session.getUserId(requireContext()).str()
+                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val userId = Session.getUserId(requireContext()).toString()
                     viewModel.changeUserPassword(token, userId, newPasswordTxt)
                 }
             } else {

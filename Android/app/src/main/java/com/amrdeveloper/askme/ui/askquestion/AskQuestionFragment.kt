@@ -14,9 +14,8 @@ import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.QuestionData
 import com.amrdeveloper.askme.data.remote.net.ResponseType
 import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
-import com.amrdeveloper.askme.utils.loadImage
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,14 +46,14 @@ class AskQuestionFragment : Fragment(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
-            val question = binding.questionEditText.text.str()
+            val question = binding.questionEditText.text.toString()
             val isAnonymously = binding.anonymouslySwitch.isChecked
             var isAnonymous = "0"
             if(isAnonymously) isAnonymous = "1"
-            val fromUser = Session.getUserId(requireContext()).str()
-            val toUser = arguments?.getString(Constants.USER_ID).str()
+            val fromUser = Session.getUserId(requireContext()).toString()
+            val toUser = arguments?.getString(Constants.USER_ID).toString()
             val questionData = QuestionData(question,toUser, fromUser, isAnonymous)
-            val token = Session.getUserToken(requireContext()).str()
+            val token = Session.getUserToken(requireContext()).toString()
             viewModel.askNewQuestion(token, questionData)
         }
         return super.onOptionsItemSelected(item)
@@ -83,7 +82,7 @@ class AskQuestionFragment : Fragment(){
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(editable : Editable?) {
-                binding.questionLength.text = (300 - editable!!.length).str()
+                binding.questionLength.text = (300 - editable!!.length).toString()
             }
         })
     }

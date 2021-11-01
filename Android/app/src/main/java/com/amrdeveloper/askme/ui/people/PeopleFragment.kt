@@ -8,12 +8,10 @@ import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.PeopleAdapter
 import dagger.hilt.android.AndroidEntryPoint

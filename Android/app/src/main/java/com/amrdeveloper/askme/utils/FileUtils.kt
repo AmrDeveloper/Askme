@@ -22,10 +22,10 @@ object FileUtils {
         if (result == null) {
             result = "Not found"
         }
-        return result.str()
+        return result.toString()
     }
 
     fun getFileType(context: Context, uri : Uri) : String{
-        return context.contentResolver.getType(uri).str()
+        return context.contentResolver.getType(uri).toString()
     }
 }

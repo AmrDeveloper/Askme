@@ -16,9 +16,8 @@ import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.databinding.QuestionAnswerLayoutBinding
-import com.amrdeveloper.askme.utils.loadImage
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.loadImage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,9 +32,9 @@ class QuestionAnswerFragment : Fragment(){
         mQuestionAnswerBinding =
             DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
 
-        val token = Session.getHeaderToken(requireContext()).str()
-        val answerId = arguments?.getString(Constants.ANSWER_ID).str()
-        val userId = Session.getUserId(requireContext()).str()
+        val token = Session.getHeaderToken(requireContext()).toString()
+        val answerId = arguments?.getString(Constants.ANSWER_ID).toString()
+        val userId = Session.getUserId(requireContext()).toString()
 
         setupObservers()
 
@@ -60,7 +59,7 @@ class QuestionAnswerFragment : Fragment(){
         mQuestionAnswerBinding.answerText.text = answer.answerBody
         mQuestionAnswerBinding.answerUserAvatar.loadImage(answer.fromUserAvatar, R.drawable.ic_profile)
 
-        mQuestionAnswerBinding.reactionsTxt.text = answer.reactionsNum.str()
+        mQuestionAnswerBinding.reactionsTxt.text = answer.reactionsNum.toString()
 
 
         if(answer.isReacted == Reaction.REACATED){
@@ -86,8 +85,8 @@ class QuestionAnswerFragment : Fragment(){
         mQuestionAnswerBinding.reactionsTxt.setOnClickListener{
             when(mQuestionAnswer.isReacted){
                 Reaction.REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).str()
-                    val answerId = mQuestionAnswer.answerId.str()
+                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val answerId = mQuestionAnswer.answerId.toString()
                     val toUserId = mQuestionAnswer.toUserId
                     val fromUserId = mQuestionAnswer.fromUserId
                     val reactionData = ReactionData(fromUserId, toUserId, answerId)
@@ -95,8 +94,8 @@ class QuestionAnswerFragment : Fragment(){
                 }
 
                 Reaction.UN_REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).str()
-                    val answerId = mQuestionAnswer.answerId.str()
+                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val answerId = mQuestionAnswer.answerId.toString()
                     val toUserId = mQuestionAnswer.toUserId
                     val fromUserId = mQuestionAnswer.fromUserId
                     val reactionData = ReactionData(fromUserId, toUserId, answerId)

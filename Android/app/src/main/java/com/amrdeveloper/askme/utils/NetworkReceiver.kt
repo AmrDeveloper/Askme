@@ -6,13 +6,11 @@ import android.content.Intent
 
 class NetworkReceiver(private val listener: NetworkStateListener) : BroadcastReceiver() {
 
-    override fun onReceive(context : Context?, intent: Intent?) {
-        context.notNull {
-            if(isNetworkConnected(it)){
-                listener.onNetworkConnected()
-            }else{
-                listener.onNetworkDisconnected()
-            }
+    override fun onReceive(context : Context, intent: Intent?) {
+        if (isNetworkConnected(context)){
+            listener.onNetworkConnected()
+        }else{
+            listener.onNetworkDisconnected()
         }
     }
 }

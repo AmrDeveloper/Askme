@@ -14,10 +14,9 @@ import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
-import com.amrdeveloper.askme.utils.gone
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.gone
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,7 +32,7 @@ class HomeFragment : Fragment() {
 
         setupUserList()
 
-        viewModel.loadUserHomeFeed(Session.getUserId(requireContext()).str())
+        viewModel.loadUserHomeFeed(Session.getUserId(requireContext()).toString())
 
         setupObservers()
 
@@ -56,15 +55,15 @@ class HomeFragment : Fragment() {
         feedAdapter.setOnReactionListener { answerId, toUser, reaction, callback ->
             when (reaction) {
                 Reaction.REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).str()
-                    val id = Session.getUserId(requireContext()).str()
-                    val body = ReactionData(id, toUser, answerId.str())
+                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val id = Session.getUserId(requireContext()).toString()
+                    val body = ReactionData(id, toUser, answerId.toString())
                     viewModel.unreactAnswer(token, body, callback)
                 }
                 Reaction.UN_REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).str()
-                    val id = Session.getUserId(requireContext()).str()
-                    val body = ReactionData(id, toUser, answerId.str())
+                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val id = Session.getUserId(requireContext()).toString()
+                    val body = ReactionData(id, toUser, answerId.toString())
                     viewModel.reactAnswer(token, body, callback)
                 }
             }

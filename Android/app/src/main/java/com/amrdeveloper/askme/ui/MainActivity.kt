@@ -11,7 +11,6 @@ import androidx.navigation.Navigation.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
 import com.amrdeveloper.askme.utils.ThemeManager
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             findNavController(this,R.id.viewContainers).navigate(R.id.homeFragment)
         } else {
             if (Session.isUserLogined(this)) {
-                val shortcutAction = intent.action.str()
+                val shortcutAction = intent.action.toString()
                 ShortcutUtils.executeAction(shortcutAction, binding.mainNavigation)
             } else {
                 Toast.makeText(this, "No Authentication", Toast.LENGTH_SHORT).show()

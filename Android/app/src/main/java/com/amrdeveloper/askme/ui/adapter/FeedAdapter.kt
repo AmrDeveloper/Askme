@@ -11,7 +11,9 @@ import com.amrdeveloper.askme.data.Anonymously
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.databinding.FeedListItemBinding
-import com.amrdeveloper.askme.utils.*
+import com.amrdeveloper.askme.utils.loadImage
+import com.amrdeveloper.askme.utils.setFormattedDateForPost
+import com.amrdeveloper.askme.utils.setTextOrHide
 
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
@@ -31,18 +33,18 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
         if(::onUsernameCLickListener.isInitialized){
             if(currentFeed.anonymously == Anonymously.NOT_ANONYMOSLY) {
                 holder.binding.questionFrom.setOnClickListener {
-                    onUsernameCLickListener(currentFeed.toUserId.str())
+                    onUsernameCLickListener(currentFeed.toUserId.toString())
                 }
             }
 
             holder.binding.answerFrom.setOnClickListener {
-                onUsernameCLickListener(currentFeed.fromUserId.str())
+                onUsernameCLickListener(currentFeed.fromUserId.toString())
             }
         }
 
         if(::onReactionClickListener.isInitialized){
             holder.binding.reactionsTxt.setOnClickListener {
-                onReactionClickListener(currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted) {
+                onReactionClickListener(currentFeed.answerId, currentFeed.toUserId.toString(), currentFeed.isReacted) {
                     when (currentFeed.isReacted) {
                         Reaction.REACATED -> {
                             currentList?.get(position)?.reactionsNum =

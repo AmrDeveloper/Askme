@@ -49,7 +49,7 @@ object Session {
     fun getUserColor(context: Context) : ThemeColor {
         val preferences =
             context.getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
-        return ThemeColor.valueOf(preferences.getString(Constants.COLOR, ThemeColor.ORANGE.name).str())
+        return ThemeColor.valueOf(preferences.getString(Constants.COLOR, ThemeColor.ORANGE.name).toString())
     }
 
     fun getUserPassword(context: Context): String? {

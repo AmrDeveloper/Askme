@@ -15,7 +15,6 @@ import com.amrdeveloper.askme.data.Action
 import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Open
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.ui.adapter.NotificationAdapter
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,8 +56,8 @@ class NotificationFragment: Fragment(){
 
         notificationAdapter.setOnItemClickListener{ notification ->
             if (notification.isOpened == Open.UN_OPENED) {
-                val token = Session.getHeaderToken(requireContext()).str()
-                viewModel.makeNotificationReaded(notification.id.str(), token)
+                val token = Session.getHeaderToken(requireContext()).toString()
+                viewModel.makeNotificationReaded(notification.id.toString(), token)
                 notification.isOpened = Open.OPENED
                 notificationAdapter.notifyDataSetChanged()
             }

@@ -17,7 +17,6 @@ import com.amrdeveloper.askme.data.FollowData
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.data.remote.datasource.FeedDataSource
 import com.amrdeveloper.askme.data.remote.net.*
-import com.amrdeveloper.askme.utils.str
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -58,7 +57,7 @@ class ProfileViewModel @Inject constructor(private val userService: UserService,
     }
 
     fun updateUserAvatar(context: Context, avatar : Uri){
-        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session.getUserEmail(context).str())
+        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session.getUserEmail(context).toString())
 
         val imagePath = FileUtils.getImagePath(context, avatar)
         val imageFile = File(imagePath)
@@ -81,7 +80,7 @@ class ProfileViewModel @Inject constructor(private val userService: UserService,
     }
 
     fun updateUserWallpaper(context: Context, wallpaper : Uri){
-        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session.getUserEmail(context).str())
+        val emailBody = RequestBody.create(MediaType.parse("multipart/form-data"), Session.getUserEmail(context).toString())
 
         val imagePath = FileUtils.getImagePath(context, wallpaper)
         val imageFile = File(imagePath)
