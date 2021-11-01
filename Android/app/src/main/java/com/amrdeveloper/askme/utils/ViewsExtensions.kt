@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import com.amrdeveloper.askme.data.remote.net.API_SERVER_URL
+import com.amrdeveloper.askme.data.API_SERVER_URL
 import com.squareup.picasso.Picasso
 
 fun View.show() {

@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.QuestionData
-import com.amrdeveloper.askme.data.remote.net.ResponseType
+import com.amrdeveloper.askme.data.*
+import com.amrdeveloper.askme.data.source.remote.net.ResponseType
 import com.amrdeveloper.askme.databinding.AskQuestionLayoutBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.loadImage
@@ -53,7 +52,7 @@ class AskQuestionFragment : Fragment(){
             var isAnonymous = "0"
             if(isAnonymously) isAnonymous = "1"
             val fromUser = Session.getUserId(requireContext()).toString()
-            val toUser = arguments?.getString(Constants.USER_ID).toString()
+            val toUser = arguments?.getString(USER_ID).toString()
             val questionData = QuestionData(question,toUser, fromUser, isAnonymous)
             val token = Session.getUserToken(requireContext()).toString()
             viewModel.askNewQuestion(token, questionData)
@@ -69,9 +68,9 @@ class AskQuestionFragment : Fragment(){
     }
 
     private fun bindUserInformation(){
-        val name = arguments?.getString(Constants.NAME)
-        val username = arguments?.getString(Constants.USERNAME)
-        val avatarUrl = arguments?.getString(Constants.AVATAR_URL)
+        val name = arguments?.getString(NAME)
+        val username = arguments?.getString(USERNAME)
+        val avatarUrl = arguments?.getString(AVATAR_URL)
 
         binding.userName.text = name
         binding.userUsername.text = username

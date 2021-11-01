@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -15,11 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Follow
-import com.amrdeveloper.askme.data.FollowData
-import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.data.remote.net.ResponseType
+import com.amrdeveloper.askme.data.*
+import com.amrdeveloper.askme.data.source.remote.net.ResponseType
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import com.amrdeveloper.askme.utils.*
@@ -46,7 +44,7 @@ class ProfileFragment : Fragment(){
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        arguments?.get(Constants.USER_ID)?.let { mUserId = it as String }
+        arguments?.get(USER_ID)?.let { mUserId = it as String }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -91,7 +89,7 @@ class ProfileFragment : Fragment(){
         })
 
         mProfileViewModel.getFeedPagedList().observe(viewLifecycleOwner, {
-            mFeedAdapter.submitList(it)
+            mFeedAdapter.submitData(lifecycle, it)
             binding.listLayout.loadingBar.gone()
         })
 
@@ -131,7 +129,7 @@ class ProfileFragment : Fragment(){
     }
 
     private fun updateUserInfoFromArguments(){
-        mUserId = arguments?.getString(Constants.USER_ID).toString()
+        mUserId = arguments?.getString(USER_ID).toString()
         if (mUserId.isEmpty() || mUserId == "null") {
             mUserId = Session.getUserId(requireContext()).toString()
             setupEditMode()
@@ -172,12 +170,12 @@ class ProfileFragment : Fragment(){
 
     private fun setupFullScreenOption(){
         binding.userAvatar.setOnClickListener {
-            val bundle = bundleOf(Constants.AVATAR_URL to mCurrentUser.avatarUrl)
+            val bundle = bundleOf(AVATAR_URL to mCurrentUser.avatarUrl)
             findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
         }
 
         binding.userWallpaper.setOnClickListener {
-            val bundle = bundleOf(Constants.AVATAR_URL to mCurrentUser.wallpaperUrl)
+            val bundle = bundleOf(AVATAR_URL to mCurrentUser.wallpaperUrl)
             findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
         }
     }
@@ -210,10 +208,10 @@ class ProfileFragment : Fragment(){
 
     private fun openAskQuestionFragment(){
         val bundle = Bundle()
-        bundle.putString(Constants.USER_ID, mCurrentUser.id)
-        bundle.putString(Constants.NAME, mCurrentUser.name)
-        bundle.putString(Constants.USERNAME, mCurrentUser.username)
-        bundle.putString(Constants.AVATAR_URL, mCurrentUser.avatarUrl)
+        bundle.putString(USER_ID, mCurrentUser.id)
+        bundle.putString(NAME, mCurrentUser.name)
+        bundle.putString(USERNAME, mCurrentUser.username)
+        bundle.putString(AVATAR_URL, mCurrentUser.avatarUrl)
 
         findNavController().navigate(R.id.action_profileFragment_to_askQuestionFragment, bundle)
     }

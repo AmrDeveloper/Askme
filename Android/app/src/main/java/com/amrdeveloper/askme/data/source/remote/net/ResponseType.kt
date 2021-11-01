@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.data.remote.net
+package com.amrdeveloper.askme.data.source.remote.net
 
 enum class ResponseType {
     SUCCESS,

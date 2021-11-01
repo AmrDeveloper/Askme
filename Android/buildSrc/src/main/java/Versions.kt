@@ -14,7 +14,7 @@ object Versions {
 
     const val daggerHiltVersion = "2.39.1"
 
-    const val pagingVersion = "2.1.1"
+    const val pagingVersion = "3.0.1"
     const val lifecycleExtensionVersion = "2.1.0"
     const val lifecycleViewModelVersion = "2.1.0"
     const val fragmentExtensionVersion = "1.3.6"

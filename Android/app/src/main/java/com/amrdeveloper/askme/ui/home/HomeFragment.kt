@@ -10,9 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
+import com.amrdeveloper.askme.data.USER_ID
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import com.amrdeveloper.askme.utils.Session
@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
 
         feedAdapter.setOnUsernameListener { userId ->
             val args = Bundle()
-            args.putString(Constants.USER_ID, userId)
+            args.putString(USER_ID, userId)
             findNavController().navigate(R.id.action_homeFragment_to_profileFragment, args)
 
         }
@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.getFeedPagedList().observe(viewLifecycleOwner, {
-            feedAdapter.submitList(it)
+            feedAdapter.submitData(lifecycle, it)
             binding.loadingBar.gone()
         })
     }

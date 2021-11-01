@@ -2,7 +2,7 @@ package com.amrdeveloper.askme.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
@@ -10,7 +10,7 @@ import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.UserListItemBinding
 import com.amrdeveloper.askme.utils.loadImage
 
-class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_CALL_BACK){
+class PeopleAdapter : PagingDataAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_CALL_BACK){
 
     private lateinit var onUserClickListener: (User) -> Unit
 

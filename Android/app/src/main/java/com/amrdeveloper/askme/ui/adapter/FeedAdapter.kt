@@ -3,7 +3,7 @@ package com.amrdeveloper.askme.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
@@ -15,8 +15,7 @@ import com.amrdeveloper.askme.utils.loadImage
 import com.amrdeveloper.askme.utils.setFormattedDateForPost
 import com.amrdeveloper.askme.utils.setTextOrHide
 
-class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
-
+class FeedAdapter : PagingDataAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
     private lateinit var onUsernameCLickListener : (String) -> Unit
     private lateinit var onReactionClickListener : (Int, String, Reaction, () -> Unit) -> Unit
@@ -47,16 +46,12 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
                 onReactionClickListener(currentFeed.answerId, currentFeed.toUserId.toString(), currentFeed.isReacted) {
                     when (currentFeed.isReacted) {
                         Reaction.REACATED -> {
-                            currentList?.get(position)?.reactionsNum =
-                                currentList?.get(position)?.reactionsNum?.minus(1)!!
-                            currentList?.get(position)?.isReacted =
-                                Reaction.UN_REACATED
+                            currentFeed.reactionsNum = currentFeed.reactionsNum.minus(1)
+                            currentFeed.isReacted = Reaction.UN_REACATED
                         }
                         Reaction.UN_REACATED -> {
-                            currentList?.get(position)?.reactionsNum =
-                                currentList?.get(position)?.reactionsNum?.plus(1)!!
-                            currentList?.get(position)?.isReacted =
-                                Reaction.REACATED
+                            currentFeed.reactionsNum = currentFeed.reactionsNum.plus(1)
+                            currentFeed.isReacted = Reaction.REACATED
                         }
                     }
                     notifyDataSetChanged()

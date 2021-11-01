@@ -1,4 +1,4 @@
-package com.amrdeveloper.askme.data.remote.net
+package com.amrdeveloper.askme.data.source.remote.net
 
 import com.amrdeveloper.askme.data.*
 import okhttp3.MultipartBody
@@ -15,7 +15,7 @@ interface UserService {
     ): User
 
     @GET("users/")
-    suspend fun getUsersQuery(
+    suspend fun getUserList(
         @Query("page") page: Int = DEFAULT_QUERY_PAGE_NUM,
         @Query("page_size") page_size : Int = DEFAULT_QUERY_PAGE_SIZE
     ): List<User>
@@ -30,14 +30,14 @@ interface UserService {
     @Multipart
     @PUT("users/avatar")
     suspend fun updateUserAvatar(
-        @Part("email") email: RequestBody,
+        @Part("email") requestBody: RequestBody,
         @Part avatar : MultipartBody.Part
     ): Response<String>
 
     @Multipart
     @PUT("users/wallpaper")
     suspend fun updateUserWallpaper(
-        @Part("email") email: RequestBody,
+        @Part("email") request: RequestBody,
         @Part wallpaper : MultipartBody.Part
     ): Response<String>
 

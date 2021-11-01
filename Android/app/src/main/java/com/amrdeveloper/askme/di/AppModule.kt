@@ -1,6 +1,11 @@
 package com.amrdeveloper.askme.di
 
-import com.amrdeveloper.askme.data.remote.net.*
+import com.amrdeveloper.askme.data.SERVER_API_URL
+import com.amrdeveloper.askme.data.source.*
+import com.amrdeveloper.askme.data.source.remote.FeedRemoteDataSource
+import com.amrdeveloper.askme.data.source.remote.NotificationRemoteDataSource
+import com.amrdeveloper.askme.data.source.remote.UserRemoteDataSource
+import com.amrdeveloper.askme.data.source.remote.net.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -71,4 +76,23 @@ object AppModule {
     fun provideNotificationService(retrofit: Retrofit) : NotificationService {
         return retrofit.create(NotificationService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideFeedDataSource(feedService: FeedService) : FeedDataSource {
+        return FeedRemoteDataSource(feedService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserDataSource(userService: UserService) : UserDataSource {
+        return UserRemoteDataSource(userService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationDataSource(notificationService: NotificationService) : NotificationDataSource {
+        return NotificationRemoteDataSource(notificationService)
+    }
+
 }

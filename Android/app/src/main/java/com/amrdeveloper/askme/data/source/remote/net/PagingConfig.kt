@@ -1,6 +1,7 @@
-package com.amrdeveloper.askme.data.remote.net
+package com.amrdeveloper.askme.data.source.remote.net
 
 import androidx.paging.PagedList
+import com.amrdeveloper.askme.data.DEFAULT_QUERY_PAGE_SIZE
 
 object PagingConfig {
 

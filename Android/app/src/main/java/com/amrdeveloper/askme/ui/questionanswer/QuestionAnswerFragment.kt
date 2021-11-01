@@ -11,10 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Answer
-import com.amrdeveloper.askme.data.Constants
-import com.amrdeveloper.askme.data.Reaction
-import com.amrdeveloper.askme.data.ReactionData
+import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.databinding.QuestionAnswerLayoutBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.loadImage
@@ -34,7 +31,7 @@ class QuestionAnswerFragment : Fragment(){
         _binding = DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
 
         val token = Session.getHeaderToken(requireContext()).toString()
-        val answerId = arguments?.getString(Constants.ANSWER_ID).toString()
+        val answerId = arguments?.getString(ANSWER_ID).toString()
         val userId = Session.getUserId(requireContext()).toString()
 
         setupObservers()
@@ -74,12 +71,12 @@ class QuestionAnswerFragment : Fragment(){
 
     private fun viewsClickListeners(){
         binding.questionUsername.setOnClickListener {
-            val bundle = bundleOf(Constants.USER_ID to mQuestionAnswer.toUserId)
+            val bundle = bundleOf(USER_ID to mQuestionAnswer.toUserId)
             findNavController().navigate(R.id.action_questionAnswerFragment_to_peopleFragment, bundle)
         }
 
         binding.answerUsername.setOnClickListener{
-            val bundle = bundleOf(Constants.USER_ID to mQuestionAnswer.fromUserId)
+            val bundle = bundleOf(USER_ID to mQuestionAnswer.fromUserId)
             findNavController().navigate(R.id.action_questionAnswerFragment_to_peopleFragment, bundle)
         }
 

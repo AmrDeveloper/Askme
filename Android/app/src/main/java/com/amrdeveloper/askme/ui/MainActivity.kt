@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation.findNavController
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
+import com.amrdeveloper.askme.data.COLOR
+import com.amrdeveloper.askme.data.SESSION_PREFERENCE
 import com.amrdeveloper.askme.databinding.ActivityMainBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.ShortcutUtils
@@ -79,18 +80,18 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
 
     override fun onStart() {
         super.onStart()
-        getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+        getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE)
             .registerOnSharedPreferenceChangeListener(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        getSharedPreferences(Constants.SESSION_PREFERENCE, Context.MODE_PRIVATE)
+        getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE)
             .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     override fun onSharedPreferenceChanged(p0: SharedPreferences?, key: String?) {
-        if (key == Constants.COLOR) {
+        if (key == COLOR) {
             intent.action = "INTENT_CHANGE_THEME"
             recreate()
         }

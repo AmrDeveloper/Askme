@@ -1,5 +1,7 @@
-package com.amrdeveloper.askme.data.remote.net
+package com.amrdeveloper.askme.data.source.remote.net
 
+import com.amrdeveloper.askme.data.DEFAULT_QUERY_PAGE_NUM
+import com.amrdeveloper.askme.data.DEFAULT_QUERY_PAGE_SIZE
 import com.amrdeveloper.askme.data.Notification
 import retrofit2.Response
 import retrofit2.http.*

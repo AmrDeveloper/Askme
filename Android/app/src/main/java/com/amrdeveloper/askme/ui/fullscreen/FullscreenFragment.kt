@@ -6,7 +6,7 @@ import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
+import com.amrdeveloper.askme.data.AVATAR_URL
 import com.amrdeveloper.askme.databinding.FullscreenLayoutBinding
 import com.amrdeveloper.askme.utils.Downloader
 import com.amrdeveloper.askme.utils.loadImage
@@ -27,7 +27,7 @@ class FullscreenFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fullscreen_layout, container, false)
 
-        val imageUrl = arguments?.getString(Constants.AVATAR_URL)
+        val imageUrl = arguments?.getString(AVATAR_URL)
         binding.imageView.loadImage(imageUrl, R.drawable.ic_profile)
 
         return binding.root
@@ -47,12 +47,12 @@ class FullscreenFragment : Fragment(){
     }
 
     private fun saveImageAction(){
-        val imageUrl = arguments?.getString(Constants.AVATAR_URL)?.toServerImageUrl().toString()
+        val imageUrl = arguments?.getString(AVATAR_URL)?.toServerImageUrl().toString()
         Downloader.downloadImage(requireContext(), imageUrl)
     }
 
     private fun shareImageAction(){
-        val imageUrl = arguments?.getString(Constants.AVATAR_URL)?.toServerImageUrl()
+        val imageUrl = arguments?.getString(AVATAR_URL)?.toServerImageUrl()
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Share Image")

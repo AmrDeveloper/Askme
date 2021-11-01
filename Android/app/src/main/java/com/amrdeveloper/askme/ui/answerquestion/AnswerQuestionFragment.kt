@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Anonymously
 import com.amrdeveloper.askme.data.AnswerData
-import com.amrdeveloper.askme.data.Constants
+import com.amrdeveloper.askme.data.QUESTION_ID
 import com.amrdeveloper.askme.data.Question
-import com.amrdeveloper.askme.data.remote.net.ResponseType
+import com.amrdeveloper.askme.data.source.remote.net.ResponseType
 import com.amrdeveloper.askme.databinding.AnswerQuestionLayoutBinding
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.loadImage
@@ -40,7 +40,7 @@ class AnswerQuestionFragment : Fragment() {
         setupObservers()
 
         val token = Session.getHeaderToken(requireContext()).toString()
-        val questionID = arguments?.getString(Constants.QUESTION_ID).toString()
+        val questionID = arguments?.getString(QUESTION_ID).toString()
         viewModel.getQuestionById(token, questionID)
 
         updateQuestionLength()
@@ -54,7 +54,7 @@ class AnswerQuestionFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.sendMenu){
-            val questionID = arguments?.getString(Constants.QUESTION_ID).toString()
+            val questionID = arguments?.getString(QUESTION_ID).toString()
             val answerBody = binding.answerEditText.text.toString()
             val fromUserId = Session.getUserId(requireContext()).toString()
             val toUserId = mQuestion.fromUserId

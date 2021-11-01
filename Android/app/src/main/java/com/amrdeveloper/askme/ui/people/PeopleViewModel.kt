@@ -1,69 +1,44 @@
 package com.amrdeveloper.askme.ui.people
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.DataSource
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PageKeyedDataSource
-import androidx.paging.PagedList
+import androidx.paging.*
 import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.data.remote.datasource.UserDataSource
-import com.amrdeveloper.askme.data.remote.datasource.UserSearchDataSource
-import com.amrdeveloper.askme.data.remote.net.PagingConfig
-import com.amrdeveloper.askme.data.remote.net.UserService
+import com.amrdeveloper.askme.data.source.UserDataSource
+import com.amrdeveloper.askme.data.source.remote.paging.UserPagingDataSource
+import com.amrdeveloper.askme.data.source.remote.paging.UserPagingSearchDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PeopleViewModel @Inject constructor(private val userService: UserService) : ViewModel(){
+class PeopleViewModel @Inject constructor(private val userDataSource: UserDataSource) : ViewModel(){
 
-    private var usersLiveData : LiveData<PagedList<User>> = MutableLiveData()
-    private var usersSearchLiveData : LiveData<PagedList<User>> = MutableLiveData()
-    private lateinit var liveDataSource : LiveData<PageKeyedDataSource<Int, User>>
-    private lateinit var searchLiveDataSource : LiveData<PageKeyedDataSource<Int, User>>
+    private var usersLiveData : MutableLiveData<PagingData<User>> = MutableLiveData()
+    private var usersSearchLiveData : MutableLiveData<PagingData<User>> = MutableLiveData()
 
     fun loadPeopleList(){
-        val userDataSourceFactory = UserDataSourceFactory()
-        liveDataSource = userDataSourceFactory.getUserLiveDataSource()
-
-        usersLiveData = LivePagedListBuilder(userDataSourceFactory, PagingConfig.getConfig()).build()
+        viewModelScope.launch {
+            Pager(
+                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+                pagingSourceFactory = { UserPagingDataSource(userDataSource) }).flow.collect {
+                usersLiveData.value = it
+            }
+        }
     }
 
     fun searchPeopleList(query : String){
-        val userDataSourceFactory = UserSearchDataSourceFactory(query)
-        searchLiveDataSource = userDataSourceFactory.getUserSearchLiveDataSource()
-
-        usersSearchLiveData = LivePagedListBuilder(userDataSourceFactory, PagingConfig.getConfig()).build()
+        viewModelScope.launch {
+            Pager(
+                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+                pagingSourceFactory = { UserPagingSearchDataSource(query, userDataSource) }).flow.collect {
+                usersSearchLiveData.value = it
+            }
+        }
     }
 
     fun getUserPagedList() = usersLiveData
     fun getUsersSearchList() = usersSearchLiveData
-
-    private inner class UserDataSourceFactory : DataSource.Factory<Int, User>(){
-
-        private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
-
-        override fun create(): DataSource<Int, User> {
-            val userDataSource = UserDataSource(viewModelScope, userService)
-            userLiveDataSource.postValue(userDataSource)
-            return userDataSource
-        }
-
-        fun getUserLiveDataSource() = userLiveDataSource
-    }
-
-    private inner class UserSearchDataSourceFactory(val query : String) : DataSource.Factory<Int, User>() {
-
-        private val userLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, User>> = MutableLiveData()
-
-        override fun create(): DataSource<Int, User> {
-            val userDataSource = UserSearchDataSource(query, viewModelScope, userService)
-            userLiveDataSource.postValue(userDataSource)
-            return userDataSource
-        }
-
-        fun getUserSearchLiveDataSource() = userLiveDataSource
-    }
 }

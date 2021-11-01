@@ -3,24 +3,20 @@ package com.amrdeveloper.askme.ui.profile
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.DataSource
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PageKeyedDataSource
-import androidx.paging.PagedList
-import com.amrdeveloper.askme.data.Feed
-import com.amrdeveloper.askme.data.Follow
-import com.amrdeveloper.askme.data.FollowData
-import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.data.remote.datasource.FeedDataSource
-import com.amrdeveloper.askme.data.remote.net.*
+import androidx.paging.*
+import androidx.paging.PagingConfig
+import com.amrdeveloper.askme.data.*
+import com.amrdeveloper.askme.data.source.FeedDataSource
+import com.amrdeveloper.askme.data.source.remote.paging.FeedPagingDataSource
+import com.amrdeveloper.askme.data.source.remote.net.*
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -33,20 +29,23 @@ private const val TAG = "ProfileViewModel"
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val userService: UserService,
                                            private val followService: FollowService,
+                                           private val feedDataSource: FeedDataSource,
                                            private val feedService: FeedService) : ViewModel() {
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private val followLiveData : MutableLiveData<Follow> = MutableLiveData()
     private val avatarLiveData : MutableLiveData<ResponseType> = MutableLiveData()
     private val wallpaperLiveData : MutableLiveData<ResponseType> = MutableLiveData()
-    private var feedPagedList: LiveData<PagedList<Feed>> = MutableLiveData()
-    private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
+    private var feedPagedList: MutableLiveData<PagingData<Feed>> = MutableLiveData()
 
     fun loadUserFeed(id: String, userId : String){
-        val feedDataSourceFactory = FeedDataSourceFactory(id, userId)
-        liveDataSource = feedDataSourceFactory.getFeedLiveDataSource()
-
-        feedPagedList = LivePagedListBuilder(feedDataSourceFactory, PagingConfig.getConfig()).build()
+        viewModelScope.launch {
+            Pager(
+                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+                pagingSourceFactory = { FeedPagingDataSource(feedDataSource, id, userId) }).flow.collect {
+                feedPagedList.value = it
+            }
+        }
     }
 
     fun loadUserInformation(userId : String, localId : String){
@@ -141,17 +140,4 @@ class ProfileViewModel @Inject constructor(private val userService: UserService,
     fun getAvatarLiveData() = avatarLiveData
 
     fun getWallpaperLiveData() = wallpaperLiveData
-
-    private inner class FeedDataSourceFactory(var id : String, var userId: String) : DataSource.Factory<Int,Feed>() {
-
-        private val feedLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
-
-        override fun create(): DataSource<Int, Feed> {
-            val feedDataSource = FeedDataSource(id, userId, viewModelScope, feedService)
-            feedLiveDataSource.postValue(feedDataSource)
-            return feedDataSource
-        }
-
-        fun getFeedLiveDataSource() = feedLiveDataSource
-    }
 }

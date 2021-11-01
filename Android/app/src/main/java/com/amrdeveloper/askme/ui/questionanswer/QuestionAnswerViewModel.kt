@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.Answer
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
-import com.amrdeveloper.askme.data.remote.net.AnswerService
-import com.amrdeveloper.askme.data.remote.net.ReactionService
+import com.amrdeveloper.askme.data.source.remote.net.AnswerService
+import com.amrdeveloper.askme.data.source.remote.net.ReactionService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

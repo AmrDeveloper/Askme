@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.Constants
+import com.amrdeveloper.askme.data.USER_ID
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.PeopleAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,7 +56,7 @@ class PeopleFragment : Fragment() {
 
     private fun setupObservers() {
         viewModel.getUserPagedList().observe(viewLifecycleOwner, {
-            peopleAdapter.submitList(it)
+            peopleAdapter.submitData(lifecycle, it)
         })
     }
 
@@ -67,7 +67,7 @@ class PeopleFragment : Fragment() {
         binding.listItems.adapter = peopleAdapter
 
         peopleAdapter.setOnUserClickListener { user ->
-            val bundle = bundleOf(Constants.USER_ID to user.id)
+            val bundle = bundleOf(USER_ID to user.id)
             findNavController().navigate(R.id.action_peopleFragment_to_profileFragment, bundle)
         }
     }
@@ -77,7 +77,11 @@ class PeopleFragment : Fragment() {
             newText?.let {
                 if (it.isEmpty()) return@let
                 if(view != null) viewModel.getUsersSearchList().removeObservers(viewLifecycleOwner)
-                peopleAdapter.submitList(viewModel.getUserPagedList().value)
+                viewModel.getUserPagedList().value?.let { it1 ->
+                    peopleAdapter.submitData(lifecycle,
+                        it1
+                    )
+                }
             }
             return true
         }
@@ -89,7 +93,7 @@ class PeopleFragment : Fragment() {
             } else{
                 if(viewModel.getUsersSearchList().hasActiveObservers().not()){
                     viewModel.getUsersSearchList().observe(viewLifecycleOwner, {
-                        peopleAdapter.submitList(it)
+                        peopleAdapter.submitData(lifecycle, it)
                     })
                 }
                 viewModel.searchPeopleList(query)

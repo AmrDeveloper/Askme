@@ -11,9 +11,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
+import com.amrdeveloper.askme.data.ANSWER_ID
 import com.amrdeveloper.askme.data.Action
-import com.amrdeveloper.askme.data.Constants
 import com.amrdeveloper.askme.data.Open
+import com.amrdeveloper.askme.data.QUESTION_ID
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.NotificationAdapter
 import com.amrdeveloper.askme.utils.Session
@@ -46,7 +47,7 @@ class NotificationFragment: Fragment(){
 
     private fun setupObservers() {
         viewModel.getNotificationList().observe(viewLifecycleOwner, {
-            notificationAdapter.submitList(it)
+            notificationAdapter.submitData(lifecycle, it)
         })
     }
 
@@ -65,13 +66,13 @@ class NotificationFragment: Fragment(){
             }
 
             if (notification.action == Action.QUESTION) {
-                val bundle = bundleOf(Constants.QUESTION_ID to notification.data)
+                val bundle = bundleOf(QUESTION_ID to notification.data)
                 findNavController().navigate(
                     R.id.action_notificationFragment_to_answerQuestionFragment,
                     bundle
                 )
             } else if (notification.action == Action.ANSWER) {
-                val bundle = bundleOf(Constants.ANSWER_ID to notification.data)
+                val bundle = bundleOf(ANSWER_ID to notification.data)
                 findNavController().navigate(
                     R.id.action_notificationFragment_to_questionAnswerFragment,
                     bundle

@@ -2,7 +2,7 @@ package com.amrdeveloper.askme.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.amrdeveloper.askme.R
@@ -13,7 +13,7 @@ import com.amrdeveloper.askme.databinding.NotificationListItemBinding
 import com.amrdeveloper.askme.utils.backgroundColor
 import com.amrdeveloper.askme.utils.setFormattedDateForPost
 
-class NotificationAdapter : PagedListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DIFF_CALL_BACK) {
+class NotificationAdapter : PagingDataAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DIFF_CALL_BACK) {
 
     private lateinit var onItemClickListener : (Notification) -> Unit
 

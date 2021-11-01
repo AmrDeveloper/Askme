@@ -1,38 +1,36 @@
 package com.amrdeveloper.askme.ui.home
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.DataSource
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PageKeyedDataSource
-import androidx.paging.PagedList
+import androidx.paging.*
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.ReactionData
-import com.amrdeveloper.askme.data.remote.datasource.HomeDataSource
-import com.amrdeveloper.askme.data.remote.net.FeedService
-import com.amrdeveloper.askme.data.remote.net.PagingConfig
-import com.amrdeveloper.askme.data.remote.net.ReactionService
+import com.amrdeveloper.askme.data.source.FeedDataSource
+import com.amrdeveloper.askme.data.source.remote.paging.HomePagingDataSource
+import com.amrdeveloper.askme.data.source.remote.net.ReactionService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val feedService: FeedService,
+class HomeViewModel @Inject constructor(private val feedDataSource: FeedDataSource,
                                         private val reactionService: ReactionService): ViewModel(){
 
-    private var homePagedList: LiveData<PagedList<Feed>> = MutableLiveData()
-    private lateinit var liveDataSource: LiveData<PageKeyedDataSource<Int, Feed>>
+    private var homePagedList: MutableLiveData<PagingData<Feed>> = MutableLiveData()
 
     fun loadUserHomeFeed(userId : String){
-        val homeDataSourceFactory = HomeDataSourceFactory(userId)
-        liveDataSource = homeDataSourceFactory.getHomeLiveDataSource()
-
-        homePagedList = LivePagedListBuilder(homeDataSourceFactory, PagingConfig.getConfig()).build()
+        viewModelScope.launch {
+            Pager(
+                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
+                pagingSourceFactory = { HomePagingDataSource(feedDataSource, userId) }).flow.collect {
+                    homePagedList.value = it
+            }
+        }
     }
 
     fun reactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
@@ -66,17 +64,4 @@ class HomeViewModel @Inject constructor(private val feedService: FeedService,
     }
 
     fun getFeedPagedList() = homePagedList
-
-    private inner class HomeDataSourceFactory(var userId : String) : DataSource.Factory<Int, Feed>() {
-
-        private val homeLiveDataSource : MutableLiveData<PageKeyedDataSource<Int, Feed>> = MutableLiveData()
-
-        override fun create(): DataSource<Int, Feed> {
-            val feedDataSource = HomeDataSource(userId, viewModelScope, feedService)
-            homeLiveDataSource.postValue(feedDataSource)
-            return feedDataSource
-        }
-
-        fun getHomeLiveDataSource() = homeLiveDataSource
-    }
 }
