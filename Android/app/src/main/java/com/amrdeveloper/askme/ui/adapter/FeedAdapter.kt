@@ -15,20 +15,9 @@ import com.amrdeveloper.askme.utils.*
 
 class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL_BACK) {
 
-    interface OnReactionClick{
-        fun onReactClick(answerId : Int,toUser : String, reaction : Reaction, callback : Callback)
-    }
 
-    interface OnUsernameClick{
-        fun onUserClick(userId : String)
-    }
-
-    interface Callback{
-        fun onCallback()
-    }
-
-    private lateinit var onReactionClick : OnReactionClick
-    private lateinit var onUsernameClick : OnUsernameClick
+    private lateinit var onUsernameCLickListener : (String) -> Unit
+    private lateinit var onReactionClickListener : (Int, String, Reaction, () -> Unit) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -38,53 +27,48 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.FeedViewHolder>(DIFF_CALL
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
         val currentFeed : Feed = getItem(position) ?: return
-        currentFeed.notNull {
-            holder.bingFeed(currentFeed)
-            if(::onUsernameClick.isInitialized){
-                if(currentFeed.anonymously == Anonymously.NOT_ANONYMOSLY) {
-                    holder.binding.questionFrom.setOnClickListener {
-                        onUsernameClick.onUserClick(currentFeed.toUserId.str())
-                    }
-                }
-
-                holder.binding.answerFrom.setOnClickListener {
-                    onUsernameClick.onUserClick(currentFeed.fromUserId.str())
+        holder.bingFeed(currentFeed)
+        if(::onUsernameCLickListener.isInitialized){
+            if(currentFeed.anonymously == Anonymously.NOT_ANONYMOSLY) {
+                holder.binding.questionFrom.setOnClickListener {
+                    onUsernameCLickListener(currentFeed.toUserId.str())
                 }
             }
 
-            if(::onReactionClick.isInitialized){
-                holder.binding.reactionsTxt.setOnClickListener {
-                    onReactionClick.onReactClick(currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted,
-                        object : Callback {
-                            override fun onCallback() {
-                                when (currentFeed.isReacted) {
-                                    Reaction.REACATED -> {
-                                        currentList?.get(position)?.reactionsNum =
-                                            currentList?.get(position)?.reactionsNum?.minus(1)!!
-                                        currentList?.get(position)?.isReacted =
-                                            Reaction.UN_REACATED
-                                    }
-                                    Reaction.UN_REACATED -> {
-                                        currentList?.get(position)?.reactionsNum =
-                                            currentList?.get(position)?.reactionsNum?.plus(1)!!
-                                        currentList?.get(position)?.isReacted =
-                                            Reaction.REACATED
-                                    }
-                                }
-                                notifyDataSetChanged()
-                            }
-                        })
+            holder.binding.answerFrom.setOnClickListener {
+                onUsernameCLickListener(currentFeed.fromUserId.str())
+            }
+        }
+
+        if(::onReactionClickListener.isInitialized){
+            holder.binding.reactionsTxt.setOnClickListener {
+                onReactionClickListener(currentFeed.answerId, currentFeed.toUserId.str(), currentFeed.isReacted) {
+                    when (currentFeed.isReacted) {
+                        Reaction.REACATED -> {
+                            currentList?.get(position)?.reactionsNum =
+                                currentList?.get(position)?.reactionsNum?.minus(1)!!
+                            currentList?.get(position)?.isReacted =
+                                Reaction.UN_REACATED
+                        }
+                        Reaction.UN_REACATED -> {
+                            currentList?.get(position)?.reactionsNum =
+                                currentList?.get(position)?.reactionsNum?.plus(1)!!
+                            currentList?.get(position)?.isReacted =
+                                Reaction.REACATED
+                        }
+                    }
+                    notifyDataSetChanged()
                 }
             }
         }
     }
 
-    fun setOnReactionListener(listener : OnReactionClick){
-        onReactionClick = listener
+    fun setOnReactionListener(listener : (Int, String, Reaction, () -> Unit) -> Unit) {
+        onReactionClickListener = listener
     }
 
-    fun setOnUsernameListener(listener : OnUsernameClick){
-        onUsernameClick = listener
+    fun setOnUsernameListener(listener : (String) -> Unit){
+        onUsernameCLickListener = listener
     }
 
     class FeedViewHolder(val binding : FeedListItemBinding) : RecyclerView.ViewHolder(binding.root) {

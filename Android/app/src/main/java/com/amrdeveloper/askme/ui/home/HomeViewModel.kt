@@ -15,7 +15,6 @@ import com.amrdeveloper.askme.data.remote.datasource.HomeDataSource
 import com.amrdeveloper.askme.data.remote.net.FeedService
 import com.amrdeveloper.askme.data.remote.net.PagingConfig
 import com.amrdeveloper.askme.data.remote.net.ReactionService
-import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,13 +35,13 @@ class HomeViewModel @Inject constructor(private val feedService: FeedService,
         homePagedList = LivePagedListBuilder(homeDataSourceFactory, PagingConfig.getConfig()).build()
     }
 
-    fun reactAnswer(token : String, reactionData: ReactionData, callback: FeedAdapter.Callback){
+    fun reactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
         viewModelScope.launch(Dispatchers.IO){
             try{
                 val response = reactionService.createAnswerReaction(token, reactionData)
                 if(response.code() == 200){
                     withContext(Dispatchers.Main){
-                        callback.onCallback()
+                        callback()
                     }
                 }
             }catch (exception : Exception){
@@ -51,13 +50,13 @@ class HomeViewModel @Inject constructor(private val feedService: FeedService,
         }
     }
 
-    fun unreactAnswer(token : String, reactionData: ReactionData, callback: FeedAdapter.Callback){
+    fun unreactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
         viewModelScope.launch(Dispatchers.IO){
             try{
                 val response = reactionService.deleteAnswerReaction(token, reactionData)
                 if(response.code() == 200){
                     withContext(Dispatchers.Main){
-                        callback.onCallback()
+                        callback()
                     }
                 }
             }catch (exception : Exception){

@@ -67,12 +67,10 @@ class PeopleFragment : Fragment() {
         binding.listItems.layoutManager = LinearLayoutManager(context)
         binding.listItems.adapter = peopleAdapter
 
-        peopleAdapter.setOnUserClickListener(object : PeopleAdapter.OnUserClickListener {
-            override fun onClick(user: User) {
-                val bundle = bundleOf(Constants.USER_ID to user.id)
-                findNavController().navigate(R.id.action_peopleFragment_to_profileFragment, bundle)
-            }
-        })
+        peopleAdapter.setOnUserClickListener { user ->
+            val bundle = bundleOf(Constants.USER_ID to user.id)
+            findNavController().navigate(R.id.action_peopleFragment_to_profileFragment, bundle)
+        }
     }
 
     private val userSearchViewListener = object : SearchView.OnQueryTextListener{
@@ -89,7 +87,7 @@ class PeopleFragment : Fragment() {
             return if(query.isNullOrEmpty() || query.trim().length < 3){
                 Toast.makeText(context, "Invalid Query", Toast.LENGTH_SHORT).show()
                 false
-            }else{
+            } else{
                 if(viewModel.getUsersSearchList().hasActiveObservers().not()){
                     viewModel.getUsersSearchList().observe(viewLifecycleOwner, {
                         peopleAdapter.submitList(it)

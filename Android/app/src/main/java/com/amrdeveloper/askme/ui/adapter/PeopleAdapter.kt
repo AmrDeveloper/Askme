@@ -1,6 +1,5 @@
 package com.amrdeveloper.askme.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
@@ -10,15 +9,10 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.databinding.UserListItemBinding
 import com.amrdeveloper.askme.utils.loadImage
-import com.amrdeveloper.askme.utils.notNull
 
 class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_CALL_BACK){
 
-    interface OnUserClickListener{
-        fun onClick(user : User)
-    }
-
-    private lateinit var mOnclickListener : OnUserClickListener
+    private lateinit var onUserClickListener: (User) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -27,20 +21,17 @@ class PeopleAdapter : PagedListAdapter<User, PeopleAdapter.UserViewHolder>(DIFF_
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val user = getItem(position)
-        user.notNull {
-            holder.bingUser(user!!)
-            holder.itemView.setOnClickListener {
-                if(::mOnclickListener.isInitialized){
-                    Log.d("Adapter","Avatar : ${user.avatarUrl}")
-                    mOnclickListener.onClick(user)
-                }
+        val user = getItem(position) ?: return
+        holder.bingUser(user)
+        holder.itemView.setOnClickListener {
+            if (::onUserClickListener.isInitialized) {
+                onUserClickListener(user)
             }
         }
     }
 
-    fun setOnUserClickListener(listener: OnUserClickListener){
-        mOnclickListener = listener
+    fun setOnUserClickListener(listener: (User) -> Unit){
+        onUserClickListener = listener
     }
 
     class UserViewHolder(val binding : UserListItemBinding) : RecyclerView.ViewHolder(binding.root){

@@ -46,34 +46,29 @@ class HomeFragment : Fragment() {
         binding.listItems.layoutManager = LinearLayoutManager(context)
         binding.listItems.adapter = feedAdapter
 
-        feedAdapter.setOnUsernameListener(object : FeedAdapter.OnUsernameClick {
-            override fun onUserClick(userId: String) {
-                val args = Bundle()
-                args.putString(Constants.USER_ID, userId)
-                findNavController().navigate(R.id.action_homeFragment_to_profileFragment, args)
-            }
-        })
+        feedAdapter.setOnUsernameListener { userId ->
+            val args = Bundle()
+            args.putString(Constants.USER_ID, userId)
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment, args)
 
-        feedAdapter.setOnReactionListener(object : FeedAdapter.OnReactionClick {
-            override fun onReactClick(answerId: Int, toUser : String, reaction: Reaction, callback: FeedAdapter.Callback){
-                when(reaction){
-                    Reaction.REACATED -> {
-                        val token = Session.getHeaderToken(requireContext()).str()
-                        val id =  Session.getUserId(requireContext()).str()
-                        val body = ReactionData(id, toUser, answerId.str())
+        }
 
-                        viewModel.unreactAnswer(token, body, callback)
-                    }
-                    Reaction.UN_REACATED -> {
-                        val token = Session.getHeaderToken(requireContext()).str()
-                        val id =  Session.getUserId(requireContext()).str()
-                        val body = ReactionData(id, toUser, answerId.str())
-
-                        viewModel.reactAnswer(token, body, callback)
-                    }
+        feedAdapter.setOnReactionListener { answerId, toUser, reaction, callback ->
+            when (reaction) {
+                Reaction.REACATED -> {
+                    val token = Session.getHeaderToken(requireContext()).str()
+                    val id = Session.getUserId(requireContext()).str()
+                    val body = ReactionData(id, toUser, answerId.str())
+                    viewModel.unreactAnswer(token, body, callback)
+                }
+                Reaction.UN_REACATED -> {
+                    val token = Session.getHeaderToken(requireContext()).str()
+                    val id = Session.getUserId(requireContext()).str()
+                    val body = ReactionData(id, toUser, answerId.str())
+                    viewModel.reactAnswer(token, body, callback)
                 }
             }
-        })
+        }
     }
 
     private fun setupObservers() {

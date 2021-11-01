@@ -11,17 +11,11 @@ import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.data.Open
 import com.amrdeveloper.askme.databinding.NotificationListItemBinding
 import com.amrdeveloper.askme.utils.backgroundColor
-import com.amrdeveloper.askme.utils.notNull
 import com.amrdeveloper.askme.utils.setFormattedDateForPost
 
-class NotificationAdapter :
-    PagedListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DIFF_CALL_BACK) {
+class NotificationAdapter : PagedListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DIFF_CALL_BACK) {
 
-    interface OnItemClickListener{
-        fun onItemClick(notification: Notification)
-    }
-
-    private lateinit var mItemClickListener: OnItemClickListener
+    private lateinit var onItemClickListener : (Notification) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val inflater: LayoutInflater = LayoutInflater.from(parent.context)
@@ -30,19 +24,17 @@ class NotificationAdapter :
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
-        val currentNotification = getItem(position)
-        currentNotification.notNull {
-            holder.bingNotification(it)
-            if(::mItemClickListener.isInitialized){
-                holder.itemView.setOnClickListener {
-                    mItemClickListener.onItemClick(currentNotification!!)
-                }
+        val currentNotification = getItem(position) ?: return
+        holder.bingNotification(currentNotification)
+        if(::onItemClickListener.isInitialized){
+            holder.itemView.setOnClickListener {
+                onItemClickListener(currentNotification)
             }
         }
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener){
-        mItemClickListener = listener
+    fun setOnItemClickListener(listener: (Notification) -> Unit){
+        onItemClickListener = listener
     }
 
     class NotificationViewHolder(val binding : NotificationListItemBinding) : RecyclerView.ViewHolder(binding.root) {
