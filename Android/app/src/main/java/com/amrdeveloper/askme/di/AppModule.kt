@@ -116,4 +116,10 @@ object AppModule {
     fun provideReactionDataSource(reactionService: ReactionService) : ReactionDataSource {
         return ReactionRemoteDataSource(reactionService)
     }
+
+    @Singleton
+    @Provides
+    fun provideFollowDataSource(followService: FollowService) : FollowDataSource {
+        return FollowRemoteDataSource(followService)
+    }
 }

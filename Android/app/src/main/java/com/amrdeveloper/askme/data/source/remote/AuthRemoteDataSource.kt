@@ -10,8 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.lang.Exception
+import javax.inject.Inject
 
-class AuthRemoteDataSource(
+class AuthRemoteDataSource @Inject constructor(
     private val authService: AuthService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : AuthDataSource {

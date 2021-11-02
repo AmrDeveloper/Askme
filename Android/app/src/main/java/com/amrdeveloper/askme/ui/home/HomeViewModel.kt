@@ -1,6 +1,5 @@
 package com.amrdeveloper.askme.ui.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,18 +7,18 @@ import androidx.paging.*
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.data.source.FeedDataSource
+import com.amrdeveloper.askme.data.source.ReactionDataSource
 import com.amrdeveloper.askme.data.source.remote.paging.HomePagingDataSource
-import com.amrdeveloper.askme.data.source.remote.service.ReactionService
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val feedDataSource: FeedDataSource,
-                                        private val reactionService: ReactionService): ViewModel(){
+class HomeViewModel @Inject constructor(
+    private val feedDataSource: FeedDataSource,
+    private val reactionDataSource: ReactionDataSource
+) : ViewModel() {
 
     private var homePagedList: MutableLiveData<PagingData<Feed>> = MutableLiveData()
 
@@ -34,31 +33,29 @@ class HomeViewModel @Inject constructor(private val feedDataSource: FeedDataSour
     }
 
     fun reactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
-                val response = reactionService.createAnswerReaction(token, reactionData)
-                if(response.code() == 200){
-                    withContext(Dispatchers.Main){
-                        callback()
-                    }
+        viewModelScope.launch {
+            val result = reactionDataSource.createAnswerReaction(token, reactionData)
+            if (result.isSuccess) {
+                val response = result.getOrNull()
+                if (response?.code() == 200) {
+                    callback()
                 }
-            }catch (exception : Exception){
-                Log.d("HomeViewModel","Invalid React ${exception.message}")
+            } else {
+                // TODO : Add Error handler in UI
             }
         }
     }
 
     fun unreactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
-                val response = reactionService.deleteAnswerReaction(token, reactionData)
-                if(response.code() == 200){
-                    withContext(Dispatchers.Main){
-                        callback()
-                    }
+        viewModelScope.launch {
+            val result = reactionDataSource.deleteAnswerReaction(token, reactionData)
+            if (result.isSuccess) {
+                val response = result.getOrNull()
+                if (response?.code() == 200) {
+                    callback()
                 }
-            }catch (exception : Exception){
-                Log.d("HomeViewModel","Invalid unreact ${exception.message}")
+            } else {
+                // TODO : Add Error handler in UI
             }
         }
     }

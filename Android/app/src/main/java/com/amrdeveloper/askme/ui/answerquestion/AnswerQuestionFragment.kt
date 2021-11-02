@@ -66,7 +66,7 @@ class AnswerQuestionFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.getQuestinLiveData().observe(viewLifecycleOwner, {
+        viewModel.getQuestionLiveData().observe(viewLifecycleOwner, {
             bindQuestionInformation(it)
             mQuestion = it
         })

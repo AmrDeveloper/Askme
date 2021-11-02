@@ -14,7 +14,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PeopleViewModel @Inject constructor(private val userDataSource: UserDataSource) : ViewModel(){
+class PeopleViewModel @Inject constructor(
+    private val userDataSource: UserDataSource
+) : ViewModel() {
 
     private var usersLiveData : MutableLiveData<PagingData<User>> = MutableLiveData()
     private var usersSearchLiveData : MutableLiveData<PagingData<User>> = MutableLiveData()

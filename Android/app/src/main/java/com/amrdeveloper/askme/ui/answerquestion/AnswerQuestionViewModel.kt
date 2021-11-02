@@ -1,55 +1,51 @@
 package com.amrdeveloper.askme.ui.answerquestion
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.AnswerData
 import com.amrdeveloper.askme.data.Question
-import com.amrdeveloper.askme.data.source.remote.service.AnswerService
-import com.amrdeveloper.askme.data.source.remote.service.QuestionService
 import com.amrdeveloper.askme.data.ResponseType
+import com.amrdeveloper.askme.data.source.AnswerDataSource
+import com.amrdeveloper.askme.data.source.QuestionDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "AnswerViewModel"
-
 @HiltViewModel
-class AnswerQuestionViewModel @Inject constructor(private val questionService: QuestionService,
-                                                  private val answerService: AnswerService) : ViewModel(){
+class AnswerQuestionViewModel @Inject constructor(
+    private val questionDataSource: QuestionDataSource,
+    private val answerDataSource: AnswerDataSource
+) : ViewModel() {
 
     private val questionLiveData : MutableLiveData<Question> = MutableLiveData()
     private val answerLiveData : MutableLiveData<ResponseType> = MutableLiveData()
 
     fun getQuestionById(token : String, id : String){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
-                val question = questionService.getQuestionById(token, id)
-                questionLiveData.postValue(question)
-            }catch (exception : Exception){
-                Log.d(TAG,"Invalid Answer Request")
+        viewModelScope.launch {
+            val result = questionDataSource.getQuestionById(token, id)
+            if (result.isSuccess) {
+                questionLiveData.postValue(result.getOrNull())
             }
         }
     }
 
     fun answerQuestion(token : String, answerData: AnswerData){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
-                val response = answerService.answerOneQuestion(token, answerData)
-                when(response.code()){
+        viewModelScope.launch {
+            val result = answerDataSource.answerOneQuestion(token, answerData)
+            if (result.isSuccess) {
+                val response = result.getOrNull()
+                when(response?.code()){
                     200 -> answerLiveData.postValue(ResponseType.SUCCESS)
                     401 -> answerLiveData.postValue(ResponseType.NO_AUTH)
                     else -> answerLiveData.postValue(ResponseType.FAILURE)
                 }
-            }catch (exception : Exception){
+            } else {
                 answerLiveData.postValue(ResponseType.FAILURE)
-                Log.d(TAG,"Invalid Answer Request ${exception.message}")
             }
         }
     }
 
-    fun getQuestinLiveData() = questionLiveData
+    fun getQuestionLiveData() = questionLiveData
     fun getAnswerLiveData() = answerLiveData
 }

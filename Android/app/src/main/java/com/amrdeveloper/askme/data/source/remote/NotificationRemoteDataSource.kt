@@ -7,8 +7,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import javax.inject.Inject
 
-class NotificationRemoteDataSource(
+class NotificationRemoteDataSource @Inject constructor(
     private val notificationService: NotificationService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : NotificationDataSource {

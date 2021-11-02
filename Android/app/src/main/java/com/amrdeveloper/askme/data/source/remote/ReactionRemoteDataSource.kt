@@ -8,8 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.lang.Exception
+import javax.inject.Inject
 
-class ReactionRemoteDataSource(
+class ReactionRemoteDataSource @Inject constructor(
     private val reactionService: ReactionService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ReactionDataSource {

@@ -9,13 +9,14 @@ import com.amrdeveloper.askme.data.Notification
 import com.amrdeveloper.askme.data.source.NotificationDataSource
 import com.amrdeveloper.askme.data.source.remote.paging.NotificationPagingDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NotificationViewModel @Inject constructor(private val notificationDataSource: NotificationDataSource): ViewModel() {
+class NotificationViewModel @Inject constructor(
+    private val notificationDataSource: NotificationDataSource
+) : ViewModel() {
 
     private var notificationPagedList: MutableLiveData<PagingData<Notification>> = MutableLiveData()
 
@@ -30,27 +31,17 @@ class NotificationViewModel @Inject constructor(private val notificationDataSour
     }
 
     fun makeNotificationReaded(id : String, token : String){
-        viewModelScope.launch(Dispatchers.IO){
-            try{
-                val result = notificationDataSource.makeNotificationOpened(token, id)
-                if (result.isFailure) {
-                    Log.d("NotificationViewModel", "Failure request")
-                    return@launch
-                }
+        viewModelScope.launch {
+            val result = notificationDataSource.makeNotificationOpened(token, id)
+            if (result.isSuccess) {
                 val response = result.getOrNull()
                 when(response?.code()){
-                    200 -> {
-                        Log.d("NotificationViewModel", "Notification Request is done Now")
-                    }
-                    403 -> {
-                        Log.d("NotificationViewModel", "No Auth")
-                    }
-                    else -> {
-
-                    }
+                    200 -> Log.d("NotificationViewModel", "Notification Request is done Now")
+                    403 -> Log.d("NotificationViewModel", "No Auth")
+                    else -> Log.d("NotificationViewModel", "Error")
                 }
-            }catch (exception : Exception){
-                Log.d("NotificationViewModel", "Notification Invalid Request")
+            } else {
+
             }
         }
     }
