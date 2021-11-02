@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.amrdeveloper.askme.data.Notification
-import com.amrdeveloper.askme.data.source.NotificationDataSource
-import com.amrdeveloper.askme.data.source.remote.paging.NotificationPagingDataSource
+import com.amrdeveloper.askme.data.source.NotificationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,16 +14,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
-    private val notificationDataSource: NotificationDataSource
+    private val notificationRepository: NotificationRepository
 ) : ViewModel() {
 
     private var notificationPagedList: MutableLiveData<PagingData<Notification>> = MutableLiveData()
 
     fun loadUserNotifications(userId : String, token : String){
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-                pagingSourceFactory = { NotificationPagingDataSource(notificationDataSource, token, userId) }).flow.collect {
+            notificationRepository.getUserNotifications(token, userId).collect {
                 notificationPagedList.value = it
             }
         }
@@ -32,7 +29,7 @@ class NotificationViewModel @Inject constructor(
 
     fun makeNotificationReaded(id : String, token : String){
         viewModelScope.launch {
-            val result = notificationDataSource.makeNotificationOpened(token, id)
+            val result = notificationRepository.makeNotificationOpened(token, id)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 when(response?.code()){

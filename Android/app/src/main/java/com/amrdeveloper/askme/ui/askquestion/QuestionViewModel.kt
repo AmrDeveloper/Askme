@@ -5,22 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.QuestionData
 import com.amrdeveloper.askme.data.ResponseType
-import com.amrdeveloper.askme.data.source.QuestionDataSource
+import com.amrdeveloper.askme.data.source.QuestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class QuestionViewModel @Inject constructor(
-    private val questionDataSource: QuestionDataSource
+    private val questionRepository: QuestionRepository
 ) : ViewModel() {
 
     private val questionLiveData: MutableLiveData<ResponseType> = MutableLiveData()
 
     fun askNewQuestion(token: String, questionData: QuestionData) {
         viewModelScope.launch {
-            val result = questionDataSource.createNewQuestion(token, questionData)
+            val result = questionRepository.createNewQuestion(token, questionData)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 when (response?.code()) {

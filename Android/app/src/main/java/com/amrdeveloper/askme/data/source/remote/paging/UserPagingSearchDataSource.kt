@@ -4,12 +4,13 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.amrdeveloper.askme.data.User
 import com.amrdeveloper.askme.data.source.UserDataSource
+import com.amrdeveloper.askme.data.source.UserRepository
 import retrofit2.HttpException
 import java.io.IOException
 
 class UserPagingSearchDataSource(
-    private val query: String,
-    private val userdataSource: UserDataSource
+    private val userdataSource: UserDataSource,
+    private val query: String
 ) : PagingSource<Int, User>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {

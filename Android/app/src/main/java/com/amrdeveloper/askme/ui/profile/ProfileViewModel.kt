@@ -6,12 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import androidx.paging.PagingConfig
 import com.amrdeveloper.askme.data.*
-import com.amrdeveloper.askme.data.source.FeedDataSource
-import com.amrdeveloper.askme.data.source.FollowDataSource
-import com.amrdeveloper.askme.data.source.UserDataSource
-import com.amrdeveloper.askme.data.source.remote.paging.FeedPagingDataSource
+import com.amrdeveloper.askme.data.source.*
 import com.amrdeveloper.askme.utils.FileUtils
 import com.amrdeveloper.askme.utils.Session
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,9 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor (
-    private val userDataSource: UserDataSource,
-    private val followDataSource: FollowDataSource,
-    private val feedDataSource: FeedDataSource,
+    private val userRepository: UserRepository,
+    private val followRepository: FollowRepository,
+    private val feedRepository: FeedRepository,
 ) : ViewModel() {
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
@@ -38,9 +34,7 @@ class ProfileViewModel @Inject constructor (
 
     fun loadUserFeed(id: String, userId : String){
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-                pagingSourceFactory = { FeedPagingDataSource(feedDataSource, id, userId) }).flow.collect {
+            feedRepository.getUserFeed(id, userId).collect {
                 feedPagedList.value = it
             }
         }
@@ -48,7 +42,7 @@ class ProfileViewModel @Inject constructor (
 
     fun loadUserInformation(userId : String, localId : String){
         viewModelScope.launch {
-            val result =  userDataSource.getUserById(userId, localId)
+            val result =  userRepository.getUserById(userId, localId)
             if (result.isSuccess) {
                 userLiveData.postValue(result.getOrNull())
             } else {
@@ -66,7 +60,7 @@ class ProfileViewModel @Inject constructor (
         val avatarBody =  MultipartBody.Part.createFormData("avatar", imageFile.name, requestFile)
 
         viewModelScope.launch {
-            val result = userDataSource.updateUserAvatar(emailBody, avatarBody)
+            val result = userRepository.updateUserAvatar(emailBody, avatarBody)
             if (result.isSuccess) {
                 when (result.getOrNull()?.code()) {
                     200 -> avatarLiveData.postValue(ResponseType.SUCCESS)
@@ -88,7 +82,7 @@ class ProfileViewModel @Inject constructor (
         val wallpaperBody =  MultipartBody.Part.createFormData("wallpaper", imageFile.name, requestFile)
 
         viewModelScope.launch{
-            val result = userDataSource.updateUserWallpaper(emailBody, wallpaperBody)
+            val result = userRepository.updateUserWallpaper(emailBody, wallpaperBody)
             if (result.isSuccess) {
                 when (result.getOrNull()?.code()) {
                     200 -> wallpaperLiveData.postValue(ResponseType.SUCCESS)
@@ -103,7 +97,7 @@ class ProfileViewModel @Inject constructor (
 
     fun followUser(token: String, followData: FollowData){
         viewModelScope.launch{
-            val result = followDataSource.followUser("auth $token", followData)
+            val result = followRepository.followUser("auth $token", followData)
             if (result.isSuccess) {
                 if (result.getOrNull()?.code() == 200) {
                     followLiveData.postValue(Follow.FOLLOW)
@@ -116,7 +110,7 @@ class ProfileViewModel @Inject constructor (
 
     fun unfollowUser(token: String, followData: FollowData){
         viewModelScope.launch {
-            val result = followDataSource.unFollowUser("auth $token", followData)
+            val result = followRepository.unFollowUser("auth $token", followData)
 
             if (result.isSuccess) {
                 val response = result.getOrNull()

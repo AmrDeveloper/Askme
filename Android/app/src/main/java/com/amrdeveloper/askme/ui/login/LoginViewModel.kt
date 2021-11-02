@@ -5,21 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.data.SessionData
-import com.amrdeveloper.askme.data.source.AuthDataSource
+import com.amrdeveloper.askme.data.source.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authDataSource: AuthDataSource
+    private val authRepository: AuthRepository
 ) : ViewModel(){
 
     private val sessionLiveData : MutableLiveData<SessionData> = MutableLiveData()
 
     fun userLogin(loginData: LoginData){
         viewModelScope.launch {
-            val result = authDataSource.login(loginData)
+            val result = authRepository.login(loginData)
             val response = result.getOrNull()
             if (response?.code() == 200) {
                 val sessionData = response.body()

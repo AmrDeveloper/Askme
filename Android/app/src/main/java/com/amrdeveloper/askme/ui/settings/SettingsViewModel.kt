@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.data.ResponseData
 import com.amrdeveloper.askme.data.ResponseType
-import com.amrdeveloper.askme.data.source.UserDataSource
+import com.amrdeveloper.askme.data.source.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val userService: UserDataSource
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val statusLiveData : MutableLiveData<ResponseType> = MutableLiveData()
@@ -27,7 +27,7 @@ class SettingsViewModel @Inject constructor(
     fun changeUserStatus(token : String, userId : String, status : String){
         viewModelScope.launch {
             val statusBody = StatusBody(userId, status)
-            val result = userService.updateUserStatus(token, statusBody)
+            val result = userRepository.updateUserStatus(token, statusBody)
             if (result.isSuccess) {
                 when (result.getOrNull()?.code()) {
                     200 -> statusLiveData.postValue(ResponseType.SUCCESS)
@@ -43,7 +43,7 @@ class SettingsViewModel @Inject constructor(
     fun changeUserLocation(token : String, userId : String, location : String){
         viewModelScope.launch {
             val locationBody = LocationBody(userId, location)
-            val result = userService.updateUserAddress(token, locationBody)
+            val result = userRepository.updateUserAddress(token, locationBody)
             if (result.isSuccess) {
                 when (result.getOrNull()?.code()) {
                     200 -> locationLiveData.postValue(ResponseType.SUCCESS)
@@ -59,7 +59,7 @@ class SettingsViewModel @Inject constructor(
     fun changeUserColor(token : String, userId : String, color : ThemeColor) {
         viewModelScope.launch {
             val colorBody = ColorBody(userId, color.name)
-            val result = userService.updateUserColor(token, colorBody)
+            val result = userRepository.updateUserColor(token, colorBody)
             if (result.isSuccess) {
                 when(result.getOrNull()?.code()){
                     200 -> colorLiveData.postValue(ResponseData(ResponseType.SUCCESS, color))
@@ -75,7 +75,7 @@ class SettingsViewModel @Inject constructor(
     fun changeUserPassword(token : String, userId : String, password : String) {
        viewModelScope.launch {
            val passwordBody = PasswordBody(userId, password)
-           val result = userService.updateUserPassword(token, passwordBody)
+           val result = userRepository.updateUserPassword(token, passwordBody)
            if (result.isSuccess) {
                when (result.getOrNull()?.code()) {
                    200 -> passwordLiveData.postValue(ResponseData(ResponseType.SUCCESS, password))

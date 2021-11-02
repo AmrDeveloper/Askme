@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.amrdeveloper.askme.data.User
-import com.amrdeveloper.askme.data.source.UserDataSource
-import com.amrdeveloper.askme.data.source.remote.paging.UserPagingDataSource
-import com.amrdeveloper.askme.data.source.remote.paging.UserPagingSearchDataSource
+import com.amrdeveloper.askme.data.source.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PeopleViewModel @Inject constructor(
-    private val userDataSource: UserDataSource
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private var usersLiveData : MutableLiveData<PagingData<User>> = MutableLiveData()
@@ -23,9 +21,7 @@ class PeopleViewModel @Inject constructor(
 
     fun loadPeopleList(){
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-                pagingSourceFactory = { UserPagingDataSource(userDataSource) }).flow.collect {
+            userRepository.getUserList().collect {
                 usersLiveData.value = it
             }
         }
@@ -33,9 +29,7 @@ class PeopleViewModel @Inject constructor(
 
     fun searchPeopleList(query : String){
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-                pagingSourceFactory = { UserPagingSearchDataSource(query, userDataSource) }).flow.collect {
+            userRepository.getUsersSearch(query).collect {
                 usersSearchLiveData.value = it
             }
         }

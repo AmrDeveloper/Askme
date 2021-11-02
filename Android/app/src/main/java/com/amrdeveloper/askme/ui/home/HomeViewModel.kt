@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.ReactionData
-import com.amrdeveloper.askme.data.source.FeedDataSource
-import com.amrdeveloper.askme.data.source.ReactionDataSource
+import com.amrdeveloper.askme.data.source.FeedRepository
+import com.amrdeveloper.askme.data.source.ReactionRepository
 import com.amrdeveloper.askme.data.source.remote.paging.HomePagingDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -16,25 +16,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val feedDataSource: FeedDataSource,
-    private val reactionDataSource: ReactionDataSource
+    private val feedRepository: FeedRepository,
+    private val reactionRepository: ReactionRepository
 ) : ViewModel() {
 
     private var homePagedList: MutableLiveData<PagingData<Feed>> = MutableLiveData()
 
     fun loadUserHomeFeed(userId : String){
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(pageSize = 10, enablePlaceholders = false),
-                pagingSourceFactory = { HomePagingDataSource(feedDataSource, userId) }).flow.collect {
-                    homePagedList.value = it
+            feedRepository.getHomeFeed(userId).collect {
+                homePagedList.value = it
             }
         }
     }
 
     fun reactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
         viewModelScope.launch {
-            val result = reactionDataSource.createAnswerReaction(token, reactionData)
+            val result = reactionRepository.createAnswerReaction(token, reactionData)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 if (response?.code() == 200) {
@@ -48,7 +46,7 @@ class HomeViewModel @Inject constructor(
 
     fun unreactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
         viewModelScope.launch {
-            val result = reactionDataSource.deleteAnswerReaction(token, reactionData)
+            val result = reactionRepository.deleteAnswerReaction(token, reactionData)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 if (response?.code() == 200) {

@@ -6,16 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.amrdeveloper.askme.data.AnswerData
 import com.amrdeveloper.askme.data.Question
 import com.amrdeveloper.askme.data.ResponseType
-import com.amrdeveloper.askme.data.source.AnswerDataSource
-import com.amrdeveloper.askme.data.source.QuestionDataSource
+import com.amrdeveloper.askme.data.source.AnswerRepository
+import com.amrdeveloper.askme.data.source.QuestionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AnswerQuestionViewModel @Inject constructor(
-    private val questionDataSource: QuestionDataSource,
-    private val answerDataSource: AnswerDataSource
+    private val questionRepository : QuestionRepository,
+    private val answerRepository: AnswerRepository
 ) : ViewModel() {
 
     private val questionLiveData : MutableLiveData<Question> = MutableLiveData()
@@ -23,7 +23,7 @@ class AnswerQuestionViewModel @Inject constructor(
 
     fun getQuestionById(token : String, id : String){
         viewModelScope.launch {
-            val result = questionDataSource.getQuestionById(token, id)
+            val result = questionRepository.getQuestionById(token, id)
             if (result.isSuccess) {
                 questionLiveData.postValue(result.getOrNull())
             }
@@ -32,7 +32,7 @@ class AnswerQuestionViewModel @Inject constructor(
 
     fun answerQuestion(token : String, answerData: AnswerData){
         viewModelScope.launch {
-            val result = answerDataSource.answerOneQuestion(token, answerData)
+            val result = answerRepository.answerOneQuestion(token, answerData)
             if (result.isSuccess) {
                 val response = result.getOrNull()
                 when(response?.code()){

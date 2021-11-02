@@ -122,4 +122,52 @@ object AppModule {
     fun provideFollowDataSource(followService: FollowService) : FollowDataSource {
         return FollowRemoteDataSource(followService)
     }
+
+    @Singleton
+    @Provides
+    fun provideAuthRepository(authDataSource: AuthDataSource) : AuthRepository {
+        return AuthRepository(authDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAnswerRepository(answerDataSource: AnswerDataSource) : AnswerRepository {
+        return AnswerRepository(answerDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFeedRepository(feedDataSource: FeedDataSource) : FeedRepository {
+        return FeedRepository(feedDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFollowRepository(followDataSource: FollowDataSource) : FollowRepository {
+        return FollowRepository(followDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNotificationRepository(notificationDataSource: NotificationDataSource) : NotificationRepository {
+        return NotificationRepository(notificationDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideQuestionRepository(questionDataSource: QuestionDataSource) : QuestionRepository {
+        return QuestionRepository(questionDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideReactionRepository(reactionDataSource: ReactionDataSource) : ReactionRepository {
+        return ReactionRepository(reactionDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(userDataSource: UserDataSource) : UserRepository {
+        return UserRepository(userDataSource)
+    }
 }
