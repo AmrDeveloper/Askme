@@ -32,7 +32,7 @@ class ProfileFragment : Fragment(){
     private lateinit var mUserId: String
     private lateinit var mCurrentUser : User
 
-    lateinit var mFeedAdapter: FeedAdapter
+    private lateinit var feedAdapter: FeedAdapter
 
     private var _binding: ProfileLayoutBinding? = null
     private val binding get() = _binding!!
@@ -88,7 +88,7 @@ class ProfileFragment : Fragment(){
         })
 
         mProfileViewModel.getFeedPagedList().observe(viewLifecycleOwner, {
-            mFeedAdapter.submitData(lifecycle, it)
+            feedAdapter.submitData(lifecycle, it)
             binding.listLayout.loadingBar.gone()
         })
 
@@ -138,11 +138,11 @@ class ProfileFragment : Fragment(){
     }
 
     private fun setupFeedRecyclerView() {
-        mFeedAdapter = FeedAdapter()
+        feedAdapter = FeedAdapter()
         binding.listLayout.listItems.setHasFixedSize(true)
         binding.listLayout.listItems.layoutManager = LinearLayoutManager(context)
         binding.listLayout.listItems.isNestedScrollingEnabled = false
-        binding.listLayout.listItems.adapter = mFeedAdapter
+        binding.listLayout.listItems.adapter = feedAdapter
     }
 
     private fun bindUserProfile(user: User) {

@@ -24,19 +24,19 @@ data class RegisterData(
                 && isValidPassword()
     }
 
-    fun isValidName() : Boolean{
+    private fun isValidName() : Boolean{
         return Validation.isValidName(name)
     }
 
-    fun isValidUsername() : Boolean{
+    private fun isValidUsername() : Boolean{
         return Validation.isValidUsername(username)
     }
 
-    fun isValidEmail() : Boolean{
+    private fun isValidEmail() : Boolean{
         return Validation.isValidEmail(email)
     }
 
-    fun isValidPassword() : Boolean{
+    private fun isValidPassword() : Boolean{
         return Validation.isValidPassword(password)
     }
 }

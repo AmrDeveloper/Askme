@@ -39,7 +39,7 @@ class AnswerQuestionFragment : Fragment() {
 
         setupObservers()
 
-        val token = Session.getHeaderToken(requireContext()).toString()
+        val token = Session.getHeaderToken(requireContext())
         val questionID = arguments?.getString(QUESTION_ID).toString()
         viewModel.getQuestionById(token, questionID)
 
@@ -59,7 +59,7 @@ class AnswerQuestionFragment : Fragment() {
             val fromUserId = Session.getUserId(requireContext()).toString()
             val toUserId = mQuestion.fromUserId
             val answerData = AnswerData(questionID,answerBody,fromUserId, toUserId)
-            val token = Session.getHeaderToken(requireContext()).toString()
+            val token = Session.getHeaderToken(requireContext())
             viewModel.answerQuestion(token, answerData)
         }
         return super.onOptionsItemSelected(item)

@@ -34,7 +34,7 @@ object Session {
         return preferences.getString(LOGIN_TOKEN, "")
     }
 
-    fun getHeaderToken(context: Context) : String?{
+    fun getHeaderToken(context: Context) : String {
         return "auth ${getUserToken(context)}"
     }
 

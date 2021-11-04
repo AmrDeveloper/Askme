@@ -14,8 +14,8 @@ object FileUtils {
             context.contentResolver.query(uri!!, projection, null, null, null)
         if (cursor != null) {
             if (cursor.moveToFirst()) {
-                val column_index = cursor.getColumnIndexOrThrow(projection[0])
-                result = cursor.getString(column_index)
+                val columnIndex = cursor.getColumnIndexOrThrow(projection[0])
+                result = cursor.getString(columnIndex)
             }
             cursor.close()
         }

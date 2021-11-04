@@ -102,7 +102,7 @@ class SettingsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Invalid Status", Toast.LENGTH_SHORT)
                     .show()
             }else{
-                val token = Session.getHeaderToken(requireContext()).toString()
+                val token = Session.getHeaderToken(requireContext())
                 val userId = Session.getUserId(requireContext()).toString()
                 viewModel.changeUserStatus(token, userId, statusTxt)
             }
@@ -129,7 +129,7 @@ class SettingsFragment : Fragment() {
                 Toast.makeText(requireContext(), "Invalid Location", Toast.LENGTH_SHORT)
                     .show()
             }else{
-                val token = Session.getHeaderToken(requireContext()).toString()
+                val token = Session.getHeaderToken(requireContext())
                 val userId = Session.getUserId(requireContext()).toString()
                 viewModel.changeUserLocation(token, userId, locationTxt)
             }
@@ -156,7 +156,7 @@ class SettingsFragment : Fragment() {
         colorGridView.setOnItemClickListener {_, _, position, _ ->
             val themeName = colorGridAdapter.getItem(position)!!.themeColor
 
-            val token = Session.getHeaderToken(requireContext()).toString()
+            val token = Session.getHeaderToken(requireContext())
             val userId = Session.getUserId(requireContext()).toString()
 
             viewModel.changeUserColor(token, userId, themeName)
@@ -188,7 +188,7 @@ class SettingsFragment : Fragment() {
                     Toast.makeText(requireContext(), "New password is equal old password", Toast.LENGTH_SHORT)
                         .show()
                 }else{
-                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val token = Session.getHeaderToken(requireContext())
                     val userId = Session.getUserId(requireContext()).toString()
                     viewModel.changeUserPassword(token, userId, newPasswordTxt)
                 }

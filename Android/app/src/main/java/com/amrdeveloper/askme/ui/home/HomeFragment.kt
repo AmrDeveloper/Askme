@@ -57,13 +57,13 @@ class HomeFragment : Fragment() {
         feedAdapter.setOnReactionListener { answerId, toUser, reaction, callback ->
             when (reaction) {
                 Reaction.REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val token = Session.getHeaderToken(requireContext())
                     val id = Session.getUserId(requireContext()).toString()
                     val body = ReactionData(id, toUser, answerId.toString())
                     viewModel.unreactAnswer(token, body, callback)
                 }
                 Reaction.UN_REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val token = Session.getHeaderToken(requireContext())
                     val id = Session.getUserId(requireContext()).toString()
                     val body = ReactionData(id, toUser, answerId.toString())
                     viewModel.reactAnswer(token, body, callback)

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dimen5dp"
@@ -9,19 +8,20 @@
     <EditText
         android:id="@+id/locationEdit"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen5dp"
         android:hint="@string/your_location"
-        android:lines="1"
-        android:layout_height="wrap_content"/>
+        android:inputType="text"
+        android:lines="1" />
 
     <Button
         android:id="@+id/changeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/dimen5dp"
-        android:text="@string/change"
         android:background="@color/darkBlue"
-        android:textColor="?attr/colorPrimary"
+        android:text="@string/change"
         android:textAllCaps="false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="?attr/colorPrimary" />
 </LinearLayout>

@@ -30,7 +30,7 @@ class QuestionAnswerFragment : Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.question_answer_layout, container, false)
 
-        val token = Session.getHeaderToken(requireContext()).toString()
+        val token = Session.getHeaderToken(requireContext())
         val answerId = arguments?.getString(ANSWER_ID).toString()
         val userId = Session.getUserId(requireContext()).toString()
 
@@ -83,7 +83,7 @@ class QuestionAnswerFragment : Fragment(){
         binding.reactionsTxt.setOnClickListener{
             when(mQuestionAnswer.isReacted){
                 Reaction.REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val token = Session.getHeaderToken(requireContext())
                     val answerId = mQuestionAnswer.answerId.toString()
                     val toUserId = mQuestionAnswer.toUserId
                     val fromUserId = mQuestionAnswer.fromUserId
@@ -92,7 +92,7 @@ class QuestionAnswerFragment : Fragment(){
                 }
 
                 Reaction.UN_REACATED -> {
-                    val token = Session.getHeaderToken(requireContext()).toString()
+                    val token = Session.getHeaderToken(requireContext())
                     val answerId = mQuestionAnswer.answerId.toString()
                     val toUserId = mQuestionAnswer.toUserId
                     val fromUserId = mQuestionAnswer.fromUserId

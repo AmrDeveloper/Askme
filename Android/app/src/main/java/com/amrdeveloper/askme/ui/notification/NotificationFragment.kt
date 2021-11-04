@@ -59,7 +59,7 @@ class NotificationFragment: Fragment(){
 
         notificationAdapter.setOnItemClickListener{ notification ->
             if (notification.isOpened == Open.UN_OPENED) {
-                val token = Session.getHeaderToken(requireContext()).toString()
+                val token = Session.getHeaderToken(requireContext())
                 viewModel.makeNotificationReaded(notification.id.toString(), token)
                 notification.isOpened = Open.OPENED
                 notificationAdapter.notifyDataSetChanged()
