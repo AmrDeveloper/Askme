@@ -50,6 +50,13 @@ object Session {
         return ThemeColor.valueOf(preferences.getString(COLOR, ThemeColor.ORANGE.name).toString())
     }
 
+    fun updateColor(context: Context, themeColor : ThemeColor) : Boolean{
+        val preferencesEditor =
+            context.getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE).edit()
+        preferencesEditor.putString(COLOR, themeColor.name)
+        return preferencesEditor.commit()
+    }
+
     fun getUserPassword(context: Context): String? {
         val preferences =
             context.getSharedPreferences(SESSION_PREFERENCE, Context.MODE_PRIVATE)

@@ -38,6 +38,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupObservers() {
+        viewModel.themeColor.observe(viewLifecycleOwner, {
+            Session.updateColor(requireContext(), it)
+        })
+
         viewModel.messages.observe(viewLifecycleOwner, {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         })

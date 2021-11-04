@@ -1,9 +1,10 @@
-package com.amrdeveloper.askme.ui
+package com.amrdeveloper.askme.ui.main
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -24,6 +25,8 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     private var supportedActionBar: ActionBar? = null
     private lateinit var binding: ActivityMainBinding
 
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeManager.setUserTheme(this)
         super.onCreate(savedInstanceState)
@@ -43,6 +46,14 @@ class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             } else {
                 Toast.makeText(this, "No Authentication", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        setupObservers()
+    }
+
+    private fun setupObservers() {
+        viewModel.navigationBottomVisibility.observe(this) {
+            binding.mainNavigation.visibility = it
         }
     }
 

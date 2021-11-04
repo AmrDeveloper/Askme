@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.databinding.FragmentRegisterBinding
+import com.amrdeveloper.askme.ui.main.MainViewModel
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.utils.show
@@ -23,8 +25,8 @@ class RegisterFragment : Fragment() {
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-
     private val viewModel by viewModels<RegisterViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
@@ -45,6 +47,8 @@ class RegisterFragment : Fragment() {
                 val password: String = binding.passInputEdit.text.toString()
 
                 Session.login(requireContext(), email, password, it)
+
+                mainViewModel.updateNavigationButtonVisibility(View.VISIBLE)
 
                 findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
             }else{

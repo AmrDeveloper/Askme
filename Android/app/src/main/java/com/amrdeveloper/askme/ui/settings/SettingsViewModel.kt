@@ -16,6 +16,9 @@ class SettingsViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
+    private val _themeColor = MutableLiveData<ThemeColor>()
+    val themeColor = _themeColor
+
     private val _messages = MutableLiveData<Int>()
     val messages : LiveData<Int> = _messages
 
@@ -48,9 +51,10 @@ class SettingsViewModel @Inject constructor(
             val colorBody = ColorBody(userId, color.name)
             val result = userRepository.updateUserColor(token, colorBody)
             if (result.isSuccess && result.getOrNull()?.code() == 200)  {
-                _messages.value = R.string.error_update_color
-            } else {
+                themeColor.value = color
                 _messages.value = R.string.success_update_color
+            } else {
+                _messages.value = R.string.error_update_color
             }
         }
     }

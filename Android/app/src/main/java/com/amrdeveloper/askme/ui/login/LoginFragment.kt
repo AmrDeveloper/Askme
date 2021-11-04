@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.databinding.FragmentLoginBinding
+import com.amrdeveloper.askme.ui.main.MainViewModel
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.Validation
 import com.amrdeveloper.askme.utils.gone
@@ -26,6 +28,7 @@ class LoginFragment : Fragment() {
 
 
     private val viewModel by viewModels<LoginViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
@@ -44,6 +47,9 @@ class LoginFragment : Fragment() {
                 val password: String = binding.passInputEdit.text.toString()
 
                 Session.login(requireContext(), email, password, it)
+
+                mainViewModel.updateNavigationButtonVisibility(View.VISIBLE)
+
                 findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
             } else {
                 Toast.makeText(requireContext(), "Invalid Login", Toast.LENGTH_SHORT).show()
