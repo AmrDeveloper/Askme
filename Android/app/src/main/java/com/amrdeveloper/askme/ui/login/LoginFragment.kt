@@ -13,6 +13,7 @@ import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.LoginData
 import com.amrdeveloper.askme.databinding.FragmentLoginBinding
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.Validation
 import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,19 +61,18 @@ class LoginFragment : Fragment() {
             val password: String = binding.passInputEdit.text.toString()
             val loginData = LoginData(email, password)
 
-            if (loginData.isValidLoginInfo()) {
-                viewModel.userLogin(loginData)
-                binding.loadingBar.show()
+            if (Validation.isValidEmail(email).not()) {
+                binding.emailInputLayout.error = "Invalid Email format"
                 return@setOnClickListener
             }
 
-            if (loginData.isValidEmail().not()) {
-                binding.emailInputLayout.error = "Invalid Email"
+            if (Validation.isValidPassword(password).not()) {
+                binding.passInputLayout.error = "Invalid Password format"
+                return@setOnClickListener
             }
 
-            if (loginData.isValidPassword().not()) {
-                binding.passInputLayout.error = "Invalid Password"
-            }
+            viewModel.userLogin(loginData)
+            binding.loadingBar.show()
         }
     }
 
