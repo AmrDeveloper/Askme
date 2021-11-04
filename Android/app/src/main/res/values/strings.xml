@@ -42,4 +42,26 @@
     <string name="new_password">New Password</string>
     <string name="new_status">New Status</string>
     <string name="your_location">Your Location</string>
+
+    <!--Messages-->
+    <string name="success_update_status">Status updated successfully</string>
+    <string name="success_update_location">Location updated successfully</string>
+    <string name="success_update_color">Color updated successfully</string>
+    <string name="success_update_password">Password updated successfully</string>
+    <string name="success_update_avatar">Avatar updated successfully</string>
+    <string name="success_update_wallpaper">Wallpaper updated successfully</string>
+
+    <!--Errors-->
+    <string name="error_react">Can\'t react this answer</string>
+    <string name="error_unreact">can\'t un react this question</string>
+    <string name="error_update_status">Error while updating your status</string>
+    <string name="error_update_location">Error while updating your location</string>
+    <string name="error_update_color">Error while updating your color</string>
+    <string name="error_update_password">Error while updating your password</string>
+    <string name="error_get_question_answer">Can\'t get question answer</string>
+    <string name="error_load_user_info">Can\'t load user information</string>
+    <string name="error_update_avatar">Error while updating your avatar</string>
+    <string name="error_update_wallpaper">Error while updating your wallpaper</string>
+    <string name="error_follow">Error while following this user</string>
+    <string name="error_unfollow">Error while unfollowing this user</string>
 </resources>

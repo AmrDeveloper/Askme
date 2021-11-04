@@ -1,11 +1,11 @@
 package com.amrdeveloper.askme.ui.settings
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.*
-import com.amrdeveloper.askme.data.ResponseData
-import com.amrdeveloper.askme.data.ResponseType
 import com.amrdeveloper.askme.data.source.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,26 +16,17 @@ class SettingsViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val statusLiveData : MutableLiveData<ResponseType> = MutableLiveData()
-
-    private val locationLiveData : MutableLiveData<ResponseType> = MutableLiveData()
-
-    private val colorLiveData : MutableLiveData<ResponseData<ThemeColor>> = MutableLiveData()
-
-    private val passwordLiveData : MutableLiveData<ResponseData<String>> = MutableLiveData()
+    private val _messages = MutableLiveData<Int>()
+    val messages : LiveData<Int> = _messages
 
     fun changeUserStatus(token : String, userId : String, status : String){
         viewModelScope.launch {
             val statusBody = StatusBody(userId, status)
             val result = userRepository.updateUserStatus(token, statusBody)
-            if (result.isSuccess) {
-                when (result.getOrNull()?.code()) {
-                    200 -> statusLiveData.postValue(ResponseType.SUCCESS)
-                    403 -> statusLiveData.postValue(ResponseType.NO_AUTH)
-                    else -> statusLiveData.postValue(ResponseType.FAILURE)
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                _messages.value = R.string.success_update_status
             } else {
-                statusLiveData.postValue(ResponseType.FAILURE)
+                _messages.value = R.string.error_update_status
             }
         }
     }
@@ -44,14 +35,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             val locationBody = LocationBody(userId, location)
             val result = userRepository.updateUserAddress(token, locationBody)
-            if (result.isSuccess) {
-                when (result.getOrNull()?.code()) {
-                    200 -> locationLiveData.postValue(ResponseType.SUCCESS)
-                    403 -> locationLiveData.postValue(ResponseType.NO_AUTH)
-                    else -> locationLiveData.postValue(ResponseType.FAILURE)
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                _messages.value = R.string.success_update_location
             } else {
-                locationLiveData.postValue(ResponseType.FAILURE)
+                _messages.value = R.string.error_update_location
             }
         }
     }
@@ -60,14 +47,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             val colorBody = ColorBody(userId, color.name)
             val result = userRepository.updateUserColor(token, colorBody)
-            if (result.isSuccess) {
-                when(result.getOrNull()?.code()){
-                    200 -> colorLiveData.postValue(ResponseData(ResponseType.SUCCESS, color))
-                    403 -> colorLiveData.postValue(ResponseData(ResponseType.NO_AUTH, ThemeColor.ORANGE))
-                    else -> colorLiveData.postValue(ResponseData(ResponseType.FAILURE, ThemeColor.ORANGE))
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200)  {
+                _messages.value = R.string.error_update_color
             } else {
-
+                _messages.value = R.string.success_update_color
             }
         }
     }
@@ -76,23 +59,11 @@ class SettingsViewModel @Inject constructor(
        viewModelScope.launch {
            val passwordBody = PasswordBody(userId, password)
            val result = userRepository.updateUserPassword(token, passwordBody)
-           if (result.isSuccess) {
-               when (result.getOrNull()?.code()) {
-                   200 -> passwordLiveData.postValue(ResponseData(ResponseType.SUCCESS, password))
-                   403 -> passwordLiveData.postValue(ResponseData(ResponseType.NO_AUTH, ""))
-                   else -> passwordLiveData.postValue(ResponseData(ResponseType.FAILURE, ""))
-               }
+           if (result.isSuccess && result.getOrNull()?.code() == 200) {
+               _messages.value = R.string.success_update_password
            } else {
-
+               _messages.value = R.string.error_update_password
            }
        }
     }
-
-    fun getStatusLiveData() = statusLiveData
-
-    fun getLocationLiveData() = locationLiveData
-
-    fun getColorLiveData() = colorLiveData
-
-    fun getPasswordLiveData() = passwordLiveData
 }

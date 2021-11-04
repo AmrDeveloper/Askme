@@ -2,10 +2,12 @@ package com.amrdeveloper.askme.ui.profile
 
 import android.content.Context
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.*
 import com.amrdeveloper.askme.data.source.*
 import com.amrdeveloper.askme.utils.FileUtils
@@ -28,9 +30,10 @@ class ProfileViewModel @Inject constructor (
 
     private val userLiveData: MutableLiveData<User> = MutableLiveData()
     private val followLiveData : MutableLiveData<Follow> = MutableLiveData()
-    private val avatarLiveData : MutableLiveData<ResponseType> = MutableLiveData()
-    private val wallpaperLiveData : MutableLiveData<ResponseType> = MutableLiveData()
     private var feedPagedList: MutableLiveData<PagingData<Feed>> = MutableLiveData()
+
+    private val _messages = MutableLiveData<Int>()
+    val messages : LiveData<Int> = _messages
 
     fun loadUserFeed(id: String, userId : String){
         viewModelScope.launch {
@@ -46,7 +49,7 @@ class ProfileViewModel @Inject constructor (
             if (result.isSuccess) {
                 userLiveData.postValue(result.getOrNull())
             } else {
-
+                _messages.value = R.string.error_load_user_info
             }
         }
     }
@@ -61,14 +64,10 @@ class ProfileViewModel @Inject constructor (
 
         viewModelScope.launch {
             val result = userRepository.updateUserAvatar(emailBody, avatarBody)
-            if (result.isSuccess) {
-                when (result.getOrNull()?.code()) {
-                    200 -> avatarLiveData.postValue(ResponseType.SUCCESS)
-                    401 -> avatarLiveData.postValue(ResponseType.NO_AUTH)
-                    else -> avatarLiveData.postValue(ResponseType.FAILURE)
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                _messages.value = R.string.success_update_avatar
             } else {
-                avatarLiveData.postValue(ResponseType.FAILURE)
+                _messages.value = R.string.error_update_avatar
             }
         }
     }
@@ -83,14 +82,10 @@ class ProfileViewModel @Inject constructor (
 
         viewModelScope.launch{
             val result = userRepository.updateUserWallpaper(emailBody, wallpaperBody)
-            if (result.isSuccess) {
-                when (result.getOrNull()?.code()) {
-                    200 -> wallpaperLiveData.postValue(ResponseType.SUCCESS)
-                    401 -> wallpaperLiveData.postValue(ResponseType.NO_AUTH)
-                    else -> wallpaperLiveData.postValue(ResponseType.FAILURE)
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                _messages.value = R.string.success_update_wallpaper
             } else {
-                wallpaperLiveData.postValue(ResponseType.FAILURE)
+                _messages.value = R.string.error_update_wallpaper
             }
         }
     }
@@ -98,12 +93,10 @@ class ProfileViewModel @Inject constructor (
     fun followUser(token: String, followData: FollowData){
         viewModelScope.launch{
             val result = followRepository.followUser("auth $token", followData)
-            if (result.isSuccess) {
-                if (result.getOrNull()?.code() == 200) {
-                    followLiveData.postValue(Follow.FOLLOW)
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                followLiveData.postValue(Follow.FOLLOW)
             } else {
-
+                _messages.value = R.string.error_follow
             }
         }
     }
@@ -111,14 +104,10 @@ class ProfileViewModel @Inject constructor (
     fun unfollowUser(token: String, followData: FollowData){
         viewModelScope.launch {
             val result = followRepository.unFollowUser("auth $token", followData)
-
-            if (result.isSuccess) {
-                val response = result.getOrNull()
-                if (response?.code() == 200) {
-                    followLiveData.postValue(Follow.UN_FOLLOW)
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                followLiveData.postValue(Follow.UN_FOLLOW)
             } else {
-
+                _messages.value = R.string.error_unfollow
             }
         }
     }
@@ -128,8 +117,4 @@ class ProfileViewModel @Inject constructor (
     fun getFeedPagedList() = feedPagedList
 
     fun getFollowLiveData() = followLiveData
-
-    fun getAvatarLiveData() = avatarLiveData
-
-    fun getWallpaperLiveData() = wallpaperLiveData
 }

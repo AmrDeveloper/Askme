@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.*
-import com.amrdeveloper.askme.data.ResponseType
 import com.amrdeveloper.askme.databinding.ProfileLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
 import com.amrdeveloper.askme.utils.*
@@ -29,21 +28,21 @@ private const val PERMISSION_EXTERNAL_STORAGE = 1998
 @AndroidEntryPoint
 class ProfileFragment : Fragment(){
 
-    private lateinit var mUserId: String
-    private lateinit var mCurrentUser : User
+    private lateinit var currentUserId: String
+    private lateinit var currentUser : User
 
     private lateinit var feedAdapter: FeedAdapter
 
     private var _binding: ProfileLayoutBinding? = null
     private val binding get() = _binding!!
 
-    private val mProfileViewModel by viewModels<ProfileViewModel>()
+    private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
 
-        arguments?.get(USER_ID)?.let { mUserId = it as String }
+        arguments?.get(USER_ID)?.let { currentUserId = it as String }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -54,8 +53,8 @@ class ProfileFragment : Fragment(){
 
         binding.listLayout.loadingBar.show()
 
-        mProfileViewModel.loadUserInformation(mUserId, Session.getUserId(requireContext()).toString())
-        mProfileViewModel.loadUserFeed(mUserId, Session.getUserId(requireContext()).toString())
+        viewModel.loadUserInformation(currentUserId, Session.getUserId(requireContext()).toString())
+        viewModel.loadUserFeed(currentUserId, Session.getUserId(requireContext()).toString())
 
         setupObservers()
 
@@ -82,45 +81,21 @@ class ProfileFragment : Fragment(){
     }
 
     private fun setupObservers( ) {
-        mProfileViewModel.getUserLiveData().observe(viewLifecycleOwner, {
-            mCurrentUser = it
+        viewModel.getUserLiveData().observe(viewLifecycleOwner, {
+            currentUser = it
             bindUserProfile(it)
         })
 
-        mProfileViewModel.getFeedPagedList().observe(viewLifecycleOwner, {
+        viewModel.getFeedPagedList().observe(viewLifecycleOwner, {
             feedAdapter.submitData(lifecycle, it)
             binding.listLayout.loadingBar.gone()
         })
 
-        mProfileViewModel.getAvatarLiveData().observe(viewLifecycleOwner, {
-            when(it){
-                ResponseType.SUCCESS -> {
-                    Toast.makeText(context, "Update Avatar Success", Toast.LENGTH_SHORT).show()
-                }
-                ResponseType.FAILURE -> {
-                    Toast.makeText(context, "Update Avatar Failure", Toast.LENGTH_SHORT).show()
-                }
-                ResponseType.NO_AUTH -> {
-                    Toast.makeText(context, "Invalid Auth", Toast.LENGTH_SHORT).show()
-                }
-            }
+        viewModel.messages.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         })
 
-        mProfileViewModel.getWallpaperLiveData().observe(viewLifecycleOwner, {
-            when(it){
-                ResponseType.SUCCESS -> {
-                    Toast.makeText(context, "Update Wallpaper Success", Toast.LENGTH_SHORT).show()
-                }
-                ResponseType.FAILURE -> {
-                    Toast.makeText(context, "Update Wallpaper Failure", Toast.LENGTH_SHORT).show()
-                }
-                ResponseType.NO_AUTH -> {
-                    Toast.makeText(context, "Invalid Auth", Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-
-        mProfileViewModel.getFollowLiveData().observe(viewLifecycleOwner, {updateFollowCardView(it)})
+        viewModel.getFollowLiveData().observe(viewLifecycleOwner, {updateFollowCardView(it)})
 
         binding.askmeButton.setOnClickListener {openAskQuestionFragment()}
 
@@ -128,9 +103,9 @@ class ProfileFragment : Fragment(){
     }
 
     private fun updateUserInfoFromArguments(){
-        mUserId = arguments?.getString(USER_ID).toString()
-        if (mUserId.isEmpty() || mUserId == "null") {
-            mUserId = Session.getUserId(requireContext()).toString()
+        currentUserId = arguments?.getString(USER_ID).toString()
+        if (currentUserId.isEmpty() || currentUserId == "null") {
+            currentUserId = Session.getUserId(requireContext()).toString()
             setupEditMode()
         }else{
             hideEditMode()
@@ -169,12 +144,12 @@ class ProfileFragment : Fragment(){
 
     private fun setupFullScreenOption(){
         binding.userAvatar.setOnClickListener {
-            val bundle = bundleOf(AVATAR_URL to mCurrentUser.avatarUrl)
+            val bundle = bundleOf(AVATAR_URL to currentUser.avatarUrl)
             findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
         }
 
         binding.userWallpaper.setOnClickListener {
-            val bundle = bundleOf(AVATAR_URL to mCurrentUser.wallpaperUrl)
+            val bundle = bundleOf(AVATAR_URL to currentUser.wallpaperUrl)
             findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
         }
     }
@@ -200,28 +175,26 @@ class ProfileFragment : Fragment(){
     private fun hideEditMode(){
         binding.changeAvatarAction.gone()
         binding.changeWallpaperAction.gone()
-        mProfileViewModel.getFollowLiveData().removeObservers(this)
-        mProfileViewModel.getAvatarLiveData().removeObservers(this)
-        mProfileViewModel.getWallpaperLiveData().removeObservers(this)
+        viewModel.getFollowLiveData().removeObservers(this)
     }
 
     private fun openAskQuestionFragment(){
         val bundle = Bundle()
-        bundle.putString(USER_ID, mCurrentUser.id)
-        bundle.putString(NAME, mCurrentUser.name)
-        bundle.putString(USERNAME, mCurrentUser.username)
-        bundle.putString(AVATAR_URL, mCurrentUser.avatarUrl)
+        bundle.putString(USER_ID, currentUser.id)
+        bundle.putString(NAME, currentUser.name)
+        bundle.putString(USERNAME, currentUser.username)
+        bundle.putString(AVATAR_URL, currentUser.avatarUrl)
 
         findNavController().navigate(R.id.action_profileFragment_to_askQuestionFragment, bundle)
     }
 
     private fun followCardViewListener(){
-        val followData = FollowData(Session.getUserId(requireContext()).toString(), mUserId)
+        val followData = FollowData(Session.getUserId(requireContext()).toString(), currentUserId)
         val token = Session.getUserToken(requireContext()).toString()
 
         when (Follow.valueOf(binding.askmeFollowMe.tag.toString())) {
-            Follow.FOLLOW -> mProfileViewModel.unfollowUser(token ,followData)
-            Follow.UN_FOLLOW -> mProfileViewModel.followUser(token ,followData)
+            Follow.FOLLOW -> viewModel.unfollowUser(token ,followData)
+            Follow.UN_FOLLOW -> viewModel.followUser(token ,followData)
         }
     }
 
@@ -257,11 +230,11 @@ class ProfileFragment : Fragment(){
            when(requestCode){
                REQUEST_AVATAR_ID -> {
                    val avatarUri = data?.data
-                   mProfileViewModel.updateUserAvatar(requireContext(), avatarUri!!)
+                   viewModel.updateUserAvatar(requireContext(), avatarUri!!)
                }
                REQUEST_WALLPAPER_ID -> {
                    val wallpaperUri = data?.data
-                   mProfileViewModel.updateUserWallpaper(requireContext(), wallpaperUri!!)
+                   viewModel.updateUserWallpaper(requireContext(), wallpaperUri!!)
                }
            }
         }

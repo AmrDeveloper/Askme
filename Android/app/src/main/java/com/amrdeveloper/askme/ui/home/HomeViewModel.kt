@@ -1,9 +1,11 @@
 package com.amrdeveloper.askme.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Feed
 import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.data.source.FeedRepository
@@ -21,6 +23,9 @@ class HomeViewModel @Inject constructor(
 
     private var homePagedList: MutableLiveData<PagingData<Feed>> = MutableLiveData()
 
+    private val _messages = MutableLiveData<Int>()
+    val messages : LiveData<Int> = _messages
+
     fun loadUserHomeFeed(userId : String){
         viewModelScope.launch {
             feedRepository.getHomeFeed(userId).collect {
@@ -32,13 +37,10 @@ class HomeViewModel @Inject constructor(
     fun reactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
         viewModelScope.launch {
             val result = reactionRepository.createAnswerReaction(token, reactionData)
-            if (result.isSuccess) {
-                val response = result.getOrNull()
-                if (response?.code() == 200) {
-                    callback()
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                callback()
             } else {
-                // TODO : Add Error handler in UI
+                _messages.value = R.string.error_react
             }
         }
     }
@@ -46,13 +48,10 @@ class HomeViewModel @Inject constructor(
     fun unreactAnswer(token : String, reactionData: ReactionData, callback : () -> Unit){
         viewModelScope.launch {
             val result = reactionRepository.deleteAnswerReaction(token, reactionData)
-            if (result.isSuccess) {
-                val response = result.getOrNull()
-                if (response?.code() == 200) {
-                    callback()
-                }
+            if (result.isSuccess && result.getOrNull()?.code() == 200) {
+                callback()
             } else {
-                // TODO : Add Error handler in UI
+                _messages.value = R.string.error_unreact
             }
         }
     }

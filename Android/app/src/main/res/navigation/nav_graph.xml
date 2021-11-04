@@ -19,26 +19,26 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
+            app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
             android:id="@+id/action_profileFragment_to_fullscreenFragment"
-            app:destination="@id/fullscreenFragment" />
-        <action
+            app:destination="@id/fullscreenFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
             android:id="@+id/action_profileFragment_to_askQuestionFragment"
-            app:destination="@id/askQuestionFragment" />
+            app:destination="@id/askQuestionFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -73,21 +73,21 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="com.amrdeveloper.askme.ui.notification.NotificationFragment"
-        android:label="NotificationFragment" >
+        android:label="NotificationFragment">
         <action
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             android:id="@+id/action_notificationFragment_to_answerQuestionFragment"
-            app:destination="@id/answerQuestionFragment" />
-        <action
+            app:destination="@id/answerQuestionFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
             android:id="@+id/action_notificationFragment_to_questionAnswerFragment"
-            app:destination="@id/questionAnswerFragment" />
+            app:destination="@id/questionAnswerFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/peopleFragment"
@@ -161,17 +161,17 @@
     <fragment
         android:id="@+id/questionAnswerFragment"
         android:name="com.amrdeveloper.askme.ui.questionanswer.QuestionAnswerFragment"
-        android:label="QuestionAnswerFragment" >
+        android:label="QuestionAnswerFragment">
         <argument
             android:name="answer_id"
-            app:argType="string"/>
+            app:argType="string" />
         <action
+            android:id="@+id/action_questionAnswerFragment_to_peopleFragment"
+            app:destination="@id/peopleFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            android:id="@+id/action_questionAnswerFragment_to_peopleFragment"
-            app:destination="@id/peopleFragment" />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/answerQuestionFragment"
@@ -180,11 +180,11 @@
     <fragment
         android:id="@+id/fullscreenFragment"
         android:name="com.amrdeveloper.askme.ui.fullscreen.FullscreenFragment"
-        android:label="FullscreenFragment" >
+        android:label="FullscreenFragment">
 
         <argument
             android:name="avatar_url"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/askQuestionFragment"
@@ -193,18 +193,18 @@
 
         <argument
             android:name="id"
-            app:argType="string"/>
+            app:argType="string" />
 
         <argument
             android:name="name"
-            app:argType="string"/>
+            app:argType="string" />
 
         <argument
             android:name="username"
-            app:argType="string"/>
+            app:argType="string" />
 
         <argument
             android:name="avatar_url"
-            app:argType="string"/>
+            app:argType="string" />
     </fragment>
 </navigation>

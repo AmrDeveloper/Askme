@@ -1,8 +1,10 @@
 package com.amrdeveloper.askme.ui.questionanswer
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amrdeveloper.askme.R
 import com.amrdeveloper.askme.data.Answer
 import com.amrdeveloper.askme.data.Reaction
 import com.amrdeveloper.askme.data.ReactionData
@@ -20,13 +22,16 @@ class QuestionAnswerViewModel @Inject constructor(
 
     private val answerLiveData : MutableLiveData<Answer> = MutableLiveData()
 
+    private val _messages = MutableLiveData<Int>()
+    val messages : LiveData<Int> = _messages
+
     fun getQuestionAnswer(token : String, answerId : String, userId : String){
         viewModelScope.launch {
             val result = answerRepository.getQuestionAnswer(token, answerId, userId)
             if (result.isSuccess) {
                 answerLiveData.postValue(result.getOrNull())
             } else {
-
+                _messages.value = R.string.error_get_question_answer
             }
         }
     }
@@ -39,7 +44,7 @@ class QuestionAnswerViewModel @Inject constructor(
                 currentAnswer?.isReacted = Reaction.UN_REACATED
                 answerLiveData.postValue(currentAnswer)
             } else {
-
+                _messages.value = R.string.error_react
             }
         }
     }
@@ -52,7 +57,7 @@ class QuestionAnswerViewModel @Inject constructor(
                 currentAnswer?.isReacted = Reaction.REACATED
                 answerLiveData.postValue(currentAnswer)
             } else {
-
+                _messages.value = R.string.error_unreact
             }
         }
     }

@@ -13,7 +13,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.amrdeveloper.askme.R
-import com.amrdeveloper.askme.data.ResponseType
 import com.amrdeveloper.askme.data.themeList
 import com.amrdeveloper.askme.databinding.FragmentSettingsBinding
 import com.amrdeveloper.askme.ui.adapter.ColorGridAdapter
@@ -39,42 +38,8 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.getStatusLiveData().observe(viewLifecycleOwner, {
-            if (it == ResponseType.SUCCESS) {
-                Toast.makeText(requireContext(), "Status Changed", Toast.LENGTH_SHORT).show()
-            }
-            else if (it == ResponseType.FAILURE) {
-                Toast.makeText(requireContext(), "Can't change Status", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        viewModel.getLocationLiveData().observe(viewLifecycleOwner, {
-            if (it == ResponseType.SUCCESS) {
-                Toast.makeText(requireContext(), "Location Changed", Toast.LENGTH_SHORT).show()
-            }
-            else if (it == ResponseType.FAILURE) {
-                Toast.makeText(requireContext(), "Can't change Location", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        viewModel.getColorLiveData().observe(viewLifecycleOwner, {
-            if (it.responseType == ResponseType.SUCCESS) {
-                Session.updateColor(requireContext(), it.data)
-                Toast.makeText(requireContext(), "Color Changed", Toast.LENGTH_SHORT).show()
-            }
-            else if (it.responseType == ResponseType.FAILURE) {
-                Toast.makeText(requireContext(), "Can't change Color", Toast.LENGTH_SHORT).show()
-            }
-        })
-
-        viewModel.getPasswordLiveData().observe(viewLifecycleOwner, {
-            if (it.responseType == ResponseType.SUCCESS) {
-                Session.updatePassword(requireContext(), it.data)
-                Toast.makeText(requireContext(), "Color Password", Toast.LENGTH_SHORT).show()
-            }
-            else if (it.responseType == ResponseType.FAILURE) {
-                Toast.makeText(requireContext(), "Can't change Password", Toast.LENGTH_SHORT).show()
-            }
+        viewModel.messages.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         })
     }
 
