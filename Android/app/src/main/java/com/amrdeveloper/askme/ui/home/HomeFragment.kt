@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.amrdeveloper.askme.data.ReactionData
 import com.amrdeveloper.askme.data.USER_ID
 import com.amrdeveloper.askme.databinding.ListLayoutBinding
 import com.amrdeveloper.askme.ui.adapter.FeedAdapter
+import com.amrdeveloper.askme.ui.main.MainViewModel
 import com.amrdeveloper.askme.utils.Session
 import com.amrdeveloper.askme.utils.gone
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +31,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel  by viewModels<HomeViewModel>()
+    private val mainViewModel by activityViewModels<MainViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater,R.layout.list_layout, container, false)
@@ -36,6 +39,7 @@ class HomeFragment : Fragment() {
         setupUserList()
 
         viewModel.loadUserHomeFeed(Session.getUserId(requireContext()).toString())
+        mainViewModel.updateNavigationButtonVisibility(View.VISIBLE)
 
         setupObservers()
 
