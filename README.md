@@ -1,25 +1,37 @@
 # Askme
 Social media app to ask and answer user questions and interact with users
 
-### Features : 
+### Screenshots:
+
+<img src="media/screenshot_1.png" width="32%"> <img src="media/screenshot_3.png" width="32%"> <img src="screenshot/screenshot_9.png" width="32%">
+
+<img src="media/screenshot_5.png" width="32%"> | <img src="media/screenshot_6.png" width="32%"> <img src="media/screenshot_2.png" width="32%">
+
+<img src="media/screenshot_4.png" width="32%"> <img src="media/screenshot_8.png" width="32%"> <img src="media/screenshot_11.png" width="32%">
+
+### Features: 
+- Register / Login
 - Ask and answer user question
-- Follow/unfollow user
+- Follow / unfollow user
+- Like / Dislike answers
 - Search for users
-- Home feed for all users that you follow
+- Home feed for all users that you following
 - Notification when got new question, answer and follower
 - Update user profile image or download other user image or wallpaper
 - Change App theme in runtime
 
 ### Android tools : 
 - Kotlin 
-- Coroutine 
-- Dagger2
+- Coroutine
+- Kotlin Flow
+- Dagger Hilt
 - MVVM Architecture
-- Paging
-- Architecture Components 
-- Retrofit 
-- GSON 
+- Navigation Components
+- Paging3
+- ViewModel & LiveData
+- Retrofit & GSON
 - Picasso
+- Gradle Kotlin DSL
 
 ### Server Tools : 
 - NodeJS
@@ -30,14 +42,5 @@ Social media app to ask and answer user questions and interact with users
 - JWT
 - Body Parser
 
-### Screenshots
-
-| <img src="screenshot/screenshot1.png" width="250"> | <img src="screenshot/screenshot2.png" width="250"> | <img src="screenshot/screenshot3.png" width="250"> |
-
-| <img src="screenshot/screenshot4.png" width="250"> | <img src="screenshot/screenshot5.png" width="250"> | <img src="screenshot/screenshot6.png" width="250"> |
-
-| <img src="screenshot/screenshot7.png" width="250"> | <img src="screenshot/screenshot8.png" width="250"> | <img src="screenshot/screenshot9.png" width="250"> |
-
-| <img src="screenshot/screenshot10.png" width="250"> | <img src="screenshot/screenshot11.png" width="250"> | <img src="screenshot/screenshot12.png" width="250"> |
-
-Demo video : [YouTube](https://www.youtube.com/watch?v=oNljJO5xkjU)
+### How to build?
+You can find all the instructions in BUILD_ASKME file

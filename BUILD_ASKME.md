@@ -36,11 +36,7 @@ Then just run the server
 npm start
 ```
 
-To find your IPv4 Address try
-
-```
-ipconfig
-```
+To find your IPv4 Address try `ipconfig` on Windows or `ifconfig` on Linux and MaxOS
 
 In Askme Android App open Consts File and change API_SERVER_HOST value with your current IPv4 Address value
 Then just run the Android App
