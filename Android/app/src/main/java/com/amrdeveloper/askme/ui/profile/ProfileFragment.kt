@@ -144,13 +144,17 @@ class ProfileFragment : Fragment(){
 
     private fun setupFullScreenOption(){
         binding.userAvatar.setOnClickListener {
-            val bundle = bundleOf(AVATAR_URL to currentUser.avatarUrl)
-            findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
+            if (currentUser.avatarUrl.isNullOrEmpty().not()) {
+                val bundle = bundleOf(AVATAR_URL to currentUser.avatarUrl)
+                findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
+            }
         }
 
         binding.userWallpaper.setOnClickListener {
-            val bundle = bundleOf(AVATAR_URL to currentUser.wallpaperUrl)
-            findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
+            if (currentUser.wallpaperUrl.isNullOrEmpty().not()) {
+                val bundle = bundleOf(AVATAR_URL to currentUser.wallpaperUrl)
+                findNavController().navigate(R.id.action_profileFragment_to_fullscreenFragment, bundle)
+            }
         }
     }
 
