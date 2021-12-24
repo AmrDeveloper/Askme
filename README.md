@@ -3,11 +3,11 @@ Social media app to ask and answer user questions and interact with users
 
 ### Screenshots:
 
-<img src="media/screenshot_1.png" width="32%"> <img src="media/screenshot_3.png" width="32%"> <img src="screenshot/screenshot_9.png" width="32%">
+<img src="media/Screenshot_1.png" width="32%"> <img src="media/Screenshot_3.png" width="32%"> <img src="media/Screenshot_9.png" width="32%">
 
-<img src="media/screenshot_5.png" width="32%"> | <img src="media/screenshot_6.png" width="32%"> <img src="media/screenshot_2.png" width="32%">
+<img src="media/Screenshot_5.png" width="32%"> <img src="media/Screenshot_6.png" width="32%"> <img src="media/Screenshot_2.png" width="32%">
 
-<img src="media/screenshot_4.png" width="32%"> <img src="media/screenshot_8.png" width="32%"> <img src="media/screenshot_11.png" width="32%">
+<img src="media/Screenshot_4.png" width="32%"> <img src="media/Screenshot_8.png" width="32%"> <img src="media/Screenshot_11.png" width="32%">
 
 ### Features: 
 - Register / Login
