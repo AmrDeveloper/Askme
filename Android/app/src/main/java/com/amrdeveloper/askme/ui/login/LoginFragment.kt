@@ -63,23 +63,27 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
-            val email: String = binding.emailInputEdit.text.toString()
-            val password: String = binding.passInputEdit.text.toString()
-            val loginData = LoginData(email, password)
-
-            if (Validation.isValidEmail(email).not()) {
-                binding.emailInputLayout.error = "Invalid Email format"
-                return@setOnClickListener
-            }
-
-            if (Validation.isValidPassword(password).not()) {
-                binding.passInputLayout.error = "Invalid Password format"
-                return@setOnClickListener
-            }
-
-            viewModel.userLogin(loginData)
-            binding.loadingBar.show()
+            loginUser()
         }
+    }
+
+    private fun loginUser() {
+        val email: String = binding.emailInputEdit.text.toString()
+        val password: String = binding.passInputEdit.text.toString()
+        val loginData = LoginData(email, password)
+
+        if (Validation.isValidEmail(email).not()) {
+            binding.emailInputLayout.error =  getString(R.string.error_invalid_email)
+            return
+        }
+
+        if (Validation.isValidPassword(password).not()) {
+            binding.passInputLayout.error = getString(R.string.error_invalid_password)
+            return
+        }
+
+        viewModel.userLogin(loginData)
+        binding.loadingBar.show()
     }
 
     override fun onDestroyView() {
