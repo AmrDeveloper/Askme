@@ -15,6 +15,7 @@ import com.amrdeveloper.askme.data.RegisterData
 import com.amrdeveloper.askme.databinding.FragmentRegisterBinding
 import com.amrdeveloper.askme.ui.main.MainViewModel
 import com.amrdeveloper.askme.utils.Session
+import com.amrdeveloper.askme.utils.Validation
 import com.amrdeveloper.askme.utils.gone
 import com.amrdeveloper.askme.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +52,7 @@ class RegisterFragment : Fragment() {
                 mainViewModel.updateNavigationButtonVisibility(View.VISIBLE)
 
                 findNavController().navigate(R.id.action_registerFragment_to_homeFragment)
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "Invalid Register", Toast.LENGTH_SHORT).show()
             }
         })
@@ -63,20 +64,38 @@ class RegisterFragment : Fragment() {
         }
 
         binding.registerButton.setOnClickListener {
-            val name = binding.nameInputEdit.text.toString()
-            val email = binding.emailInputEdit.text.toString()
-            val username = binding.usernameInputEdit.text.toString()
-            val password = binding.passInputEdit.text.toString()
-
-            val registerData = RegisterData(name, email, username , password)
-
-            if(registerData.isValidRegisterInfo()){
-                viewModel.userRegister(registerData)
-                binding.loadingBar.show()
-            }else{
-                Toast.makeText(requireContext(), "Invalid Information", Toast.LENGTH_SHORT).show()
-            }
+            registerNewUser()
         }
+    }
+
+    private fun registerNewUser() {
+        val name = binding.nameInputEdit.text.toString()
+        if (Validation.isValidName(name).not()) {
+            binding.nameInputLayout.error = getString(R.string.error_invalid_name)
+            return
+        }
+
+        val username = binding.usernameInputEdit.text.toString()
+        if (Validation.isValidUsername(username).not()) {
+            binding.usernameInputLayout.error = getString(R.string.error_invalid_username)
+            return
+        }
+
+        val email = binding.emailInputEdit.text.toString()
+        if (Validation.isValidEmail(email).not()) {
+            binding.emailInputLayout.error = getString(R.string.error_invalid_email)
+            return
+        }
+
+        val password = binding.passInputEdit.text.toString()
+        if (Validation.isValidPassword(password).not()) {
+            binding.passInputLayout.error = getString(R.string.error_invalid_password)
+            return
+        }
+
+        val registerData = RegisterData(name, email, username , password)
+        viewModel.userRegister(registerData)
+        binding.loadingBar.show()
     }
 
     override fun onDestroyView() {

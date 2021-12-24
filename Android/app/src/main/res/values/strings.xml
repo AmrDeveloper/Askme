@@ -52,6 +52,10 @@
     <string name="success_update_wallpaper">Wallpaper updated successfully</string>
 
     <!--Errors-->
+    <string name="error_invalid_name">Your name is invalid</string>
+    <string name="error_invalid_username">Your username is invalid</string>
+    <string name="error_invalid_email">Your email is invalid</string>
+    <string name="error_invalid_password">Your password is invalid</string>
     <string name="error_react">Can\'t react this answer</string>
     <string name="error_unreact">can\'t un react this question</string>
     <string name="error_update_status">Error while updating your status</string>
